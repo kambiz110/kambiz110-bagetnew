@@ -32,16 +32,16 @@ namespace WebSite.EndPoint.Models
 
                 if (liMain == null)
                 {
-                    liMain = CreateLi(item.Name, "");
+                    liMain = CreateLiWithTag_a(item.Name, "");
                 }
                 else
                 {
-                    liMain.InnerHtml.AppendHtml(CreateLi(item.Name, ""));
+                    liMain.InnerHtml.AppendHtml(CreateLiWithTag_a(item.Name, ""));
                 }
 
                 var ul = new TagBuilder("ul");
                 ul.AddCssClass("row");
-                var liAll = CreateLi($"همه دسته بندی های  {item.Name}", "#");
+                var liAll = CreateLiWithTag_a($"همه دسته بندی های  {item.Name}", "#");
                 liAll.AddCssClass("col-12");
                 ul.InnerHtml.AppendHtml(liAll);
 
@@ -120,13 +120,13 @@ namespace WebSite.EndPoint.Models
             var ulsub2 = new TagBuilder("ul");
             foreach (var sub2 in data.Where(p => p.ParentId == sub1.Id))
             {
-                ulsub2.InnerHtml.AppendHtml(CreateLi(sub2.Name, $"/product?CatalogTypeId={sub2.Id}"));
+                ulsub2.InnerHtml.AppendHtml(CreateLiWithTag_a(sub2.Name, $"/product?CatalogTypeId={sub2.Id}"));
                 IndexCount++;
             }
             return ulsub2;
         }
 
-        private TagBuilder CreateLi(string Text, string Link)
+        private TagBuilder CreateLiWithTag_a(string Text, string Link)
         {
             var a = new TagBuilder("a");
             a.MergeAttribute("href", $"{Link}");
