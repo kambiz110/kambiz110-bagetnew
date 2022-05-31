@@ -1,5 +1,6 @@
 ﻿using Application.Visitors.VisitorOnline;
 using Microsoft.AspNetCore.SignalR;
+using Persistence.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +10,30 @@ namespace WebSite.EndPoint.Hubs
 {
     public class OnlineVisitorHub : Hub
     {
-        private readonly IIVisitorOnlineService visitorOnlineService;
-        public OnlineVisitorHub(IIVisitorOnlineService visitorOnlineService)
+        //private readonly IIVisitorOnlineService visitorOnlineService;
+        private readonly InMemoryContext _inMemoryContext;
+        public OnlineVisitorHub(/*IIVisitorOnlineService visitorOnlineService,*/
+            InMemoryContext inMemoryContext)
         {
-            this.visitorOnlineService = visitorOnlineService;
+            //this.visitorOnlineService = visitorOnlineService;
+            _inMemoryContext = inMemoryContext;
         }
         public override Task OnConnectedAsync()
         {
             string VisitorId = Context.GetHttpContext().Request.Cookies["VisitorId"];
-            visitorOnlineService.ConnectUser(VisitorId);
-            var count = visitorOnlineService.GetCount();
+            //visitorOnlineService.ConnectUser(VisitorId);
+            if (!_inMemoryContext.OnlineVisitors.Where(p=>p.Id== VisitorId).Any())
+            {
+            _inMemoryContext.OnlineVisitors.Add(new Domain.Visitors.OnlineVisitor { 
+            ClientId= VisitorId,
+            Id= VisitorId,
+            Time=DateTime.Now
+            });
+            _inMemoryContext.SaveChanges();
+            }
+        
+            var onlineInMemoreUser = _inMemoryContext.OnlineVisitors.ToList();
+            //var count = visitorOnlineService.GetCount();
             return base.OnConnectedAsync();
         }
 
@@ -26,8 +41,19 @@ namespace WebSite.EndPoint.Hubs
         {
             string VisitorId = Context.GetHttpContext().Request.Cookies["VisitorId"];
 
-            visitorOnlineService.DisConnectUser(VisitorId);
-            var count = visitorOnlineService.GetCount();
+            //visitorOnlineService.DisConnectUser(VisitorId);
+            //var count = visitorOnlineService.GetCount();
+            if (_inMemoryContext.OnlineVisitors.Where(p => p.Id == VisitorId).Any())
+            { 
+                      _inMemoryContext.OnlineVisitors.Remove(new Domain.Visitors.OnlineVisitor
+            {
+                ClientId = VisitorId,
+                Id = VisitorId,
+            });
+            _inMemoryContext.SaveChanges();
+            }
+      
+            var onlineInMemoreUser = _inMemoryContext.OnlineVisitors.ToList();
             return base.OnDisconnectedAsync(exception);
         }
     }

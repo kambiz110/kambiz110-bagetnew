@@ -48,12 +48,15 @@ namespace WebSite.EndPoint
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
             #region  Connection String
             services.AddTransient<IDataBaseContext, DataBaseContext>();
             services.AddTransient<IIdentityDatabaseContext, IdentityDatabaseContext>();
+           
             string connection = Configuration["ConnectionString:SqlServer"];
             services.AddDbContext<DataBaseContext>(option => option.UseSqlServer(connection));
-
+            services.AddDbContext<InMemoryContext>(option => option.UseInMemoryDatabase("OnlineVisitor"));
+            services.AddScoped<InMemoryContext>();
             services.AddIdentityService(Configuration);
             services.AddAuthorization();
             services.ConfigureApplicationCookie(option =>

@@ -12,7 +12,7 @@ using WebSite.EndPoint.Utilities.Filters;
 
 namespace WebSite.EndPoint.Controllers
 {
-    [ServiceFilter(typeof(SaveVisitorFilter))]
+  //  [ServiceFilter(typeof(SaveVisitorFilter))]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -12,7 +12,7 @@ using WebSite.EndPoint.Utilities.Filters;
 
 namespace WebSite.EndPoint.Controllers
 {
-    [ServiceFilter(typeof(SaveVisitorFilter))]
+  //  [ServiceFilter(typeof(SaveVisitorFilter))]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
