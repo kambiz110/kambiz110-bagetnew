@@ -1,4 +1,4 @@
-﻿using Application.Catalogs.CatalogItems.UriComposer;
+﻿ using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Interfaces.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;

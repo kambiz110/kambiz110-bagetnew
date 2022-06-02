@@ -56,6 +56,11 @@ namespace Domain.Catalogs
         public ICollection<Discount> Discounts { get; set; }
         public ICollection<CatalogItemFavourite> CatalogItemFavourites { get; set; }
         public ICollection<OrderItem>  OrderItems { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private int GetPrice()
         {
             var dis = GetPreferredDiscount(Discounts, _price);
