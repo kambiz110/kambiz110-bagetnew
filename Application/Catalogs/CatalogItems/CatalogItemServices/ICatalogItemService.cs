@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,7 +33,9 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
     public class CatalogBrandDto
     {
         public int Id { get; set; }
+        [Display(Name = "نام برند")]
         public string Brand { get; set; }
+        public bool IsDakely { get; set; }
     }
     public class ListCatalogTypeDto
     {

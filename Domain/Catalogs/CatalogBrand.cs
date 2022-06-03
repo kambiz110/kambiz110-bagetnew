@@ -10,5 +10,6 @@ namespace Domain.Catalogs
     {
         public int Id { get; set; }
         public string Brand { get; set; }
+        public bool IsDakely { get; set; }
     }
 }

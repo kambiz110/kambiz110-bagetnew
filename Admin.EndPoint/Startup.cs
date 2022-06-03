@@ -1,5 +1,6 @@
 using Admin.EndPoint.MappingProfiles;
 using Application.Banners;
+using Application.Catalogs.CatalogBrands;
 using Application.Catalogs.CatalogCompany.CrudService;
 using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Catalogs.CatalogTypes;
@@ -55,6 +56,7 @@ namespace Admin.EndPoint
             services.AddTransient<IDiscountHistoryService,  DiscountHistoryService>();
             services.AddTransient<IBannersService,  BannersService>();
             services.AddTransient<IUriComposerService,  UriComposerService>();
+            services.AddTransient<ICatalogBrandCrudService, CatalogBrandCrudService>();
 
 
             #region connection String SqlServer

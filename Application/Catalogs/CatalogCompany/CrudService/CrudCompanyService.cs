@@ -32,7 +32,7 @@ namespace Application.Catalogs.CatalogCompany.CrudService
                new List<string> { $"کمپانی {model.Name}  با موفقیت در سیستم ثبت شد" },
                 mapper.Map<CompanyDto>(model)
              );
-            throw new NotImplementedException();
+    
         }
 
         public BaseDto<CompanyDto> Edit(CompanyDto catalogCompany)
