@@ -1,5 +1,6 @@
 using Admin.EndPoint.MappingProfiles;
 using Application.Banners;
+using Application.Catalogs.CatalogCompany.CrudService;
 using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Catalogs.CatalogTypes;
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
@@ -42,6 +43,7 @@ namespace Admin.EndPoint
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddControllers();
 
+            services.AddScoped<ICrudCompanyService, CrudCompanyService>();
             services.AddScoped<IGetTodayReportService, GetTodayReportService>();
             services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
             services.AddTransient<ICatalogTypeService, CatalogTypeService>();

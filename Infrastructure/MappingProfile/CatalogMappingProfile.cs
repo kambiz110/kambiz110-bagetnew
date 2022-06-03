@@ -1,4 +1,5 @@
-﻿using Application.Catalogs.CatalogTypes;
+﻿using Application.Catalogs.CatalogCompany.Dto;
+using Application.Catalogs.CatalogTypes;
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Catalogs.GetMenuItem;
@@ -41,6 +42,10 @@ namespace Infrastructure.MappingProfile
             //-------------------
             CreateMap<CatalogBrand, CatalogBrandDto>().ReverseMap();
             CreateMap<CatalogType, CatalogTypeDto>().ReverseMap();
+
+            //-----------------------
+            CreateMap<CatalogCompany, CompanyDto>().ReverseMap();
+            CreateMap<CatalogCompany, CompanyListDto>().ReverseMap();
         }
     }
 }
