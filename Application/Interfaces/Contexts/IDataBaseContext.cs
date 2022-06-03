@@ -18,6 +18,7 @@ namespace Application.Interfaces.Contexts
 {
     public interface IDataBaseContext
     {
+        DbSet<CatalogCompany> CatalogCompanes { get; set; }
         DbSet<CatalogBrand> CatalogBrands { get; set; }
         DbSet<CatalogType> CatalogTypes { get; set; }
         DbSet<CatalogItem> CatalogItems { get; set; }

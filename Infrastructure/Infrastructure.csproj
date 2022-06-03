@@ -16,4 +16,13 @@
     <ProjectReference Include="..\Persistence\Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Application">
+      <HintPath>..\Application\bin\Debug\net5.0\Application.dll</HintPath>
+    </Reference>
+    <Reference Include="Domain">
+      <HintPath>..\Application\bin\Debug\net5.0\Domain.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
