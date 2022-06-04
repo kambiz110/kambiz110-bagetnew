@@ -21,8 +21,12 @@ namespace Infrastructure.ExternalApi.ImageServer
             var client = new RestClient("https://localhost:44327/api/Images?apikey=mysecretkey");
             client.Timeout = -1;
             var request = new RestRequest(Method.POST);
+            if (files.Count()>0)
+            {
             foreach (var item in files)
             {
+                if (item!=null)
+                {
                 byte[] bytes;
                 using (var ms = new MemoryStream())
                 {
@@ -30,13 +34,17 @@ namespace Infrastructure.ExternalApi.ImageServer
                     bytes = ms.ToArray();
                 }
                 request.AddFile(item.FileName, bytes, item.FileName, item.ContentType);
+                }
+
             }
 
 
             IRestResponse response = client.Execute(request);
             UploadDto  upload = JsonConvert.DeserializeObject<UploadDto>(response.Content);
             return upload.FileNameAddress;
+            }
 
+            return null;
         }
     }
 

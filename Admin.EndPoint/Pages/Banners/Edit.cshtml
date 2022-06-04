@@ -1,19 +1,20 @@
 ﻿@page
-@model Admin.EndPoint.Pages.Banners.CreateModel
+@model Admin.EndPoint.Pages.Banners.EditModel
 @{
 }
+
 <div class="col-lg-12 col-12 layout-spacing">
     <div class="statbox widget box box-shadow">
         <div class="widget-header">
             <div class="row">
                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                    <h4> ثبت اسلایدر و بنر  جدید  </h4>
+                    <h4> ویرایش اسلایدر و بنر    </h4>
                 </div>
             </div>
         </div>
         <div class="widget-content widget-content-area">
 
-            <form asp-page="create" method="post" enctype="multipart/form-data">
+            <form asp-page="edit" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group mb-4">
                     <label asp-for="Banner.Name"> </label>
@@ -51,7 +52,16 @@
                     <span asp-validation-for="BannerImage" class="text-danger"></span>
 
                 </div>
+                <div class="form-group mb-4">
 
+                    @if (Model.Banner.Image != "" && Model.Banner.Image != null)
+                    {
+                        @*<span>@Model.Banner.ShowImage</span>*@
+                        <img src="@Model.Banner.ShowImage" width="300" height="175" />
+                    }
+                </div>
+                <input type="hidden" asp-for="Banner.Image">
+                <input type="hidden" asp-for="Banner.Id">
                 <input type="submit" name="time" value="ثبت" class="btn btn-primary">
                 <a asp-page="index" class="btn btn-info">برگشت به لیست</a>
             </form>
