@@ -73,7 +73,7 @@ namespace Persistence.Contexts
             builder.ApplyConfiguration(new CatalogBrandEntityTypeConfiguration());
             builder.ApplyConfiguration(new CatalogTypeEntityTypeConfiguration());
 
-            DataBaseContextSeed.CatalogSeed(builder);
+          //  DataBaseContextSeed.CatalogSeed(builder);
 
 
             //

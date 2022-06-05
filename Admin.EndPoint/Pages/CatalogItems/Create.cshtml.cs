@@ -30,6 +30,7 @@ namespace Admin.EndPoint.Pages.CatalogItems
 
         public SelectList Categories { get; set; }
         public SelectList Brands { get; set; }
+        public SelectList Companes { get; set; }
 
         [BindProperty]
         public AddNewCatalogItemDto Data { get; set; }

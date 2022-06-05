@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title-wrap bar-success">
-                        <h4 class="card-title mb-0">افزودن کاتالوگ جدید</h4>
+                        <h4 class="card-title mb-0">افزودن محصول جدید</h4>
                     </div>
                 </div>
                 <div class="card-body">
@@ -17,7 +17,7 @@
                         <div class="row">
                             <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
                                 <fieldset class="form-group">
-                                    <label for="basicInput">نام کاتالوگ </label>
+                                    <label for="basicInput">نام محصول </label>
                                     <input type="text" asp-for="Data.Name" class="form-control" id="Name">
                                     <span asp-validation-for="Data.Name" class="text-danger"></span>
                                 </fieldset>
@@ -26,7 +26,7 @@
                             <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> برند </label>
-                                    <select class="form-control" id="Brand" asp-items="@Model.Brands"></select>
+                                    <select class="form-control basic-single" id="Brand" asp-items="@Model.Brands"></select>
                                 </fieldset>
                             </div>
 
@@ -34,7 +34,7 @@
                                 <fieldset class="form-group">
                                     <label for="basicInput">دسته بندی </label>
 
-                                    <select class="form-control" id="Category" asp-items="Model.Categories"></select>
+                                    <select class="form-control basic-single" id="Category" asp-items="Model.Categories"></select>
                                 </fieldset>
                             </div>
 
@@ -161,11 +161,15 @@
     </div>
 
 </section>
+@section Styles{ 
+    <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
 
+}
 @section Scripts {
 
     <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
     <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/lib/select2/js/select2.js"></script>
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
@@ -175,6 +179,12 @@
             language: 'fa',
             contentsLangDirection: 'rtl',
             height: 270,
+        });
+
+        $(document).ready(function () {
+            $('.basic-single').select2({
+                placeholder: '... انتخاب کنید'
+            });
         });
     </script>
 
@@ -271,7 +281,7 @@
                     else {
                         swal.fire(
                             'هشدار!',
-                             "دیتا ثبت نشد",
+                            "دیتا ثبت نشد",
                             'warning'
                         );
                     }
@@ -285,10 +295,10 @@
             ajaxRequest.done(function (xhr, textStatus) {
                 // Do other operation
             });
- 
+
         }
 
-            
+
 
 
     </script>

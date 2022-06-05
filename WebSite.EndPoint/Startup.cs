@@ -14,17 +14,20 @@ using Application.Payments;
 using Application.Users;
 using Application.Visitors.SaveVisitorInfo;
 using Application.Visitors.VisitorOnline;
+using Domain.Users;
 using Infrastructure.IdentityConfigs;
 using Infrastructure.MappingProfile;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence.Contexts;
 using Persistence.Contexts.MongoContext;
+using Persistence.Seeding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +60,7 @@ namespace WebSite.EndPoint
             services.AddDbContext<DataBaseContext>(option => option.UseSqlServer(connection));
             services.AddDbContext<InMemoryContext>(option => option.UseInMemoryDatabase("OnlineVisitor"));
             services.AddScoped<InMemoryContext>();
+    
             services.AddIdentityService(Configuration);
             services.AddAuthorization();
             services.ConfigureApplicationCookie(option =>
@@ -96,6 +100,15 @@ namespace WebSite.EndPoint
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //Seed data on application startup
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetRequiredService<DataBaseContext>();
+                var identityDatabase = serviceScope.ServiceProvider.GetRequiredService<IdentityDatabaseContext>();
+                dbContext.Database.Migrate();
+                identityDatabase.Database.Migrate();
+                new ApplicationDbContextSeeder().SeedAsync(dbContext, identityDatabase,serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

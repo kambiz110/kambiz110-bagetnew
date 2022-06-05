@@ -41,8 +41,8 @@ namespace Domain.Catalogs
             }
         }
         public int?  PercentDiscount { get; set; }
-
-
+        public int CatalogCompanyId { get; set; }
+        public CatalogCompany CatalogCompany { get; set; }
         public int CatalogTypeId { get; set; }
         public CatalogType CatalogType { get; set; }
         public int CatalogBrandId { get; set; }

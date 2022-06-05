@@ -10,5 +10,6 @@ namespace Domain.Users
     public class User : IdentityUser
     {
         public string FullName { get; set; }
+        public virtual ICollection<IdentityUserRole<string>> UserRoles { get; set; }
     }
 }

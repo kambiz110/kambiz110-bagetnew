@@ -21,7 +21,8 @@ namespace Infrastructure.IdentityConfigs
                 .AddEntityFrameworkStores<IdentityDatabaseContext>()
                 .AddDefaultTokenProviders()
                 .AddRoles<IdentityRole>()
-                .AddErrorDescriber<CustomIdentityError>();
+                .AddErrorDescriber<CustomIdentityError>()
+                .AddPasswordValidator<MyPasswordValidator>(); 
 
 
             services.Configure<IdentityOptions>(options =>
