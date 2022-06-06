@@ -1,4 +1,5 @@
-﻿using Application.Dtos;
+﻿using Application.Catalogs.CatalogCompany.Dto;
+using Application.Dtos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,6 +10,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
 {
     public interface ICatalogItemService
     {
+        List<CompanyDto> GetCompanes();
         List<CatalogBrandDto> GetBrand();
         List<ListCatalogTypeDto> GetCatalogType();
         PaginatedItemsDto<CatalogItemListItemDto> GetCatalogList(int page, int pageSize);

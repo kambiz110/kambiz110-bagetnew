@@ -12,6 +12,7 @@ using Application.Interfaces.Contexts;
 using Application.Visitors.GetTodayReport;
 using FluentValidation;
 using Infrastructure.ExternalApi.ImageServer;
+using Infrastructure.IdentityConfigs;
 using Infrastructure.MappingProfile;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -64,6 +65,17 @@ namespace Admin.EndPoint
             services.AddScoped<IDataBaseContext, DataBaseContext>();
             string connection = Configuration["ConnectionString:SqlServer"];
             services.AddDbContext<DataBaseContext>(option => option.UseSqlServer(connection));
+
+            services.AddTransient<IIdentityDatabaseContext, IdentityDatabaseContext>();
+            services.AddIdentityService(Configuration);
+            services.AddAuthorization();
+            services.ConfigureApplicationCookie(option =>
+            {
+                option.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                option.LoginPath = "/account/login";
+                option.AccessDeniedPath = "/Account/AccessDenied";
+                option.SlidingExpiration = true;
+            });
             #endregion
 
             //mapper
@@ -78,7 +90,15 @@ namespace Admin.EndPoint
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-         
+            //Seed data on application startup
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetRequiredService<DataBaseContext>();
+                var identityDatabase = serviceScope.ServiceProvider.GetRequiredService<IdentityDatabaseContext>();
+                dbContext.Database.Migrate();
+                identityDatabase.Database.Migrate();
+                new ApplicationDbContextSeeder().SeedAsync(dbContext, identityDatabase, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

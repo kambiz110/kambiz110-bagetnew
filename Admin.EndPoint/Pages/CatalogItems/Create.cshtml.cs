@@ -40,6 +40,7 @@ namespace Admin.EndPoint.Pages.CatalogItems
 
         public void OnGet()
         {
+            Companes = new SelectList(catalogItemService.GetCompanes(), "Id", "Name");
             Categories = new SelectList(catalogItemService.GetCatalogType(), "Id", "Type");
             Brands = new SelectList(catalogItemService.GetBrand(), "Id", "Brand");
         }

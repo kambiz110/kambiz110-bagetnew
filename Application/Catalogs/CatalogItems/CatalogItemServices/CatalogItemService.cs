@@ -1,4 +1,5 @@
-﻿using Application.Catalogs.CatalogItems.UriComposer;
+﻿using Application.Catalogs.CatalogCompany.Dto;
+using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Dtos;
 using Application.Interfaces.Contexts;
 using AutoMapper;
@@ -19,7 +20,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
 
         public CatalogItemService(IDataBaseContext context
             , IMapper mapper
-            , IUriComposerService uriComposerService )
+            , IUriComposerService uriComposerService)
         {
             this.context = context;
             this.mapper = mapper;
@@ -46,7 +47,14 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
             var data = mapper.Map<List<CatalogBrandDto>>(brands);
             return data;
         }
+        public List<CompanyDto> GetCompanes()
+        {
+            var companes = context.CatalogCompanes
+           .OrderBy(p => p.Name).Take(500).ToList();
 
+            var data = mapper.Map<List<CompanyDto>>(companes);
+            return data;
+        }
         public PaginatedItemsDto<CatalogItemListItemDto> GetCatalogList(int page, int pageSize)
         {
             int rowCount = 0;
@@ -68,10 +76,21 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
                 }).ToList();
 
             return new PaginatedItemsDto<CatalogItemListItemDto>(page, page, rowCount, data);
-                
+
         }
 
         public List<ListCatalogTypeDto> GetCatalogType()
+        {
+            var types = context.CatalogTypes
+               .Include(p => p.ParentCatalogType)
+       .Select(p => new ListCatalogTypeDto
+       {
+           Id = p.Id,
+           Type = p.Type
+       }).ToList();
+            return types;
+        }
+        public List<ListCatalogTypeDto> GetCatalogTypeWhitParent()
         {
             var types = context.CatalogTypes
                .Include(p => p.ParentCatalogType)
@@ -89,7 +108,6 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
                 }).ToList();
             return types;
         }
-
         public PaginatedItemsDto<FavouriteCatalogItemDto> GetMyFavourite(string UserId, int page = 1, int pageSize = 20)
         {
             var model = context.CatalogItems

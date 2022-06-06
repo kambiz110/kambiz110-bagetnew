@@ -7,9 +7,12 @@ namespace Application.Catalogs.CatalohItems.AddNewCatalogItem
     {
         public string Name { get; set; }
         public string Description { get; set; }
+
+        public string Slug { get; set; }
         public int Price { get; set; }
         public int CatalogTypeId { get; set; }
         public int CatalogBrandId { get; set; }
+        public int CatalogCompanyId { get; set; }
         public int AvailableStock { get; set; }
         public int RestockThreshold { get; set; }
         public int MaxStockThreshold { get; set; }
