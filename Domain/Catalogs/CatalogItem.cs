@@ -8,7 +8,25 @@ namespace Domain.Catalogs
     [Auditable]
     public class CatalogItem
     {
+        public CatalogItem(int pris , string name , string descript , string slug
+            , int catalogCompanyId , int catalogTypeId , int catalogBrandId , int availableStock
+            , int restockThreshold, int maxStockThreshold)
+        {
+            this._price = pris;
+            this.Name = name;
+            this.Description = descript;
+            this.Slug = slug;
+            this.CatalogCompanyId = catalogCompanyId;
+            this.CatalogTypeId = catalogTypeId;
+           this.CatalogBrandId =catalogBrandId;
+            this.AvailableStock = availableStock;
+            this.MaxStockThreshold = maxStockThreshold;
+            this.RestockThreshold = restockThreshold;
+        }
+        public CatalogItem()
+        {
 
+        }
         private int _price = 0;
         private int? _oldPrice = null;
 
@@ -27,7 +45,7 @@ namespace Domain.Catalogs
             }
             set
             {
-                Price = _price;
+                Price =  _price;
             }
         }
         public int? OldPrice
@@ -51,7 +69,7 @@ namespace Domain.Catalogs
         public int AvailableStock { get; set; }
         public int RestockThreshold { get; set; }
         public int MaxStockThreshold { get; set; }
-        public int VisitCount { get; set; }
+        public int VisitCount { get; set; } = 0;
         public ICollection<CatalogItemFeature> CatalogItemFeatures { get; set; }
         public ICollection<CatalogItemImage> CatalogItemImages { get; set; }
         public ICollection<Discount> Discounts { get; set; }

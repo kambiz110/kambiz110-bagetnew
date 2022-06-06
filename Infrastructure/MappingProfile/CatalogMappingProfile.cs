@@ -1,9 +1,11 @@
-﻿using Application.Catalogs.CatalogCompany.Dto;
+﻿using Application.Banners;
+using Application.Catalogs.CatalogCompany.Dto;
 using Application.Catalogs.CatalogTypes;
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Catalogs.GetMenuItem;
 using AutoMapper;
+using Domain.Banners;
 using Domain.Catalogs;
 using System;
 using System.Collections.Generic;
@@ -37,8 +39,9 @@ namespace Infrastructure.MappingProfile
                 .ForMember(dest => dest.Features, opt =>
                 opt.MapFrom(src => src.CatalogItemFeatures))
                  .ForMember(dest => dest.Images, opt =>
-                 opt.MapFrom(src => src.CatalogItemImages)).ReverseMap();
+                 opt.MapFrom(src => src.CatalogItemImages));
 
+            CreateMap<AddNewCatalogItemDto, CatalogItem>();
             //-------------------
             CreateMap<CatalogBrand, CatalogBrandDto>().ReverseMap();
             CreateMap<CatalogType, CatalogTypeDto>().ReverseMap();
@@ -49,6 +52,9 @@ namespace Infrastructure.MappingProfile
 
             //--------------------------
             CreateMap<CatalogBrand, CatalogBrandDto>().ReverseMap();
+
+            //-------------------------
+            CreateMap<Banner, BannerDto>().ReverseMap();
 
         }
     }

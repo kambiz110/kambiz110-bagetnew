@@ -27,6 +27,7 @@ namespace Persistence.Contexts
         }
         public DbSet<CatalogCompany> CatalogCompanes { get; set; }
         public DbSet<CatalogBrand> CatalogBrands { get; set; }
+        public DbSet<CatalogItemFeature> CatalogItemFeatures { get; set; }
         public DbSet<CatalogType> CatalogTypes { get; set; }
         public DbSet<CatalogItem> CatalogItems { get; set; }
         public DbSet<Basket> Baskets { get; set; }

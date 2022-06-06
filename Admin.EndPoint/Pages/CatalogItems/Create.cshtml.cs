@@ -49,6 +49,7 @@ namespace Admin.EndPoint.Pages.CatalogItems
 
         public JsonResult OnPost()
         {
+            ModelState.Remove("Id");
             if (!ModelState.IsValid)
             {
                 var allErrors = ModelState.Values.SelectMany(v => v.Errors);
@@ -69,6 +70,7 @@ namespace Admin.EndPoint.Pages.CatalogItems
                     images.Add(new AddNewCatalogItemImage_Dto { Src = item });
                 }
             }
+          
             Data.Images = images;
             var resultService = addNewCatalogItemService.Execute(Data);
             return new JsonResult(resultService);

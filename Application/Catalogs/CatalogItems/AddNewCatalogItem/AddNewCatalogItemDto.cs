@@ -5,6 +5,7 @@ namespace Application.Catalogs.CatalohItems.AddNewCatalogItem
 {
     public class AddNewCatalogItemDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 

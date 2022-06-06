@@ -14,14 +14,47 @@
                 </div>
                 <div class="card-body">
                     <form id="createForm" class="form" asp-antiforgery="true" onsubmit="return sendDataToServer(event)">
+
+                        <input type="hidden" asp-for="Data.Id"  id="Id">
                         <div class="row">
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                            <div class="col-xl-6 col-lg-6 col-md-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">نام محصول </label>
                                     <input type="text" asp-for="Data.Name" class="form-control" id="Name">
                                     <span asp-validation-for="Data.Name" class="text-danger"></span>
                                 </fieldset>
                             </div>
+                            <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput"> تعداد موجودی</label>
+                                    <input type="number" asp-for="Data.AvailableStock" class="form-control" id="AvailableStock">
+                                    <span asp-validation-for="Data.AvailableStock" class="text-danger"></span>
+
+                                </fieldset>
+                            </div>
+
+                            <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput">حداقل برای سفارش مجدد</label>
+                                    <input type="number" asp-for="Data.RestockThreshold" class="form-control" id="RestockThreshold">
+                                    <span asp-validation-for="Data.RestockThreshold" class="text-danger"></span>
+
+                                </fieldset>
+                            </div>
+
+                            <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput">حداکثر توان ذخیره در انبار</label>
+                                    <input type="number" asp-for="Data.MaxStockThreshold" class="form-control" id="MaxStockThreshold">
+                                    <span asp-validation-for="Data.MaxStockThreshold" class="text-danger"></span>
+                                </fieldset>
+                            </div>
+
+                        </div>
+                        <hr />
+                        <div class="row">
+
+
 
                             <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
                                 <fieldset class="form-group">
@@ -47,36 +80,7 @@
                         </div>
                         <hr />
                         <div class="row">
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
-                                <fieldset class="form-group">
-                                    <label for="basicInput"> تعداد موجودی</label>
-                                    <input type="number" asp-for="Data.AvailableStock" class="form-control" id="AvailableStock">
-                                    <span asp-validation-for="Data.AvailableStock" class="text-danger"></span>
-
-                                </fieldset>
-                            </div>
-
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
-                                <fieldset class="form-group">
-                                    <label for="basicInput">حداقل برای سفارش مجدد</label>
-                                    <input type="number" asp-for="Data.RestockThreshold" class="form-control" id="RestockThreshold">
-                                    <span asp-validation-for="Data.RestockThreshold" class="text-danger"></span>
-
-                                </fieldset>
-                            </div>
-
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
-                                <fieldset class="form-group">
-                                    <label for="basicInput">حداکثر توان ذخیره در انبار</label>
-                                    <input type="number" asp-for="Data.MaxStockThreshold" class="form-control" id="MaxStockThreshold">
-                                    <span asp-validation-for="Data.MaxStockThreshold" class="text-danger"></span>
-                                </fieldset>
-                            </div>
-
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                            <div class="col-xl-6 col-lg-6 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> قیمت</label>
                                     <input type="number" asp-for="Data.Price" class="form-control" id="Price">
@@ -84,7 +88,7 @@
 
                                 </fieldset>
                             </div>
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                            <div class="col-xl-6 col-lg-6 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">تصاویر </label>
                                     <input type="file" multiple class="form-control" accept="image/*" id="Images">
@@ -153,7 +157,7 @@
                         </div>
                         <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
                             <fieldset class="form-group">
-                                <button type="submit" class="btn btn-success col-md-12"> ثبت کاتالوگ</button>
+                                <button type="submit" class="btn btn-success col-md-12"> ثبت محصول</button>
                             </fieldset>
                         </div>
 
@@ -234,6 +238,7 @@
 
             var data = new FormData();
             //دریافت مقادیر از تکس باکس ها و....
+            data.append("Id", $("#Id").val());
             data.append("Name", $("#Name").val());
             data.append("AvailableStock", $("#AvailableStock").val());
             data.append("RestockThreshold", $("#RestockThreshold").val());
@@ -264,7 +269,7 @@
 
             $.each(dataFeaturesViewModel, function (i, val) {
                 data.append('Features[' + i + '].Group', val.Group);
-                data.append('Features[' + i + '].DisplayName', val.DisplayName);
+                data.append('Features[' + i + '].Key', val.DisplayName);
                 data.append('Features[' + i + '].Value', val.Value);
             });
 

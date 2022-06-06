@@ -15,7 +15,7 @@ namespace Common.Useful
 
             string str = RemoveAccent(phrase).ToLower();
             // invalid chars           
-            str = Regex.Replace(str, @"[^(\u0621-\u064A\u0660-\u0669\sa-zA-Z0-9ی)]+$", "");
+            str = Regex.Replace(str, @"[^(\u0621-\u064A\u0660-\u0669\sa-zA-Z0-9یگژ)]+$", "");
             str = RemoveDenjerCharecter(str).ToLower();
 
             // convert multiple spaces into one space   
