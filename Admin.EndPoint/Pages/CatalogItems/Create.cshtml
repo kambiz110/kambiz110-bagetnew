@@ -56,20 +56,26 @@
 
 
 
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                            <div class="col-xl-3 col-lg-6 col-md-3 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> کمپانی </label>
                                     <select class="form-control basic-single" id="Company" asp-items="@Model.Companes"></select>
                                 </fieldset>
                             </div>
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                            <div class="col-xl-3 col-lg-6 col-md-3 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput"> خودرو </label>
+                                    <select class="form-control basic-single" id="Car" asp-items="@Model.Cars"></select>
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-3 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> برند </label>
                                     <select class="form-control basic-single" id="Brand" asp-items="@Model.Brands"></select>
                                 </fieldset>
                             </div>
 
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                            <div class="col-xl-3 col-lg-6 col-md-3 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">دسته بندی </label>
 
@@ -199,7 +205,9 @@
     </script>
 
     <script>
-
+        $(document).on('change', '.cke_editable', function () {
+            alert($(this).val());
+        });
         $("#btnAddFeatures").on("click", function () {
             var txtDisplayName = $("#txtDisplayName").val();
             var txtValue = $("#txtValue").val();
@@ -235,7 +243,14 @@
                 );
                 return false;
             }
-
+            console.log('form :', form)
+            $a = $("#Description");
+            console.log('Description :', $a)
+            $.each($a, function () {
+                var key = Object.keys(this)[0];
+                var value = this[key];
+                console.log('Description each:', key + " " + value);
+            });
             var data = new FormData();
             //دریافت مقادیر از تکس باکس ها و....
             data.append("Id", $("#Id").val());
@@ -244,8 +259,9 @@
             data.append("RestockThreshold", $("#RestockThreshold").val());
             data.append("MaxStockThreshold", $("#MaxStockThreshold").val());
             data.append("Price", $("#Price").val());
-            data.append("Description", $("#Description").val());
+            data.append("Description", $("#Description").value);
 
+            data.append("CatologCarId", $('#Car').find('option:selected').val());
             data.append("CatalogCompanyId", $('#Company').find('option:selected').val());
             data.append("CatalogTypeId", $('#Category').find('option:selected').val());
             data.append("CatalogBrandId", $('#Brand').find('option:selected').val());
@@ -272,7 +288,7 @@
                 data.append('Features[' + i + '].Key', val.DisplayName);
                 data.append('Features[' + i + '].Value', val.Value);
             });
-
+            console.log('data :', data)
             var ajaxRequest = $.ajax({
                 type: "POST",
                 url: "/catalogitems/create",

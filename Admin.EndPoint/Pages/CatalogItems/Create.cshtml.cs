@@ -31,6 +31,7 @@ namespace Admin.EndPoint.Pages.CatalogItems
         public SelectList Categories { get; set; }
         public SelectList Brands { get; set; }
         public SelectList Companes { get; set; }
+        public SelectList Cars { get; set; }
 
         [BindProperty]
         public AddNewCatalogItemDto Data { get; set; }
@@ -40,6 +41,7 @@ namespace Admin.EndPoint.Pages.CatalogItems
 
         public void OnGet()
         {
+            Cars = new SelectList(catalogItemService.GetCares(), "Id", "Name");
             Companes = new SelectList(catalogItemService.GetCompanes(), "Id", "Name");
             Categories = new SelectList(catalogItemService.GetCatalogType(), "Id", "Type");
             Brands = new SelectList(catalogItemService.GetBrand(), "Id", "Brand");

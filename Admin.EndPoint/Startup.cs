@@ -1,6 +1,7 @@
 using Admin.EndPoint.MappingProfiles;
 using Application.Banners;
 using Application.Catalogs.CatalogBrands;
+using Application.Catalogs.CatalogCars.CrudService;
 using Application.Catalogs.CatalogCompany.CrudService;
 using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Catalogs.CatalogTypes;
@@ -59,6 +60,7 @@ namespace Admin.EndPoint
             services.AddTransient<IBannersService,  BannersService>();
             services.AddTransient<IUriComposerService,  UriComposerService>();
             services.AddTransient<ICatalogBrandCrudService, CatalogBrandCrudService>();
+            services.AddTransient<ICrudCarService, CrudCarService>();
 
 
             #region connection String SqlServer

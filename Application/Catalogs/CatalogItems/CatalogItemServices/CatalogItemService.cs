@@ -1,4 +1,5 @@
-﻿using Application.Catalogs.CatalogCompany.Dto;
+﻿using Application.Catalogs.CatalogCars.Dto;
+using Application.Catalogs.CatalogCompany.Dto;
 using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Dtos;
 using Application.Interfaces.Contexts;
@@ -132,6 +133,14 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
                 .ComposeImageUri(p.CatalogItemImages.FirstOrDefault().Src),
             }).ToList();
             return new PaginatedItemsDto<FavouriteCatalogItemDto>(page, pageSize, rowCount, data);
+        }
+
+        public List<CarDto> GetCares()
+        {
+            var cares = context.CatologCars
+                 .OrderBy(p => p.Name).Take(500).ToList();
+            var data = mapper.Map<List<CarDto>>(cares);
+            return data;
         }
     }
 }

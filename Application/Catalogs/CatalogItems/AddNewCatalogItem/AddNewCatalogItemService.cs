@@ -34,7 +34,7 @@ namespace Application.Catalogs.CatalohItems.AddNewCatalogItem
             else
             {
 
-                var catalogItem2 = new CatalogItem(request.Price, request.Name, request.Description ?? "", request.Slug, request.CatalogCompanyId, request.CatalogTypeId, request.CatalogBrandId,
+                var catalogItem2 = new CatalogItem(request.Price, request.Name, request.Description ?? "", request.Slug, request.CatalogCompanyId, request.CatalogTypeId, request.CatalogBrandId,request.CatologCarId,
                     request.AvailableStock, request.RestockThreshold, request.MaxStockThreshold);
      
 

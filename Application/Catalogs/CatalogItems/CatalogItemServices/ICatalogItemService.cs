@@ -1,4 +1,5 @@
-﻿using Application.Catalogs.CatalogCompany.Dto;
+﻿using Application.Catalogs.CatalogCars.Dto;
+using Application.Catalogs.CatalogCompany.Dto;
 using Application.Dtos;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
 {
     public interface ICatalogItemService
     {
+        List<CarDto> GetCares();
         List<CompanyDto> GetCompanes();
         List<CatalogBrandDto> GetBrand();
         List<ListCatalogTypeDto> GetCatalogType();

@@ -1,4 +1,5 @@
 ﻿using Application.Banners;
+using Application.Catalogs.CatalogCars.Dto;
 using Application.Catalogs.CatalogCompany.Dto;
 using Application.Catalogs.CatalogTypes;
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
@@ -55,7 +56,10 @@ namespace Infrastructure.MappingProfile
 
             //-------------------------
             CreateMap<Banner, BannerDto>().ReverseMap();
-
+            //----------------------------
+            CreateMap<CatologCar, CarDto>().ReverseMap();
+            CreateMap<CatologCar, CarListDto>().ReverseMap();
+        
         }
     }
 }
