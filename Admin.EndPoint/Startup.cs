@@ -45,6 +45,7 @@ namespace Admin.EndPoint
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddControllers();
 
@@ -128,8 +129,16 @@ namespace Admin.EndPoint
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+          name: "areas",
+           pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+
+                endpoints.MapControllerRoute(
+                              name: "default",
+                              pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        
         }
     }
 }

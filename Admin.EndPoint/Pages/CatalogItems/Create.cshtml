@@ -157,7 +157,7 @@
                             <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> توضیحات</label>
-                                    <textarea id="Description" class="form-control " rows="5"></textarea>
+                                    <textarea id="Description" class="form-control trumbowyg-texterea" rows="5"></textarea>
                                     <span asp-validation-for="Data.Description" class="text-danger"></span>
                                 </fieldset>
                             </div>
@@ -180,7 +180,7 @@
 </section>
 @section Styles{
     <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
-
+    <link href="~/lib/trumbowyg-2_25_1/ui/trumbowyg.css" rel="stylesheet" />
 }
 @section Scripts {
 
@@ -188,20 +188,17 @@
     <script src="~/Sweetalert2/sweetalert2.min.js"></script>
     <script src="~/lib/select2/js/select2.js"></script>
 
+    <script src="~/lib/trumbowyg-2_25_1/trumbowyg.js"></script>
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <script src="https://cdn.ckeditor.com/4.13.0/standard-all/ckeditor.js"></script>
     <script>
-        CKEDITOR.replace('Description', {
-            language: 'fa',
-            contentsLangDirection: 'rtl',
-            height: 270,
-        });
-
         $(document).ready(function () {
             $('.basic-single').select2({
                 placeholder: '... انتخاب کنید'
             });
+
+            $('.trumbowyg-texterea').trumbowyg();
         });
     </script>
 
@@ -245,8 +242,8 @@
                 return false;
             }
             $descript = $('textarea#Description');
-            var message = $('textarea#Description').val();
-            console.log("message :", message);
+            var textareadata = $('textarea#Description').val();
+            console.log("message :", textareadata);
             var data = new FormData();
             //دریافت مقادیر از تکس باکس ها و....
             data.append("Id", $("#Id").val());
@@ -255,7 +252,7 @@
             data.append("RestockThreshold", $("#RestockThreshold").val());
             data.append("MaxStockThreshold", $("#MaxStockThreshold").val());
             data.append("Price", $("#Price").val());
-            data.append("Description", message);
+            data.append("Description", textareadata);
 
             data.append("CatologCarId", $('#Car').find('option:selected').val());
             data.append("CatalogCompanyId", $('#Company').find('option:selected').val());

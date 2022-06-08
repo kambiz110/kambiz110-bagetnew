@@ -1,7 +1,11 @@
-﻿@page
-@model Admin.EndPoint.Pages.CatalogItems.EditModel
+﻿@model Application.Catalogs.CatalohItems.AddNewCatalogItem.AddNewCatalogItemDto
+
 @{
+    ViewData["Title"] = "ویرایش محصول";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 
 <section class="card">
     <div class="row">
@@ -15,20 +19,20 @@
                 <div class="card-body">
                     <form id="createForm" class="form" asp-antiforgery="true" onsubmit="return sendDataToServer(event)">
 
-                        <input type="hidden" asp-for="Data.Id" id="Id">
+                        <input type="hidden" asp-for="@Model.Id" id="Id">
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">نام محصول </label>
-                                    <input type="text" asp-for="Data.Name" class="form-control" id="Name">
-                                    <span asp-validation-for="Data.Name" class="text-danger"></span>
+                                    <input type="text" asp-for="@Model.Name" class="form-control" id="Name">
+                                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
                                 </fieldset>
                             </div>
                             <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> تعداد موجودی</label>
-                                    <input type="number" asp-for="Data.AvailableStock" class="form-control" id="AvailableStock">
-                                    <span asp-validation-for="Data.AvailableStock" class="text-danger"></span>
+                                    <input type="number" asp-for="@Model.AvailableStock" class="form-control" id="AvailableStock">
+                                    <span asp-validation-for="@Model.AvailableStock" class="text-danger"></span>
 
                                 </fieldset>
                             </div>
@@ -36,8 +40,8 @@
                             <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">حداقل برای سفارش مجدد</label>
-                                    <input type="number" asp-for="Data.RestockThreshold" class="form-control" id="RestockThreshold">
-                                    <span asp-validation-for="Data.RestockThreshold" class="text-danger"></span>
+                                    <input type="number" asp-for="@Model.RestockThreshold" class="form-control" id="RestockThreshold">
+                                    <span asp-validation-for="@Model.RestockThreshold" class="text-danger"></span>
 
                                 </fieldset>
                             </div>
@@ -45,8 +49,8 @@
                             <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">حداکثر توان ذخیره در انبار</label>
-                                    <input type="number" asp-for="Data.MaxStockThreshold" class="form-control" id="MaxStockThreshold">
-                                    <span asp-validation-for="Data.MaxStockThreshold" class="text-danger"></span>
+                                    <input type="number" asp-for="@Model.MaxStockThreshold" class="form-control" id="MaxStockThreshold">
+                                    <span asp-validation-for="@Model.MaxStockThreshold" class="text-danger"></span>
                                 </fieldset>
                             </div>
 
@@ -59,19 +63,19 @@
                             <div class="col-xl-3 col-lg-6 col-md-3 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> کمپانی </label>
-                                    <select class="form-control basic-single" id="Company" asp-for="Data.CatalogCompanyId" asp-items="@Model.Companes"></select>
+                                    <select class="form-control basic-single" id="Company" asp-for="@Model.CatalogCompanyId" asp-items="(IEnumerable<SelectListItem>)@ViewData["Companes"]"></select>
                                 </fieldset>
                             </div>
                             <div class="col-xl-3 col-lg-6 col-md-3 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> خودرو </label>
-                                    <select class="form-control basic-single" id="Car" asp-for="Data.CatologCarId" asp-items="@Model.Cars"></select>
+                                    <select class="form-control basic-single" id="Car" asp-for="@Model.CatologCarId" asp-items="(IEnumerable<SelectListItem>)@ViewData["Cars"]"></select>
                                 </fieldset>
                             </div>
                             <div class="col-xl-3 col-lg-6 col-md-3 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> برند </label>
-                                    <select class="form-control basic-single" id="Brand" asp-for="Data.CatalogBrandId" asp-items="@Model.Brands"></select>
+                                    <select class="form-control basic-single" id="Brand" asp-for="@Model.CatalogBrandId" asp-items="(IEnumerable<SelectListItem>)@ViewData["Brands"]"></select>
                                 </fieldset>
                             </div>
 
@@ -79,7 +83,7 @@
                                 <fieldset class="form-group">
                                     <label for="basicInput">دسته بندی </label>
 
-                                    <select class="form-control basic-single" id="Category" asp-for="Data.CatalogTypeId" asp-items="Model.Categories"></select>
+                                    <select class="form-control basic-single" id="Category" asp-for="@Model.CatalogTypeId" asp-items="(IEnumerable<SelectListItem>)@ViewData["Categories"] "></select>
                                 </fieldset>
                             </div>
 
@@ -89,8 +93,8 @@
                             <div class="col-xl-6 col-lg-6 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> قیمت</label>
-                                    <input type="number" asp-for="Data.Price" class="form-control" id="Price">
-                                    <span asp-validation-for="Data.Price" class="text-danger"></span>
+                                    <input type="number" asp-for="@Model.Price" class="form-control" id="Price">
+                                    <span asp-validation-for="@Model.Price" class="text-danger"></span>
 
                                 </fieldset>
                             </div>
@@ -149,17 +153,17 @@
                                     </thead>
                                     <tbody>
 
-                                        @if (Model.Data.Features.Count > 0)
+                                        @if (Model.Features.Count > 0)
                                         {
-                                            foreach (var item in Model.Data.Features)
+                                            foreach (var item in Model.Features)
                                             {
-                                        <tr data-source="db">
-                                          
-                                            <td>@item.Group</td>
-                                            <td>@item.Key</td>
-                                            <td>@item.Value</td>
-                                            <td> <a class="idFeatures btnDelete btn btn-danger"> حذف </a> </td>
-                                        </tr>
+                                                <tr data-source="db">
+
+                                                    <td>@item.Group</td>
+                                                    <td>@item.Key</td>
+                                                    <td>@item.Value</td>
+                                                    <td> <a class="idFeatures btnDelete btn btn-danger"> حذف </a> </td>
+                                                </tr>
                                             }
 
                                         }
@@ -172,8 +176,8 @@
                             <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> توضیحات</label>
-                                    <textarea id="Description" asp-for="Data.Description" class="form-control " rows="5">@Model.Data.Description</textarea>
-                                    <span asp-validation-for="Data.Description" class="text-danger"></span>
+                                    <textarea id="Description" asp-for="@Model.Description" class="form-control " rows="5">@Model.Description</textarea>
+                                    <span asp-validation-for="@Model.Description" class="text-danger"></span>
                                 </fieldset>
                             </div>
                         </div>
@@ -204,7 +208,7 @@
     <script src="~/lib/select2/js/select2.js"></script>
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-@*<script src="~/Theme/plugins/editors/ckeditor.js"></script>*@
+    @*<script src="~/Theme/plugins/editors/ckeditor.js"></script>*@
     <script src="https://cdn.ckeditor.com/4.13.0/standard-all/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('Description', {
@@ -247,26 +251,26 @@
 
             var src = $(this).parent().parent().attr("data-source");
             if (src == 'db') {
-             
+
                 var sr = $(this).parent().parent()
-              
+
                 var data = new FormData();
                 sr.each(function (key, value) {
                     var tds = $(this).find('td');
-   
+
                     var idClmn = tds.eq(1).text(); //console.log(" idClmn : ", idClmn);
                     var catClmn = tds.eq(2).text();// console.log(" catClmn : ", catClmn);
                     var titClmn = tds.eq(3).text();// console.log(" titClmn : ", titClmn);
-                    data.append('Feature.itemid', @(Model.Data.Id));
-                    data.append('Feature.Group', idClmn);
-                    data.append('Feature.Key', catClmn);
-                    data.append('Features.Value', titClmn);
-                 
-      
+                    data.append('itemid', @(Model.Id));
+                    data.append('Group', idClmn);
+                    data.append('Key', catClmn);
+                    data.append('Value', titClmn);
+
+
                 });
                 var ajaxRequest = $.ajax({
                     type: "POST",
-                    url: "/Controllers/CategoreItems/RemoveFeature",
+                    url: "/CategoreItems/RemoveFeature",
                     contentType: false,
                     processData: false,
                     data: data,
@@ -397,3 +401,5 @@
 
     </script>
 }
+
+

@@ -46,10 +46,10 @@ namespace Admin.EndPoint.Pages.CatalogItems
         public void OnGet(int Id)
         {
             Data = getAdminEditCatalogItem.Execute(Id);
-            Cars = new SelectList(catalogItemService.GetCares(), "Id", "Name");
-            Companes = new SelectList(catalogItemService.GetCompanes(), "Id", "Name");
-            Categories = new SelectList(catalogItemService.GetCatalogType(), "Id", "Type");
-            Brands = new SelectList(catalogItemService.GetBrand(), "Id", "Brand");
+           ViewData["Cars"]  = new SelectList(catalogItemService.GetCares(), "Id", "Name");
+            ViewData["Companes"] = new SelectList(catalogItemService.GetCompanes(), "Id", "Name");
+            ViewData["Categories"]  = new SelectList(catalogItemService.GetCatalogType(), "Id", "Type");
+            ViewData["Brands"]  = new SelectList(catalogItemService.GetBrand(), "Id", "Brand");
         }
 
 

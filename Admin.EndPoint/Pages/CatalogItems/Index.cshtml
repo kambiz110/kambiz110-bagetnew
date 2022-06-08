@@ -58,8 +58,9 @@
                                                         <td>@item.RestockThreshold</td>
                                                         <td>@item.MaxStockThreshold</td>
                                                         <td>
-                                                            <a class="btn btn-danger">حذف</a>
-                                                            <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-warning">ویرایش</a>
+
+                                                            <a href="./CategoreItems/EditCatalogItem/@item.Id" class="btn btn-warning">ویرایش</a><a class="btn btn-danger">حذف</a>
+                                                            @*<a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-warning">ویرایش</a>*@
                                                             <a asp-page="Detail" class="btn btn-info"> جزئیات</a>
                                                         </td>
                                                     </tr>
