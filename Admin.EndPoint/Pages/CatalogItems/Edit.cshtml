@@ -1,5 +1,5 @@
 ﻿@page
-@model Admin.EndPoint.Pages.CatalogItems.CreateModel
+@model Admin.EndPoint.Pages.CatalogItems.EditModel
 @{
 }
 
@@ -9,39 +9,22 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title-wrap bar-success">
-                        <h4 class="card-title mb-0">افزودن کاتالوگ جدید</h4>
+                        <h4 class="card-title mb-0">  ویرایش محصول</h4>
                     </div>
                 </div>
                 <div class="card-body">
                     <form id="createForm" class="form" asp-antiforgery="true" onsubmit="return sendDataToServer(event)">
+
+                        <input type="hidden" asp-for="Data.Id" id="Id">
                         <div class="row">
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                            <div class="col-xl-6 col-lg-6 col-md-12 mb-1">
                                 <fieldset class="form-group">
-                                    <label for="basicInput">نام کاتالوگ </label>
+                                    <label for="basicInput">نام محصول </label>
                                     <input type="text" asp-for="Data.Name" class="form-control" id="Name">
                                     <span asp-validation-for="Data.Name" class="text-danger"></span>
                                 </fieldset>
                             </div>
-
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
-                                <fieldset class="form-group">
-                                    <label for="basicInput"> برند </label>
-                                    <select class="form-control" id="Brand" asp-items="@Model.Brands"></select>
-                                </fieldset>
-                            </div>
-
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
-                                <fieldset class="form-group">
-                                    <label for="basicInput">دسته بندی </label>
-
-                                    <select class="form-control" id="Category" asp-items="Model.Categories"></select>
-                                </fieldset>
-                            </div>
-
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                            <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> تعداد موجودی</label>
                                     <input type="number" asp-for="Data.AvailableStock" class="form-control" id="AvailableStock">
@@ -50,7 +33,7 @@
                                 </fieldset>
                             </div>
 
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                            <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">حداقل برای سفارش مجدد</label>
                                     <input type="number" asp-for="Data.RestockThreshold" class="form-control" id="RestockThreshold">
@@ -59,7 +42,7 @@
                                 </fieldset>
                             </div>
 
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                            <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">حداکثر توان ذخیره در انبار</label>
                                     <input type="number" asp-for="Data.MaxStockThreshold" class="form-control" id="MaxStockThreshold">
@@ -70,7 +53,40 @@
                         </div>
                         <hr />
                         <div class="row">
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+
+
+
+                            <div class="col-xl-3 col-lg-6 col-md-3 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput"> کمپانی </label>
+                                    <select class="form-control basic-single" id="Company" asp-for="Data.CatalogCompanyId" asp-items="@Model.Companes"></select>
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-3 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput"> خودرو </label>
+                                    <select class="form-control basic-single" id="Car" asp-for="Data.CatologCarId" asp-items="@Model.Cars"></select>
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-3 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput"> برند </label>
+                                    <select class="form-control basic-single" id="Brand" asp-for="Data.CatalogBrandId" asp-items="@Model.Brands"></select>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-xl-3 col-lg-6 col-md-3 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput">دسته بندی </label>
+
+                                    <select class="form-control basic-single" id="Category" asp-for="Data.CatalogTypeId" asp-items="Model.Categories"></select>
+                                </fieldset>
+                            </div>
+
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> قیمت</label>
                                     <input type="number" asp-for="Data.Price" class="form-control" id="Price">
@@ -78,7 +94,7 @@
 
                                 </fieldset>
                             </div>
-                            <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                            <div class="col-xl-6 col-lg-6 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">تصاویر </label>
                                     <input type="file" multiple class="form-control" accept="image/*" id="Images">
@@ -140,14 +156,14 @@
                             <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> توضیحات</label>
-                                    <textarea id="Description" asp-for="Data.Description" class="form-control " rows="5"></textarea>
+                                    <textarea id="Description" asp-for="Data.Description" class="form-control " rows="5">@Model.Data.Description</textarea>
                                     <span asp-validation-for="Data.Description" class="text-danger"></span>
                                 </fieldset>
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
                             <fieldset class="form-group">
-                                <button type="submit" class="btn btn-success col-md-12"> ثبت کاتالوگ</button>
+                                <button type="submit" class="btn btn-success col-md-12"> ثبت محصول</button>
                             </fieldset>
                         </div>
 
@@ -161,14 +177,18 @@
     </div>
 
 </section>
+@section Styles{
+    <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
 
+}
 @section Scripts {
 
     <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
     <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/lib/select2/js/select2.js"></script>
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
+@*<script src="~/Theme/plugins/editors/ckeditor.js"></script>*@
     <script src="https://cdn.ckeditor.com/4.13.0/standard-all/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('Description', {
@@ -176,10 +196,16 @@
             contentsLangDirection: 'rtl',
             height: 270,
         });
+
+        $(document).ready(function () {
+            $('.basic-single').select2({
+                placeholder: '... انتخاب کنید'
+            });
+        });
     </script>
 
     <script>
-
+      
         $("#btnAddFeatures").on("click", function () {
             var txtDisplayName = $("#txtDisplayName").val();
             var txtValue = $("#txtValue").val();
@@ -218,13 +244,16 @@
 
             var data = new FormData();
             //دریافت مقادیر از تکس باکس ها و....
+            data.append("Id", $("#Id").val());
             data.append("Name", $("#Name").val());
             data.append("AvailableStock", $("#AvailableStock").val());
             data.append("RestockThreshold", $("#RestockThreshold").val());
             data.append("MaxStockThreshold", $("#MaxStockThreshold").val());
             data.append("Price", $("#Price").val());
-            data.append("Description", $("#Description").val());
+            data.append("Description", $('textarea#Description').val());
 
+            data.append("CatologCarId", $('#Car').find('option:selected').val());
+            data.append("CatalogCompanyId", $('#Company').find('option:selected').val());
             data.append("CatalogTypeId", $('#Category').find('option:selected').val());
             data.append("CatalogBrandId", $('#Brand').find('option:selected').val());
 
@@ -247,13 +276,13 @@
 
             $.each(dataFeaturesViewModel, function (i, val) {
                 data.append('Features[' + i + '].Group', val.Group);
-                data.append('Features[' + i + '].DisplayName', val.DisplayName);
+                data.append('Features[' + i + '].Key', val.DisplayName);
                 data.append('Features[' + i + '].Value', val.Value);
             });
 
             var ajaxRequest = $.ajax({
                 type: "POST",
-                url: "/catalogitems/create",
+                url: "/catalogitems/edit",
                 contentType: false,
                 processData: false,
                 data: data,
@@ -271,7 +300,7 @@
                     else {
                         swal.fire(
                             'هشدار!',
-                             "دیتا ثبت نشد",
+                            "دیتا ثبت نشد",
                             'warning'
                         );
                     }
@@ -285,10 +314,10 @@
             ajaxRequest.done(function (xhr, textStatus) {
                 // Do other operation
             });
- 
+
         }
 
-            
+
 
 
     </script>

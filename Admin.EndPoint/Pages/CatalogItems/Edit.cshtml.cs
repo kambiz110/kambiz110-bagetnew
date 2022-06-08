@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Catalogs.CatalogItems.GetCatalogItemAdmin;
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Dtos;
@@ -18,18 +19,23 @@ namespace Admin.EndPoint.Pages.CatalogItems
         private readonly IAddNewCatalogItemService addNewCatalogItemService;
         private readonly ICatalogItemService catalogItemService;
         private readonly IImageUploadService imageUploadService;
+        private readonly IGetAdminEditCatalogItem getAdminEditCatalogItem;
 
         public EditModel(IAddNewCatalogItemService addNewCatalogItemService
             , ICatalogItemService catalogItemService
-            , IImageUploadService imageUploadService )
+            , IImageUploadService imageUploadService 
+            , IGetAdminEditCatalogItem getAdminEditCatalogItem)
         {
             this.addNewCatalogItemService = addNewCatalogItemService;
             this.catalogItemService = catalogItemService;
             this.imageUploadService = imageUploadService;
+            this.getAdminEditCatalogItem = getAdminEditCatalogItem;
         }
-
         public SelectList Categories { get; set; }
         public SelectList Brands { get; set; }
+        public SelectList Companes { get; set; }
+        public SelectList Cars { get; set; }
+
 
         [BindProperty]
         public AddNewCatalogItemDto Data { get; set; }
@@ -39,6 +45,9 @@ namespace Admin.EndPoint.Pages.CatalogItems
 
         public void OnGet(int Id)
         {
+            Data = getAdminEditCatalogItem.Execute(Id);
+            Cars = new SelectList(catalogItemService.GetCares(), "Id", "Name");
+            Companes = new SelectList(catalogItemService.GetCompanes(), "Id", "Name");
             Categories = new SelectList(catalogItemService.GetCatalogType(), "Id", "Type");
             Brands = new SelectList(catalogItemService.GetBrand(), "Id", "Brand");
         }

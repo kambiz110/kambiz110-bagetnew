@@ -43,13 +43,17 @@ namespace Application.Catalogs.CatalohItems.AddNewCatalogItem
                 context.CatalogItems.Add(catalogItem2);
                 context.SaveChanges();
                 request.Id = catalogItem2.Id;
-                var FeaturesToDb = mapper.Map<List<CatalogItemFeature>>(request.Features);
+                if (request.Features !=null&& request.Features.Count()>0)
+                {
+    var FeaturesToDb = mapper.Map<List<CatalogItemFeature>>(request.Features);
                 for (int i = 0; i < FeaturesToDb.Count(); i++)
                 {
                     FeaturesToDb.ElementAt(i).CatlogItemId = catalogItem2.Id;
                    context.CatalogItemFeatures.Add(FeaturesToDb.ElementAt(i));
                 }
                 context.SaveChanges();
+                }
+            
                 return new BaseDto<int>(true, new List<string> { "با موفقیت ثبت شد" }, catalogItem2.Id);
             }
 

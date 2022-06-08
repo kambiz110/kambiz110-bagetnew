@@ -1,6 +1,7 @@
 ﻿@page
 @model Admin.EndPoint.Pages.CatalogItems.CreateModel
 @{
+    ViewData["Title"] = "ثبت محصول";
 }
 
 <section class="card">
@@ -15,7 +16,7 @@
                 <div class="card-body">
                     <form id="createForm" class="form" asp-antiforgery="true" onsubmit="return sendDataToServer(event)">
 
-                        <input type="hidden" asp-for="Data.Id"  id="Id">
+                        <input type="hidden" asp-for="Data.Id" id="Id">
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 mb-1">
                                 <fieldset class="form-group">
@@ -156,7 +157,7 @@
                             <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> توضیحات</label>
-                                    <textarea id="Description" asp-for="Data.Description" class="form-control " rows="5"></textarea>
+                                    <textarea id="Description" class="form-control " rows="5"></textarea>
                                     <span asp-validation-for="Data.Description" class="text-danger"></span>
                                 </fieldset>
                             </div>
@@ -177,7 +178,7 @@
     </div>
 
 </section>
-@section Styles{ 
+@section Styles{
     <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
 
 }
@@ -243,14 +244,9 @@
                 );
                 return false;
             }
-            console.log('form :', form)
-            $a = $("#Description");
-            console.log('Description :', $a)
-            $.each($a, function () {
-                var key = Object.keys(this)[0];
-                var value = this[key];
-                console.log('Description each:', key + " " + value);
-            });
+            $descript = $('textarea#Description');
+            var message = $('textarea#Description').val();
+            console.log("message :", message);
             var data = new FormData();
             //دریافت مقادیر از تکس باکس ها و....
             data.append("Id", $("#Id").val());
@@ -259,7 +255,7 @@
             data.append("RestockThreshold", $("#RestockThreshold").val());
             data.append("MaxStockThreshold", $("#MaxStockThreshold").val());
             data.append("Price", $("#Price").val());
-            data.append("Description", $("#Description").value);
+            data.append("Description", message);
 
             data.append("CatologCarId", $('#Car').find('option:selected').val());
             data.append("CatalogCompanyId", $('#Company').find('option:selected').val());
@@ -288,7 +284,7 @@
                 data.append('Features[' + i + '].Key', val.DisplayName);
                 data.append('Features[' + i + '].Value', val.Value);
             });
-            console.log('data :', data)
+
             var ajaxRequest = $.ajax({
                 type: "POST",
                 url: "/catalogitems/create",
