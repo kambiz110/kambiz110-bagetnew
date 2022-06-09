@@ -1,6 +1,7 @@
 ﻿using Application.Catalogs.CatalogFeature.Command;
 using Application.Catalogs.CatalogFeature.Dto;
 using Application.Catalogs.CatalogItems.GetCatalogItemAdmin;
+using Application.Catalogs.CatalogItems.RemoveImage;
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Dtos;
@@ -19,6 +20,7 @@ namespace Admin.EndPoint.Controllers
     {
         private readonly IAddNewCatalogItemService addNewCatalogItemService;
         private readonly IImageUploadService imageUploadService;
+        private readonly IDeleteImageService deleteImageService;
         private readonly IGetAdminEditCatalogItem getAdminEditCatalogItem;
         private readonly ICatalogItemService catalogItemService;
         private readonly IRemoveFeacherService removeFeacherService;
@@ -27,13 +29,15 @@ namespace Admin.EndPoint.Controllers
             , ICatalogItemService catalogItemService
             , IRemoveFeacherService removeFeacherService,
             IAddNewCatalogItemService addNewCatalogItemService,
-            IImageUploadService imageUploadService)
+            IImageUploadService imageUploadService
+            , IDeleteImageService deleteImageService)
         {
             this.getAdminEditCatalogItem = getAdminEditCatalogItem;
             this.catalogItemService = catalogItemService;
             this.removeFeacherService = removeFeacherService;
             this.addNewCatalogItemService = addNewCatalogItemService;
             this.imageUploadService = imageUploadService;
+            this.deleteImageService = deleteImageService;
         }
 
 
@@ -82,6 +86,12 @@ namespace Admin.EndPoint.Controllers
         public IActionResult RemoveFeature(RemoveFeatureDto data)
         {
             var result = removeFeacherService.Exequte(data);
+            return new JsonResult(result);
+        }
+        [HttpPost]
+        public IActionResult RemoveImageProdact(int itemId, string src)
+        {
+            var result = deleteImageService.delete(itemId , src);
             return new JsonResult(result);
         }
 

@@ -5,6 +5,7 @@ using Application.Catalogs.CatalogCars.CrudService;
 using Application.Catalogs.CatalogCompany.CrudService;
 using Application.Catalogs.CatalogFeature.Command;
 using Application.Catalogs.CatalogItems.GetCatalogItemAdmin;
+using Application.Catalogs.CatalogItems.RemoveImage;
 using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Catalogs.CatalogTypes;
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
@@ -66,6 +67,8 @@ namespace Admin.EndPoint
             services.AddTransient<ICrudCarService, CrudCarService>();
             services.AddTransient<IGetAdminEditCatalogItem, GetAdminEditCatalogItem>();
             services.AddTransient<IRemoveFeacherService, RemoveFeacherService>();
+            
+            services.AddTransient<IDeleteImageService, DeleteImageService>();
 
 
             #region connection String SqlServer

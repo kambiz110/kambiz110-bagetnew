@@ -259,11 +259,44 @@
         $(document).ready(function () {
             $('.removeImageProdact').on('click', function (e) {
                 e.preventDefault();
-                var sr = $(this).parent();
-                console.log('$(this) : ', $(this));
+                var imageParent = $(this).parent();
+                var src = imageParent.find('img').attr('src')
+                var itemId = @(Model.Id);
+               // console.log('sr', src + "/ itemId :  /" + itemId);
+                var ajaxRequest = $.ajax({
+                    method: "POST",
+                    url: "/CategoreItems/RemoveImageProdact",
+                    dataType: "text",
+                    data: {itemId: itemId, src: src},
 
-                console.log('sr', sr.find('img').attr('src'));
+                    success: function (result) {
+                        console.log("result :", result);
+                        if (result.isSuccess == true) {
+                            swal.fire(
+                                'موفق!',
+                                'عکس با موفقیت حذف شد',
+                                'success'
+                            );
+                            imageParent.parent().remove();
+                        }
+                        else {
+                            swal.fire(
+                                'هشدار!',
+                                "دیتا حذف نشد",
+                                'warning'
+                            );
+                            imageParent.parent().remove();
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                   console.log("xhr.status", xhr.status);
+                      console.log("thrownError", thrownError);
+                    }
+                });
 
+                ajaxRequest.done(function (xhr, textStatus) {
+                    // Do other operation
+                });
             });
         });
     </script>

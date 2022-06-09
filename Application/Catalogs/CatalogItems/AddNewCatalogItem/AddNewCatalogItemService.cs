@@ -27,7 +27,7 @@ namespace Application.Catalogs.CatalohItems.AddNewCatalogItem
                 if (Catalogitem != null)
                 {
 
-                    var catalogItem2 = new CatalogItem(request.Id,request.Price, request.Name, request.Description ?? "", request.Slug, request.CatalogCompanyId, request.CatalogTypeId, request.CatalogBrandId, request.CatologCarId,
+                    var catalogItem2 = new CatalogItem(request.Id, request.Price, request.Name, request.Description ?? "", request.Slug, request.CatalogCompanyId, request.CatalogTypeId, request.CatalogBrandId, request.CatologCarId,
                         request.AvailableStock, request.RestockThreshold, request.MaxStockThreshold);
 
 
@@ -35,7 +35,7 @@ namespace Application.Catalogs.CatalohItems.AddNewCatalogItem
                     // var catalogItem2 = mapper.Map<CatalogItem>(request);
                     context.CatalogItems.Update(catalogItem2);
                     context.SaveChanges();
-                    
+
                     if (request.Features != null && request.Features.Count() > 0)
                     {
                         var FeaturesToDb = mapper.Map<List<CatalogItemFeature>>(request.Features);
@@ -44,9 +44,13 @@ namespace Application.Catalogs.CatalohItems.AddNewCatalogItem
                             FeaturesToDb.ElementAt(i).CatalogItemId = catalogItem2.Id;
                             context.CatalogItemFeatures.Add(FeaturesToDb.ElementAt(i));
                         }
-                        context.SaveChanges();
+                       
                     }
-
+                    foreach (var item in request.Images)
+                    {
+                        context.CatalogItemImage.Add(new CatalogItemImage { Src = item.Src, CatalogItemId = catalogItem2.Id });
+                    }
+                    context.SaveChanges();
                     return new BaseDto<int>(true, new List<string> { "با موفقیت ثبت شد" }, catalogItem2.Id);
                 }
                 return new BaseDto<int>(false, new List<string> { "ناموفق" }, 0);
@@ -54,30 +58,30 @@ namespace Application.Catalogs.CatalohItems.AddNewCatalogItem
             else
             {
 
-                var catalogItem2 = new CatalogItem(request.Price, request.Name, request.Description ?? "", request.Slug, request.CatalogCompanyId, request.CatalogTypeId, request.CatalogBrandId,request.CatologCarId,
+                var catalogItem2 = new CatalogItem(request.Price, request.Name, request.Description ?? "", request.Slug, request.CatalogCompanyId, request.CatalogTypeId, request.CatalogBrandId, request.CatologCarId,
                     request.AvailableStock, request.RestockThreshold, request.MaxStockThreshold);
-     
 
 
-               // var catalogItem2 = mapper.Map<CatalogItem>(request);
+
+                // var catalogItem2 = mapper.Map<CatalogItem>(request);
                 context.CatalogItems.Add(catalogItem2);
                 context.SaveChanges();
                 request.Id = catalogItem2.Id;
-                if (request.Features !=null&& request.Features.Count()>0)
+                if (request.Features != null && request.Features.Count() > 0)
                 {
-               var FeaturesToDb = mapper.Map<List<CatalogItemFeature>>(request.Features);
-                for (int i = 0; i < FeaturesToDb.Count(); i++)
-                {
-                    FeaturesToDb.ElementAt(i).CatalogItemId = catalogItem2.Id;
-                   context.CatalogItemFeatures.Add(FeaturesToDb.ElementAt(i));
-                }
-                  
+                    var FeaturesToDb = mapper.Map<List<CatalogItemFeature>>(request.Features);
+                    for (int i = 0; i < FeaturesToDb.Count(); i++)
+                    {
+                        FeaturesToDb.ElementAt(i).CatalogItemId = catalogItem2.Id;
+                        context.CatalogItemFeatures.Add(FeaturesToDb.ElementAt(i));
+                    }
 
-               
+
+
                 }
                 foreach (var item in request.Images)
                 {
-                    context.CatalogItemImage.Add(new CatalogItemImage {Src=item.Src ,CatalogItemId= catalogItem2.Id });
+                    context.CatalogItemImage.Add(new CatalogItemImage { Src = item.Src, CatalogItemId = catalogItem2.Id });
                 }
                 context.SaveChanges();
                 return new BaseDto<int>(true, new List<string> { "با موفقیت ثبت شد" }, catalogItem2.Id);

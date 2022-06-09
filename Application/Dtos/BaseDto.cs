@@ -30,6 +30,15 @@ namespace Application.Dtos
         public List<string> Message { get; private set; }
         public bool IsSuccess { get; private set; }
     }
+    public class ResultDto
+    {
+        public ResultDto()
+        {
+                
+        }
+        public string Message { get;  set; }
+        public bool IsSuccess { get;  set; }
+    }
 
 
 }
