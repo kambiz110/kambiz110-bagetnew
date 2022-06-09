@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form id="createForm" class="form" asp-antiforgery="true" onsubmit="return sendDataToServer(event)">
+                    <form id="createForm" class="form" asp-antiforgery="true" enctype="multipart/form-data" onsubmit="return sendDataToServer(event)">
 
                         <input type="hidden" asp-for="@Model.Id" id="Id">
                         <div class="row">
@@ -258,9 +258,9 @@
                 sr.each(function (key, value) {
                     var tds = $(this).find('td');
 
-                    var idClmn = tds.eq(1).text(); //console.log(" idClmn : ", idClmn);
-                    var catClmn = tds.eq(2).text();// console.log(" catClmn : ", catClmn);
-                    var titClmn = tds.eq(3).text();// console.log(" titClmn : ", titClmn);
+                    var idClmn = tds.eq(0).text(); //console.log(" idClmn : ", idClmn);
+                    var catClmn = tds.eq(1).text();// console.log(" catClmn : ", catClmn);
+                    var titClmn = tds.eq(2).text();// console.log(" titClmn : ", titClmn);
                     data.append('itemid', @(Model.Id));
                     data.append('Group', idClmn);
                     data.append('Key', catClmn);
@@ -279,14 +279,15 @@
                         if (data.isSuccess == true) {
                             swal.fire(
                                 'موفق!',
-                                'کاتالوگ با موفقیت ثبت شد',
+                                'دیتا با موفقیت حذف شد',
                                 'success'
-                            )
+                            );
+                            sr.remove();
                         }
                         else {
                             swal.fire(
                                 'هشدار!',
-                                "دیتا ثبت نشد",
+                                "دیتا حذف نشد",
                                 'warning'
                             );
                         }
@@ -345,12 +346,18 @@
             }
 
             //دریافت ویژگی های محصول از جدول
+            //[data-source="view"] 
             var dataFeaturesViewModel = $('#tbl_Features tr:gt(0)').map(function () {
-                return {
-                    Group: $(this.cells[0]).text(),
-                    DisplayName: $(this.cells[1]).text(),
-                    Value: $(this.cells[2]).text(),
-                };
+                var source = $(this).data("source");
+               // console.log("data source:", source)
+                if (source =="view") {
+                    return {
+                        Group: $(this.cells[0]).text(),
+                        DisplayName: $(this.cells[1]).text(),
+                        Value: $(this.cells[2]).text(),
+                    };
+                }
+             
             }).get();
 
             $.each(dataFeaturesViewModel, function (i, val) {
@@ -358,10 +365,11 @@
                 data.append('Features[' + i + '].Key', val.DisplayName);
                 data.append('Features[' + i + '].Value', val.Value);
             });
+          //  console.log("dataFeaturesViewModel :", dataFeaturesViewModel)
 
             var ajaxRequest = $.ajax({
                 type: "POST",
-                url: "/catalogitems/edit",
+                url: "/CategoreItems/EditCatalogItem",
                 contentType: false,
                 processData: false,
                 data: data,

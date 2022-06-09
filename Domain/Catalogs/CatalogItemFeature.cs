@@ -9,7 +9,8 @@ namespace Domain.Catalogs
         public string Key { get; set; }
         public string Value { get; set; }
         public string Group { get; set; }
+        public int CatalogItemId { get; set; }
         public CatalogItem CatalogItem { get; set; }
-        public int CatlogItemId { get; set; }
+
     }
 }

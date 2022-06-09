@@ -54,6 +54,7 @@ namespace StaticFile.EndPoint.Controllers
             string newName = Guid.NewGuid().ToString();
             var date = DateTime.Now;
             string folder = $@"Resources\images\{date.Year}\{date.Year}-{date.Month}\{date.Year}-{date.Month}-{date.Day}\";
+            string folderDb = $@"Resources/images/{date.Year}/{date.Year}-{date.Month}/{date.Year}-{date.Month}-{date.Day}/";
             var uploadsRootFolder = Path.Combine(_environment.WebRootPath, folder);
             if (!Directory.Exists(uploadsRootFolder))
             {
@@ -70,7 +71,7 @@ namespace StaticFile.EndPoint.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
-                    address.Add(folder + fileName);
+                    address.Add(folderDb + fileName);
                 }
             }
             return new UploadDto()

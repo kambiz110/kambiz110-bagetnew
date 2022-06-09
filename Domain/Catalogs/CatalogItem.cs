@@ -9,8 +9,8 @@ namespace Domain.Catalogs
     public class CatalogItem
     {
         public CatalogItem(int pris , string name , string descript , string slug
-            , int catalogCompanyId , int catalogTypeId , int catalogBrandId , int catologCarId, int availableStock
-            , int restockThreshold, int maxStockThreshold)
+            , int catalogCompanyId , int catalogTypeId , int catalogBrandId , int catologCarId
+            , int availableStock, int restockThreshold, int maxStockThreshold)
         {
             this._price = pris;
             this.Name = name;
@@ -19,6 +19,24 @@ namespace Domain.Catalogs
             this.CatalogCompanyId = catalogCompanyId;
             this.CatalogTypeId = catalogTypeId;
            this.CatalogBrandId =catalogBrandId;
+            this.AvailableStock = availableStock;
+            this.MaxStockThreshold = maxStockThreshold;
+            this.RestockThreshold = restockThreshold;
+            this.CatologCarId = catologCarId;
+        }
+
+        public CatalogItem(int id,int pris, string name, string descript, string slug
+       , int catalogCompanyId, int catalogTypeId, int catalogBrandId, int catologCarId
+       , int availableStock, int restockThreshold, int maxStockThreshold)
+        {
+            this.Id = id;
+            this._price = pris;
+            this.Name = name;
+            this.Description = descript;
+            this.Slug = slug;
+            this.CatalogCompanyId = catalogCompanyId;
+            this.CatalogTypeId = catalogTypeId;
+            this.CatalogBrandId = catalogBrandId;
             this.AvailableStock = availableStock;
             this.MaxStockThreshold = maxStockThreshold;
             this.RestockThreshold = restockThreshold;

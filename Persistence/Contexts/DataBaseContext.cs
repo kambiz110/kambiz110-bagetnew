@@ -25,6 +25,7 @@ namespace Persistence.Contexts
         {
 
         }
+        public DbSet<CatalogItemImage> CatalogItemImage { get; set; }
         public DbSet<CatologCar> CatologCars { get; set; }
         public DbSet<CatalogCompany> CatalogCompanes { get; set; }
         public DbSet<CatalogBrand> CatalogBrands { get; set; }
@@ -61,6 +62,9 @@ namespace Persistence.Contexts
                 }
             }
             builder.Entity<CatalogType>()
+                .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
+
+            builder.Entity<CatalogItemFeature>()
                 .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
             builder.Entity<BasketItem>()
                 .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);

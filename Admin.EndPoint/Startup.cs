@@ -3,6 +3,7 @@ using Application.Banners;
 using Application.Catalogs.CatalogBrands;
 using Application.Catalogs.CatalogCars.CrudService;
 using Application.Catalogs.CatalogCompany.CrudService;
+using Application.Catalogs.CatalogFeature.Command;
 using Application.Catalogs.CatalogItems.GetCatalogItemAdmin;
 using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Catalogs.CatalogTypes;
@@ -64,6 +65,7 @@ namespace Admin.EndPoint
             services.AddTransient<ICatalogBrandCrudService, CatalogBrandCrudService>();
             services.AddTransient<ICrudCarService, CrudCarService>();
             services.AddTransient<IGetAdminEditCatalogItem, GetAdminEditCatalogItem>();
+            services.AddTransient<IRemoveFeacherService, RemoveFeacherService>();
 
 
             #region connection String SqlServer
