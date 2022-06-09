@@ -106,6 +106,38 @@
                             </div>
                         </div>
                         <hr />
+                        <div class="card-body col-md-12">
+                            <fieldset class="form-group">
+                                <label for="basicInput"> عکس ها </label>
+                                <div class="note-container note-grid">
+                                    @if (Model.Images.Count > 0)
+                                    {
+                                        foreach (var item in Model.Images)
+                                        {
+                                            <div class="note-item all-notes note-personal">
+                                                <div class="note-inner-content">
+                                                    <div class="note-content">
+                                                        <div class="note-description-content">
+                                                            <img src="@item.Src" width="275" height="155" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="note-action removeImageProdact">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+
+
+
+                                </div>
+                                </fieldset>
+                        </div>
+                        <hr />
                         <div class="card col-md-12">
                             <div class="card-header col-md-12 row">
                                 <div class="col-xl-2 col-lg-6 col-md-12 mb-1">
@@ -133,6 +165,7 @@
                                     </fieldset>
                                 </div>
                             </div>
+
                             <div class="card-body col-md-12">
                                 <table id="tbl_Features" class="col-md-12 table table-bordered table-hover  table-condensed table-responsive">
                                     <thead>
@@ -198,8 +231,9 @@
 
 </section>
 @section Styles{
-    <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
 
+    <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
+    <link href="~/Theme/assets/css/apps/notes.css" rel="stylesheet" />
 }
 @section Scripts {
 
@@ -220,6 +254,16 @@
         $(document).ready(function () {
             $('.basic-single').select2({
                 placeholder: '... انتخاب کنید'
+            });
+        });
+        $(document).ready(function () {
+            $('.removeImageProdact').on('click', function (e) {
+                e.preventDefault();
+                var sr = $(this).parent();
+                console.log('$(this) : ', $(this));
+
+                console.log('sr', sr.find('img').attr('src'));
+
             });
         });
     </script>
@@ -346,7 +390,7 @@
             }
 
             //دریافت ویژگی های محصول از جدول
-            //[data-source="view"] 
+            //[data-source="view"]
             var dataFeaturesViewModel = $('#tbl_Features tr:gt(0)').map(function () {
                 var source = $(this).data("source");
                // console.log("data source:", source)
@@ -357,7 +401,7 @@
                         Value: $(this.cells[2]).text(),
                     };
                 }
-             
+
             }).get();
 
             $.each(dataFeaturesViewModel, function (i, val) {

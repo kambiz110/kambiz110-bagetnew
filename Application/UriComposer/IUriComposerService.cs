@@ -17,7 +17,8 @@ namespace Application.Catalogs.CatalogItems.UriComposer
         {
             if (src!=null)
             {
-                return "https://localhost:44327/" + src.Replace("\\", "//");
+               // return "https://localhost:44327/" + src.Replace("\\", "//");
+                return "https://localhost:44327/" + src;
             }
             return ""; 
         }

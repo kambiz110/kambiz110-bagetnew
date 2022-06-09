@@ -40,6 +40,10 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemAdmin
 
 
             var model = mapper.Map<AddNewCatalogItemDto>(catalogitem);
+            for (int i = 0; i < model.Images.Count(); i++)
+            {
+                model.Images.ElementAt(i).Src = uriComposerService.ComposeImageUri(model.Images.ElementAt(i).Src);
+            }
             var feature = catalogitem.CatalogItemFeatures
                 .Select(p => new AddNewCatalogItemFeature_dto
                 {
