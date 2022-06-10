@@ -56,7 +56,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
             var data = mapper.Map<List<CompanyDto>>(companes);
             return data;
         }
-        public PaginatedItemsDto<CatalogItemListItemDto> GetCatalogList(int page, int pageSize)
+        public PaginatedItemsDto<CatalogItemListItemDto> GetCatalogList(int page, int pageSize, SearchInCategoreItemsDto dto)
         {
             int rowCount = 0;
             var data = context.CatalogItems
@@ -64,19 +64,44 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
                 .Include(p => p.CatalogBrand)
                 .ToPaged(page, pageSize, out rowCount)
                 .OrderByDescending(p => p.Id)
-                .Select(p => new CatalogItemListItemDto
+                //.Select(p => new CatalogItemListItemDto
+                //{
+                //    Id = p.Id,
+                //    Brand = p.CatalogBrand.Brand,
+                //    Type = p.CatalogType.Type,
+                //    AvailableStock = p.AvailableStock,
+                //    MaxStockThreshold = p.MaxStockThreshold,
+                //    RestockThreshold = p.RestockThreshold,
+                //    Name = p.Name,
+                //    Price = p.Price,
+                //})
+                .AsQueryable();
+            if (dto!=null)
+            {
+                if (dto.CatalogBrandId>0)
                 {
-                    Id = p.Id,
-                    Brand = p.CatalogBrand.Brand,
-                    Type = p.CatalogType.Type,
-                    AvailableStock = p.AvailableStock,
-                    MaxStockThreshold = p.MaxStockThreshold,
-                    RestockThreshold = p.RestockThreshold,
-                    Name = p.Name,
-                    Price = p.Price,
-                }).ToList();
+                    data = data.Where(p => p.CatalogBrandId == dto.CatalogBrandId).AsQueryable();
+                }
+                if (dto.CatalogCompanyId>0)
+                {
+                    data = data.Where(p => p.CatalogCompanyId == dto.CatalogCompanyId).AsQueryable();
+                }
+                if (dto.CatalogTypeId>0)
+                {
+                    data = data.Where(p => p.CatalogTypeId == dto.CatalogTypeId).AsQueryable();
+                }
+                if (dto.CatologCarId>0)
+                {
+                    data = data.Where(p => p.CatologCarId == dto.CatologCarId).AsQueryable();
+                }
+                if (dto.q!=null && dto.q!="")
+                {
+                    data = data.Where(p => p.Name.Contains(dto.q.Trim()) || p.Slug.Contains(dto.q.Trim())).AsQueryable();
+                }
+            }
 
-            return new PaginatedItemsDto<CatalogItemListItemDto>(page, page, rowCount, data);
+            var model = mapper.ProjectTo<CatalogItemListItemDto>(data).ToList();
+            return new PaginatedItemsDto<CatalogItemListItemDto>(page, page, rowCount, model);
 
         }
 

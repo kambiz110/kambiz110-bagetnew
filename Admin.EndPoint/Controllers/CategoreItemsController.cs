@@ -1,4 +1,6 @@
-﻿using Application.Catalogs.CatalogFeature.Command;
+﻿using Admin.EndPoint.Helper;
+using Admin.EndPoint.ViewModels.Catalogs;
+using Application.Catalogs.CatalogFeature.Command;
 using Application.Catalogs.CatalogFeature.Dto;
 using Application.Catalogs.CatalogItems.GetCatalogItemAdmin;
 using Application.Catalogs.CatalogItems.RemoveImage;
@@ -40,7 +42,34 @@ namespace Admin.EndPoint.Controllers
             this.deleteImageService = deleteImageService;
         }
 
+        public IActionResult Index(int page = 1, int pageSize = 100, string search = "")
+        {
+            if (search == "clear")
+            {
+                HttpContext.Session.Remove("productes");
+            }
 
+            SearchInCategoreItemsDto productes = SessionHelper.GetObjectFromJson<SearchInCategoreItemsDto>(HttpContext.Session, "productes");
+
+            var CatalogItems = catalogItemService.GetCatalogList(page, pageSize , productes);
+            ViewData["Cars"] = new SelectList(catalogItemService.GetCares(), "Id", "Name");
+            ViewData["Companes"] = new SelectList(catalogItemService.GetCompanes(), "Id", "Name");
+            ViewData["Categories"] = new SelectList(catalogItemService.GetCatalogType(), "Id", "Type");
+            ViewData["Brands"] = new SelectList(catalogItemService.GetBrand(), "Id", "Brand");
+            return View(CatalogItems);
+        }
+        [HttpPost]
+        public IActionResult Index(SearchInCategoreItemsDto dto)
+        {
+            var  CatalogItems = catalogItemService.GetCatalogList(1, 100 ,dto);
+            ViewData["Cars"] = new SelectList(catalogItemService.GetCares(), "Id", "Name");
+            ViewData["Companes"] = new SelectList(catalogItemService.GetCompanes(), "Id", "Name");
+            ViewData["Categories"] = new SelectList(catalogItemService.GetCatalogType(), "Id", "Type");
+            ViewData["Brands"] = new SelectList(catalogItemService.GetBrand(), "Id", "Brand");
+          
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "productes", dto);
+            return View(CatalogItems);
+        }
 
         public IActionResult EditCatalogItem(int id)
         {
@@ -89,9 +118,10 @@ namespace Admin.EndPoint.Controllers
             return new JsonResult(result);
         }
         [HttpPost]
-        public IActionResult RemoveImageProdact(int itemId, string src)
+        public IActionResult RemoveImageProdact(DeleteImageDto data)
         {
-            var result = deleteImageService.delete(itemId , src);
+
+            var result = deleteImageService.delete(data.itemId, data.src);
             return new JsonResult(result);
         }
 

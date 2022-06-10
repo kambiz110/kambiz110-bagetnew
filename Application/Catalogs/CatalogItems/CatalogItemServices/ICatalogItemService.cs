@@ -15,7 +15,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
         List<CompanyDto> GetCompanes();
         List<CatalogBrandDto> GetBrand();
         List<ListCatalogTypeDto> GetCatalogType();
-        PaginatedItemsDto<CatalogItemListItemDto> GetCatalogList(int page, int pageSize);
+        PaginatedItemsDto<CatalogItemListItemDto> GetCatalogList(int page, int pageSize , SearchInCategoreItemsDto dto);
 
         void AddToMyFavourite(string UserId, int CatalogItemId);
         PaginatedItemsDto<FavouriteCatalogItemDto> GetMyFavourite(string UserId, int page = 1, int pageSize = 20);
@@ -57,5 +57,13 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
         public int AvailableStock { get; set; }
         public int RestockThreshold { get; set; }
         public int MaxStockThreshold { get; set; }
+    }
+    public class SearchInCategoreItemsDto
+    {
+        public int CatalogTypeId { get; set; }
+        public int CatalogBrandId { get; set; }
+        public int CatologCarId { get; set; }
+        public int CatalogCompanyId { get; set; }
+        public string q { get; set; } = "";
     }
 }

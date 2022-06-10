@@ -50,7 +50,7 @@ namespace Admin.EndPoint
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddControllers();
-
+            services.AddSession();
             services.AddScoped<ICrudCompanyService, CrudCompanyService>();
             services.AddScoped<IGetTodayReportService, GetTodayReportService>();
             services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
@@ -113,10 +113,7 @@ namespace Admin.EndPoint
             {
                 app.UseDeveloperExceptionPage();
             }
-            if (!env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+         
             else
             {
                 app.UseExceptionHandler("/Error");
@@ -128,7 +125,7 @@ namespace Admin.EndPoint
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

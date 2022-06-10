@@ -1,0 +1,241 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Admin.EndPoint.Helper
+@using Application.Dtos
+@using Application.Catalogs.CatalohItems.CatalogItemServices
+@model PaginatedItemsDto<CatalogItemListItemDto>
+@{
+    ViewData["Title"] = " محصول";
+
+    SearchInCategoreItemsDto productes = SessionHelper.GetObjectFromJson<SearchInCategoreItemsDto>(Context.Session, "productes")??new SearchInCategoreItemsDto ();
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Zero configuration table -->
+        <section id="configuration">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="dt-buttons mb-2">
+                                <a href="/CatalogItems/create" class="dt-button btn-success btn" tabindex="0" aria-controls="html5-extension">
+                                    <span>ثبت محصول جدید</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-10">
+                    <form asp-action="Index" method="post">
+                        <div class="input-group">
+                            <select class="form-control basic-single" id="CatalogCompanyId" name="CatalogCompanyId" asp-for="@productes.CatalogCompanyId" asp-items="(IEnumerable<SelectListItem>)@ViewData["Companes"]">
+                                <option value="0"> انتخاب کمپانی</option>
+                            </select>
+                            <select class="form-control basic-single" id="CatologCarId" name="CatologCarId" asp-for="@productes.CatologCarId" asp-items="(IEnumerable<SelectListItem>)@ViewData["Cars"]">
+                                <option value="0">  انتخاب خودرو</option>
+                            </select>
+                            <select class="form-control basic-single" id="CatalogBrandId" name="CatalogBrandId" asp-for="@productes.CatalogBrandId" asp-items="(IEnumerable<SelectListItem>)@ViewData["Brands"]">
+                                <option value="0"> انتخاب برند</option>
+                            </select>
+                            <select class="form-control basic-single" id="CatalogTypeId" name="CatalogTypeId" asp-for="@productes.CatalogTypeId" asp-items="(IEnumerable<SelectListItem>)@ViewData["Categories"] ">
+                                <option value="0"> انتخاب دسته بندی</option>
+                            </select>
+
+                            <input type="text" name="q" class="form-control float-right" placeholder="جستجو">
+
+                            <button type="submit" class="btn btn-primary">جستجو</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="col-sm-4 col-md-2">
+                    <div class="form-group form-group-sm">
+
+
+                        <form class="form-inline d-inline" asp-action="Index" method="get">
+                            <button type="submit" name="search" value="clear" class="btn btn-default">
+                                پاک کن
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-body collapse show">
+                            <div class="card-block card-dashboard">
+                                <p class="card-text">لیست کاتالوگ ها</p>
+                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                                    @{
+
+                                        if (Model.Data != null && Model.Data.Any())
+                                        {
+                                            <div class="col-sm-12">
+                                                <table class="table table-striped table-bordered zero-configuration dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th class="sorting_asc">شناسه</th>
+                                                            <th class="sorting_asc">نام</th>
+                                                            <th class="sorting_asc">دسته بندی</th>
+                                                            <th class="sorting_asc">برند </th>
+                                                            <th class="sorting_asc">قیمت </th>
+                                                            <th class="sorting_asc">موجودی </th>
+                                                            <th class="sorting_asc"> حداقل برای سفارش مجدد </th>
+                                                            <th class="sorting_asc"> حداکثر موجودی</th>
+                                                            <th class="sorting_asc"> </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        @foreach (var item in Model.Data)
+                                                        {
+                                                            <tr role="row">
+                                                                <td>@item.Id</td>
+                                                                <td>@item.Name</td>
+                                                                <td>@item.Type</td>
+                                                                <td>@item.Brand</td>
+                                                                <td>@item.Price.ToString("n0")</td>
+                                                                <td>@item.AvailableStock</td>
+                                                                <td>@item.RestockThreshold</td>
+                                                                <td>@item.MaxStockThreshold</td>
+                                                                <td>
+
+                                                                    <a asp-action="EditCatalogItem" asp-controller="CategoreItems" asp-route-id="@item.Id" class="btn btn-warning mr-1">ویرایش</a><a class="btn btn-danger">حذف</a>
+                                                                    @*<a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-warning">ویرایش</a>*@
+                                                                    <a href="/CatalogItems/Detail" class="btn btn-info"> جزئیات</a>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <div class="dataTables_info" id="html5-extension_info" role="status" aria-live="polite">
+
+                                                            صفحه @Model.PageIndex
+                                                            از
+                                                            @Model.Pager.TotalPages
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <div class="dataTables_paginate paging_simple_numbers" id="html5-extension_paginate">
+                                                            <ul class="pagination">
+
+                                                                <li class="paginate_button page-item">
+
+                                                                    <a asp-action="Index" asp-controller="CategoreItems" asp-route-parentid="@(HttpContextAccessor.HttpContext.Request.Query["parentid"])"
+                                                                       asp-route-pageIndex="1"
+                                                                       aria-controls="html5-extension"
+                                                                       data-dt-idx="2" tabindex="0"
+                                                                       class="page-link"> صفحه اول</a>
+                                                                </li>
+
+                                                                <li class="paginate_button page-item active">
+                                                                    <a asp-action="Index" asp-controller="CategoreItems" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                                       asp-route-pageIndex="@(Model.PageIndex - 1)"
+                                                                       class="btn btn-default @prevDisabled">
+                                                                        قبلی
+                                                                    </a>
+                                                                </li>
+
+                                                                @foreach (var item in Model.Pager.Pages)
+                                                                {
+                                                                    if (item == Model.PageIndex)
+                                                                    {
+                                                                        <li class="paginate_button page-item  active">
+                                                                            <a asp-action="Index" asp-controller="CategoreItems" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                                               asp-route-pageIndex="@item"
+                                                                               aria-controls="html5-extension"
+                                                                               data-dt-idx="2" tabindex="0"
+                                                                               class="page-link"> @item</a>
+                                                                        </li>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <li class="paginate_button page-item ">
+                                                                            <a asp-action="Index" asp-controller="CategoreItems" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                                               asp-route-pageIndex="@item"
+                                                                               aria-controls="html5-extension"
+                                                                               data-dt-idx="2" tabindex="0"
+                                                                               class="page-link"> @item</a>
+                                                                        </li>
+                                                                    }
+
+                                                                }
+
+                                                                <li class="paginate_button page-item ">
+
+                                                                    <a asp-action="Index" asp-controller="CategoreItems" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                                       asp-route-pageIndex="@(Model.PageIndex + 1)"
+                                                                       class="btn btn-default @nextDisabled">
+                                                                        بعدی
+                                                                    </a>
+                                                                </li>
+
+                                                                <li class="paginate_button page-item">
+                                                                    <a asp-action="Index" asp-controller="CategoreItems" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                                       asp-route-pageIndex="@Model.Pager.TotalPages"
+                                                                       aria-controls="html5-extension"
+                                                                       data-dt-idx="2" tabindex="0"
+                                                                       class="page-link"> صفحه آخر</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+<h2>
+    هیچ محصولی با مشخصات جستجو شده وجود ندارد!!!
+</h2>
+                                        }
+                                    }
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+@section Styles{
+
+    <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
+
+}
+@section Scripts {
+
+
+    <script src="~/lib/select2/js/select2.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $('.basic-single').select2({
+            placeholder: '... انتخاب کنید'
+        });
+    });
+</script>
+
+}

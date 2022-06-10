@@ -262,16 +262,20 @@
                 var imageParent = $(this).parent();
                 var src = imageParent.find('img').attr('src')
                 var itemId = @(Model.Id);
+                var data = new FormData();
+                data.append('src', src);
+                data.append('itemId', itemId);
                // console.log('sr', src + "/ itemId :  /" + itemId);
                 var ajaxRequest = $.ajax({
                     method: "POST",
                     url: "/CategoreItems/RemoveImageProdact",
-                    dataType: "text",
-                    data: {itemId: itemId, src: src},
+                    contentType: false,
+                    processData: false,
+                    data: data,
 
-                    success: function (result) {
-                        console.log("result :", result);
-                        if (result.isSuccess == true) {
+                    success: function (data) {
+                        console.log("result :", data);
+                        if (data.isSuccess == true) {
                             swal.fire(
                                 'موفق!',
                                 'عکس با موفقیت حذف شد',
