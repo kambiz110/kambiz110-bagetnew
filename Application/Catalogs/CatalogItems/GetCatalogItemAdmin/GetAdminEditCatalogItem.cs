@@ -2,6 +2,7 @@
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Interfaces.Contexts;
 using AutoMapper;
+using Common.Useful;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemAdmin
             var model = mapper.Map<AddNewCatalogItemDto>(catalogitem);
             for (int i = 0; i < model.Images.Count(); i++)
             {
-                model.Images.ElementAt(i).Src = uriComposerService.ComposeImageUri(model.Images.ElementAt(i).Src);
+                model.Images.ElementAt(i).Src = GlobalConstants.serverImageUrl+model.Images.ElementAt(i).Src;
             }
             var feature = catalogitem.CatalogItemFeatures
                 .Select(p => new AddNewCatalogItemFeature_dto

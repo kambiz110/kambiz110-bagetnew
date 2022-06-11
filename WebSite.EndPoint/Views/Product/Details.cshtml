@@ -31,9 +31,9 @@
                     <div class="swiper-container gallery-slider swiper-container-initialized swiper-container-horizontal swiper-container-rtl">
                         <div class="swiper-wrapper" style="transform: translate3d(1660px, 0px, 0px); transition-duration: 0ms;">
 
-                          
+
                             @foreach (var item in Model.Images)
-                            { 
+                            {
                                 <div class="swiper-slide" data-swiper-slide-index="1" style="width: 415px;">
                                     <img src="@item" data-zoom-image="@item" class="zoom-image" alt="gallery item">
                                 </div>
@@ -45,7 +45,7 @@
                     <div class="swiper-container gallery-slider-thumbs swiper-container-initialized swiper-container-horizontal swiper-container-rtl">
                         <div class="swiper-wrapper" style="transform: translate3d(622.5px, 0px, 0px); transition-duration: 0ms;">
                             @{
-                                int  i = 1;
+                                int i = 1;
                                 string classname = "swiper-slide";
                             }
 
@@ -121,17 +121,21 @@
                     <span class="font-weight-bold">گارانتی:</span>
                     <span>18 ماهه</span>
                 </div>
-                <div class="product-params-special">
-                    <ul data-title="ویژگی‌های محصول">
-                        @foreach (var item in Model.Features.FirstOrDefault())
-                        {
-                            <li>
-                                <span>@item.Key</span>
-                                <span>@item.Value</span>
-                            </li>
-                        }
-                    </ul>
-                </div>
+                @if (Model.Features != null && Model.Features.Any())
+                {
+                    <div class="product-params-special">
+                        <ul data-title="ویژگی‌های محصول">
+                            @foreach (var item in Model.Features.FirstOrDefault())
+                            {
+                                <li>
+                                    <span>@item.Key</span>
+                                    <span>@item.Value</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+
                 <div class="alert alert-warning">
                     <div class="alert-body">
                         <p class="d-flex align-items-center">
@@ -151,7 +155,7 @@
                         <div class="num-block">
                             <div class="num-in">
                                 <span class="plus"></span>
-                                <input type="hidden" value="@Model.Id"  name="CatalogitemId"  />
+                                <input type="hidden" value="@Model.Id" name="CatalogitemId" />
                                 <input type="text" class="in-num" name="quantity" value="1" readonly="">
                                 <span class="minus dis"></span>
                             </div>

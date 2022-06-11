@@ -2,6 +2,7 @@
 using Application.Dtos;
 using Application.Interfaces.Contexts;
 using Common;
+using Common.Useful;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -94,20 +95,23 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
                     .Include(p => p.Discounts)
                     .OrderByDescending(p => p.Price);
             }
+            if (query!=null && query.Any())
+            {
+                var data = query.PagedResult(request.page, request.pageSize, out rowCount)
+                       .ToList()
+                       .Select(p => new CatalogPLPDto
+                       {
+                           Id = p.Id,
+                           Name = p.Name,
+                           Price = p.Price,
+                           Rate = 4,
+                           Image = GlobalConstants.serverImageUrl+p.CatalogItemImages.FirstOrDefault().Src,
+                           AvailableStock = p.AvailableStock,
+                       }).ToList();
+                return new PaginatedItemsDto<CatalogPLPDto>(request.page, request.pageSize, rowCount, data);
+            }
 
-            var data = query.PagedResult(request.page, request.pageSize, out rowCount)
-                .ToList()
-                .Select(p => new CatalogPLPDto
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    Rate = 4,
-                    Image = uriComposerService
-                    .ComposeImageUri(p.CatalogItemImages.FirstOrDefault().Src),
-                    AvailableStock = p.AvailableStock,
-                }).ToList();
-            return new PaginatedItemsDto<CatalogPLPDto>(request.page, request.pageSize, rowCount, data);
+            return new PaginatedItemsDto<CatalogPLPDto>(request.page, request.pageSize, rowCount, new List<CatalogPLPDto>());
         }
     }
 

@@ -4,6 +4,7 @@ using Application.Dtos;
 using Application.Interfaces.Contexts;
 using AutoMapper;
 using Common;
+using Domain.Catalogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,6 +74,10 @@ namespace Application.Catalogs.CatalogCars.CrudService
 
         public BaseDto Remove(int Id)
         {
+           //Func<CatologCar , bool> myfunc = test;
+           // var catalogCar2 = context.CatologCars.Where(myfunc).FirstOrDefault();
+ 
+
             var catalogCar = context.CatologCars.Find(Id);
             context.CatologCars.Remove(catalogCar);
             context.SaveChanges();
@@ -82,5 +87,14 @@ namespace Application.Catalogs.CatalogCars.CrudService
              new List<string> { $"خودرو با موفقیت حذف شد" }
              );
         }
+       
+        //public  bool test(CatologCar x )
+        //{
+        //    if (x.Id==5)
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
     }
 }

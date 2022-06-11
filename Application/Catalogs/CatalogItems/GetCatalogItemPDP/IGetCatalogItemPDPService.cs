@@ -1,5 +1,6 @@
 ﻿ using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Interfaces.Contexts;
+using Common.Useful;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
                .Select(p => new SimilarCatalogItemDto
                {
                    Id = p.Id,
-                   Images = uriComposerService.ComposeImageUri(p.CatalogItemImages.FirstOrDefault().Src),
+                   Images = GlobalConstants.serverImageUrl+p.CatalogItemImages.FirstOrDefault().Src,
                    Price = p.Price,
                    Name = p.Name
                }).ToList();
@@ -69,7 +70,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
                 Price = catalogitem.Price,
                 Description = catalogitem.Description,
                 Images = catalogitem.CatalogItemImages.Select(p => uriComposerService.ComposeImageUri(p.Src)).ToList(),
-                OldPrice = catalogitem.OldPrice,
+                OldPrice = catalogitem.OldPrice?? catalogitem.Price,
                 PercentDiscount = catalogitem.PercentDiscount,
             };
 

@@ -90,7 +90,7 @@
                             <div class="col-xl-6 col-lg-6 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> قیمت</label>
-                                    <input type="number" asp-for="Data.Price" class="form-control" id="Price">
+                                    <input type="number" asp-for="Data.Price" class="form-control " id="currency">
                                     <span asp-validation-for="Data.Price" class="text-danger"></span>
 
                                 </fieldset>
@@ -189,10 +189,13 @@
     <script src="~/lib/select2/js/select2.js"></script>
 
     <script src="~/lib/trumbowyg-2_25_1/trumbowyg.js"></script>
-
+    <script src="~/Theme/plugins/input-mask/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/Theme/plugins/input-mask/input-mask.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
+        $('.trumbowyg-texterea').trumbowyg();
+        $("#currency").inputmask({ mask: "$999,9999,999.99" });
         $(document).ready(function () {
             $('.basic-single').select2({
                 placeholder: '... انتخاب کنید'

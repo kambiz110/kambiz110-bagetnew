@@ -5,8 +5,10 @@ using Application.Dtos;
 using Application.Interfaces.Contexts;
 using AutoMapper;
 using Common;
+using Common.Useful;
 using Domain.Catalogs;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -94,7 +96,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
                 {
                     data = data.Where(p => p.CatologCarId == dto.CatologCarId).AsQueryable();
                 }
-                if (dto.q!=null && dto.q!="")
+                if (!String.IsNullOrEmpty(dto.q))
                 {
                     data = data.Where(p => p.Name.Contains(dto.q.Trim()) || p.Slug.Contains(dto.q.Trim())).AsQueryable();
                 }
@@ -154,8 +156,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
                 Price = p.Price,
                 Rate = 4,
                 AvailableStock = p.AvailableStock,
-                Image = uriComposerService
-                .ComposeImageUri(p.CatalogItemImages.FirstOrDefault().Src),
+                Image = GlobalConstants.serverImageUrl+p.CatalogItemImages.FirstOrDefault().Src,
             }).ToList();
             return new PaginatedItemsDto<FavouriteCatalogItemDto>(page, pageSize, rowCount, data);
         }
