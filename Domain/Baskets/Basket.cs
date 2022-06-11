@@ -74,6 +74,9 @@ namespace Domain.Baskets
     {
         public int Id { get; set; }
         public int UnitPrice { get; private set; }
+        /// <summary>
+        /// تعداد محصول
+        /// </summary>
         public int Quantity { get; private set; }
         public int CatalogItemId { get; private set; }
         public CatalogItem CatalogItem { get; private set; }

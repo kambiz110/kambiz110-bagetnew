@@ -130,8 +130,6 @@ namespace Application.BasketsService
             return true;
         }
 
-
-
         private BasketDto CreateBasketForUser(string BuyerId)
         {
             Basket basket = new Basket(BuyerId);
@@ -165,12 +163,8 @@ namespace Application.BasketsService
             {
                 userBasket.ApplyDiscountCode(anonymousBasket.AppliedDiscount);
             }
-
             context.Baskets.Remove(anonymousBasket);
             context.SaveChanges();
-
-
-
         }
 
     }
@@ -181,7 +175,6 @@ namespace Application.BasketsService
         public string BuyerId { get; set; }
         public List<BasketItemDto> Items { get; set; } = new List<BasketItemDto>();
         public int DiscountAmount { get; set; }
-
         public int Total()
         {
             if (Items.Count > 0)
