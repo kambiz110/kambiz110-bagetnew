@@ -34,6 +34,13 @@ namespace Application.BasketsService
             this.uriComposerService = uriComposerService;
         }
 
+
+        /// <summary>
+        /// افزودن آیتم و محصول به سبد خرید
+        /// </summary>
+        /// <param name="basketId"></param>
+        /// <param name="catalogItemId"></param>
+        /// <param name="quantity"></param>
         public void AddItemToBasket(int basketId, int catalogItemId, int quantity = 1)
         {
             var basket = context.Baskets.FirstOrDefault(p => p.Id == basketId);
@@ -75,7 +82,11 @@ namespace Application.BasketsService
                 }).ToList(),
             };
         }
-
+        /// <summary>
+        /// به دست آوردن یا ایجاد سبد خرید
+        /// </summary>
+        /// <param name="BuyerId"></param>
+        /// <returns></returns>
         public BasketDto GetOrCreateBasketForUser(string BuyerId)
         {
             var basket = context.Baskets
@@ -113,7 +124,11 @@ namespace Application.BasketsService
             };
 
         }
-
+        /// <summary>
+        /// حذف کردن محصول از سبد خرید
+        /// </summary>
+        /// <param name="ItemId"></param>
+        /// <returns></returns>
         public bool RemoveItemFromBasket(int ItemId)
         {
             var item = context.BasketItems.SingleOrDefault(p => p.Id == ItemId);
@@ -121,7 +136,12 @@ namespace Application.BasketsService
             context.SaveChanges();
             return true;
         }
-
+        /// <summary>
+        /// برای به روز کردن تعداد کالا در هر محصول در سبد
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
         public bool SetQuantities(int itemId, int quantity)
         {
             var item = context.BasketItems.SingleOrDefault(p => p.Id == itemId);
@@ -129,7 +149,11 @@ namespace Application.BasketsService
             context.SaveChanges();
             return true;
         }
-
+        /// <summary>
+        /// ایجاد سبد خرید برای کاربر
+        /// </summary>
+        /// <param name="BuyerId"></param>
+        /// <returns></returns>
         private BasketDto CreateBasketForUser(string BuyerId)
         {
             Basket basket = new Basket(BuyerId);
@@ -141,6 +165,12 @@ namespace Application.BasketsService
                 Id = basket.Id,
             };
         }
+
+        /// <summary>
+        /// انتقال سبد خرید از شناسه کوکی به شناسه کاربر لاگین کرده
+        /// </summary>
+        /// <param name="anonymousId"></param>
+        /// <param name="UserId"></param>
         public void TransferBasket(string anonymousId, string UserId)
         {
             var anonymousBasket = context.Baskets
