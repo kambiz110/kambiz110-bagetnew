@@ -52,7 +52,11 @@ namespace Application.BasketsService
 
             context.SaveChanges();
         }
-
+        /// <summary>
+        /// نمایش سبد خرید کاربر
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
         public BasketDto GetBasketForUser(string UserId)
         {
             var basket = context.Baskets
