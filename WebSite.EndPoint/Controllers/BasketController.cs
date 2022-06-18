@@ -52,17 +52,27 @@ namespace WebSite.EndPoint.Controllers
             return View(data);
         }
 
-
+        /// <summary>
+        /// افزودن محصول به سبد خرید
+        /// </summary>
+        /// <param name="CatalogitemId"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
         public IActionResult Index(int CatalogitemId, int quantity = 1)
         {
             var basket = GetOrSetBasket();
+            //افزودن محصول به سبد خرید
             basketService.AddItemToBasket(basket.Id, CatalogitemId, quantity);
             return RedirectToAction(nameof(Index));
         }
 
-
+        /// <summary>
+        /// حذف محصول از سبد خرید
+        /// </summary>
+        /// <param name="ItemId"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
         public IActionResult RemoveItemFromBasket(int ItemId)
@@ -70,7 +80,12 @@ namespace WebSite.EndPoint.Controllers
             basketService.RemoveItemFromBasket(ItemId);
             return RedirectToAction(nameof(Index));
         }
-
+        /// <summary>
+        /// تعیین تعداد محصول یک آیتم در سبد خرید
+        /// </summary>
+        /// <param name="basketItemId"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
         public IActionResult setQuantity(int basketItemId, int quantity)
@@ -79,7 +94,10 @@ namespace WebSite.EndPoint.Controllers
         }
 
 
-
+        /// <summary>
+        /// نمایش محتویات سبد برای تعیین آدرس و نحوه پرداخت
+        /// </summary>
+        /// <returns></returns>
         public IActionResult ShippingPayment()
         {
             ShippingPaymentViewModel model = new ShippingPaymentViewModel();
@@ -88,16 +106,23 @@ namespace WebSite.EndPoint.Controllers
             model.UserAddresses = userAddressService.GetAddress(userId);
             return View(model);
         }
-
+        /// <summary>
+        /// تعیین آدرس و نحوه پرداخت و انتقال به درگاه خرید
+        /// ایجاد سفارش و انتقال سبد خرید به آن
+        /// </summary>
+        /// <param name="Address"></param>
+        /// <param name="PaymentMethod"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult ShippingPayment(int Address, PaymentMethod PaymentMethod)
         {
             string userId = ClaimUtility.GetUserId(User);
             var basket = basketService.GetBasketForUser(userId);
+            //ایجاد سفارش بر اساس سبد خرید کاربر
             int orderId = orderService.CreateOrder(basket.Id, Address, PaymentMethod);
             if (PaymentMethod == PaymentMethod.OnlinePaymnt)
             {
-                //ثبت پرداخت
+                //ثبت پرداخت با ایجاد شناسه خرید بر اساس سفارش
                 var payment = paymentService.PayForOrder(orderId);
                 //ارسال به درگاه پرداخت
                 return RedirectToAction("Index", "Pay", new { PaymentId = payment.PaymentId });
@@ -146,7 +171,10 @@ namespace WebSite.EndPoint.Controllers
         }
 
 
-
+        /// <summary>
+        /// بدست آوردن و یا ایجاد سبد خرید
+        /// </summary>
+        /// <returns></returns>
         private BasketDto GetOrSetBasket()
         {
             if (signInManager.IsSignedIn(User))

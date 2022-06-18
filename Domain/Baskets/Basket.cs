@@ -27,7 +27,12 @@ namespace Domain.Baskets
         {
             this.BuyerId = buyerId;
         }
-
+        /// <summary>
+        /// افزودن محصول به سبد خرید
+        /// </summary>
+        /// <param name="catalogItemId"></param>
+        /// <param name="quantity"></param>
+        /// <param name="unitPrice"></param>
         public void AddItem(int catalogItemId, int quantity, int unitPrice)
         {
             if (!Items.Any(p => p.CatalogItemId == catalogItemId))
@@ -38,14 +43,20 @@ namespace Domain.Baskets
             var existingItem = Items.FirstOrDefault(p => p.CatalogItemId == catalogItemId);
             existingItem.AddQuantity(quantity);
         }
-
+        /// <summary>
+        /// محاسبه قیمت محصول های موجود در سبد
+        /// </summary>
+        /// <returns></returns>
         public int TotalPrice()
         {
             int totalPrice = _items.Sum(p => p.UnitPrice * p.Quantity);
             totalPrice -= AppliedDiscount.GetDiscountAmount(totalPrice);
             return totalPrice;
         }
-
+        /// <summary>
+        /// محاسبه قیمت محصول های داخل سبد بدون تخفیف
+        /// </summary>
+        /// <returns></returns>
         public int TotalPriceWithOutDiescount()
         {
             int totalPrice = _items.Sum(p => p.UnitPrice * p.Quantity);
@@ -58,7 +69,9 @@ namespace Domain.Baskets
             this.AppliedDiscountId = discount.Id;
             this.DiscountAmount = discount.GetDiscountAmount(TotalPriceWithOutDiescount());
         }
-
+        /// <summary>
+        /// حذف تخفیف 
+        /// </summary>
         public void RemoveDescount()
         {
             AppliedDiscount = null;
@@ -87,12 +100,18 @@ namespace Domain.Baskets
             UnitPrice = unitPrice;
             SetQuantity(quantity);
         }
-
+        /// <summary>
+        /// افزودن و یا کاهش تعداد محصول انتخابی
+        /// </summary>
+        /// <param name="quantity"></param>
         public void AddQuantity(int quantity)
         {
             Quantity += quantity;
         }
-
+        /// <summary>
+        /// مقدار دهی تعداد محصول
+        /// </summary>
+        /// <param name="quantity"></param>
         public void SetQuantity(int quantity)
         {
             Quantity = quantity;

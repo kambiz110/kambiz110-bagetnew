@@ -44,12 +44,14 @@ namespace Common.Useful
         public static class DataSeeding
         {
             public const string AdminPassword = "K@rd!N1399";
-            public const string UserPassword = "Ww@1400+";
+            public const string CustomerPassword = "Ww@1400+";
 
             public const string AdminName = "Admin";
 
             public const string AdminEmail = "admin@admin.com";
+            public const string CustomerName = "customer";
 
+            public const string CustomerEmail = "customer@customer.com";
 
         }
 

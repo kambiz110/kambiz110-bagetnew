@@ -27,7 +27,13 @@ namespace Persistence.Seeding
                 GlobalConstants.DataSeeding.AdminName,
                 GlobalConstants.DataSeeding.AdminEmail,
                 GlobalConstants.AdministratorRoleName);
-
+            // creating admin user;
+            await CreateUser(
+                userManager,
+                roleManager,
+                GlobalConstants.DataSeeding.CustomerName,
+                GlobalConstants.DataSeeding.CustomerEmail,
+                GlobalConstants.UserRoleName);
             await CatalogAndbrandSeed(dbContext);
 
 
@@ -46,7 +52,7 @@ namespace Persistence.Seeding
                 Email = email,
             };
 
-            var userpassword = GlobalConstants.DataSeeding.UserPassword;
+            var userpassword = GlobalConstants.DataSeeding.CustomerPassword;
             var adminpassword = GlobalConstants.DataSeeding.AdminPassword;
             if (roleName != null)
             {
@@ -91,21 +97,24 @@ namespace Persistence.Seeding
                     await dbContext.CatalogBrands.AddAsync(brand);
                 }
             }
+            foreach (var car in GetCatalogCars())
+            {
+                if (!dbContext.CatologCars.AsNoTracking().Where(p => p.Id == car.Id).Any())
+                {
+                    await dbContext.CatalogBrands.AddAsync(car);
+                }
+            }
         }
 
         private static IEnumerable<CatalogType> GetCatalogTypes()
         {
             return new List<CatalogType>()
             {
-                new CatalogType() {  Id=1,  Type="کالای دیجیتال"},
-
-                new CatalogType() {  Id= 2,  Type="لوازم جانبی گوشی" , ParentCatalogTypeId = 1},
-                new CatalogType() {  Id= 3,  Type="پایه نگهدارنده گوشی" , ParentCatalogTypeId=2},
-                new CatalogType() {  Id= 4,  Type="پاور بانک (شارژر همراه)", ParentCatalogTypeId=2},
-                new CatalogType() {  Id= 5,  Type="کیف و کاور گوشی", ParentCatalogTypeId=2},
-
-
-
+                new CatalogType() {  Id=1,  Type="جلوبندی"},
+                new CatalogType() {  Id= 2,  Type="دیفرانسیل" , ParentCatalogTypeId = 1},
+                new CatalogType() {  Id= 3,  Type="موتور" , ParentCatalogTypeId=2},
+                new CatalogType() {  Id= 4,  Type="گریبکس", ParentCatalogTypeId=2},
+                new CatalogType() {  Id= 5,  Type="داشبورد", ParentCatalogTypeId=2},
             };
         }
 
@@ -113,14 +122,19 @@ namespace Persistence.Seeding
         {
             return new List<CatalogBrand>()
             {
-                new CatalogBrand() { Id=1, Brand = "سامسونگ" },
-                new CatalogBrand() { Id=2, Brand = "شیائومی " },
-                new CatalogBrand() { Id=3, Brand = "اپل" },
-                new CatalogBrand() { Id=4, Brand = "هوآوی" },
-                new CatalogBrand() { Id=5, Brand = "نوکیا " },
-                new CatalogBrand() { Id=6, Brand = "ال جی" }
+                new CatalogBrand() { Id=1, Brand = "ایساکو" },
+                new CatalogBrand() { Id=2, Brand = "اعزام" },
+                new CatalogBrand() { Id=3, Brand = "ایران یدک" }
             };
         }
-
+        private static IEnumerable<CatologCar> GetCatalogCars()
+        {
+            return new List<CatologCar>()
+            {
+                new CatologCar() { Id=1, Name = "تیبا" },
+                new CatologCar() { Id=2, Name = "پراید" },
+                new CatologCar() { Id=3, Name = "ساینا" }
+            };
+        }
     }
 }

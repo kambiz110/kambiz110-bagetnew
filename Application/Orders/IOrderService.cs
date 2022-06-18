@@ -42,8 +42,9 @@ namespace Application.Orders
                          .Include(p => p.Items)
                          .Include(p=> p.AppliedDiscount)
                          .SingleOrDefault(p => p.Id == BasketId);
-
+            //بدست آودن شناسه ای دی محصول های داخل سبد
             int[] Ids = basket.Items.Select(p => p.CatalogItemId).ToArray();
+            // بدست آوردن محصول های داخل سبد
             var catalogItems = context.CatalogItems
                 .Include(p => p.CatalogItemImages)
                 .Where(p => Ids.Contains(p.Id));
@@ -62,9 +63,10 @@ namespace Application.Orders
                return orderitem;
 
            }).ToList();
-
+            //بدست آوردن آدرس کاربر
             var userAddress = context.UserAddresses.SingleOrDefault(p => p.Id == UserAddressId);
             var address = mapper.Map<Address>(userAddress);
+            //ایجاد سفارش محصول
             var order = new Order(basket.BuyerId, address, orderItems, paymentMethod,basket.AppliedDiscount);
             context.Orders.Add(order);
             context.Baskets.Remove(basket);
