@@ -87,6 +87,8 @@ namespace WebSite.EndPoint.Controllers
                 //    MerchantId = merchendId,
                 //}, Payment.Mode.zarinpal).Result;
 
+
+                //using RestSharp;
                 var client = new RestClient("https://www.zarinpal.com/pg/rest/WebGate/PaymentVerification.json");
                 client.Timeout = -1;
                 var request = new RestRequest(Method.POST);
