@@ -2,10 +2,44 @@
 @model CatalogItemPDPDto;
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Name;
+    ViewData["Description"] = Model.Description;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    //ViewData["Title"] = "Page Title";
 
+    Html.SetSeoInfo(seoInfo =>
+    {
+        seoInfo.SetCommonInfo(
+            pageTitle: "SEO Tags for ASP.NET Core",
+            description: "Create all SEO tags you need such as meta, link, twitter card (twitter:), open graph (og:), and ...",
+            url: "https://site.com/url/",
+            keywordTags: new[] { "SEO", "AspNetCore", "MVC", "RazorPages" }, //optional
+            seeAlsoUrls: new[] { "https://site.com/see-also-1", "https://site.com/see-also-2" }  //optional
+        );
+
+        seoInfo.SetImageInfo(
+            url: "https://site.com/uploads/image.jpg",
+          //  width: 1280,  //optional
+          //  height: 720,  //optional
+            alt: "Image alt"//,  //optional
+                               //mimeType: "image/jpeg", //optional (detects from url file extension if not set.)
+           // cardType: SeoTags.TwitterCardType.SummaryLargeImage   //optional
+        );
+
+        seoInfo.SetArticleInfo(
+            authorName: "Author Name",
+            publishDate: DateTimeOffset.Now,
+            modifiedDate: DateTimeOffset.Now,  //optional
+            authorUrl: "https://github.com/author-profile",  //optional
+            section: "Article Topic"  //optional
+        );
+
+//Add another rss feed. (only for this page) (optional)
+seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.FeedType.Rss);
+    });
+}
 <div class="container">
     <div class="row mb-1">
         <div class="col-12">

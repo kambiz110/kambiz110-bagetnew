@@ -1,4 +1,4 @@
-
+﻿
 using Application.BasketsService;
 using Application.Catalogs.CatalogItems.GetCatalogIItemPLP;
 using Application.Catalogs.CatalogItems.GetCatalogItemPDP;
@@ -51,16 +51,24 @@ namespace WebSite.EndPoint
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddSeoTags(seoInfo =>
+            {
+                seoInfo.SetSiteInfo(
+                    siteTitle: "لوازم یدکی خودرو زنجانی"
+                );
+            });
+
+
 
             #region  Connection String
             services.AddTransient<IDataBaseContext, DataBaseContext>();
             services.AddTransient<IIdentityDatabaseContext, IdentityDatabaseContext>();
-           
+
             string connection = Configuration["ConnectionString:SqlServer"];
             services.AddDbContext<DataBaseContext>(option => option.UseSqlServer(connection));
             services.AddDbContext<InMemoryContext>(option => option.UseInMemoryDatabase("OnlineVisitor"));
             services.AddScoped<InMemoryContext>();
-    
+
             services.AddIdentityService(Configuration);
             services.AddAuthorization();
             services.ConfigureApplicationCookie(option =>
@@ -80,12 +88,12 @@ namespace WebSite.EndPoint
             services.AddTransient<IGetCatalogItemPDPService, GetCatalogItemPDPService>();
             services.AddTransient<IBasketService, BasketService>();
             services.AddTransient<IUserAddressService, UserAddressService>();
-            services.AddTransient<IOrderService,  OrderService>();
-            services.AddTransient<IPaymentService,  PaymentService>();
-            services.AddTransient<IDiscountService,  DiscountService>();
-            services.AddTransient<IDiscountHistoryService,  DiscountHistoryService>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IPaymentService, PaymentService>();
+            services.AddTransient<IDiscountService, DiscountService>();
+            services.AddTransient<IDiscountHistoryService, DiscountHistoryService>();
             services.AddTransient<ICatalogItemService, CatalogItemService>();
-            services.AddTransient<ICustomerOrdersService,  CustomerOrdersService>();
+            services.AddTransient<ICustomerOrdersService, CustomerOrdersService>();
             services.AddTransient<IHomePageService, HomePageService>();
             services.AddScoped<SaveVisitorFilter>();
 
@@ -107,7 +115,7 @@ namespace WebSite.EndPoint
                 var identityDatabase = serviceScope.ServiceProvider.GetRequiredService<IdentityDatabaseContext>();
                 dbContext.Database.Migrate();
                 identityDatabase.Database.Migrate();
-                new ApplicationDbContextSeeder().SeedAsync(dbContext, identityDatabase,serviceScope.ServiceProvider).GetAwaiter().GetResult();
+                new ApplicationDbContextSeeder().SeedAsync(dbContext, identityDatabase, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
             if (env.IsDevelopment())
             {
@@ -138,6 +146,10 @@ namespace WebSite.EndPoint
                 endpoints.MapControllerRoute(
                               name: "default",
                               pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+              name: "ProductDetails",
+              pattern: "product/{car}/{catalogtype}/pid-{id}/{slug?}",
+                defaults: new { controller = "product", action = "Details" });
 
                 endpoints.MapHub<OnlineVisitorHub>("/chathub");
             });

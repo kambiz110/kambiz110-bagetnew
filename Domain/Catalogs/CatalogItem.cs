@@ -99,7 +99,7 @@ namespace Domain.Catalogs
         public ICollection<OrderItem>  OrderItems { get; set; }
 
         /// <summary>
-        /// 
+        /// دریافت قیمت
         /// </summary>
         /// <returns></returns>
         private int GetPrice()

@@ -25,7 +25,7 @@ namespace WebSite.EndPoint.Controllers
             var data = getCatalogIItemPLPService.Execute(catlogPLPRequestDto);
             return View(data);
         }
-
+        [Route("[controller]/[action]/{car}/{catalogtype}/pid-{id}/{slug?}")]
         public IActionResult Details(int Id)
         {
             var data = getCatalogItemPDPService.Execute(Id);
