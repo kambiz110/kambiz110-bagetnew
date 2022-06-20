@@ -101,7 +101,7 @@ namespace Persistence.Seeding
             {
                 if (!dbContext.CatologCars.AsNoTracking().Where(p => p.Id == car.Id).Any())
                 {
-                    await dbContext.CatalogBrands.AddAsync(car);
+                    await dbContext.CatologCars.AddAsync(car);
                 }
             }
         }

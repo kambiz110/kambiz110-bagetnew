@@ -101,14 +101,14 @@ namespace Admin.EndPoint
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //Seed data on application startup
-            using (var serviceScope = app.ApplicationServices.CreateScope())
-            {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<DataBaseContext>();
-                var identityDatabase = serviceScope.ServiceProvider.GetRequiredService<IdentityDatabaseContext>();
-                dbContext.Database.Migrate();
-                identityDatabase.Database.Migrate();
-                new ApplicationDbContextSeeder().SeedAsync(dbContext, identityDatabase, serviceScope.ServiceProvider).GetAwaiter().GetResult();
-            }
+            //using (var serviceScope = app.ApplicationServices.CreateScope())
+            //{
+            //    var dbContext = serviceScope.ServiceProvider.GetRequiredService<DataBaseContext>();
+            //    var identityDatabase = serviceScope.ServiceProvider.GetRequiredService<IdentityDatabaseContext>();
+            //    dbContext.Database.Migrate();
+            //    identityDatabase.Database.Migrate();
+            //    new ApplicationDbContextSeeder().SeedAsync(dbContext, identityDatabase, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            //}
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
