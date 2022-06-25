@@ -13,9 +13,31 @@ namespace Application.Discounts
 {
     public interface IDiscountService
     {
+        /// <summary>
+        /// بدست آوردن محصول ها با شرط جستجو
+        /// </summary>
+        /// <param name="searchKey">عبارت جستجو</param>
+        /// <returns></returns>
         List<CatlogItemDto> GetCatalogItems(string searchKey);
+        /// <summary>
+        /// اعمال تخفیف روی محصول های سبد خرید
+        /// </summary>
+        /// <param name="CoponCode"></param>
+        /// <param name="BasketId"></param>
+        /// <returns></returns>
         bool ApplyDiscountInBasket(string CoponCode, int BasketId);
+        /// <summary>
+        /// حذف تخفیف برای سبد خرید
+        /// </summary>
+        /// <param name="BasketId"></param>
+        /// <returns></returns>
         bool RemoveDiscountFromBasket(int BasketId);
+        /// <summary>
+        /// اعتبار سنجی کد تخفیف
+        /// </summary>
+        /// <param name="couponCode">عبارت کوپن</param>
+        /// <param name="user">کاربر</param>
+        /// <returns></returns>
         BaseDto IsDiscountValid(string couponCode, User user);
     }
 
@@ -31,7 +53,12 @@ namespace Application.Discounts
             this.context = context;
             this.discountHistoryService = discountHistoryService;
         }
-
+        /// <summary>
+        /// اعمال تخفیف روی محصول های سبد خرید
+        /// </summary>
+        /// <param name="CoponCode"></param>
+        /// <param name="BasketId"></param>
+        /// <returns></returns>
         public bool ApplyDiscountInBasket(string CoponCode, int BasketId)
         {
             var basket = context.Baskets
@@ -41,12 +68,20 @@ namespace Application.Discounts
 
             var discount = context.Discount.Where(p => p.CouponCode.Equals(CoponCode))
                 .FirstOrDefault();
+            if (discount!=null)
+            {
+                basket.ApplyDiscountCode(discount);
+                context.SaveChanges();
+                return true;
+            }
 
-            basket.ApplyDiscountCode(discount);
-            context.SaveChanges();
-            return true;
+            return false;
         }
-
+        /// <summary>
+        /// بدست آوردن محصول ها با شرط جستجو
+        /// </summary>
+        /// <param name="searchKey">عبارت جستجو</param>
+        /// <returns></returns>
         public List<CatlogItemDto> GetCatalogItems(string searchKey)
         {
             if (!string.IsNullOrEmpty(searchKey))
@@ -74,7 +109,12 @@ namespace Application.Discounts
             }
 
         }
-
+        /// <summary>
+        /// اعتبار سنجی کد تخفیف
+        /// </summary>
+        /// <param name="couponCode">عبارت کوپن</param>
+        /// <param name="user">کاربر</param>
+        /// <returns></returns>
         public BaseDto IsDiscountValid(string couponCode, User user)
         {
             var discount = context.Discount
@@ -108,7 +148,12 @@ namespace Application.Discounts
 
         }
 
-
+        /// <summary>
+        /// چک کردن محدودیت استفاده از کوپن تخفیف
+        /// </summary>
+        /// <param name="discount">تخفیف</param>
+        /// <param name="user">کاربر</param>
+        /// <returns></returns>
         private BaseDto CheckDiscountLimitations(Discount discount, User user)
         {
             switch (discount.DiscountLimitation)
@@ -156,7 +201,11 @@ namespace Application.Discounts
             return new BaseDto(true, null);
 
         }
-
+        /// <summary>
+        /// حذف تخفیف برای سبد خرید
+        /// </summary>
+        /// <param name="BasketId"></param>
+        /// <returns></returns>
         public bool RemoveDiscountFromBasket(int BasketId)
         {
             var basket = context.Baskets.Find(BasketId);

@@ -143,6 +143,7 @@ namespace WebSite.EndPoint.Controllers
 
         [AllowAnonymous]
         [HttpPost]
+        //اعمال تخفیف روی سبد خرید
         public IActionResult ApplyDiscount(string CouponCode,int BasketId)
         {
             var user = userManager.GetUserAsync(User).Result;
@@ -164,6 +165,7 @@ namespace WebSite.EndPoint.Controllers
 
 
         [AllowAnonymous]
+        //حذف تخفیف از سبد خرید
         public IActionResult RemoveDiscount(int id)
         {
             discountService.RemoveDiscountFromBasket(id);

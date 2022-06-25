@@ -16,7 +16,9 @@ namespace Domain.Baskets
         public string BuyerId { get; private set; }
         private readonly List<BasketItem> _items = new List<BasketItem>();
 
-
+        /// <summary>
+        /// مبلغ تخفیف
+        /// </summary>
         public int DiscountAmount { get; private set; } = 0;
         public Discount AppliedDiscount { get; private set; }
         public int? AppliedDiscountId { get; private set; }

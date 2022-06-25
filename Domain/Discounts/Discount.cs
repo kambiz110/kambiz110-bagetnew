@@ -48,7 +48,7 @@ namespace Domain.Discounts
         /// <summary>
         /// محاسبه مقدار تخفیف براساس نوع تخفیف(درصد یا مبلغ)
         /// </summary>
-        /// <param name="amount"></param>
+        /// <param name="amount"> قیمت</param>
         /// <returns></returns>
         public int GetDiscountAmount(int amount)
         {
@@ -66,7 +66,9 @@ namespace Domain.Discounts
             return result;
         }
     }
-
+    /// <summary>
+    /// نوع تخفیف
+    /// </summary>
     public enum DiscountType
     {
         [Display(Name ="تخفیف برای محصولات")]
@@ -87,7 +89,7 @@ namespace Domain.Discounts
         /// <summary>
         /// بدونه محدودیت تعداد
         /// </summary>
-        [Display(Name = "بدونه محدودیت تعداد")]
+        [Display(Name = "بدون محدودیت تعداد")]
         Unlimited = 0,
         /// <summary>
         /// فقط N بار

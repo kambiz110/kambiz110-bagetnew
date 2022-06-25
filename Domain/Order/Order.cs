@@ -22,7 +22,9 @@ namespace Domain.Order
         public OrderStatus OrderStatus { get; private set; }
         private readonly List<OrderItem> _orderItems = new List<OrderItem>();
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
-
+        /// <summary>
+        /// مبلغ تخفیف
+        /// </summary>
         public decimal DiscountAmount { get; private set; }
         public Discount AppliedDiscount { get; private set; }
         public int? AppliedDiscountId { get; private set; }
@@ -30,8 +32,8 @@ namespace Domain.Order
 
         public Order(string userId, Address address,
             List<OrderItem> orderItems,
-            PaymentMethod paymentMethod 
-            ,Discount discount)
+            PaymentMethod paymentMethod
+            , Discount discount)
         {
             UserId = userId;
             Address = address;
@@ -87,15 +89,15 @@ namespace Domain.Order
         public int TotalPrice()
         {
             int totalPrice = _orderItems.Sum(p => p.UnitPrice * p.Units);
-            if(AppliedDiscount != null)
+            if (AppliedDiscount != null)
             {
-            totalPrice -= AppliedDiscount.GetDiscountAmount(totalPrice);
+                totalPrice -= AppliedDiscount.GetDiscountAmount(totalPrice);
             }
             return totalPrice;
         }
 
         /// <summary>
-        /// دریافت مبلغ کل بدونه در نظر گرفتن کد تخفیف
+        /// دریافت مبلغ کل بدون در نظر گرفتن کد تخفیف
         /// </summary>
         /// <returns></returns>
         public int TotalPriceWithOutDiescount()
