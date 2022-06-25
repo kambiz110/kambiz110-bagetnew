@@ -44,7 +44,7 @@ namespace Domain.Baskets
             existingItem.AddQuantity(quantity);
         }
         /// <summary>
-        /// محاسبه قیمت محصول های موجود در سبد
+        /// محاسبه قیمت محصول های موجود در سبد با اعمال تخفیف
         /// </summary>
         /// <returns></returns>
         public int TotalPrice()
@@ -54,7 +54,7 @@ namespace Domain.Baskets
             return totalPrice;
         }
         /// <summary>
-        /// محاسبه قیمت محصول های داخل سبد بدون تخفیف
+        /// محاسبه قیمت محصول های داخل سبد بدون اعمال تخفیف
         /// </summary>
         /// <returns></returns>
         public int TotalPriceWithOutDiescount()
@@ -62,7 +62,10 @@ namespace Domain.Baskets
             int totalPrice = _items.Sum(p => p.UnitPrice * p.Quantity);
             return totalPrice;
         }
-
+        /// <summary>
+        /// اعمال تخفیف به سبد خرید
+        /// </summary>
+        /// <param name="discount"></param>
         public void ApplyDiscountCode(Discount discount)
         {
             this.AppliedDiscount = discount;

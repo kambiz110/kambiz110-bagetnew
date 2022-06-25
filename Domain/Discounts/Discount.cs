@@ -45,7 +45,11 @@ namespace Domain.Discounts
         public int DiscountLimitationId { get; set; }
 
 
-
+        /// <summary>
+        /// محاسبه مقدار تخفیف براساس نوع تخفیف(درصد یا مبلغ)
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns></returns>
         public int GetDiscountAmount(int amount)
         {
             var result = 0;
