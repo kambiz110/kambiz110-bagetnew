@@ -4,7 +4,96 @@
     Layout = null;
 }
 
-<div class="user-item cart-list">
+
+
+
+
+
+<div class="mini_cart_wrapper">
+    <a href="javascript:void(0)">
+        <i class="icon-shopping-bag2"></i>
+
+        @if (Model != null)
+        {
+
+            <span class="cart_price">
+                @Model.Total().ToString("n0") تومان <i class="ion-ios-arrow-down"></i>
+            </span>
+            <span class="cart_count">@Model.Items.Count()</span>
+        }
+        else
+        {
+            <span class="cart_price">
+                0 تومان <i class="ion-ios-arrow-down"></i>
+            </span>
+            <span class="cart_count">0</span>
+        }
+
+    </a>
+    <!--mini cart-->
+    <div class="mini_cart">
+        <div class="mini_cart_inner">
+            <div class="cart_close">
+                <div class="cart_text">
+                    <h3>سبد خرید</h3>
+                </div>
+                <div class="mini_cart_close">
+                    <a href="javascript:void(0)"><i class="icon-x"></i></a>
+                </div>
+            </div>
+            @if (Model != null)
+                foreach (var item in Model.Items)
+                {
+                    <div class="cart_item">
+                        <div class="cart_img">
+                            <a href="#">
+                                <img src="@item.ImageUrl"
+                                     alt="">
+                            </a>
+                        </div>
+                        <div class="cart_info">
+                            <a href="#"> @item.CatalogName</a>
+                         
+                            <p> تعداد: @item.Quantity عدد <span> @item.UnitPrice.ToString("n0") تومان</span></p>
+                        </div>
+                        <div class="cart_remove">
+
+                            <form asp-action="RemoveItemFromBasket" asp-controller="Basket" method="post">
+                                <input type="hidden" name="ItemId" value="@item.Id" />
+                                <button class="remove-item">
+                                    <i class="ion-android-close"></i>
+                                </button>
+
+                            </form>
+                        </div>
+                    </div>
+                }
+
+            <div class="mini_cart_table">
+                @*<div class="cart_total">
+                    <span>مجموع فرعی:</span>
+                    <span class="price">138.00 تومان</span>
+                </div>*@
+                <div class="cart_total mt-10">
+                    <span>جمع کل:</span>
+                    <span class="price">@Model.Total().ToString("n0") تومان</span>
+                </div>
+            </div>
+        </div>
+        <div class="mini_cart_footer">
+            <div class="cart_button">
+                <a asp-controller="basket" asp-action="index" class="active">مشاهده سبد خرید</a>
+            </div>
+        
+
+        </div>
+    </div>
+    <!--mini cart end-->
+</div>
+
+
+
+@*<div class="user-item cart-list">
     <a href="#">
         <i class="fal fa-shopping-basket"></i>
 
@@ -25,31 +114,36 @@
                     foreach (var item in Model.Items)
                     {
                         <li class="cart-item">
-                            <span class="d-flex align-items-center mb-2">
-                                <a href="#">
-                                    <img src="@item.ImageUrl" alt="">
-                                </a>
-                                <span>
+                                <span class="d-flex align-items-center mb-2">
                                     <a href="#">
-                                        <span class="title-item">
-                                            @item.CatalogName
-                                        </span>
+                                        <img src="@item.ImageUrl" alt="">
                                     </a>
-                                    <span class="color d-flex align-items-center">
-                                        تعداد:
-                                        <span>@item.Quantity</span>
+                                    <span>
+                                        <a href="#">
+                                            <span class="title-item">
+                                                @item.CatalogName
+                                            </span>
+                                        </a>
+                                        <span class="color d-flex align-items-center">
+                                            تعداد:
+                                            <span>@item.Quantity</span>
+                                        </span>
                                     </span>
                                 </span>
-                            </span>
-                            <span class="price"> @item.UnitPrice.ToString("n0") تومان</span>
-                            <form asp-action="RemoveItemFromBasket" asp-controller="Basket" method="post">
-                                <input type="hidden" name="ItemId" value="@item.Id" />
-                                <button class="remove-item">
-                                    <i class="far fa-trash-alt"></i>
-                                </button>
+                                <span class="price"> @item.UnitPrice.ToString("n0") تومان</span>
+                                <form asp-action="RemoveItemFromBasket" asp-controller="Basket" method="post">
+                                    <input type="hidden" name="ItemId" value="@item.Id" />
+                                    <button class="remove-item">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
 
-                            </form>
-                        </li>
+                                </form>
+                            </li>
+
+
+
+
+
                     }
             </ul>
         </li>
@@ -72,5 +166,4 @@
             </span>
         </li>
     </ul>
-</div>
-
+</div>*@

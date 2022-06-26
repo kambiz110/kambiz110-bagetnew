@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-
+    @Html.SeoTags()
     <!-- CSS
     ========================= -->
     <!-- Plugins CSS -->
@@ -24,6 +24,7 @@
     <link href="~/NewThem/assets/css/plugins.css" rel="stylesheet" />
     <!-- Main Style CSS -->
     <link href="~/NewThem/assets/css/style.css" rel="stylesheet" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 
 <body>
@@ -303,79 +304,9 @@
                                             <span class="wishlist_count">3</span>
                                         </a>
                                     </div>
-                                    <div class="mini_cart_wrapper">
-                                        <a href="javascript:void(0)">
-                                            <i class="icon-shopping-bag2"></i>
-                                            <span class="cart_price">
-                                                152.00 تومان <i class="ion-ios-arrow-down"></i>
-                                            </span>
-                                            <span class="cart_count">2</span>
-                                        </a>
-                                        <!--mini cart-->
-                                        <div class="mini_cart">
-                                            <div class="mini_cart_inner">
-                                                <div class="cart_close">
-                                                    <div class="cart_text">
-                                                        <h3>سبد خرید</h3>
-                                                    </div>
-                                                    <div class="mini_cart_close">
-                                                        <a href="javascript:void(0)"><i class="icon-x"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="cart_item">
-                                                    <div class="cart_img">
-                                                        <a href="#">
-                                                            <img src="~/NewThem/assets/img/s-product/product.jpg"
-                                                                 alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="cart_info">
-                                                        <a href="#">عنوان محصول</a>
-                                                        <p> تعداد: 1 عدد <span> 60.00 تومان </span></p>
-                                                    </div>
-                                                    <div class="cart_remove">
-                                                        <a href="#"><i class="ion-android-close"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="cart_item">
-                                                    <div class="cart_img">
-                                                        <a href="#">
-                                                            <img src="~/NewThem/assets/img/s-product/product2.jpg"
-                                                                 alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="cart_info">
-                                                        <a href="#">عنوان محصول</a>
-                                                        <p> تعداد: 1 عدد <span> 60.00 تومان </span></p>
-                                                    </div>
-                                                    <div class="cart_remove">
-                                                        <a href="#"><i class="ion-android-close"></i></a>
-                                                    </div>
-                                                </div>
 
-                                                <div class="mini_cart_table">
-                                                    <div class="cart_total">
-                                                        <span>مجموع فرعی:</span>
-                                                        <span class="price">138.00 تومان</span>
-                                                    </div>
-                                                    <div class="cart_total mt-10">
-                                                        <span>جمع کل:</span>
-                                                        <span class="price">138.00 تومان</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mini_cart_footer">
-                                                <div class="cart_button">
-                                                    <a href="cart.html">مشاهده سبد خرید</a>
-                                                </div>
-                                                <div class="cart_button">
-                                                    <a class="active" href="checkout.html">بررسی</a>
-                                                </div>
+                                    @await Component.InvokeAsync("BasketComponent")
 
-                                            </div>
-                                        </div>
-                                        <!--mini cart end-->
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -559,7 +490,8 @@
                                         <li class="mega_items d-none">
                                             <a href="shop.html">
                                                 خرید<i>
-                                                class="fa fa-angle-down"></i>
+                                                    class="fa fa-angle-down">
+                                                </i>
                                             </a>
                                             <div class="mega_menu">
                                                 <ul class="mega_menu_inner">
@@ -752,9 +684,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="welcome_title">
-                   
+
                         <h2> <span>خرید آنلاین فروشگاه لوازم یدکی خودرو زنجانی</span></h2>
-                      
+
                     </div>
                 </div>
             </div>
@@ -869,7 +801,7 @@
                     <div class="col-12">
                         <div class="section_title">
                             <h2>محصولات ما</h2>
-                          
+
                         </div>
                         <div class="product_tab_btn">
                             <ul class="nav" role="tablist" id="nav-tab">
@@ -1255,7 +1187,8 @@
                                                         <h4 class="product_name">
                                                             <a href="product-details.html">
                                                                 عنوان
-                                                                محصول</a>
+                                                                محصول
+                                                            </a>
                                                         </h4>
                                                         <div class="product_rating">
                                                             <ul>
@@ -1934,7 +1867,8 @@
                                                         <h4 class="product_name">
                                                             <a href="product-details.html">
                                                                 عنوان
-                                                                محصول</a>
+                                                                محصول
+                                                            </a>
                                                         </h4>
                                                         <div class="product_rating">
                                                             <ul>
@@ -3285,7 +3219,8 @@
                                                         <h4 class="product_name">
                                                             <a href="product-details.html">
                                                                 عنوان
-                                                                محصول</a>
+                                                                محصول
+                                                            </a>
                                                         </h4>
                                                         <div class="product_rating">
                                                             <ul>
@@ -4982,7 +4917,7 @@
                         <div class="copyright_area">
                             <p>
                                 &copy; 1400 <a href="#" class="">گروه کاردین</a>. ساخته شده با <i class="fa fa-heart"></i> توسط <a target="_blank"
-                                                                                                                            href="https://www.rtl-theme.com/author/najma/">نجمه بهرمن</a>
+                                                                                                                                   href="https://www.rtl-theme.com/author/najma/">نجمه بهرمن</a>
                             </p>
                         </div>
                     </div>
@@ -5144,26 +5079,26 @@
                         </label>
                         <div id="frm_subscribe">
                             <form name="subscribe" id="subscribe_popup">-->
-                                <!-- <span class="required">*</span><span>Enter you email address here...</span>-->
-                                <!--<input type="text" value="" name="subscribe_pemail" id="subscribe_pemail"
-                                       placeholder="آدرس ایمیل خود را در اینجا وارد کنید...">
-                                <input type="hidden" value="" name="subscribe_pname" id="subscribe_pname">
-                                <div id="notification"></div>
-                                <a class="theme-btn-outlined" onclick="email_subscribepopup()"><span>اشتراک</span></a>
-                            </form>
-                            <div class="subscribe-bottom">
-                                <input type="checkbox" id="newsletter_popup_dont_show_again">
-                                <label for="newsletter_popup_dont_show_again">دیگر این پنجره نشان داده نشود</label>
-                            </div>
-                        </div>-->
-                        <!-- /#frm_subscribe -->
-                    <!--</div>-->
-                    <!-- /.box-content -->
-                <!--</div>
-            </div>
+    <!-- <span class="required">*</span><span>Enter you email address here...</span>-->
+    <!--<input type="text" value="" name="subscribe_pemail" id="subscribe_pemail"
+                   placeholder="آدرس ایمیل خود را در اینجا وارد کنید...">
+            <input type="hidden" value="" name="subscribe_pname" id="subscribe_pname">
+            <div id="notification"></div>
+            <a class="theme-btn-outlined" onclick="email_subscribepopup()"><span>اشتراک</span></a>
+        </form>
+        <div class="subscribe-bottom">
+            <input type="checkbox" id="newsletter_popup_dont_show_again">
+            <label for="newsletter_popup_dont_show_again">دیگر این پنجره نشان داده نشود</label>
+        </div>
+    </div>-->
+    <!-- /#frm_subscribe -->
+    <!--</div>-->
+    <!-- /.box-content -->
+    <!--</div>
+        </div>
 
-        </div>-->
-        <!-- /.box -->
+    </div>-->
+    <!-- /.box -->
     <!--</div>-->
     <!--news letter popup start-->
     <!-- JS
@@ -5175,6 +5110,7 @@
 
 
     @RenderBody()
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 
 
