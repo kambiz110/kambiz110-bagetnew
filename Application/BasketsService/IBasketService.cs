@@ -121,10 +121,11 @@ namespace Application.BasketsService
                     CatalogName = item.CatalogItem.Name,
                     Quantity = item.Quantity,
                     UnitPrice = item.CatalogItem.Price,
+                    OldPrice=item.CatalogItem.OldPrice,
                     ImageUrl = uriComposerService.ComposeImageUri(item?.CatalogItem?
                    .CatalogItemImages?.FirstOrDefault()?.Src ?? ""),
 
-                }).ToList(),
+                }).ToList()
             };
 
         }
@@ -236,6 +237,7 @@ namespace Application.BasketsService
         public int CatalogItemid { get; set; }
         public string CatalogName { get; set; }
         public int UnitPrice { get; set; }
+        public int? OldPrice { get; set; }
         public int Quantity { get; set; }
         public string ImageUrl { get; set; }
     }

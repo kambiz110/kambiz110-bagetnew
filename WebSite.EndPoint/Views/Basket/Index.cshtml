@@ -5,6 +5,154 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!--shopping cart area start -->
+<div class="cart_page_bg">
+    <div class="container">
+        <div class="shopping_cart_area">
+            <form action="#">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table_desc">
+                            <div class="cart_page">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="product_remove">حذف</th>
+                                            <th class="product_thumb">عکس</th>
+                                            <th class="product_name">محصول</th>
+                                            <th class="product-price">قیمت</th>
+                                            <th class="product_quantity">تعداد</th>
+                                            <th class="product_total">مجموع</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var item in Model.Items)
+                                        {
+                                            <tr>
+
+                                                <td class="product_remove">
+
+                                                    <form method="post" asp-action="RemoveItemFromBasket">
+                                                        <input name="ItemId" type="hidden" value="@item.Id" />
+
+                                                        <button type="submit" class="item-remove-btn mr-3">
+                                                            <i class="fa fa-trash-o"></i>
+                                                            حذف
+                                                        </button>
+                                                    </form>
+
+                                                </td>
+                                                <td class="product_thumb">
+
+                                                    <img src="@item.ImageUrl" width="100" height="100" alt="item">
+
+                                                </td>
+                                                <td class="product_name"><a href="#">روغن موتور</a></td>
+                                                <td class="product-price">
+                                                    @item.UnitPrice.ToString("n0") تومان
+                                                    @if (item.OldPrice!=null)
+                                                    {
+                                                        <span class="old_price" style=" text-decoration: line-through;color:red;">@item.OldPrice?.ToString("n0") تومان</span>
+                                                    }
+
+
+                                                </td>
+                                                <td class="product_quantity">
+
+                                                    <label>تعداد</label> <input min="1" max="100" onchange="SetQuantity('@item.Id')" id="quantity-@item.Id" value="@item.Quantity" type="number">
+
+                                                </td>
+                                                <td class="product_total">
+                                                    @{var price = (item.UnitPrice * item.Quantity);
+
+                                                        <text> <span>@price.ToString("n0")</span> تومان</text>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="cart_submit d-none">
+                                <button type="submit">به روز رسانی سبد خرید</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--coupon code area start-->
+                <div class="coupon_area">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <form class="coupon_code left" method="post" asp-action="ApplyDiscount">
+                                <input type="hidden" value="@Model.Id" name="BasketId" />
+                                <h3>تخفیف</h3>
+                                <div class="coupon_inner">
+                                    <p>اگر کد تخفیف خود را دارید وارد کنید.</p>
+                                    <input placeholder="کد تخفیف" type="text">
+                                    <button type="submit">اعمال تخفیف</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="coupon_code right">
+                                <h3>مجموع سبد خرید</h3>
+                                <div class="coupon_inner">
+                                    <div class="cart_subtotal">
+                                        <p>جمع کل</p>
+                                        <p class="cart_amount">@Model.TotalWithOutDiescount().ToString("n0") تومان</p>
+                                    </div>
+                                    @if (Model.DiscountAmount > 0)
+                                    {
+                                        <div class="d-flex justify-content-between px-3 py-2">
+                                            <span class="text-muted">تخفیف کالاها</span>
+                                            <span class="text-danger">
+                                                @Model.DiscountAmount.ToString("n0")
+                                                <span class="text-sm">تومان</span>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex justify-content-between px-3 py-2">
+                                            <a asp-action="RemoveDiscount" asp-route-id="@Model.Id" class="text-danger">
+                                                <i class="fa fa-closed-captioning"></i>
+                                                حذف تخفیف
+                                            </a>
+                                        </div>
+                                    }
+                                    <div class="cart_subtotal ">
+                                        <p>هزینه ارسال</p>
+                                        <p class="cart_amount"><span> نرخ ثابت:</span> 255.00 تومان</p>
+                                    </div>
+                                    <a href="#">محاسبه حمل و نقل</a>
+
+                                    <div class="cart_subtotal">
+                                        <p>جمع کل</p>
+                                        <p class="cart_amount"> @Model.Total().ToString("n0") تومان</p>
+                                    </div>
+                                    <div class="checkout_btn">
+                                        <a asp-action="ShippingPayment" class="btn btn-danger btn-block py-2">ادامه فرایند خرید</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--coupon code area end-->
+            </form>
+        </div>
+    </div>
+</div>
+<!--shopping cart area end -->
+
+
+
+
+
+
+
+
+
 
 <div class="container">
     <div class="row mb-4">
@@ -166,23 +314,23 @@
 
             </div>
 
-       
+
         </div>
     </div>
 </div>
 
 @section Scripts
 {
-<script>
-    function SetQuantity(itemId) {
-        var quantity = $("#quantity-"+itemId).val();
-        $.ajax({
-            type: "POST",
-            url: "/basket/setquantity?basketItemId=" + itemId + "&&quantity=" + quantity,
-            success: function () {
-                location.reload();
-            }
-        })
-    }
-</script>
+    <script>
+        function SetQuantity(itemId) {
+            var quantity = $("#quantity-" + itemId).val();
+            $.ajax({
+                type: "POST",
+                url: "/basket/setquantity?basketItemId=" + itemId + "&&quantity=" + quantity,
+                success: function () {
+                    location.reload();
+                }
+            })
+        }
+    </script>
 }
