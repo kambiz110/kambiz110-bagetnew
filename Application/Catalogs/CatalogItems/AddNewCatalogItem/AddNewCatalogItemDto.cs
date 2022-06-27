@@ -10,6 +10,11 @@ namespace Application.Catalogs.CatalohItems.AddNewCatalogItem
         public string Description { get; set; }
         public string Slug { get; set; }
         public int Price { get; set; }
+        public int Importance { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int Length { get; set; }
+        public int Weight { get; set; }
         public int CatalogTypeId { get; set; }
         public int CatalogBrandId { get; set; }
         public int CatologCarId { get; set; }

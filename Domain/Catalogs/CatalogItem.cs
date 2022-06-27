@@ -8,9 +8,9 @@ namespace Domain.Catalogs
     [Auditable]
     public class CatalogItem
     {
-        public CatalogItem(int pris , string name , string descript , string slug
-            , int catalogCompanyId , int catalogTypeId , int catalogBrandId , int catologCarId
-            , int availableStock, int restockThreshold, int maxStockThreshold)
+        public CatalogItem(int pris, string name, string descript, string slug
+            , int catalogCompanyId, int catalogTypeId, int catalogBrandId, int catologCarId
+            , int availableStock, int restockThreshold, int maxStockThreshold, int importance, int width, int height, int length, int weight = 0)
         {
             this._price = pris;
             this.Name = name;
@@ -18,16 +18,21 @@ namespace Domain.Catalogs
             this.Slug = slug;
             this.CatalogCompanyId = catalogCompanyId;
             this.CatalogTypeId = catalogTypeId;
-           this.CatalogBrandId =catalogBrandId;
+            this.CatalogBrandId = catalogBrandId;
             this.AvailableStock = availableStock;
             this.MaxStockThreshold = maxStockThreshold;
             this.RestockThreshold = restockThreshold;
             this.CatologCarId = catologCarId;
+            this.Importance = importance;
+            this.Width = width;
+            this.Height = height;
+            this.Length = length;
+            Weight = weight;
         }
 
-        public CatalogItem(int id,int pris, string name, string descript, string slug
+        public CatalogItem(int id, int pris, string name, string descript, string slug
        , int catalogCompanyId, int catalogTypeId, int catalogBrandId, int catologCarId
-       , int availableStock, int restockThreshold, int maxStockThreshold)
+       , int availableStock, int restockThreshold, int maxStockThreshold, int importance, int width , int height, int length, int weight = 0)
         {
             this.Id = id;
             this._price = pris;
@@ -41,6 +46,11 @@ namespace Domain.Catalogs
             this.MaxStockThreshold = maxStockThreshold;
             this.RestockThreshold = restockThreshold;
             this.CatologCarId = catologCarId;
+            this.Importance = importance;
+            this.Width = width;
+            this.Height = height;
+            this.Length = length;
+            this.Weight = weight;
         }
         public CatalogItem()
         {
@@ -49,7 +59,11 @@ namespace Domain.Catalogs
         private int _price = 0;
         private int? _oldPrice = null;
 
-
+        public int Importance { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int Length { get; set; }
+        public int Weight { get; set; }
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

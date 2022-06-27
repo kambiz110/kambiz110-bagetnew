@@ -53,6 +53,54 @@
 
                         </div>
                         <hr />
+
+
+
+
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput">وزن محصول </label>
+                                    <input type="text" asp-for="Data.Weight" class="form-control" id="Weight">
+                                    <span asp-validation-for="Data.Weight" class="text-danger"></span>
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput"> عرض محصول</label>
+                                    <input type="number" asp-for="Data.Width" class="form-control" id="Width">
+                                    <span asp-validation-for="Data.Width" class="text-danger"></span>
+
+                                </fieldset>
+                            </div>
+
+                            <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput">طول محصول</label>
+                                    <input type="number" asp-for="Data.Length" class="form-control" id="Length">
+                                    <span asp-validation-for="Data.Length" class="text-danger"></span>
+
+                                </fieldset>
+                            </div>
+
+                            <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput">ارتفاع محصول</label>
+                                    <input type="number" asp-for="Data.Height" class="form-control" id="Height">
+                                    <span asp-validation-for="Data.Height" class="text-danger"></span>
+                                </fieldset>
+                            </div>
+
+                        </div>
+                        <hr />
+
+
+
+
+
+
+
+
                         <div class="row">
 
 
@@ -87,7 +135,7 @@
                         </div>
                         <hr />
                         <div class="row">
-                            <div class="col-xl-6 col-lg-6 col-sm-12 mb-1">
+                            <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> قیمت</label>
                                     <input type="number" asp-for="Data.Price" class="form-control " id="currency">
@@ -95,7 +143,19 @@
 
                                 </fieldset>
                             </div>
-                            <div class="col-xl-6 col-lg-6 col-sm-12 mb-1">
+                            <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput"> اهمیت قرار گیری در صفحه</label>
+                                    <select type="number" asp-for="Data.Importance" class="form-control " id="Importance">
+                                        <option value="1">عادی</option>
+                                        <option value="2">صفحه اصلی</option>
+                                        <option value="3">ویژه</option>
+                                    </select>
+                                    <span asp-validation-for="Data.Importance" class="text-danger"></span>
+
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">تصاویر </label>
                                     <input type="file" multiple class="form-control" accept="image/*" id="Images">
@@ -250,6 +310,11 @@
             var data = new FormData();
             //دریافت مقادیر از تکس باکس ها و....
             data.append("Id", $("#Id").val());
+            data.append("Importance", $('#Importance').find('option:selected').val());
+            data.append("Width", $("#Width").val());
+            data.append("Height", $("#Height").val());
+            data.append("Length", $("#Length").val());
+            data.append("Weight", $("#Weight").val());
             data.append("Name", $("#Name").val());
             data.append("AvailableStock", $("#AvailableStock").val());
             data.append("RestockThreshold", $("#RestockThreshold").val());

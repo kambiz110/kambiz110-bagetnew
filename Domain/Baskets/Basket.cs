@@ -23,7 +23,6 @@ namespace Domain.Baskets
         public Discount AppliedDiscount { get; private set; }
         public int? AppliedDiscountId { get; private set; }
 
-
         public ICollection<BasketItem> Items => _items.AsReadOnly();
         public Basket(string buyerId)
         {
