@@ -1,103 +1,138 @@
 ﻿@page
 @model Admin.EndPoint.Pages.Discounts.CreateModel
 @{
+    ViewData["Title"] = "تخفیف ها";
 }
 @using Domain.Discounts;
 <link href="~/MdPersianDateTimePicker/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
 <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
-<link href="https://raw.githack.com/ttskch/select2-bootstrap4-theme/master/dist/select2-bootstrap4.css" rel="stylesheet">
-
-
+<link href="~/lib/select2/css/select2-bootstrap4.css" rel="stylesheet" />
 
 <div class="col-lg-12 col-12 layout-spacing">
     <div class="statbox widget box box-shadow">
         <div class="widget-header">
             <div class="row">
-                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                    <h4> تخفیف جدید  ثبت کنید  </h4>
-                </div>
+
+                <h4 class="col-xl-12 col-md-12 col-sm-12 col-12 btn btn-success">   ثبت تخفیف جدید   </h4>
+
             </div>
         </div>
         <div class="widget-content widget-content-area">
             <form asp-page="create" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="row">
-                    <div class="form-group  col-md-4">
-                        <label asp-for="model.Name"> </label>
-                        <input type="text" class="form-control" asp-for="model.Name">
-                        <span asp-validation-for="model.Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label asp-for="model.RequiresCouponCode"> </label>
-                        <input type="checkbox" class="form-control" asp-for="model.RequiresCouponCode">
-                        <span asp-validation-for="model.RequiresCouponCode" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label asp-for="model.CouponCode"> </label>
-                        <input type="text" class="form-control" asp-for="model.CouponCode">
-                        <span asp-validation-for="model.CouponCode" class="text-danger"></span>
-                    </div>
-                </div>
 
                 <div class="row">
-                    <div class="form-group  col-md-6">
-                        <label asp-for="model.StartDate"> </label>
-                        <input type="text" class="form-control" asp-for="model.StartDate">
-                        <span asp-validation-for="model.StartDate" class="text-danger"></span>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-group  col-md-12">
+                            <label asp-for="model.StartDate"> </label>
+                            <input asp-for="model.StartDate" type="hidden" />
+                            <input type="text" class="form-control" id="StartDateFake">
+                            <span asp-validation-for="model.StartDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label asp-for="model.EndDate"> </label>
+                            <input asp-for="model.EndDate" type="hidden" />
+                            <input type="text" class="form-control" id="EndDateFake">
+                            <span asp-validation-for="model.EndDate" class="text-danger"></span>
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label asp-for="model.EndDate"> </label>
-                        <input type="text" class="form-control" asp-for="model.EndDate">
-                        <span asp-validation-for="model.EndDate" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-md-2">
-                        <label asp-for="model.UsePercentage"> </label>
-                        <input class="form-control" asp-for="model.UsePercentage">
-                        <span asp-validation-for="model.UsePercentage" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label asp-for="model.DiscountPercentage"> </label>
-                        <input type="text" class="form-control" asp-for="model.DiscountPercentage">
-                        <span asp-validation-for="model.DiscountPercentage" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label asp-for="model.DiscountAmount"> </label>
-                        <input type="text" class="form-control" asp-for="model.DiscountAmount">
-                        <span asp-validation-for="model.DiscountAmount" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group  col-md-4">
-                        <label asp-for="model.DiscountTypeId"> </label>
-                        <select asp-for="model.DiscountTypeId" class="form-control" asp-items="@Html.GetEnumSelectList<DiscountType>()"></select>
-                        <span asp-validation-for="model.DiscountTypeId" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label asp-for="model.DiscountLimitationId"> </label>
-                        <select asp-for="model.DiscountLimitationId" class="form-control" asp-items="@Html.GetEnumSelectList<DiscountLimitationType>()"></select>
-
-                        <span asp-validation-for="model.DiscountLimitationId" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label asp-for="model.LimitationTimes"> </label>
-                        <input type="text" class="form-control" asp-for="model.LimitationTimes">
-                        <span asp-validation-for="model.LimitationTimes" class="text-danger"></span>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="row">
+                            <div class="form-group  col-md-4">
+                                <label asp-for="model.Name"> </label>
+                                <input type="text" class="form-control" asp-for="model.Name">
+                                <span asp-validation-for="model.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="model.RequiresCouponCode"> </label>
+                                <input type="checkbox" class="form-control" asp-for="model.RequiresCouponCode">
+                                <span asp-validation-for="model.RequiresCouponCode" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="model.CouponCode"> </label>
+                                <input type="text" class="form-control" asp-for="model.CouponCode">
+                                <span asp-validation-for="model.CouponCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label asp-for="model.UsePercentage"> </label>
+                                <input class="form-control" asp-for="model.UsePercentage">
+                                <span asp-validation-for="model.UsePercentage" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="model.DiscountPercentage"> </label>
+                                <input type="text" class="form-control" asp-for="model.DiscountPercentage">
+                                <span asp-validation-for="model.DiscountPercentage" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="model.DiscountAmount"> </label>
+                                <input type="number" class="form-control" asp-for="model.DiscountAmount">
+                                <span asp-validation-for="model.DiscountAmount" class="text-danger"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group  col-md-4">
-                        <label> محصولات را انتخاب کنید</label>
-                        <select class="form-control" asp-for="model.appliedToCatalogItem">
-                        </select>
-                    </div>
-                </div>
 
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="row">
+                            <div class="form-group  col-md-4">
+                                <label asp-for="model.DiscountTypeId"> </label>
+                                <select asp-for="model.DiscountTypeId" class="form-control">
+                                    <option value="0" selected>بر اساس محصول</option>
+                                </select>
+                                <span asp-validation-for="model.DiscountTypeId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="model.DiscountLimitationId"> </label>
+                                <select asp-for="model.DiscountLimitationId" class="form-control" asp-items="@Html.GetEnumSelectList<DiscountLimitationType>()"></select>
+
+                                <span asp-validation-for="model.DiscountLimitationId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="model.LimitationTimes"> </label>
+                                <input type="text" class="form-control" value="0" asp-for="model.LimitationTimes">
+                                <span asp-validation-for="model.LimitationTimes" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6" id="searchProductBox">
+                        <div class="row">
+                            <div class="form-group  col-md-12 fa-directions">
+                                <label> محصولات را انتخاب کنید</label>
+                                <select class="form-control" asp-for="model.appliedToCatalogItem">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row align-items-center">
+
+                            <div class="col-sm-8 my-1">
+                                <label class="sr-only" for="searchproductinput"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><span><i class='fas fa-search' style='font-size:24px;color:red;'></i></span> </div>
+                                    </div>
+                                    <input type="text" class="form-control" id="searchproductinput" placeholder="جستجو محصول">
+                                </div>
+                            </div>
+
+                            <div class="col-auto my-1">
+                                <button type="button" class="btn btn-primary" id="btnsearchproduct">جستجو</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+                </div>
                 <input type="submit" name="time" value="ثبت" class="btn btn-primary">
-                <a asp-page="index" class="btn btn-info">برگشت به لیست</a>
+                <a asp-action="index" asp-controller="Discounts" class="btn btn-info">برگشت به لیست</a>
 
             </form>
         </div>
@@ -110,60 +145,102 @@
     <script src="~/MdPersianDateTimePicker/jquery.md.bootstrap.datetimepicker.js"></script>
 
     <script>
-        $('#model_StartDate').MdPersianDateTimePicker({
-            targetTextSelector: '#model_StartDate',
-            toDate: true,
+        $('#StartDateFake').MdPersianDateTimePicker({
+
+            targetTextSelector: '#StartDateFake',
+            targetDateSelector: '#model_StartDate',
             groupId: 'rangeSelector1',
             placement: 'top',
-            enableTimePicker: true,
             dateFormat: 'yyyy-MM-dd HH:mm:ss',
             textFormat: 'yyyy-MM-dd HH:mm:ss',
+            fromDate: true,
+            enableTimePicker: true,
             modalMode: true
         });
 
-        $('#model_EndDate').MdPersianDateTimePicker({
-            targetTextSelector: '#model_EndDate',
-            toDate: true,
+        $('#EndDateFake').MdPersianDateTimePicker({
+            targetTextSelector: '#EndDateFake',
+            targetDateSelector: '#model_EndDate',
             groupId: 'rangeSelector1',
             placement: 'top',
-            enableTimePicker: true,
             dateFormat: 'yyyy-MM-dd HH:mm:ss',
             textFormat: 'yyyy-MM-dd HH:mm:ss',
+            fromDate: true,
+            enableTimePicker: true,
             modalMode: true
+
         });
+        $("#model_DiscountPercentage").parent().hide();//model_UsePercentage
+        $("#model_CouponCode").parent().hide();
+        $('#model_RequiresCouponCode').click(function () {
+            if (this.checked) {
+                $("#model_CouponCode").parent().show();
+                $("#searchProductBox").hide();
+            } else {
+                $("#model_CouponCode").parent().hide();
+                $("#searchProductBox").show();
+            }
+        });
+        $('#model_UsePercentage').click(function () {
+            $("#model_DiscountAmount").attr("value", "0");
+            console.log("value : ", $("#model_DiscountAmount").val());
+
+            if (this.checked) {
+                $("#model_DiscountAmount").parent().hide();
+                $("#model_DiscountAmount").attr("value", "0");
+                $("#model_DiscountPercentage").parent().show();
+            } else {
+                $("#model_DiscountAmount").parent().show();
+                $("#model_DiscountPercentage").parent().hide();
+            }
+        });
+
     </script>
 
     <script src="~/lib/select2/js/select2.js"></script>
-<script>
-    $("#model_appliedToCatalogItem").select2({
-        placeholder: "محصول را جستجو وانتخاب کنید",
-        allowClear: true,
-        multiple: true,
-        tags: true,
-        tokenSeparators: [',', ' '],
-        theme: "bootstrap4",
-        ajax: {
-            url: "/api/DiscountApi/SearchCatalogItem",
-            contentType: "application/json; charset=utf-8",
-            data: function (params) {
-                var query =
-                {
-                    term: params.term,
-                };
-                return query;
-            },
-            processResults: function (result) {
-                return {
-                    results: $.map(result, function (item) {
+    <script>
+        $("#model_appliedToCatalogItem").select2({
+            placeholder: "انتخاب کنید",
+            allowClear: true,
+            multiple: true,
+            tags: true,
+            tokenSeparators: [',', ' '],
+            theme: "bootstrap4",
+
+        });
+
+
+        $('#btnsearchproduct').click(function (e) {
+            e.preventDefault();
+            var term = $('#searchproductinput').val();
+          
+            var data = new FormData();
+            data.append("term", term);
+            $.ajax({
+                type: 'GET',
+                data: { term: term },
+                url: "/api/DiscountApi/SearchCatalogItem",
+                success: function (result) {
+                    $('#model_appliedToCatalogItem').find('option').not(':selected').remove();
+                    var resultsmap = $.map(result, function (item) {
                         return {
                             id: item.id,
                             text: item.name
                         };
-                    }),
-                };
-            }
-        }
-    });
-</script>
+                      
+                       
+                    });
+                    $.each(resultsmap, function (i, currProgram) {
+                        $('#model_appliedToCatalogItem')
+                            .append($("<option></option>")
+                                .attr("value", currProgram.id)
+                                .text(currProgram.text));
+                    });
+                 
+                   
+                }
+            });
+        });
+    </script>
 
 }

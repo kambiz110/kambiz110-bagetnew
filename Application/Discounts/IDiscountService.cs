@@ -18,7 +18,7 @@ namespace Application.Discounts
         /// </summary>
         /// <param name="searchKey">عبارت جستجو</param>
         /// <returns></returns>
-        List<CatlogItemDto> GetCatalogItems(string searchKey);
+         Task<List<CatlogItemDto>>   GetCatalogItems(string searchKey);
         /// <summary>
         /// اعمال تخفیف روی محصول های سبد خرید
         /// </summary>
@@ -82,29 +82,29 @@ namespace Application.Discounts
         /// </summary>
         /// <param name="searchKey">عبارت جستجو</param>
         /// <returns></returns>
-        public List<CatlogItemDto> GetCatalogItems(string searchKey)
+        public async Task<List<CatlogItemDto>>  GetCatalogItems(string searchKey)
         {
             if (!string.IsNullOrEmpty(searchKey))
             {
-                var data = context.CatalogItems
+                var data = await context.CatalogItems
                     .Where(p => p.Name.Contains(searchKey))
                     .Select(p => new CatlogItemDto
                     {
                         Id = p.Id,
                         Name = p.Name
-                    }).ToList();
+                    }).ToListAsync();
                 return data;
             }
             else
             {
-                var data = context.CatalogItems
+                var data =await context.CatalogItems
                     .OrderByDescending(p => p.Id)
                     .Take(10)
                     .Select(p => new CatlogItemDto
                     {
                         Id = p.Id,
                         Name = p.Name
-                    }).ToList();
+                    }).ToListAsync();
                 return data;
             }
 

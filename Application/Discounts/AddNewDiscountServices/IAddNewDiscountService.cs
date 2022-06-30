@@ -55,7 +55,7 @@ namespace Application.Discounts.AddNewDiscountServices
         [Display(Name = "نام تخفیف")]
         public string Name { get; set; }
         [Display(Name = "استفاده از درصد؟")]
-        public bool UsePercentage { get; set; } = true;
+        public bool UsePercentage { get; set; } = false;
         [Display(Name = "درصد تخفیف")]
         public int DiscountPercentage { get; set; } = 0;
         [Display(Name = "مبلغ تخفیف")]

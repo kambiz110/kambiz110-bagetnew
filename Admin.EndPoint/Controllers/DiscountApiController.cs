@@ -24,7 +24,8 @@ namespace Admin.EndPoint.Controllers
         [Route("SearchCatalogItem")]
         public async Task<IActionResult> SearchCatalogItem(string term)
         {
-            return Ok(discountService.GetCatalogItems(term));
+            var model = await discountService.GetCatalogItems(term);
+            return Ok(model);
         }
     }
 }
