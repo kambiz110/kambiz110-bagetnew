@@ -84,13 +84,13 @@
                                 </select>
                                 <span asp-validation-for="model.DiscountTypeId" class="text-danger"></span>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-5">
                                 <label asp-for="model.DiscountLimitationId"> </label>
                                 <select asp-for="model.DiscountLimitationId" class="form-control" asp-items="@Html.GetEnumSelectList<DiscountLimitationType>()"></select>
 
                                 <span asp-validation-for="model.DiscountLimitationId" class="text-danger"></span>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label asp-for="model.LimitationTimes"> </label>
                                 <input type="text" class="form-control" value="0" asp-for="model.LimitationTimes">
                                 <span asp-validation-for="model.LimitationTimes" class="text-danger"></span>
