@@ -6,6 +6,7 @@ using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Catalogs.GetMenuItem;
 using Application.Discounts.AddNewDiscountServices;
+using Application.Discounts.Dto;
 using AutoMapper;
 using Domain.Banners;
 using Domain.Catalogs;
@@ -62,6 +63,7 @@ namespace Infrastructure.MappingProfile
             CreateMap<Banner, BannerDto>().ReverseMap();
             //----------------------------
             CreateMap<Discount, AddNewDiscountDto>().ReverseMap();
+            CreateMap<Discount, GetDescountsForAdminViewModel>().ReverseMap();
             //----------------------------
             CreateMap<CatologCar, CarDto>().ReverseMap();
             CreateMap<CatologCar, CarListDto>().ReverseMap();

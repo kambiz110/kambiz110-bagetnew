@@ -1,8 +1,200 @@
-﻿@using Application.Discounts.AddNewDiscountServices
+﻿@using Application.Discounts.Dto
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @using Application.Dtos
-@model PaginatedItemsDto<AddNewDiscountDto>
+@using Common.Useful
+@model PaginatedItemsDto<GetDescountsForAdminViewModel>
 @{
-    ViewData["Title"] = "تخفیف ها";
+    ViewData["Title"] = " تخفیف ها ";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    var counter = 0;
 }
-<h1>تخفیف ها</h1>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Zero configuration table -->
+        <section id="configuration">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="dt-buttons mb-2">
+                                <a href="~/Discounts/create" class="dt-button btn-success btn" tabindex="0" aria-controls="html5-extension">
+                                    <span>ثبت تخفیف جدید</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-body collapse show">
+                            <div class="card-block card-dashboard">
+                                <p class="card-text">لیست تخفیف ها</p>
+                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+
+                                    @{
+
+                                        @if (Model.Data.Any())
+                                        {
+                                            <div class="col-sm-12">
+                                                <table class="table table-striped table-bordered zero-configuration dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th>R</th>
+                                                            <th class="sorting_asc">@Html.DisplayNameFor(model => model.Data.ElementAt(0).Name)</th>
+                                                            <th class="sorting_asc">مقدار تخفیف</th>
+                                                            <th class="sorting_asc">@Html.DisplayNameFor(model => model.Data.ElementAt(0).StartDate)</th>
+                                                            <th class="sorting_asc">@Html.DisplayNameFor(model => model.Data.ElementAt(0).EndDate) </th>
+                                                            <th class="sorting_asc">@Html.DisplayNameFor(model => model.Data.ElementAt(0).RequiresCouponCode) </th>
+                                    
+
+                                                            <th class="sorting_asc"> </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.Data)
+                                                        {
+                                                            counter++;
+                                                        <tr role="row">
+                                                            <td>@counter</td>
+                                                            <td>@item.Name</td>
+                                                            <td>
+                                                                @if (item.UsePercentage)
+                                                                {
+                                                                    <span>@item.DiscountPercentage درصد</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span>@item.DiscountAmount.ToString("n0") تومان</span>
+                                                                }
+                                                            </td>
+                                                            <td>@item.StartDate?.ToPersianDateStrFarsi()</td>
+                                                            <td>@item.EndDate?.ToPersianDateStrFarsi()</td>
+                                                            <td>
+                                                                @{
+                                                                    if (item.RequiresCouponCode)
+                                                                    {
+                                                                        <span>کوپن</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>تخفیف</span>
+                                                                    }
+                                                                }
+                                                            </td>
+                                                           
+
+                                                            <td>
+
+                                                                <a href="#" class="btn btn-warning mr-1">ویرایش</a><a class="btn btn-danger">حذف</a>
+                                                                @*<a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-warning">ویرایش</a>*@
+                                                                <a href="./Discounts/Detail" class="btn btn-info"> جزئیات</a>
+                                                            </td>
+                                                        </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <div class="dataTables_info" id="html5-extension_info" role="status" aria-live="polite">
+
+                                                            صفحه @Model.PageIndex
+                                                            از
+                                                            @Model.Pager.TotalPages
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <div class="dataTables_paginate paging_simple_numbers" id="html5-extension_paginate">
+                                                            <ul class="pagination">
+
+                                                                <li class="paginate_button page-item">
+
+                                                                    <a asp-action="Index" asp-controller="Discounts" asp-route-parentid="@(HttpContextAccessor.HttpContext.Request.Query["parentid"])"
+                                                                       asp-route-pageIndex="1"
+                                                                       aria-controls="html5-extension"
+                                                                       data-dt-idx="2" tabindex="0"
+                                                                       class="page-link"> صفحه اول</a>
+                                                                </li>
+
+                                                                <li class="paginate_button page-item active">
+                                                                    <a asp-action="Index" asp-controller="Discounts" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                                       asp-route-pageIndex="@(Model.PageIndex - 1)"
+                                                                       class="btn btn-default @prevDisabled">
+                                                                        قبلی
+                                                                    </a>
+                                                                </li>
+
+                                                                @foreach (var item in Model.Pager.Pages)
+                                                                {
+                                                                    if (item == Model.PageIndex)
+                                                                    {
+                                                                        <li class="paginate_button page-item  active">
+                                                                            <a asp-action="Index" asp-controller="Discounts" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                                               asp-route-pageIndex="@item"
+                                                                               aria-controls="html5-extension"
+                                                                               data-dt-idx="2" tabindex="0"
+                                                                               class="page-link"> @item</a>
+                                                                        </li>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <li class="paginate_button page-item ">
+                                                                            <a asp-action="Index" asp-controller="Discounts" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                                               asp-route-pageIndex="@item"
+                                                                               aria-controls="html5-extension"
+                                                                               data-dt-idx="2" tabindex="0"
+                                                                               class="page-link"> @item</a>
+                                                                        </li>
+                                                                    }
+
+                                                                }
+
+                                                                <li class="paginate_button page-item ">
+
+                                                                    <a asp-action="Index" asp-controller="Discounts" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                                       asp-route-pageIndex="@(Model.PageIndex + 1)"
+                                                                       class="btn btn-default @nextDisabled">
+                                                                        بعدی
+                                                                    </a>
+                                                                </li>
+
+                                                                <li class="paginate_button page-item">
+                                                                    <a asp-action="Index" asp-controller="Discounts" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                                       asp-route-pageIndex="@Model.Pager.TotalPages"
+                                                                       aria-controls="html5-extension"
+                                                                       data-dt-idx="2" tabindex="0"
+                                                                       class="page-link"> صفحه آخر</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <h3>هیچ تخفیفی ثبت نگردیده است</h3>
+                                        }
+                                    }
+
+
+
+                                    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

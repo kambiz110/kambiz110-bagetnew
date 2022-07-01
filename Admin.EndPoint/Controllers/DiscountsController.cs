@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Discounts;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,16 @@ namespace Admin.EndPoint.Controllers
 {
     public class DiscountsController : Controller
     {
-        public IActionResult Index()
+        private readonly IGetDescountesForAdmin getDescountes;
+
+        public DiscountsController(IGetDescountesForAdmin getDescountes)
         {
-            return View();
+            this.getDescountes = getDescountes;
+        }
+        public IActionResult Index(int page=1, int pageSize=10)
+        {
+            var model = getDescountes.GetListDescounts(page, pageSize);
+            return View(model);
         }
     }
 }

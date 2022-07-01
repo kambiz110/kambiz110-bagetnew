@@ -67,6 +67,7 @@ namespace Admin.EndPoint
             services.AddTransient<ICrudCarService, CrudCarService>();
             services.AddTransient<IGetAdminEditCatalogItem, GetAdminEditCatalogItem>();
             services.AddTransient<IRemoveFeacherService, RemoveFeacherService>();
+            services.AddTransient<IGetDescountesForAdmin, GetDescountesForAdmin>();
             
             services.AddTransient<IDeleteImageService, DeleteImageService>();
 

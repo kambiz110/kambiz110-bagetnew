@@ -1,9 +1,11 @@
 ﻿using Application.Discounts.AddNewDiscountServices;
+using Application.Discounts.Dto;
 using Application.Dtos;
 using Application.Interfaces.Contexts;
 using AutoMapper;
 using Common;
 using Domain.Discounts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +16,7 @@ namespace Application.Discounts
 {
    public interface IGetDescountesForAdmin
     {
-        public PaginatedItemsDto<AddNewDiscountDto> GetListDescounts(int page , int pageSize);
+        public PaginatedItemsDto<GetDescountsForAdminViewModel> GetListDescounts(int page , int pageSize);
     }
     public class GetDescountesForAdmin : IGetDescountesForAdmin
     {
@@ -27,17 +29,17 @@ namespace Application.Discounts
             this.mapper = mapper;
         }
 
-        public PaginatedItemsDto<AddNewDiscountDto> GetListDescounts(int page, int pageSize)
+        public PaginatedItemsDto<GetDescountsForAdminViewModel> GetListDescounts(int page, int pageSize)
         {
             int rowCount = 0;
             var query = context.Discount
-           
+                .Where(p=>p.Statse==true).AsNoTracking()
                 .OrderByDescending(p => p.Id)
                 .AsQueryable();
             var data = query.PagedResult(page, pageSize, out rowCount)
                     .AsQueryable();
-            var model = mapper.ProjectTo<AddNewDiscountDto>(data).ToList();
-            return new PaginatedItemsDto<AddNewDiscountDto>(page, pageSize, rowCount, model);
+            var model = mapper.ProjectTo<GetDescountsForAdminViewModel>(data).ToList();
+            return new PaginatedItemsDto<GetDescountsForAdminViewModel>(page, pageSize, rowCount, model);
         }
     }
 }
