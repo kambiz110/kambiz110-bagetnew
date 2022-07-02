@@ -22,9 +22,9 @@ namespace Admin.EndPoint.Controllers
 
         [HttpGet]
         [Route("SearchCatalogItem")]
-        public async Task<IActionResult> SearchCatalogItem(string term)
+        public  IActionResult SearchCatalogItem(string term , int categoryId=0, int brandId=0)
         {
-            var model = await discountService.GetCatalogItems(term);
+            var model =  discountService.GetCatalogItems(term , categoryId , brandId);
             return Ok(model);
         }
     }

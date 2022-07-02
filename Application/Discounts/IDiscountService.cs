@@ -18,7 +18,7 @@ namespace Application.Discounts
         /// </summary>
         /// <param name="searchKey">عبارت جستجو</param>
         /// <returns></returns>
-         Task<List<CatlogItemDto>>   GetCatalogItems(string searchKey);
+         List<CatlogItemDto> GetCatalogItems(string searchKey, int categoryId, int brandId);
         /// <summary>
         /// اعمال تخفیف روی محصول های سبد خرید
         /// </summary>
@@ -82,32 +82,29 @@ namespace Application.Discounts
         /// </summary>
         /// <param name="searchKey">عبارت جستجو</param>
         /// <returns></returns>
-        public async Task<List<CatlogItemDto>>  GetCatalogItems(string searchKey)
+        public  List<CatlogItemDto> GetCatalogItems(string searchKey, int categoryId, int brandId)
         {
+            var data =  context.CatalogItems.AsQueryable();
             if (!string.IsNullOrEmpty(searchKey))
             {
-                var data = await context.CatalogItems
-                    .Where(p => p.Name.Contains(searchKey))
-                    .Select(p => new CatlogItemDto
-                    {
-                        Id = p.Id,
-                        Name = p.Name
-                    }).ToListAsync();
-                return data;
+                data = data.Where(p => p.Name.Contains(searchKey)).AsQueryable();
             }
-            else
+            if (categoryId!=0)
             {
-                var data =await context.CatalogItems
-                    .OrderByDescending(p => p.Id)
-                    .Take(10)
-                    .Select(p => new CatlogItemDto
-                    {
-                        Id = p.Id,
-                        Name = p.Name
-                    }).ToListAsync();
-                return data;
+                data = data.Where(p => p.CatalogTypeId== categoryId).AsQueryable();
             }
-
+            if (brandId != 0)
+            {
+                data = data.Where(p => p.CatalogBrandId == brandId).AsQueryable();
+            }
+           
+                return data.OrderByDescending(p => p.Id).Take(20).Select(p => new CatlogItemDto
+                {
+                    Id = p.Id,
+                    Name = p.Name
+                }).ToList();
+           
+       
         }
         /// <summary>
         /// اعتبار سنجی کد تخفیف

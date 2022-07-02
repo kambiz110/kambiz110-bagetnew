@@ -70,6 +70,7 @@
                                 <input type="number" class="form-control" asp-for="model.DiscountAmount">
                                 <span asp-validation-for="model.DiscountAmount" class="text-danger"></span>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -101,13 +102,30 @@
                         <div class="row">
                             <div class="form-group  col-md-12 fa-directions">
                                 <label> محصولات را انتخاب کنید</label>
-                                <select class="form-control" asp-for="model.appliedToCatalogItem">
+                                <select class="form-control basic-single" asp-for="model.appliedToCatalogItem">
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-row align-items-center">
+                            <div class="col-xl-6 col-lg-6 col-md-3 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput"> برند </label>
+                                    <select class="form-control basic-single" id="Brand" asp-items="@Model.Brands">
+                                        <option value="0">بدون انتخاب</option>
+                                    </select>
+                                </fieldset>
+                            </div>
 
+                            <div class="col-xl-6 col-lg-6 col-md-3 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput">دسته بندی </label>
+
+                                    <select class="form-control basic-single" id="Category" asp-items="Model.Categories">
+                                        <option value="0">بدون انتخاب</option>
+                                    </select>
+                                </fieldset>
+                            </div>
                             <div class="col-sm-8 my-1">
                                 <label class="sr-only" for="searchproductinput"></label>
                                 <div class="input-group">
@@ -138,13 +156,20 @@
         </div>
     </div>
 </div>
+@section Styles{
+    <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
 
+}
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/lib/select2/js/select2.js"></script>
     <script src="~/MdPersianDateTimePicker/jquery.md.bootstrap.datetimepicker.js"></script>
 
     <script>
+        $('.basic-single').select2({
+            placeholder: '... انتخاب کنید'
+        });
         $('#StartDateFake').MdPersianDateTimePicker({
 
             targetTextSelector: '#StartDateFake',
@@ -213,12 +238,13 @@
         $('#btnsearchproduct').click(function (e) {
             e.preventDefault();
             var term = $('#searchproductinput').val();
-          
+          var categoryId= $('#Category').find('option:selected').val();
+         var brandId =$('#Brand').find('option:selected').val();
             var data = new FormData();
             data.append("term", term);
             $.ajax({
                 type: 'GET',
-                data: { term: term },
+                data: { term: term, categoryId: categoryId, brandId: brandId  },
                 url: "/api/DiscountApi/SearchCatalogItem",
                 success: function (result) {
                     $('#model_appliedToCatalogItem').find('option').not(':selected').remove();
@@ -227,8 +253,8 @@
                             id: item.id,
                             text: item.name
                         };
-                      
-                       
+
+
                     });
                     $.each(resultsmap, function (i, currProgram) {
                         $('#model_appliedToCatalogItem')
@@ -236,8 +262,8 @@
                                 .attr("value", currProgram.id)
                                 .text(currProgram.text));
                     });
-                 
-                   
+
+
                 }
             });
         });
