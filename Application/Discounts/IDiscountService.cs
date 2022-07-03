@@ -18,7 +18,7 @@ namespace Application.Discounts
         /// </summary>
         /// <param name="searchKey">عبارت جستجو</param>
         /// <returns></returns>
-         List<CatlogItemDto> GetCatalogItems(string searchKey, int categoryId, int brandId);
+         List<CatlogItemDto> GetCatalogItems(string searchKey, int categoryId, int brandId, int carId);
         /// <summary>
         /// اعمال تخفیف روی محصول های سبد خرید
         /// </summary>
@@ -82,7 +82,7 @@ namespace Application.Discounts
         /// </summary>
         /// <param name="searchKey">عبارت جستجو</param>
         /// <returns></returns>
-        public  List<CatlogItemDto> GetCatalogItems(string searchKey, int categoryId, int brandId)
+        public  List<CatlogItemDto> GetCatalogItems(string searchKey, int categoryId, int brandId, int carId)
         {
             var data =  context.CatalogItems.AsQueryable();
             if (!string.IsNullOrEmpty(searchKey))
@@ -96,6 +96,10 @@ namespace Application.Discounts
             if (brandId != 0)
             {
                 data = data.Where(p => p.CatalogBrandId == brandId).AsQueryable();
+            }
+            if (carId != 0)
+            {
+                data = data.Where(p => p.CatologCarId == carId).AsQueryable();
             }
            
                 return data.OrderByDescending(p => p.Id).Take(20).Select(p => new CatlogItemDto

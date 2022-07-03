@@ -68,6 +68,7 @@ namespace Admin.EndPoint
             services.AddTransient<IGetAdminEditCatalogItem, GetAdminEditCatalogItem>();
             services.AddTransient<IRemoveFeacherService, RemoveFeacherService>();
             services.AddTransient<IGetDescountesForAdmin, GetDescountesForAdmin>();
+            services.AddTransient<IGetDescountForEdit, GetDescountForEdit>();
             
             services.AddTransient<IDeleteImageService, DeleteImageService>();
 
@@ -90,6 +91,7 @@ namespace Admin.EndPoint
             #endregion
 
             //mapper
+            services.AddAutoMapper(typeof(DescountMapperProfile));
             services.AddAutoMapper(typeof(CatalogMappingProfile));
             services.AddAutoMapper(typeof(CatalogVMMappingProfile));
 

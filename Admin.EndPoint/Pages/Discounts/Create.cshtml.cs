@@ -27,10 +27,12 @@ namespace Admin.EndPoint.Pages.Discounts
         public AddNewDiscountDto model { get; set; }
         public SelectList Categories { get; set; }
         public SelectList Brands { get; set; }
+        public SelectList Cars { get; set; }
         public void OnGet()
         {
             Categories = new SelectList(catalogItemService.GetCatalogType(), "Id", "Type");
             Brands = new SelectList(catalogItemService.GetBrand(), "Id", "Brand");
+            Cars = new SelectList(catalogItemService.GetCares(), "Id", "Name");
         }
 
         public void OnPost()

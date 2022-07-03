@@ -22,9 +22,9 @@ namespace Admin.EndPoint.Controllers
 
         [HttpGet]
         [Route("SearchCatalogItem")]
-        public  IActionResult SearchCatalogItem(string term , int categoryId=0, int brandId=0)
+        public  IActionResult SearchCatalogItem(string term , int categoryId=0, int brandId=0, int carId=0)
         {
-            var model =  discountService.GetCatalogItems(term , categoryId , brandId);
+            var model =  discountService.GetCatalogItems(term , categoryId , brandId, carId);
             return Ok(model);
         }
     }

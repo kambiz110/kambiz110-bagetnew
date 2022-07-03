@@ -1,9 +1,12 @@
-﻿@page
-@model Admin.EndPoint.Pages.Discounts.CreateModel
+﻿@using Application.Discounts.Dto
+@using Domain.Discounts
+@model GetDescountsForAdminViewModel
 @{
-    ViewData["Title"] = "تخفیف ها";
+    ViewData["Title"] = " ویرایش تخفیف ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using Domain.Discounts;
+
+
 
 
 <div class="col-lg-12 col-12 layout-spacing">
@@ -11,7 +14,7 @@
         <div class="widget-header">
             <div class="row">
 
-                <h4 class="col-xl-12 col-md-12 col-sm-12 col-12 btn btn-success">   ثبت تخفیف جدید   </h4>
+                <h4 class="col-xl-12 col-md-12 col-sm-12 col-12 btn btn-success">    ویرایش تخفیف    </h4>
 
             </div>
         </div>
@@ -22,51 +25,51 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="form-group  col-md-12">
-                            <label asp-for="model.StartDate"> </label>
-                            <input asp-for="model.StartDate" type="hidden" />
+                            <label asp-for="StartDate"> </label>
+                            <input asp-for="StartDate" type="hidden" />
                             <input type="text" class="form-control" id="StartDateFake">
-                            <span asp-validation-for="model.StartDate" class="text-danger"></span>
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
                         </div>
                         <div class="form-group col-md-12">
-                            <label asp-for="model.EndDate"> </label>
-                            <input asp-for="model.EndDate" type="hidden" />
+                            <label asp-for="EndDate"> </label>
+                            <input asp-for="EndDate" type="hidden" />
                             <input type="text" class="form-control" id="EndDateFake">
-                            <span asp-validation-for="model.EndDate" class="text-danger"></span>
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="row">
                             <div class="form-group  col-md-4">
-                                <label asp-for="model.Name"> </label>
-                                <input type="text" class="form-control" asp-for="model.Name">
-                                <span asp-validation-for="model.Name" class="text-danger"></span>
+                                <label asp-for="Name"> </label>
+                                <input type="text" class="form-control" asp-for="Name">
+                                <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-4">
-                                <label asp-for="model.RequiresCouponCode"> </label>
-                                <input type="checkbox" class="form-control" asp-for="model.RequiresCouponCode">
-                                <span asp-validation-for="model.RequiresCouponCode" class="text-danger"></span>
+                                <label asp-for="RequiresCouponCode"> </label>
+                                <input type="checkbox" class="form-control" asp-for="RequiresCouponCode">
+                                <span asp-validation-for="RequiresCouponCode" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-4">
-                                <label asp-for="model.CouponCode"> </label>
-                                <input type="text" class="form-control" asp-for="model.CouponCode">
-                                <span asp-validation-for="model.CouponCode" class="text-danger"></span>
+                                <label asp-for="CouponCode"> </label>
+                                <input type="text" class="form-control" asp-for="CouponCode">
+                                <span asp-validation-for="CouponCode" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label asp-for="model.UsePercentage"> </label>
-                                <input class="form-control" asp-for="model.UsePercentage">
-                                <span asp-validation-for="model.UsePercentage" class="text-danger"></span>
+                                <label asp-for="UsePercentage"> </label>
+                                <input class="form-control" asp-for="UsePercentage">
+                                <span asp-validation-for="UsePercentage" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-4">
-                                <label asp-for="model.DiscountPercentage"> </label>
-                                <input type="text" class="form-control" asp-for="model.DiscountPercentage">
-                                <span asp-validation-for="model.DiscountPercentage" class="text-danger"></span>
+                                <label asp-for="DiscountPercentage"> </label>
+                                <input type="text" class="form-control" asp-for="DiscountPercentage">
+                                <span asp-validation-for="DiscountPercentage" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-4">
-                                <label asp-for="model.DiscountAmount"> </label>
-                                <input type="number" class="form-control" asp-for="model.DiscountAmount">
-                                <span asp-validation-for="model.DiscountAmount" class="text-danger"></span>
+                                <label asp-for="DiscountAmount"> </label>
+                                <input type="number" class="form-control" asp-for="DiscountAmount">
+                                <span asp-validation-for="DiscountAmount" class="text-danger"></span>
                             </div>
 
                         </div>
@@ -77,22 +80,22 @@
                     <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="row">
                             <div class="form-group  col-md-4">
-                                <label asp-for="model.DiscountTypeId"> </label>
-                                <select asp-for="model.DiscountTypeId" class="form-control">
+                                <label asp-for="DiscountTypeId"> </label>
+                                <select asp-for="DiscountTypeId" class="form-control">
                                     <option value="0" selected>بر اساس محصول</option>
                                 </select>
-                                <span asp-validation-for="model.DiscountTypeId" class="text-danger"></span>
+                                <span asp-validation-for="DiscountTypeId" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-5">
-                                <label asp-for="model.DiscountLimitationId"> </label>
-                                <select asp-for="model.DiscountLimitationId" class="form-control" asp-items="@Html.GetEnumSelectList<DiscountLimitationType>()"></select>
+                                <label asp-for="DiscountLimitationId"> </label>
+                                <select asp-for="DiscountLimitationId" class="form-control" asp-items="@Html.GetEnumSelectList<DiscountLimitationType>()"></select>
 
-                                <span asp-validation-for="model.DiscountLimitationId" class="text-danger"></span>
+                                <span asp-validation-for="DiscountLimitationId" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-3">
-                                <label asp-for="model.LimitationTimes"> </label>
-                                <input type="text" class="form-control" value="0" asp-for="model.LimitationTimes">
-                                <span asp-validation-for="model.LimitationTimes" class="text-danger"></span>
+                                <label asp-for="LimitationTimes"> </label>
+                                <input type="text" class="form-control" value="0" asp-for="LimitationTimes">
+                                <span asp-validation-for="LimitationTimes" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -100,7 +103,7 @@
                         <div class="row">
                             <div class="form-group  col-md-12 fa-directions">
                                 <label> محصولات را انتخاب کنید</label>
-                                <select class="form-control basic-single" asp-for="model.appliedToCatalogItem">
+                                <select class="form-control basic-single" asp-for="appliedToCatalogItem">
                                 </select>
                             </div>
                         </div>
@@ -109,7 +112,7 @@
                             <div class="col-xl-6 col-lg-6 col-md-3 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> خودرو </label>
-                                    <select class="form-control basic-single" id="Cars" asp-items="@ViewData["Cars"] as SelectList">
+                                    <select class="form-control basic-single" id="Cars" asp-items="@(SelectList)@ViewData["Cars"]">
                                         <option value="0">بدون انتخاب</option>
                                     </select>
                                 </fieldset>
@@ -117,7 +120,7 @@
                             <div class="col-xl-6 col-lg-6 col-md-3 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> برند </label>
-                                    <select class="form-control basic-single" id="Brand" asp-items="@Model.Brands">
+                                    <select class="form-control basic-single" id="Brand" asp-items="@(SelectList)@ViewData["Brands"]">
                                         <option value="0">بدون انتخاب</option>
                                     </select>
                                 </fieldset>
@@ -127,7 +130,7 @@
                                 <fieldset class="form-group">
                                     <label for="basicInput">دسته بندی </label>
 
-                                    <select class="form-control basic-single" id="Category" asp-items="Model.Categories">
+                                    <select class="form-control basic-single" id="Category" asp-items="@(SelectList)@ViewData["Categories"]">
                                         <option value="0">بدون انتخاب</option>
                                     </select>
                                 </fieldset>
@@ -249,12 +252,11 @@
             var term = $('#searchproductinput').val();
             var categoryId = $('#Category').find('option:selected').val();
             var brandId = $('#Brand').find('option:selected').val();
-            var carId = $('#Cars').find('option:selected').val();
             var data = new FormData();
             data.append("term", term);
             $.ajax({
                 type: 'GET',
-                data: { term: term, categoryId: categoryId, brandId: brandId, carId: carId },
+                data: { term: term, categoryId: categoryId, brandId: brandId },
                 url: "/api/DiscountApi/SearchCatalogItem",
                 success: function (result) {
                     $('#model_appliedToCatalogItem').find('option').not(':selected').remove();
@@ -280,3 +282,4 @@
     </script>
 
 }
+

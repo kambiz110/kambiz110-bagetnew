@@ -61,9 +61,7 @@ namespace Infrastructure.MappingProfile
 
             //-------------------------
             CreateMap<Banner, BannerDto>().ReverseMap();
-            //----------------------------
-            CreateMap<Discount, AddNewDiscountDto>().ReverseMap();
-            CreateMap<Discount, GetDescountsForAdminViewModel>().ReverseMap();
+  
             //----------------------------
             CreateMap<CatologCar, CarDto>().ReverseMap();
             CreateMap<CatologCar, CarListDto>().ReverseMap();

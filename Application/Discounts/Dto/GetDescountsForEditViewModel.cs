@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Discounts.Dto
 {
-  public  class GetDescountsForAdminViewModel
+   public class GetDescountsForEditViewModel
     {
         public int Id { get; set; }
         [Display(Name = "نام تخفیف")]
@@ -33,8 +34,13 @@ namespace Application.Discounts.Dto
 
         [Display(Name = "تعداد کد تخفیف")]
         public int LimitationTimes { get; set; } = 0;
-        [Display(Name = "اعمال برای محصول")]
-        public List<int> appliedToCatalogItem { get; set; }
 
+        public List<catalogitemDtoForEditDescount> catalogItems { get; set; }
+    }
+    public class catalogitemDtoForEditDescount
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Price { get; set; }
     }
 }
