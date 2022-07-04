@@ -36,10 +36,15 @@ namespace Application.Discounts
                 .Where(p=>p.Statse==true).AsNoTracking()
                 .OrderByDescending(p => p.Id)
                 .AsQueryable();
-            var data = query.PagedResult(page, pageSize, out rowCount)
+            if (query!=null)
+            {
+         var data = query.PagedResult(page, pageSize, out rowCount)
                     .AsQueryable();
             var model = mapper.ProjectTo<GetDescountsForAdminViewModel>(data).ToList();
-            return new PaginatedItemsDto<GetDescountsForAdminViewModel>(page, pageSize, rowCount, model);
+                return new PaginatedItemsDto<GetDescountsForAdminViewModel>(page, pageSize, rowCount, model);
+            }
+   
+            return new PaginatedItemsDto<GetDescountsForAdminViewModel>(page, pageSize, rowCount, null);
         }
     }
 }

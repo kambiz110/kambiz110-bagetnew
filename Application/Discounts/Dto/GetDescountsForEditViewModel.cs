@@ -35,6 +35,8 @@ namespace Application.Discounts.Dto
         [Display(Name = "تعداد کد تخفیف")]
         public int LimitationTimes { get; set; } = 0;
 
+        public List<int> appliedToCatalogItem { get; set; }
+
         public List<catalogitemDtoForEditDescount> catalogItems { get; set; }
     }
     public class catalogitemDtoForEditDescount
