@@ -42,6 +42,8 @@ namespace Application.Discounts.Dto
     public class catalogitemDtoForEditDescount
     {
         public int Id { get; set; }
+        public string CarName { get; set; }
+        public string BrandName { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
     }

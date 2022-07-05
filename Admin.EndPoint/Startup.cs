@@ -69,7 +69,7 @@ namespace Admin.EndPoint
             services.AddTransient<IRemoveFeacherService, RemoveFeacherService>();
             services.AddTransient<IGetDescountesForAdmin, GetDescountesForAdmin>();
             services.AddTransient<IGetDescountForEdit, GetDescountForEdit>();
-            
+            services.AddTransient<IDeletItemInDescount, DeletItemInDescount>();
             services.AddTransient<IDeleteImageService, DeleteImageService>();
 
 

@@ -30,7 +30,9 @@ namespace Application.Discounts
         {
             var descount = _context.Discount.Where(p => p.Id == id)
                 .AsNoTracking()
-                .Include(p => p.CatalogItems).FirstOrDefault();
+                .Include(p => p.CatalogItems).ThenInclude(p=>p.CatologCar)
+                .Include(p => p.CatalogItems).ThenInclude(p => p.CatalogBrand)
+                .FirstOrDefault();
             if (descount!=null)
             {
                 var model = _mapper.Map<GetDescountsForEditViewModel>(descount);
