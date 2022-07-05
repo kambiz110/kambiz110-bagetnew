@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Admin.EndPoint.Controllers
 {
-    public class DiscountsController : Controller
+    public class DiscountController : Controller
     {
         private readonly IGetDescountesForAdmin getDescountes;
         private readonly IGetDescountForEdit descountForEdit;
         private readonly ICatalogItemService catalogItemService;
 
-        public DiscountsController(IGetDescountesForAdmin getDescountes, IGetDescountForEdit descountForEdit, ICatalogItemService catalogItemService)
+        public DiscountController(IGetDescountesForAdmin getDescountes, IGetDescountForEdit descountForEdit, ICatalogItemService catalogItemService)
         {
             this.getDescountes = getDescountes;
             this.descountForEdit = descountForEdit;
@@ -29,9 +29,9 @@ namespace Admin.EndPoint.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            ViewData["Categories"] = new SelectList(catalogItemService.GetCatalogType(), "Id", "Type");
-            ViewData["Brands"] = new SelectList(catalogItemService.GetBrand(), "Id", "Brand");
-            ViewData["Cars"] = new SelectList(catalogItemService.GetCares(), "Id", "Name");
+            ViewData["Categories2"] = new SelectList(catalogItemService.GetCatalogType(), "Id", "Type");
+            ViewData["Brands2"] = new SelectList(catalogItemService.GetBrand(), "Id", "Brand");
+            ViewData["Cars2"] = new SelectList(catalogItemService.GetCares(), "Id", "Name");
             var model = descountForEdit.GetDescount(id);
             return View(model.Data);
         }

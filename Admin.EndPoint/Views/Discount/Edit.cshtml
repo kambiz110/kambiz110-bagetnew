@@ -1,4 +1,5 @@
-﻿@using Application.Discounts.Dto
+﻿
+@using Application.Discounts.Dto
 @using Domain.Discounts
 @model GetDescountsForEditViewModel
 @{
@@ -112,7 +113,7 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> خودرو </label>
-                                    <select class="form-control basic-single" id="Cars" asp-items="@(SelectList)@ViewData["Cars"]">
+                                    <select class="form-control basic-single" id="Cars" asp-items="(SelectList)@ViewData["Cars2"]">
                                         <option value="0">بدون انتخاب</option>
                                     </select>
                                 </fieldset>
@@ -120,17 +121,17 @@
                             <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> برند </label>
-                                    <select class="form-control basic-single" id="Brand" asp-items="@(SelectList)@ViewData["Brands"]">
+                                    <select class="form-control basic-single" id="Brand" asp-items="(SelectList)@ViewData["Brands2"]">
                                         <option value="0">بدون انتخاب</option>
                                     </select>
                                 </fieldset>
                             </div>
 
-                           <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+                            <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">دسته بندی </label>
 
-                                    <select class="form-control basic-single" id="Category" asp-items="@(SelectList)@ViewData["Categories"]">
+                                    <select class="form-control basic-single" id="Category" asp-items="(SelectList)@ViewData["Categories2"]">
                                         <option value="0">بدون انتخاب</option>
                                     </select>
                                 </fieldset>
@@ -169,7 +170,7 @@
 
     <link href="~/MdPersianDateTimePicker/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
     <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
-    @*<link href="~/lib/select2/css/select2-bootstrap4.css" rel="stylesheet" /*@>
+    <link href="~/lib/select2/css/select2-bootstrap4.css" rel="stylesheet" />
 }
 
 @section Scripts {
@@ -234,7 +235,6 @@
 
     </script>
 
-    <script src="~/lib/select2/js/select2.js"></script>
     <script>
         $("#model_appliedToCatalogItem").select2({
             placeholder: "انتخاب کنید",
@@ -255,7 +255,7 @@
             var brandId = $('#Brand').find('option:selected').val();
             var carId = $('#Cars').find('option:selected').val();
             console.log(term + "/" + categoryId + "/" + brandId + "/" + carId + "/"  );
-           
+
             $.ajax({
                 type: 'GET',
                 data: { term: term, categoryId: categoryId, brandId: brandId, carId: carId },
@@ -284,4 +284,6 @@
     </script>
 
 }
+
+
 

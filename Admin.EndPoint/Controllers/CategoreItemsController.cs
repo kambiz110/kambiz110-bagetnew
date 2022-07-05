@@ -6,6 +6,7 @@ using Application.Catalogs.CatalogItems.GetCatalogItemAdmin;
 using Application.Catalogs.CatalogItems.RemoveImage;
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
+using Application.Discounts;
 using Application.Dtos;
 using Infrastructure.ExternalApi.ImageServer;
 using Microsoft.AspNetCore.Http;
@@ -26,13 +27,13 @@ namespace Admin.EndPoint.Controllers
         private readonly IGetAdminEditCatalogItem getAdminEditCatalogItem;
         private readonly ICatalogItemService catalogItemService;
         private readonly IRemoveFeacherService removeFeacherService;
-
+        private readonly IGetDescountForEdit descountForEdit;
         public CategoreItemsController(IGetAdminEditCatalogItem getAdminEditCatalogItem
             , ICatalogItemService catalogItemService
             , IRemoveFeacherService removeFeacherService,
             IAddNewCatalogItemService addNewCatalogItemService,
             IImageUploadService imageUploadService
-            , IDeleteImageService deleteImageService)
+            , IDeleteImageService deleteImageService, IGetDescountForEdit descountForEdit )
         {
             this.getAdminEditCatalogItem = getAdminEditCatalogItem;
             this.catalogItemService = catalogItemService;
@@ -40,6 +41,7 @@ namespace Admin.EndPoint.Controllers
             this.addNewCatalogItemService = addNewCatalogItemService;
             this.imageUploadService = imageUploadService;
             this.deleteImageService = deleteImageService;
+            this.descountForEdit = descountForEdit;
         }
 
         public IActionResult Index(int page = 1, int pageSize = 100, string search = "")
@@ -124,6 +126,6 @@ namespace Admin.EndPoint.Controllers
             var result = deleteImageService.delete(data.itemId, data.src);
             return new JsonResult(result);
         }
-
+    
     }
 }
