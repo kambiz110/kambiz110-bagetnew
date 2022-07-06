@@ -13,10 +13,12 @@ namespace Admin.EndPoint.Controllers
     public class DiscountApiController : ControllerBase
     {
         private readonly IDiscountService discountService;
+        private readonly IDeletItemInDescount deletItemInDescount;
 
-        public DiscountApiController(IDiscountService discountService)
+        public DiscountApiController(IDiscountService discountService , IDeletItemInDescount deletItemInDescount)
         {
             this.discountService = discountService;
+            this.deletItemInDescount = deletItemInDescount;
         }
 
 
@@ -26,6 +28,15 @@ namespace Admin.EndPoint.Controllers
         {
             var model =  discountService.GetCatalogItems(term , categoryId , brandId, carId);
             return Ok(model);
+        }
+        [HttpGet]
+        [Route("DeletedDiscountItem")]
+        public  IActionResult DeletedDiscountItem(int catalogItemId, int diccountId)
+        {
+
+            var result = deletItemInDescount.delete(diccountId, catalogItemId);
+            var sum = (catalogItemId + diccountId);
+            return Ok("Succes : "+ sum+"");
         }
     }
 }
