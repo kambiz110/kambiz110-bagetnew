@@ -12,6 +12,7 @@ using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Discounts;
 using Application.Discounts.AddNewDiscountServices;
+using Application.Discounts.EditDiscountServices;
 using Application.Interfaces.Contexts;
 using Application.Visitors.GetTodayReport;
 using FluentValidation;
@@ -71,6 +72,7 @@ namespace Admin.EndPoint
             services.AddTransient<IGetDescountForEdit, GetDescountForEdit>();
             services.AddTransient<IDeletItemInDescount, DeletItemInDescount>();
             services.AddTransient<IDeleteImageService, DeleteImageService>();
+            services.AddTransient<IEDitDiscount, EDitDiscount>();
 
 
             #region connection String SqlServer

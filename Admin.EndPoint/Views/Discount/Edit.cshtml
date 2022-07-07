@@ -23,7 +23,7 @@
         <div class="widget-content widget-content-area">
             <form asp-action="Edit" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+                <input type="hidden" asp-for="Id"/>
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="form-group  col-md-12">
@@ -182,7 +182,7 @@
                 <form class="form-inline my-2 my-lg-0">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                        <input type="text" class="form-control product-search" id="input-search" placeholder="جستجو مخاطب...">
+                        <input type="text" class="form-control product-search" id="input-search" placeholder="جستجو محصول...">
                     </div>
                 </form>
             </div>
@@ -269,11 +269,13 @@
         <div class="searchable-items list">
             <div class="items items-header-section">
                 <div class="item-content">
-                    <div class="">
-                        <div class="n-chk align-self-center text-center">
-                           ردیف
-                        </div>
-                        <h4>نام</h4>
+                    <div class="user-location">
+                    
+                        <h4 style="margin-left: 0;">ردیف</h4>
+                    </div>
+                    <div class="user-location">
+                        <h4 style="margin-left: 0;">عنوان</h4>
+
                     </div>
                     <div class="user-email">
                         <h4>نوع خودرو</h4>
@@ -294,17 +296,15 @@
            {
         <div class="items">
             <div class="item-content">
-                <div class="user-profile">
-                    <div class="n-chk align-self-center text-center">
-                        @counter
-                    </div>
-                    @*<img src="~/Theme/assets/img/90x90.jpg" alt="avatar">*@
-                    <div class="user-meta-info">
-                        <p class="user-name" data-name="@item.Name">@item.Name</p>
-                       
-                    </div>
+        
+                <div class="user-location">
+                    <p class="info-title">ردیف: </p>
+                    <p class="usr-location" data-location="">  @counter</p>
                 </div>
-
+                <div class="user-location">
+                    <p class="info-title">عنوان: </p>
+                    <p class="usr-location" data-location="">@item.Name</p>
+                </div>
                 <div class="user-location">
                     <p class="info-title">نوع خودرو: </p>
                     <p class="usr-location" data-location="">@item.CarName</p>
@@ -317,7 +317,7 @@
                     <p class="info-title">قیمت: </p>
                     <p class="usr-location" data-location="">@item.Price.ToString("n0")</p>
                 </div>
-                <div class="action-btn"  data-itemId="@item.Id" data-discountId="@Model.Id">
+                <div class="action-btn" data-itemId="@item.Id" data-discountId="@Model.Id">
                     @*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>*@
 
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-minus delete deletedCataloge"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="23" y1="11" x2="17" y2="11"></line></svg>
@@ -471,8 +471,6 @@
                 type: 'GET',
                 data: { catalogItemId: catalogItemId, diccountId: diccountId},
                 url: "/api/DiscountApi/DeletedDiscountItem",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
                 success: function (result) {
 
                     console.log(result);
