@@ -36,9 +36,18 @@
                     <input type="text" class="form-control" asp-for="Banner.Priority">
                     <span asp-validation-for="Banner.Priority" class="text-danger"></span>
                 </div>
-                <div class="form-group mb-4">
-                    <label asp-for="Banner.IsActive"> </label>
-                    <input type="text" class="form-control" asp-for="Banner.IsActive">
+                <div class="form-group mb-4 align-middle row align-items-center">
+                    <label asp-for="Banner.IsActive" class="ml-2 mr-2"> </label>
+                    @if (Model.Banner.IsActive)
+                    {
+                        <input type="checkbox" class="form-control" style="display:inline; width:20px!important;" asp-for="Banner.IsActive" checked="checked">
+                    }
+                    else
+                    {
+                        <input type="checkbox" class="form-control" style="display:inline; width:20px!important;" asp-for="Banner.IsActive" >
+
+                    }
+
                     <span asp-validation-for="Banner.IsActive" class="text-danger"></span>
                 </div>
                 <div class="form-group mb-4">

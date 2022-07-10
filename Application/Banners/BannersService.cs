@@ -64,6 +64,11 @@ namespace Application.Banners
             var model = context.Banners
                 .PagedResult(page, pageSize, out totalCount);
             var result = mapper.ProjectTo<BannerDto>(model).ToList();
+            for (int i = 0; i < result.Count; i++)
+            {
+                result.ElementAt(i).Image= uriComposerService
+                    .ComposeImageUri(result.ElementAt(i).Image);
+            }
             return new PaginatedItemsDto<BannerDto>(page, pageSize, totalCount, result);
         }
 

@@ -1,4 +1,5 @@
 ﻿
+using Application.Banners;
 using Application.BasketsService;
 using Application.Catalogs.CatalogItems.GetCatalogIItemPLP;
 using Application.Catalogs.CatalogItems.GetCatalogItemPDP;
@@ -95,6 +96,7 @@ namespace WebSite.EndPoint
             services.AddTransient<ICatalogItemService, CatalogItemService>();
             services.AddTransient<ICustomerOrdersService, CustomerOrdersService>();
             services.AddTransient<IHomePageService, HomePageService>();
+            services.AddTransient<IBannersService, BannersService>();
             services.AddScoped<SaveVisitorFilter>();
 
             services.AddSignalR();
