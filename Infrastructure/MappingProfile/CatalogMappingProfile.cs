@@ -47,7 +47,11 @@ namespace Infrastructure.MappingProfile
 
             CreateMap<AddNewCatalogItemDto, CatalogItem>();
 
-            CreateMap<CatalogItem, CatalogItemListItemDto>();
+            CreateMap<CatalogItem, CatalogItemListItemDto>()
+                 .ForMember(dest => dest.Brand, opt =>
+                opt.MapFrom(src => src.CatalogBrand.Brand))
+                  .ForMember(dest => dest.Type, opt =>
+                opt.MapFrom(src => src.CatalogType.Type));
             //-------------------
             CreateMap<CatalogBrand, CatalogBrandDto>().ReverseMap();
             CreateMap<CatalogType, CatalogTypeDto>().ReverseMap();

@@ -57,6 +57,42 @@
                         </div>
                         <hr />
                         <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput">وزن محصول </label>
+                                    <input type="text" asp-for="@Model.Weight" class="form-control" id="Weight">
+                                    <span asp-validation-for="@Model.Weight" class="text-danger"></span>
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput"> عرض محصول</label>
+                                    <input type="number" asp-for="@Model.Width" class="form-control" id="Width">
+                                    <span asp-validation-for="@Model.Width" class="text-danger"></span>
+
+                                </fieldset>
+                            </div>
+
+                            <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput">طول محصول</label>
+                                    <input type="number" asp-for="@Model.Length" class="form-control" id="Length">
+                                    <span asp-validation-for="@Model.Length" class="text-danger"></span>
+
+                                </fieldset>
+                            </div>
+
+                            <div class="col-xl-2 col-lg-2 col-sm-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput">ارتفاع محصول</label>
+                                    <input type="number" asp-for="@Model.Height" class="form-control" id="Height">
+                                    <span asp-validation-for="@Model.Height" class="text-danger"></span>
+                                </fieldset>
+                            </div>
+
+                        </div>
+                        <hr />
+                        <div class="row">
 
 
 
@@ -93,7 +129,7 @@
                             <div class="col-xl-6 col-lg-6 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> قیمت</label>
-                                    <input type="number" asp-for="@Model.Price" class="form-control " id="currency" >
+                                    <input type="number" asp-for="@Model.Price" class="form-control " id="currency">
                                     <span asp-validation-for="@Model.Price" class="text-danger"></span>
 
                                 </fieldset>
@@ -408,10 +444,15 @@
             //دریافت مقادیر از تکس باکس ها و....
             data.append("Id", $("#Id").val());
             data.append("Name", $("#Name").val());
+            data.append("Width", $("#Width").val());
+            data.append("Height", $("#Height").val());
+            data.append("Length", $("#Length").val());
+            data.append("Weight", $("#Weight").val());
+
             data.append("AvailableStock", $("#AvailableStock").val());
             data.append("RestockThreshold", $("#RestockThreshold").val());
             data.append("MaxStockThreshold", $("#MaxStockThreshold").val());
-            data.append("Price", $("#Price").val());
+            data.append("Price", $("#currency").val());
             data.append("Description", $('textarea#Description').val());
 
             data.append("CatologCarId", $('#Car').find('option:selected').val());
@@ -460,7 +501,7 @@
                     if (data.isSuccess == true) {
                         swal.fire(
                             'موفق!',
-                            'کاتالوگ با موفقیت ثبت شد',
+                            'محصول با موفقیت ثبت شد',
                             'success'
                         ).then(function (isConfirm) {
                             window.location.href = "/catalogitems";

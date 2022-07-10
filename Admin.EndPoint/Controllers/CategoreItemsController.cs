@@ -90,7 +90,8 @@ namespace Admin.EndPoint.Controllers
             if (!ModelState.IsValid)
             {
                 var allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new JsonResult(new BaseDto<int>(false, allErrors.Select(p => p.ErrorMessage).ToList(), 0));
+                var errorList = allErrors.Select(p => p.ErrorMessage).ToList();
+                return new JsonResult(new BaseDto<int>(false, errorList, 0));
             }
             for (int i = 0; i < Request.Form.Files.Count; i++)
             {

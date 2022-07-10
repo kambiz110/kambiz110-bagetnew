@@ -76,13 +76,13 @@
 
                         <div class="card-body collapse show">
                             <div class="card-block card-dashboard">
-                                <p class="card-text">لیست کاتالوگ ها</p>
-                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                                <p class="card-text">لیست محصول ها</p>
+                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper">
                                     @{
 
                                         if (Model.Data != null && Model.Data.Any())
                                         {
-                                            <div class="col-sm-12">
+                           
                                                 <table class="table table-striped table-bordered zero-configuration dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
                                                     <thead>
                                                         <tr role="row">
@@ -92,8 +92,8 @@
                                                             <th class="sorting_asc">برند </th>
                                                             <th class="sorting_asc">قیمت </th>
                                                             <th class="sorting_asc">موجودی </th>
-                                                            <th class="sorting_asc"> حداقل برای سفارش مجدد </th>
-                                                            <th class="sorting_asc"> حداکثر موجودی</th>
+                                                            <th class="sorting_asc"> حداقل انبار </th>
+                                                            <th class="sorting_asc"> حداکثر انبار </th>
                                                             <th class="sorting_asc"> </th>
                                                         </tr>
                                                     </thead>
@@ -112,15 +112,15 @@
                                                                 <td>@item.MaxStockThreshold</td>
                                                                 <td>
 
-                                                                    <a asp-action="EditCatalogItem" asp-controller="CategoreItems" asp-route-id="@item.Id" class="btn btn-warning mr-1">ویرایش</a><a class="btn btn-danger">حذف</a>
-                                                                    @*<a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-warning">ویرایش</a>*@
+                                                                    <a asp-action="EditCatalogItem" asp-controller="CategoreItems" asp-route-id="@item.Id" class="btn btn-warning ml-1 mr-1">ویرایش</a>
+                                                                    <a class="btn btn-danger">حذف</a>
                                                                     <a href="/CatalogItems/Detail" class="btn btn-info"> جزئیات</a>
                                                                 </td>
                                                             </tr>
                                                         }
                                                     </tbody>
                                                 </table>
-                                            </div>
+                                      
                                         
                                             <div class="col-md-12">
                                                 <div class="row">

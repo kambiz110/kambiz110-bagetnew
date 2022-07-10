@@ -29,7 +29,7 @@ namespace Application.Discounts.EditDiscountServices
         public bool Execute(GetDescountsForEditViewModel dto)
         {
             var discount = context.Discount.Where(p => p.Id == dto.Id).FirstOrDefault();
-            mapper.Map(discount, dto);
+            mapper.Map( dto, discount);
       
 
             if (dto.appliedToCatalogItem != null)
