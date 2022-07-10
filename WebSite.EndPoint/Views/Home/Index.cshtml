@@ -5,12 +5,7 @@
 @{
     ViewData["Title"] = "صفحه نخست";
 
-    var sliders = Model.Banners.Where(p => p.Position == Position.Slider).ToList();
-    var Line_1 = Model.Banners.Where(p => p.Position == Position.Line_1).FirstOrDefault();
-    var Line_2 = Model.Banners.Where(p => p.Position == Position.Line_2).ToList();
-    var Line_3 = Model.Banners.Where(p => p.Position == Position.Line_3).ToList();
-    var Line_4 = Model.Banners.Where(p => p.Position == Position.Line_4).ToList();
-    var Line_5 = Model.Banners.Where(p => p.Position == Position.Line_5).ToList();
+
 }
 
 @(await Component.InvokeAsync("GetMainSlider", new { page = 1, pageSize = 10 }))

@@ -4,26 +4,12 @@
 
 @{
     ViewData["Title"] = "صفحه نخست";
-
-    var sliders = Model.Banners.Where(p => p.Position == Position.Slider).ToList();
-    var Line_1 = Model.Banners.Where(p => p.Position == Position.Line_1).FirstOrDefault();
-    var Line_2 = Model.Banners.Where(p => p.Position == Position.Line_2).ToList();
-    var Line_3 = Model.Banners.Where(p => p.Position == Position.Line_3).ToList();
-    var Line_4 = Model.Banners.Where(p => p.Position == Position.Line_4).ToList();
-    var Line_5 = Model.Banners.Where(p => p.Position == Position.Line_5).ToList();
 }
 
 <div class="container">
     <div class="row d-none d-sm-block">
         <div class="col-12 mb-3">
-            @if (Line_1 != null)
-            {
-                <div class="banner">
-                    <a href="@Line_1.Link">
-                        <img src="@Line_1.Image" alt="banner">
-                    </a>
-                </div>
-            }
+       
 
         </div>
     </div>
@@ -34,14 +20,7 @@
                     <div class="swiper-wrapper" style="transform: translate3d(4405px, 0px, 0px); transition-duration: 300ms;">
 
 
-                        @foreach (var item in sliders)
-                        {
-                            <div class="swiper-slide" data-swiper-slide-index="3" style="width: 881px;">
-                                <a href="@item.Link">
-                                    <img src="@item.Image" alt="">
-                                </a>
-                            </div>
-                        }
+                 
 
                     </div>
                     <!-- Add Arrows -->
@@ -103,7 +82,7 @@
         </div>
         <div class="col-lg-4">
             <div class="row">
-                @foreach (var item in Line_2.Take(2))
+                @*@foreach (var item in Line_2.Take(2))
                 {
                     <div class="col-lg-12 col-sm-6 col-12">
                         <div class="banner mb-3">
@@ -112,7 +91,7 @@
                             </a>
                         </div>
                     </div>
-                }
+                }*@
 
 
             </div>
@@ -121,7 +100,7 @@
     <div class="row align-items-center mb-4">
         <div class="col-lg-4 order-2 order-lg-1">
             <div class="row mt-4 mt-lg-0">
-                @foreach (var item in Line_3.Take(2))
+                @*@foreach (var item in Line_3.Take(2))
                 {
                     <div class="col-lg-12 col-sm-6 col-12">
                         <div class="banner mb-4">
@@ -130,7 +109,7 @@
                             </a>
                         </div>
                     </div>
-                }
+                }*@
 
             </div>
         </div>
@@ -387,7 +366,7 @@
     </section>
     <div class="row mb-5">
 
-        @foreach (var item in Line_4.Take(4))
+        @*@foreach (var item in Line_4.Take(4))
         {
             <div class="col-lg-3 col-md-6 col-sm-6 mb-lg-0 mb-3">
                 <div class="banner">
@@ -396,13 +375,13 @@
                     </a>
                 </div>
             </div>
-        }
+        }*@
 
 
     </div>
     <div class="row mb-5">
 
-        @foreach (var item in Line_5.Take(2))
+        @*@foreach (var item in Line_5.Take(2))
         {
             <div class="col-md-6 mb-lg-0 mb-3">
                 <div class="banner">
@@ -411,7 +390,7 @@
                     </a>
                 </div>
             </div>
-        }
+        }*@
 
 
     </div>
