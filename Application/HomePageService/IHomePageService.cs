@@ -1,6 +1,7 @@
 ﻿using Application.Catalogs.CatalogItems.GetCatalogIItemPLP;
 using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Interfaces.Contexts;
+using Common.Useful;
 using Domain.Banners;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -78,8 +79,8 @@ namespace Application.HomePageService
                     Price=p.Price,
                     Rate=4,
                     AvailableStock=p.AvailableStock,
-                    Image= uriComposerService
-                    .ComposeImageUri(p.CatalogItemImages.FirstOrDefault()?.Src)
+                    Images = p.CatalogItemImages.Select(p => GlobalConstants.serverImageUrl + p.Src).ToList()
+                   
                 }));
                 }
             }

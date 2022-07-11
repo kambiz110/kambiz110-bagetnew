@@ -104,8 +104,10 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
                            Id = p.Id,
                            Name = p.Name,
                            Price = p.Price,
+                           OldPrice=p.OldPrice,
+                           DiscountPercentage=p.Discounts.OrderByDescending(p=>p.DiscountPercentage).FirstOrDefault().DiscountPercentage,
                            Rate = 4,
-                           Image = GlobalConstants.serverImageUrl+p.CatalogItemImages.FirstOrDefault().Src,
+                           Images = p.CatalogItemImages.Select(p=> GlobalConstants.serverImageUrl + p.Src).ToList(),
                            AvailableStock = p.AvailableStock,
                        }).ToList();
                 return new PaginatedItemsDto<CatalogPLPDto>(request.page, request.pageSize, rowCount, data);
@@ -165,7 +167,10 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
         public int Id { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
-        public string Image { get; set; }
+        public int DiscountPercentage { get; set; }
+
+        public int? OldPrice { get; set; }
+        public List<string>  Images { get; set; }
         public byte Rate { get; set; }
         public int AvailableStock { get; set; }
     }

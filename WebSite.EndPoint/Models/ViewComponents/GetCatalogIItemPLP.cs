@@ -1,4 +1,5 @@
-﻿using Application.HomePageService;
+﻿using Application.Catalogs.CatalogItems.GetCatalogIItemPLP;
+using Application.HomePageService;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,16 +10,16 @@ namespace WebSite.EndPoint.Models.ViewComponents
 {
     public class GetCatalogIItemPLP : ViewComponent
     {
-        private readonly IHomePageService homePageService;
+        private readonly IGetCatalogIItemPLPService getCatalogIItemPLPService;
 
-        public GetCatalogIItemPLP(IHomePageService homePageService)
+        public GetCatalogIItemPLP(IGetCatalogIItemPLPService getCatalogIItemPLPService)
         {
-            this.homePageService = homePageService;
+            this.getCatalogIItemPLPService = getCatalogIItemPLPService;
         }
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(CatlogPLPRequestDto dto)
         {
-            var model = homePageService.GetData();
-            var viewName = $"~/Areas/Admin/Views/Shared/Components/Product/{this.ViewComponentContext.ViewComponentDescriptor.ShortName}.cshtml";
+            var model = getCatalogIItemPLPService.Execute(dto);
+            var viewName = $"~/Views/Shared/Components/Product/{this.ViewComponentContext.ViewComponentDescriptor.ShortName}.cshtml";
             return View(viewName, model);
         }
     }

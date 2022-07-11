@@ -299,7 +299,7 @@
                         <div class="product-card">
                             <div class="product-card-top">
                                 <a href="" class="product-image">
-                                    <img src="@item.Image" alt="product image">
+                                    <img src="@item.Images.FirstOrDefault()" alt="product image">
                                 </a>
                                 <div class="product-card-actions">
                                     <a class="add-to-wishlist"
@@ -408,7 +408,7 @@
                 <div class="product-card">
                     <div class="product-card-top">
                         <a href="" class="product-image">
-                            <img src="@item.Image" alt="@item.Name">
+                            <img src="@item.Images.FirstOrDefault()" alt="@item.Name">
                         </a>
                         <div class="product-card-actions">
                             <a class="add-to-wishlist"

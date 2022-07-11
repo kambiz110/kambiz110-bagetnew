@@ -41,7 +41,8 @@
                     <a href="javascript:void(0)"><i class="icon-x"></i></a>
                 </div>
             </div>
-            @if (Model != null)
+            @if (Model != null && Model.Items.Count()>0)
+            {
                 foreach (var item in Model.Items)
                 {
                     <div class="cart_item">
@@ -53,7 +54,7 @@
                         </div>
                         <div class="cart_info">
                             <a href="#"> @item.CatalogName</a>
-                         
+
                             <p> تعداد: @item.Quantity عدد <span> @item.UnitPrice.ToString("n0") تومان</span></p>
                         </div>
                         <div class="cart_remove">
@@ -69,16 +70,20 @@
                     </div>
                 }
 
-            <div class="mini_cart_table">
-                @*<div class="cart_total">
+                <div class="mini_cart_table">
+                    @*<div class="cart_total">
                     <span>مجموع فرعی:</span>
                     <span class="price">138.00 تومان</span>
                 </div>*@
-                <div class="cart_total mt-10">
-                    <span>جمع کل:</span>
-                    <span class="price">@Model.Total().ToString("n0") تومان</span>
+                    <div class="cart_total mt-10">
+                        <span>جمع کل:</span>
+                        <span class="price">@Model.Total().ToString("n0") تومان</span>
+                    </div>
                 </div>
-            </div>
+            }
+
+
+
         </div>
         <div class="mini_cart_footer">
             <div class="cart_button">
