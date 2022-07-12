@@ -97,20 +97,25 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
             }
             if (query!=null && query.Any())
             {
-                var data = query.PagedResult(request.page, request.pageSize, out rowCount)
-                       .ToList()
-                       .Select(p => new CatalogPLPDto
-                       {
-                           Id = p.Id,
-                           Name = p.Name,
-                           Price = p.Price,
-                           OldPrice=p.OldPrice,
-                           DiscountPercentage=p.Discounts.OrderByDescending(p=>p.DiscountPercentage).FirstOrDefault().DiscountPercentage,
-                           Rate = 4,
-                           Images = p.CatalogItemImages.Select(p=> GlobalConstants.serverImageUrl + p.Src).ToList(),
-                           AvailableStock = p.AvailableStock,
-                       }).ToList();
-                return new PaginatedItemsDto<CatalogPLPDto>(request.page, request.pageSize, rowCount, data);
+                var result = query.PagedResult(request.page, request.pageSize, out rowCount)
+                       .ToList();
+                if (result.Count>0)
+                {
+                    var data = result.Select(p => new CatalogPLPDto
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        Price = p.Price,
+                        OldPrice = p.OldPrice,
+                        Description=p.Description,
+                        DiscountPercentage = p.Discounts.Count>0? p.Discounts.OrderByDescending(p => p.DiscountPercentage).FirstOrDefault().DiscountPercentage:0,
+                        Rate = 4,
+                        Images = p.CatalogItemImages.Select(p => GlobalConstants.serverImageUrl + p.Src).ToList(),
+                        AvailableStock = p.AvailableStock,
+                    }).ToList();
+                    return new PaginatedItemsDto<CatalogPLPDto>(request.page, request.pageSize, rowCount, data);
+
+                }
             }
 
             return new PaginatedItemsDto<CatalogPLPDto>(request.page, request.pageSize, rowCount, new List<CatalogPLPDto>());
@@ -168,7 +173,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
         public string Name { get; set; }
         public int Price { get; set; }
         public int DiscountPercentage { get; set; }
-
+        public string Description { get; set; }
         public int? OldPrice { get; set; }
         public List<string>  Images { get; set; }
         public byte Rate { get; set; }
