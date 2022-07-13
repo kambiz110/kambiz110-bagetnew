@@ -61,29 +61,36 @@ namespace Application.HomePageService
                 pageSize = 20,
                 SortType = SortType.MostPopular
             }).Data.ToList();
-
-
-            List<CatalogPLPDto> MostDescountNumber = new List<CatalogPLPDto>();
-            var DiscountCatalogItem = context.Discount
-                .Where(p => p.DiscountPercentage != 0)
-                .OrderByDescending(p => p.Id)
-                .Include(p => p.CatalogItems).ThenInclude(p => p.CatalogItemImages)
-                .ToList();
-            if (DiscountCatalogItem!=null && DiscountCatalogItem.Count()>0)
+            var MostDescountNumber = getCatalogIItemPLPService.Execute(new CatlogPLPRequestDto
             {
+                AvailableStock = true,
+                page = 1,
+                pageSize = 20,
+                SortType = SortType.mostDescounted
+            }).Data.ToList();
 
-                foreach (var item in DiscountCatalogItem)
-                {
-                    MostDescountNumber.AddRange(item.CatalogItems.Select(p => new CatalogPLPDto {
-                    Id=p.Id,
-                    Price=p.Price,
-                    Rate=4,
-                    AvailableStock=p.AvailableStock,
-                    Images = p.CatalogItemImages.Select(p => GlobalConstants.serverImageUrl + p.Src).ToList()
+
+            //List<CatalogPLPDto> MostDescountNumber = new List<CatalogPLPDto>();
+            //var DiscountCatalogItem = context.Discount
+            //    .Where(p => p.DiscountPercentage != 0)
+            //    .OrderByDescending(p => p.Id)
+            //    .Include(p => p.CatalogItems).ThenInclude(p => p.CatalogItemImages)
+            //    .ToList();
+            //if (DiscountCatalogItem!=null && DiscountCatalogItem.Count()>0)
+            //{
+
+            //    foreach (var item in DiscountCatalogItem)
+            //    {
+            //        MostDescountNumber.AddRange(item.CatalogItems.Select(p => new CatalogPLPDto {
+            //        Id=p.Id,
+            //        Price=p.Price,
+            //        Rate=4,
+            //        AvailableStock=p.AvailableStock,
+            //        Images = p.CatalogItemImages.Select(p => GlobalConstants.serverImageUrl + p.Src).ToList()
                    
-                }));
-                }
-            }
+            //    }));
+            //    }
+            //}
             return new HomePageDto
             {
                 MostDescountNumber = MostDescountNumber,

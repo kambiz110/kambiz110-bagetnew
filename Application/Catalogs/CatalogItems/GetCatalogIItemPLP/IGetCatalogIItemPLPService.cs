@@ -95,6 +95,13 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
                     .Include(p => p.Discounts)
                     .OrderByDescending(p => p.Price);
             }
+
+            if (request.SortType == SortType.mostDescounted)
+            {
+                query = query
+                    .Include(p => p.Discounts)
+                        .Where(p => p.Discounts.Count() > 0);
+            }
             if (query!=null && query.Any())
             {
                 var result = query.PagedResult(request.page, request.pageSize, out rowCount)
@@ -165,6 +172,10 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
         /// گران‌ترین
         /// </summary>
         mostExpensive = 6,
+        /// <summary>
+        /// ‌بیشترین تخفیف
+        /// </summary>
+        mostDescounted = 7,
     }
 
     public class CatalogPLPDto
