@@ -4,6 +4,7 @@ using Application.BasketsService;
 using Application.Catalogs.CatalogItems.GetCatalogIItemPLP;
 using Application.Catalogs.CatalogItems.GetCatalogItemPDP;
 using Application.Catalogs.CatalogItems.UriComposer;
+using Application.Catalogs.CatalogTypes;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Catalogs.GetMenuItem;
 using Application.Discounts;
@@ -96,6 +97,7 @@ namespace WebSite.EndPoint
             services.AddTransient<ICatalogItemService, CatalogItemService>();
             services.AddTransient<ICustomerOrdersService, CustomerOrdersService>();
             services.AddTransient<IHomePageService, HomePageService>();
+            services.AddTransient<IMenuCatolgType, MenuCatolgType>();
             services.AddTransient<IBannersService, BannersService>();
             services.AddScoped<SaveVisitorFilter>();
 
