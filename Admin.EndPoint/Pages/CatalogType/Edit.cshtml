@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="widget-content widget-content-area">
-            <form asp-page="edit" method="post">
+            <form asp-page="edit" method="post" enctype="multipart/form-data">
                 @if (Model.Message != null)
                 {
                     @foreach (var item in Model.Message)
@@ -30,6 +30,18 @@
                     <label asp-for="CatalogType.Type"> </label>
                     <input type="text" class="form-control" asp-for="CatalogType.Type">
                     <span asp-validation-for="CatalogType.Type" class="text-danger"></span>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
+                    <fieldset class="form-group">
+                        <label for="basicInput">تصاویر </label>
+                        <input type="file" class="form-control" name="Files" id="Files">
+                    </fieldset>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
+                    <fieldset class="form-group">
+                        <label for="basicInput">اولویت </label>
+                        <input type="number" class="form-control" asp-for="CatalogType.SortIndex" >
+                    </fieldset>
                 </div>
                 <input type="hidden" asp-for="CatalogType.ParentCatalogTypeId" />
                 <input type="hidden" asp-for="CatalogType.Id" />

@@ -3,6 +3,7 @@ using Application.Interfaces.Contexts;
 using AutoMapper;
 using Common;
 using Domain.Catalogs;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,8 @@ namespace Application.Catalogs.CatalogTypes
 
         public BaseDto<CatalogTypeDto> FindById(int Id)
         {
-            var data = context.CatalogTypes.Find(Id);
+            var data = context.CatalogTypes.Where(p=>p.Id==Id)
+                .Include(p=>p.CatalogTypeImage).FirstOrDefault();
             var result = mapper.Map<CatalogTypeDto>(data);
 
             return new BaseDto<CatalogTypeDto>(
@@ -76,6 +78,7 @@ namespace Application.Catalogs.CatalogTypes
             int totalCount = 0;
             var model = context.CatalogTypes
                 .Where(p=> p.ParentCatalogTypeId == parentId)
+                 .Include(p => p.CatalogTypeImage)
                 .PagedResult(page,pageSize, out totalCount);
             var result = mapper.ProjectTo<CatalogTypeListDto>(model).ToList();
             return new PaginatedItemsDto<CatalogTypeListDto>(page, pageSize, totalCount, result);
@@ -99,6 +102,8 @@ namespace Application.Catalogs.CatalogTypes
     {
         public int Id { get; set; }
         public string Type { get; set; }
+        public int SortIndex { get; set; }
+        public  CatalogTypeImage CatalogTypeImage { get; set; }
         public int? ParentCatalogTypeId { get; set; }
     }
 
@@ -106,6 +111,7 @@ namespace Application.Catalogs.CatalogTypes
     {
         public int Id { get; set; }
         public string Type { get; set; }
+        public virtual CatalogTypeImage CatalogTypeImage { get; set; }
         public int SubTypeCount { get; set; }
     }
 }

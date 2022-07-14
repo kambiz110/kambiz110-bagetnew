@@ -7,6 +7,7 @@ using Application.Catalogs.CatalogFeature.Command;
 using Application.Catalogs.CatalogItems.GetCatalogItemAdmin;
 using Application.Catalogs.CatalogItems.RemoveImage;
 using Application.Catalogs.CatalogItems.UriComposer;
+using Application.Catalogs.CatalogTypeImages;
 using Application.Catalogs.CatalogTypes;
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
@@ -73,6 +74,7 @@ namespace Admin.EndPoint
             services.AddTransient<IDeletItemInDescount, DeletItemInDescount>();
             services.AddTransient<IDeleteImageService, DeleteImageService>();
             services.AddTransient<IEDitDiscount, EDitDiscount>();
+            services.AddTransient<ICRUDCatalogTypeImage, CRUDCatalogTypeImage>();
 
 
             #region connection String SqlServer

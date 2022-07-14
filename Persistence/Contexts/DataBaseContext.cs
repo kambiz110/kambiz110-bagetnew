@@ -44,13 +44,17 @@ namespace Persistence.Contexts
         public DbSet<Discount> Discount { get; set; }
         public DbSet<DiscountUsageHistory>  DiscountUsageHistories { get; set; }
         public DbSet<CatalogItemFavourite>   CatalogItemFavourites { get; set; }
-        public DbSet<Banner>    Banners { get; set; }
+        public DbSet<Banner> Banners { get; set; }
+        public DbSet<CatalogTypeImage>  CatalogTypeImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //builder.Entity<User>().Property<DateTime?>("InsertTime");
             //builder.Entity<User>().Property<DateTime?>("UpdateTime");
-
+            //builder.Entity<CatalogTypeImage>()
+            // .HasOne(a => a.CatalogType)
+            // .WithOne(b => b.CatalogTypeImage)
+            // .HasForeignKey<CatalogType>(b => b.CatalogTypeImageId);
             foreach (var entityType in builder.Model.GetEntityTypes())
             {
                 if (entityType.ClrType.GetCustomAttributes(typeof(AuditableAttribute), true).Length > 0)

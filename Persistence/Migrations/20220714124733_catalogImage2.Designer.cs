@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Contexts;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220714124733_catalogImage2")]
+    partial class catalogImage2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,7 +88,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 14, 18, 5, 55, 359, DateTimeKind.Local).AddTicks(4804));
+                        .HasDefaultValue(new DateTime(2022, 7, 14, 17, 17, 32, 526, DateTimeKind.Local).AddTicks(8670));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -122,7 +124,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 14, 18, 5, 55, 396, DateTimeKind.Local).AddTicks(22));
+                        .HasDefaultValue(new DateTime(2022, 7, 14, 17, 17, 32, 542, DateTimeKind.Local).AddTicks(7867));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -165,7 +167,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 14, 18, 5, 55, 396, DateTimeKind.Local).AddTicks(6301));
+                        .HasDefaultValue(new DateTime(2022, 7, 14, 17, 17, 32, 543, DateTimeKind.Local).AddTicks(5089));
 
                     b.Property<bool>("IsDakely")
                         .HasColumnType("bit");
@@ -196,7 +198,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 14, 18, 5, 55, 397, DateTimeKind.Local).AddTicks(1325));
+                        .HasDefaultValue(new DateTime(2022, 7, 14, 17, 17, 32, 544, DateTimeKind.Local).AddTicks(1409));
 
                     b.Property<bool>("IsDakely")
                         .HasColumnType("bit");
@@ -254,7 +256,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 14, 18, 5, 55, 397, DateTimeKind.Local).AddTicks(8754));
+                        .HasDefaultValue(new DateTime(2022, 7, 14, 17, 17, 32, 545, DateTimeKind.Local).AddTicks(1026));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -326,7 +328,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 14, 18, 5, 55, 399, DateTimeKind.Local).AddTicks(975));
+                        .HasDefaultValue(new DateTime(2022, 7, 14, 17, 17, 32, 545, DateTimeKind.Local).AddTicks(9351));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -365,7 +367,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 14, 18, 5, 55, 399, DateTimeKind.Local).AddTicks(5561));
+                        .HasDefaultValue(new DateTime(2022, 7, 14, 17, 17, 32, 546, DateTimeKind.Local).AddTicks(2568));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -418,10 +420,13 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CatalogTypeImageId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 14, 18, 5, 55, 400, DateTimeKind.Local).AddTicks(1021));
+                        .HasDefaultValue(new DateTime(2022, 7, 14, 17, 17, 32, 546, DateTimeKind.Local).AddTicks(6379));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -447,6 +452,10 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CatalogTypeImageId")
+                        .IsUnique()
+                        .HasFilter("[CatalogTypeImageId] IS NOT NULL");
+
                     b.HasIndex("ParentCatalogTypeId");
 
                     b.ToTable("CatalogType");
@@ -467,9 +476,6 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CatalogTypeId")
-                        .IsUnique();
-
                     b.ToTable("CatalogTypeImages");
                 });
 
@@ -483,7 +489,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 14, 18, 5, 55, 400, DateTimeKind.Local).AddTicks(8322));
+                        .HasDefaultValue(new DateTime(2022, 7, 14, 17, 17, 32, 547, DateTimeKind.Local).AddTicks(1241));
 
                     b.Property<bool>("IsDakely")
                         .HasColumnType("bit");
@@ -535,7 +541,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 14, 18, 5, 55, 401, DateTimeKind.Local).AddTicks(4930));
+                        .HasDefaultValue(new DateTime(2022, 7, 14, 17, 17, 32, 547, DateTimeKind.Local).AddTicks(8152));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -612,7 +618,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 14, 18, 5, 55, 402, DateTimeKind.Local).AddTicks(5447));
+                        .HasDefaultValue(new DateTime(2022, 7, 14, 17, 17, 32, 550, DateTimeKind.Local).AddTicks(6914));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -660,7 +666,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 14, 18, 5, 55, 403, DateTimeKind.Local).AddTicks(6186));
+                        .HasDefaultValue(new DateTime(2022, 7, 14, 17, 17, 32, 552, DateTimeKind.Local).AddTicks(2725));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -715,7 +721,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 14, 18, 5, 55, 404, DateTimeKind.Local).AddTicks(2685));
+                        .HasDefaultValue(new DateTime(2022, 7, 14, 17, 17, 32, 552, DateTimeKind.Local).AddTicks(9426));
 
                     b.Property<bool>("IsPay")
                         .HasColumnType("bit");
@@ -757,7 +763,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 14, 18, 5, 55, 404, DateTimeKind.Local).AddTicks(8166));
+                        .HasDefaultValue(new DateTime(2022, 7, 14, 17, 17, 32, 553, DateTimeKind.Local).AddTicks(5626));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -901,22 +907,17 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Catalogs.CatalogType", b =>
                 {
+                    b.HasOne("Domain.Catalogs.CatalogTypeImage", "CatalogTypeImage")
+                        .WithOne("CatalogType")
+                        .HasForeignKey("Domain.Catalogs.CatalogType", "CatalogTypeImageId");
+
                     b.HasOne("Domain.Catalogs.CatalogType", "ParentCatalogType")
                         .WithMany("SubType")
                         .HasForeignKey("ParentCatalogTypeId");
 
+                    b.Navigation("CatalogTypeImage");
+
                     b.Navigation("ParentCatalogType");
-                });
-
-            modelBuilder.Entity("Domain.Catalogs.CatalogTypeImage", b =>
-                {
-                    b.HasOne("Domain.Catalogs.CatalogType", "CatalogType")
-                        .WithOne("CatalogTypeImage")
-                        .HasForeignKey("Domain.Catalogs.CatalogTypeImage", "CatalogTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CatalogType");
                 });
 
             modelBuilder.Entity("Domain.Discounts.DiscountUsageHistory", b =>
@@ -1023,9 +1024,12 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Catalogs.CatalogType", b =>
                 {
-                    b.Navigation("CatalogTypeImage");
-
                     b.Navigation("SubType");
+                });
+
+            modelBuilder.Entity("Domain.Catalogs.CatalogTypeImage", b =>
+                {
+                    b.Navigation("CatalogType");
                 });
 
             modelBuilder.Entity("Domain.Order.Order", b =>
