@@ -35,9 +35,10 @@ namespace Admin.EndPoint.Pages.Discounts
             Cars = new SelectList(catalogItemService.GetCares(), "Id", "Name");
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
             addNewDiscountService.Execute(model);
+            return RedirectToAction("Index", "Discount");
         }
     }
 }

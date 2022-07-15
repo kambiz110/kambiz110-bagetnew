@@ -23,6 +23,7 @@ namespace Domain.Discounts
         public bool Statse { get; set; } = true;
         public bool RequiresCouponCode { get; set; }
         public string CouponCode { get; set; }
+        public int Importance { get; set; }
 
         [NotMapped]
         public DiscountType DiscountType

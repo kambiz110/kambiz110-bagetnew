@@ -1,0 +1,42 @@
+﻿@using Application.Catalogs.CatalogTypes;
+@using Domain.Banners;
+@model List<CatalogTypeDto>;
+<!--Categories product area start-->
+
+@{
+
+    if (Model != null && Model.Count > 0)
+    {
+        <div class="categories_product_area mb-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section_title mb-35">
+                            <h2><span>بهترین</span> دسته بندی ها</h2>
+
+                        </div>
+                        <div class="categories_product_inner categories_column7 owl-carousel">
+                            @foreach (var item in Model)
+                            {
+                                <div class="single_categories_product">
+                                    <div class="categories_product_thumb">
+                                        <a href="shop.html"><img src="@item.CatalogTypeImage.Src" alt=""></a>
+                                    </div>
+                                    <div class="categories_product_content">
+                                        <h4><a href="shop.html"> @item.Type</a></h4>
+                                    </div>
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+
+<!--Categories product area end-->

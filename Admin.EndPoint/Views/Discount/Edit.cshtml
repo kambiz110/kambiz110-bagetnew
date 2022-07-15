@@ -76,6 +76,18 @@
 
                         </div>
                     </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <fieldset class="form-group">
+                            <label for="basicInput"> اهمیت قرار گیری در صفحه</label>
+                            <select type="number" asp-for="Importance" class="form-control">
+                                <option value="1">عادی</option>
+                                <option value="2">صفحه اصلی</option>
+                                <option value="3">ویژه</option>
+                            </select>
+                            <span asp-validation-for="Importance" class="text-danger"></span>
+
+                        </fieldset>
+                    </div>
                 </div>
                 <div class="row">
 

@@ -37,6 +37,7 @@ namespace Application.Discounts.AddNewDiscountServices
                 RequiresCouponCode = discount.RequiresCouponCode,
                 StartDate = discount.StartDate,
                 UsePercentage = discount.UsePercentage,
+                Importance=discount.Importance
             };
 
             if (discount.appliedToCatalogItem != null)
@@ -75,6 +76,8 @@ namespace Application.Discounts.AddNewDiscountServices
 
         [Display(Name = "تعداد کد تخفیف")]
         public int LimitationTimes { get; set; } = 0;
+        [Display(Name = "اهمیت در صفحه")]
+        public int Importance { get; set; }
         [Display(Name = "اعمال برای محصول")]
         public List<int> appliedToCatalogItem { get; set; }
 
