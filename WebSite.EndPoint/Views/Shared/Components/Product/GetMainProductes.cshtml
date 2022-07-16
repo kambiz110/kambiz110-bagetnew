@@ -132,7 +132,7 @@
                                                                            title="نمایش جزئیات"> نمایش جزئیات</a>
                                                                     </li>
                                                                     <li class="wishlist">
-                                                                        <a  asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@Model.bestSellers.ElementAt(i).Id"
+                                                                        <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@Model.bestSellers.ElementAt(i).Id"
                                                                            title="افزودن به لیست علاقمندی ها">
                                                                             <i class="icon-heart"></i>
                                                                         </a>
@@ -236,7 +236,7 @@
                                                                                title="نمایش جزئیات"> نمایش جزئیات</a>
                                                                         </li>
                                                                         <li class="wishlist">
-                                                                            <a  asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@Model.bestSellers.ElementAt(i+1).Id"
+                                                                            <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@Model.bestSellers.ElementAt(i+1).Id"
                                                                                title="افزودن به لیست علاقمندی ها">
                                                                                 <i class="icon-heart"></i>
                                                                             </a>
@@ -371,7 +371,7 @@
                                                                            title="نمایش جزئیات"> نمایش جزئیات</a>
                                                                     </li>
                                                                     <li class="wishlist">
-                                                                        <a  asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@@Model.MostDescountNumber.ElementAt(i).Id"
+                                                                        <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@@Model.MostDescountNumber.ElementAt(i).Id"
                                                                            title="افزودن به لیست علاقمندی ها">
                                                                             <i class="icon-heart"></i>
                                                                         </a>
@@ -475,7 +475,7 @@
                                                                                title="نمایش جزئیات"> نمایش جزئیات</a>
                                                                         </li>
                                                                         <li class="wishlist">
-                                                                            <a  asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@Model.MostDescountNumber.ElementAt(i+1).Id"
+                                                                            <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@Model.MostDescountNumber.ElementAt(i+1).Id"
                                                                                title="افزودن به لیست علاقمندی ها">
                                                                                 <i class="icon-heart"></i>
                                                                             </a>
@@ -609,7 +609,7 @@
                                                                            title="نمایش جزئیات"> نمایش جزئیات</a>
                                                                     </li>
                                                                     <li class="wishlist">
-                                                                        <a  asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@Model.MostPopular.ElementAt(i).Id"
+                                                                        <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@Model.MostPopular.ElementAt(i).Id"
                                                                            title="افزودن به لیست علاقمندی ها">
                                                                             <i class="icon-heart"></i>
                                                                         </a>
@@ -713,7 +713,7 @@
                                                                                title="نمایش جزئیات"> نمایش جزئیات</a>
                                                                         </li>
                                                                         <li class="wishlist">
-                                                                            <a  asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@Model.MostPopular.ElementAt(i+1).Id"
+                                                                            <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@Model.MostPopular.ElementAt(i+1).Id"
                                                                                title="افزودن به لیست علاقمندی ها">
                                                                                 <i class="icon-heart"></i>
                                                                             </a>
@@ -752,28 +752,6 @@
     </div>
     <!--product area end-->
 
-    <!--banner area start-->
-    <div class="banner_area mb-80">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <figure class="single_banner">
-                        <div class="banner_thumb">
-                            <a href="shop.html"><img src="~/NewThem/assets/img/bg/banner4.jpg" alt=""></a>
-                        </div>
-                    </figure>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <figure class="single_banner">
-                        <div class="banner_thumb">
-                            <a href="shop.html"><img src="~/NewThem/assets/img/bg/banner5.jpg" alt=""></a>
-                        </div>
-                    </figure>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--banner area end-->
     <!--product area start-->
     <div class="product_area">
         <div class="container">
@@ -838,7 +816,7 @@
                                                     </a>
                                                 </li>
                                                 <li class="wishlist">
-                                                    <a  asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId=""
+                                                    <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId=""
                                                        title="افزودن به لیست علاقمندی ها">
                                                         <i class="icon-heart"></i>
                                                     </a>
@@ -927,7 +905,7 @@
                                                                 </a>
                                                             </li>
                                                             <li class="wishlist">
-                                                                <a  asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId=""
+                                                                <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId=""
                                                                    title="افزودن به لیست علاقمندی ها">
                                                                     <i class="icon-heart"></i>
                                                                 </a>
@@ -1014,7 +992,7 @@
                                                                 </a>
                                                             </li>
                                                             <li class="wishlist">
-                                                                <a  asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId=""
+                                                                <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId=""
                                                                    title="افزودن به لیست علاقمندی ها">
                                                                     <i class="icon-heart"></i>
                                                                 </a>
@@ -1101,7 +1079,7 @@
                                                                 </a>
                                                             </li>
                                                             <li class="wishlist">
-                                                                <a  asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId=""
+                                                                <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId=""
                                                                    title="افزودن به لیست علاقمندی ها">
                                                                     <i class="icon-heart"></i>
                                                                 </a>
@@ -1188,7 +1166,7 @@
                                                                 </a>
                                                             </li>
                                                             <li class="wishlist">
-                                                                <a  asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId=""
+                                                                <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId=""
                                                                    title="افزودن به لیست علاقمندی ها">
                                                                     <i class="icon-heart"></i>
                                                                 </a>
@@ -1275,7 +1253,7 @@
                                                                 </a>
                                                             </li>
                                                             <li class="wishlist">
-                                                                <a  asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId=""
+                                                                <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId=""
                                                                    title="افزودن به لیست علاقمندی ها">
                                                                     <i class="icon-heart"></i>
                                                                 </a>
@@ -1363,7 +1341,7 @@
                                                                 </a>
                                                             </li>
                                                             <li class="wishlist">
-                                                                <a  asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId=""
+                                                                <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId=""
                                                                    title="افزودن به لیست علاقمندی ها">
                                                                     <i class="icon-heart"></i>
                                                                 </a>

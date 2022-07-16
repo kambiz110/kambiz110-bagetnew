@@ -30,18 +30,34 @@ namespace Domain.Banners
         /// <summary>
         /// سطر اول
         /// </summary>
-        [Display(Name = "بنر میانه صفحه")]
-        single_banner = 1,
+        [Display(Name = "بنر میانه سطر اول")]
+        single_banner1 = 1,
         /// <summary>
         /// سطر دوم
+        /// </summary>    
+        [Display(Name = "بنر میانه سطر دوم")]
+        single_banner2 = 2,
+        /// <summary>
+        /// سطر سوم
+        /// </summary>    
+        [Display(Name = "بنر میانه سطر سوم")]
+        single_banner3 = 3,
+        /// <summary>
+        /// بنر کنار صفحه 
         /// </summary>
         [Display(Name = "بنر کنار صفحه")]
-        sidebar_banner = 2,
+        sidebar_banner = 4,
         /// <summary>
-        /// سطر دوم
+        /// بنر کنار تبلیغاتی
         /// </summary>
         [Display(Name = "بنر کنار تبلیغاتی")]
-        sidebar_banner_ADs = 3,
+        sidebar_banner_ADs = 5,
+
+        /// <summary>
+        /// بنر  انتهای صفحه
+        /// </summary>
+        [Display(Name = "بنر  انتهای صفحه")]
+        single_banner_Footer = 6,
 
        
   

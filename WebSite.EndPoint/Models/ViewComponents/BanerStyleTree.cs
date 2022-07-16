@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace WebSite.EndPoint.Models.ViewComponents
 {
-    public class GetMainSlider : ViewComponent
+    public class BanerStyleTree :ViewComponent
     {
         private readonly IGetBanerHomePage banners;
 
-        public GetMainSlider(IGetBanerHomePage banners)
+        public BanerStyleTree(IGetBanerHomePage banners)
         {
             this.banners = banners;
         }
 
-        public IViewComponentResult Invoke(int position=0, int count=4)
+        public IViewComponentResult Invoke(int position = 1, int count = 3)
         {
             var model = banners.Executed(position, count);
             var viewName = $"~/Views/Shared/Components/Banner/{this.ViewComponentContext.ViewComponentDescriptor.ShortName}.cshtml";
