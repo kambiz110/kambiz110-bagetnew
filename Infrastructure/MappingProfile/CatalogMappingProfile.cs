@@ -64,8 +64,7 @@ namespace Infrastructure.MappingProfile
             //--------------------------
             CreateMap<CatalogBrand, CatalogBrandDto>().ReverseMap();
 
-            //-------------------------
-            CreateMap<Banner, BannerDto>().ReverseMap();
+ 
   
             //----------------------------
             CreateMap<CatologCar, CarDto>().ReverseMap();

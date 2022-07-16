@@ -17,6 +17,21 @@ namespace Infrastructure.MappingProfile
             //----------------------------
             CreateMap<Discount, AddNewDiscountDto>().ReverseMap();
             CreateMap<Discount, GetDescountsForAdminViewModel>().ReverseMap();
+            CreateMap<Discount, GetDiscountInHomePageViewModel>()
+                  .ForMember(dest => dest.catalogItems, opt =>
+                opt.MapFrom(src => src.CatalogItems.Select(p => new catalogitemDtoForHomePage
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    CarName = p.CatologCar.Name,
+                    BrandName = p.CatalogBrand.Brand,
+                    OldPrice=p.OldPrice,
+                    Description=p.Description,
+                    Src=p.CatalogItemImages.FirstOrDefault().Src
+                    
+                })))
+                .ReverseMap();
 
             CreateMap<Discount, GetDescountsForEditViewModel>()
                  .ForMember(dest => dest.catalogItems, opt =>

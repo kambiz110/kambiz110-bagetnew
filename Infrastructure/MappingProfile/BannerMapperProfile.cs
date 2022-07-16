@@ -13,7 +13,8 @@ namespace Infrastructure.MappingProfile
     {
         public BannerMapperProfile()
         {
-           
+            //-------------------------
+            CreateMap<Banner, BannerDto>().ReverseMap();
         }
     }
 }

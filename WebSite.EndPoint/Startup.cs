@@ -98,7 +98,8 @@ namespace WebSite.EndPoint
             services.AddTransient<ICustomerOrdersService, CustomerOrdersService>();
             services.AddTransient<IHomePageService, HomePageService>();
             services.AddTransient<IMenuCatolgType, MenuCatolgType>();
-            services.AddTransient<IBannersService, BannersService>();
+            services.AddTransient<IGetBanerHomePage, GetBanerHomePage>();
+            services.AddTransient<IGetDiscountInHomePage, GetDiscountInHomePage>();
             services.AddScoped<SaveVisitorFilter>();
 
             services.AddSignalR();
@@ -106,6 +107,7 @@ namespace WebSite.EndPoint
             //mapper
             services.AddAutoMapper(typeof(CatalogMappingProfile));
             services.AddAutoMapper(typeof(UserMappingProfile));
+            services.AddAutoMapper(typeof(DescountMapperProfile));
 
         }
 

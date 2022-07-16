@@ -25,34 +25,26 @@ namespace Domain.Banners
         /// <summary>
         /// اسلایدر
         /// </summary>
-        [Display(Name = "اسلایدر")]
+        [Display(Name = "اسلایدر بالای صفحه")]
         Slider = 0,
         /// <summary>
         /// سطر اول
         /// </summary>
-        [Display(Name = "سطر اول")]
-        Line_1 = 1,
+        [Display(Name = "بنر میانه صفحه")]
+        single_banner = 1,
         /// <summary>
         /// سطر دوم
         /// </summary>
-        [Display(Name = "سطر دوم")]
-        Line_2 = 2,
+        [Display(Name = "بنر کنار صفحه")]
+        sidebar_banner = 2,
+        /// <summary>
+        /// سطر دوم
+        /// </summary>
+        [Display(Name = "بنر کنار تبلیغاتی")]
+        sidebar_banner_ADs = 3,
 
-        /// <summary>
-        /// سطر سوم
-        /// </summary>
-        [Display(Name = " سطر سوم")]
-        Line_3 = 3,
-        /// <summary>
-        /// سطر چهارم
-        /// </summary>
-        [Display(Name = "سطر چهارم")]
-        Line_4 = 4,
-        /// <summary>
-        /// سطر پنجم
-        /// </summary>
-        [Display(Name = "سطر پنجم")]
-        Line_5 = 5,
+       
+  
 
     }
 

@@ -8,9 +8,8 @@
 
 }
 
-@(await Component.InvokeAsync("GetMainSlider", new { page = 1, pageSize = 10 }))
-
+@(await Component.InvokeAsync("GetMainSlider", new { position = 0,  count =4}))
+@(await Component.InvokeAsync("GetCatalogByDiscountHomePage"))
 
 @(await Component.InvokeAsync("GetCatalogTypeHomePage", new { sortIndex=0,  count=9 }))
-
 @(await Component.InvokeAsync("GetMainProductes"))

@@ -9,16 +9,16 @@ namespace WebSite.EndPoint.Models.ViewComponents
 {
     public class GetMainSlider : ViewComponent
     {
-        private readonly IBannersService banners;
+        private readonly IGetBanerHomePage banners;
 
-        public GetMainSlider(IBannersService banners)
+        public GetMainSlider(IGetBanerHomePage banners)
         {
             this.banners = banners;
         }
 
-        public IViewComponentResult Invoke(int page=1, int pageSize=4)
+        public IViewComponentResult Invoke(int position=0, int count=4)
         {
-            var model = banners.GetList(page , pageSize);
+            var model = banners.Executed(position, count);
             var viewName = $"~/Views/Shared/Components/Product/{this.ViewComponentContext.ViewComponentDescriptor.ShortName}.cshtml";
             return View(viewName, model.Data);
         }

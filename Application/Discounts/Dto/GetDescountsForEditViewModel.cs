@@ -52,5 +52,6 @@ namespace Application.Discounts.Dto
         public string BrandName { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
+
     }
 }
