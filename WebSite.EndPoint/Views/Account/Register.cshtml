@@ -1,5 +1,6 @@
 ﻿@model WebSite.EndPoint.Models.ViewModels.Register.RegisterViewModel
 @{
+    ViewData["Title"] = "ثبت نام";
     Layout = null;
 }
 
@@ -19,7 +20,7 @@
 
 </head>
 
-<body>
+<body style="padding-top: 110px !important">
 
     <div class="page-wrapper auth-page-wrapper">
 
@@ -30,11 +31,12 @@
                     <div class="auth-form shadow-around">
                         <div class="site-logo">
                             <a href="#">
-                                <img src="./assets/images/logo.png" alt="logo">
+                             
+                                <img src="~/Theme/assets/images/theme/90x90.jpg" />
                             </a>
                         </div>
-                        <div class="auth-form-title">
-                            ثبت نام در  باگتو
+                        <div class="auth-form-title text-center">
+                            ثبت نام در  فروشگاه لوازم یدکی زنجانی
                         </div>
                         <form asp-action="register" asp-controller="account" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -88,7 +90,7 @@
                                 <label class="container-checkbox">
                                     <a href="#" class="link--with-border-bottom">حریم خصوصی</a> و <a href="#"
                                                                                                      class="link--with-border-bottom">شرایط و قوانین</a> استفاده از سرویس های سایت
-                                    باگتو  را مطالعه نموده
+                                    فروشگاه زنجانی  را مطالعه نموده
                                     و با کلیه موارد آن موافقم.
                                     <input type="checkbox" checked="checked">
                                     <span class="checkmark"></span>
@@ -97,14 +99,14 @@
                             <div class="form-element-row text-left">
                                 <button class="btn-element btn-success-element">
                                     <i class="fad fa-user-edit"></i>
-                                    ثبت نام در  باگتو
+                                    ثبت نام در فروشگاه زنجانی 
                                 </button>
                             </div>
 
                         </form>
                         <div class="auth-form-footer">
-                            <span>قبلا در  باگتو  ثبت‌نام کرده‌اید؟</span>
-                            <a href="#" class="link--with-border-bottom">وارد شوید</a>
+                            <span>قبلا ثبت‌ نام کرده‌اید؟</span>
+                            <a asp-area="" asp-controller="Account" asp-action="Login" class="link--with-border-bottom">وارد شوید</a>
                         </div>
                     </div>
                 </div>
@@ -125,7 +127,7 @@
                     </div>
                     <div class="col-12 mt-2 mb-3">
                         <div class="footer-light-text">
-                            استفاده از مطالب فروشگاه اینترنتی  باگتو  فقط برای مقاصد غیرتجاری و با ذکر منبع بلامانع است..
+                            استفاده از مطالب فروشگاه اینترنتی  زنجانی  فقط برای مقاصد غیرتجاری و با ذکر منبع بلامانع است..
                         </div>
                     </div>
                     <div class="col-12 text-center">

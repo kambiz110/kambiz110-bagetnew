@@ -18,3 +18,4 @@
 @(await Component.InvokeAsync("BanerStyleTree", new { position = 1,  count =3}))
 @(await Component.InvokeAsync("GetMainProductes"))
 @(await Component.InvokeAsync("BannerStyleTwo", new { position = 2,  count =2}))
+@(await Component.InvokeAsync("GetCatalogeByTypeHomePage", new { sortIndex=0,  count=9 }))
