@@ -1,16 +1,16 @@
 ﻿
 @{
   
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<div class="container" style="transform: none;">
+<div class="container" @*style="transform: none;"*@>
     <div class="row mb-5" style="transform: none;">
         <div class="col-lg-3 col-md-4 mb-md-0 mb-3 sticky-sidebar" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
 
             <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;">
                 <div class="sidebar-widget">
-                    <div class="banner mb-3">
+                    <div class="banner mb-3 d-none">
                         <a href="#">
                             <img src="~/Theme/assets/images/banner/banner-profile-sidebar.jpg" class="box-shaow-unset has-border" alt="...">
                         </a>
@@ -39,7 +39,7 @@
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <span> باگتو  کلاب</span>
+                                        <span> زنجانی  کلاب</span>
                                         <span>0 <span class="text-info font-weight-bold">امتیاز</span></span>
                                     </a>
                                 </li>
@@ -98,17 +98,29 @@
                             </ul>
                         </div>
                     </div>
-                </div><div class="resize-sensor" style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;"><div class="resize-sensor-expand" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0px; top: 0px; transition: all 0s ease 0s; width: 347px; height: 598px;"></div></div><div class="resize-sensor-shrink" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;"><div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%"></div></div></div>
+                </div>
+                
+                @*<div class="resize-sensor" style="position: absolute; inset: 0px; overflow: hidden; z-index: -1; visibility: hidden;">
+                <div class="resize-sensor-expand" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+                    <div style="position: absolute; left: 0px; top: 0px; transition: all 0s ease 0s; width: 347px; height: 598px;">
+
+                    </div>
+                    </div>
+                <div class="resize-sensor-shrink" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;">
+                    <div style="position: absolute; left: 0; top: 0; transition: 0s; width: 200%; height: 200%">
+                        </div>
+                    </div>
+                </div>*@
             </div>
         </div>
         <div class="col-lg-9 col-md-8">
-            <div class="section-title mb-2">
+            <div class="section-title mb-2 mt-2">
                 @ViewData["Title"]
             </div>
             @RenderBody()
         </div>
     </div>
-    <div class="row mb-5">
+    @*<div class="row mb-5 d-none">
         <div class="col-lg-3 col-md-6 col-sm-6 mb-lg-0 mb-3">
             <div class="banner">
                 <a href="#">
@@ -137,6 +149,6 @@
                 </a>
             </div>
         </div>
-    </div>
+    </div>*@
 </div>
 

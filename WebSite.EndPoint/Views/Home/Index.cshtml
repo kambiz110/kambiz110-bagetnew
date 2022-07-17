@@ -7,9 +7,12 @@
 
 
 }
+<cache expires-after="@TimeSpan.FromSeconds(30)">
+
+    @(await Component.InvokeAsync("GetMainSlider", new { position = 0,  count =4}))
+</cache>
 
 
-@(await Component.InvokeAsync("GetMainSlider", new { position = 0,  count =4}))
 @(await Component.InvokeAsync("GetCatalogTypeHomePage", new { sortIndex=0,  count=9 }))
 @(await Component.InvokeAsync("GetCatalogByDiscountHomePage"))
 @(await Component.InvokeAsync("BanerStyleTree", new { position = 1,  count =3}))
