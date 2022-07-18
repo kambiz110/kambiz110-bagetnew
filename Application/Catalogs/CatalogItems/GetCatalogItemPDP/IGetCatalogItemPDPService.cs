@@ -1,4 +1,4 @@
-﻿ using Application.Catalogs.CatalogItems.UriComposer;
+﻿using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Interfaces.Contexts;
 using Common.Useful;
 using Microsoft.EntityFrameworkCore;
@@ -28,10 +28,13 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
         public CatalogItemPDPDto Execute(int Id)
         {
             var catalogitem = context.CatalogItems
+
                 .Include(p => p.CatalogItemFeatures)
                 .Include(p => p.CatalogItemImages)
+                 .Include(p => p.CatalogBrand)
+                .Include(p => p.CatalogCompany)
                 .Include(p => p.CatalogType)
-                .Include(p => p.CatalogBrand)
+                .Include(p => p.CatologCar)
                 .Include(p => p.Discounts)
                 .SingleOrDefault(p => p.Id == Id);
             catalogitem.VisitCount += 1;
@@ -49,14 +52,20 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
             var similarCatalogItems = context
                .CatalogItems
                .Include(p => p.CatalogItemImages)
+               .Include(p => p.Discounts)
                .Where(p => p.CatalogTypeId == catalogitem.CatalogTypeId)
                .Take(10)
                .Select(p => new SimilarCatalogItemDto
                {
                    Id = p.Id,
-                   Images = GlobalConstants.serverImageUrl+p.CatalogItemImages.FirstOrDefault().Src,
+                   Image = GlobalConstants.serverImageUrl + p.CatalogItemImages.FirstOrDefault().Src,
                    Price = p.Price,
-                   Name = p.Name
+                   Name = p.Name,
+                   DiscountPercentage = p.Discounts.Count > 0 ? p.Discounts.OrderByDescending(p => p.DiscountPercentage).FirstOrDefault().DiscountPercentage : 0,
+                   Rate = 5,
+                   OldPrice = p.OldPrice ?? p.Price,
+                   AvailableStock = p.AvailableStock,
+                   Slug = p.Slug,
                }).ToList();
 
             return new CatalogItemPDPDto
@@ -65,13 +74,18 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
                 SimilarCatalogs = similarCatalogItems,
                 Id = catalogitem.Id,
                 Name = catalogitem.Name,
+                Rate = 5,
                 Brand = catalogitem.CatalogBrand.Brand,
                 Type = catalogitem.CatalogType.Type,
                 Price = catalogitem.Price,
                 Description = catalogitem.Description,
                 Images = catalogitem.CatalogItemImages.Select(p => uriComposerService.ComposeImageUri(p.Src)).ToList(),
-                OldPrice = catalogitem.OldPrice?? catalogitem.Price,
+                OldPrice = catalogitem.OldPrice ?? catalogitem.Price,
                 PercentDiscount = catalogitem.PercentDiscount,
+                CarName = catalogitem.CatologCar.Name,
+                CompanyName = catalogitem.CatalogCompany.Name,
+                TypeName = catalogitem.CatalogType.Type,
+                BrrndName = catalogitem.CatalogBrand.Brand,
             };
 
 
@@ -81,6 +95,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
     public class CatalogItemPDPDto
     {
         public int Id { get; set; }
+        public int Rate { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public string Brand { get; set; }
@@ -89,6 +104,10 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
         public int? PercentDiscount { get; set; }
         public List<string> Images { get; set; }
         public string Description { get; set; }
+        public string TypeName { get; set; }
+        public string CarName { get; set; }
+        public string BrrndName { get; set; }
+        public string CompanyName { get; set; }
         public IEnumerable<IGrouping<string, PDPFeaturesDto>> Features { get; set; }
         public List<SimilarCatalogItemDto> SimilarCatalogs { get; set; }
 
@@ -107,6 +126,11 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
         public int Id { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
-        public string Images { get; set; }
+        public string Image { get; set; }
+        public int DiscountPercentage { get; set; }
+        public byte Rate { get; set; }
+        public int AvailableStock { get; set; }
+        public int? OldPrice { get; set; }
+        public string Slug { get; set; }
     }
 }

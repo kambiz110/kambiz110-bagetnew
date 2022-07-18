@@ -19,16 +19,16 @@
             seeAlsoUrls: new[] { "https://site.com/see-also-1", "https://site.com/see-also-2" }  //optional
         );
 
-        seoInfo.SetImageInfo(
-            url: "https://site.com/uploads/image.jpg",
-          //  width: 1280,  //optional
-          //  height: 720,  //optional
-            alt: "Image alt"//,  //optional
-                               //mimeType: "image/jpeg", //optional (detects from url file extension if not set.)
-           // cardType: SeoTags.TwitterCardType.SummaryLargeImage   //optional
-        );
+//seoInfo.SetImageInfo(
+//    url: "https://site.com/uploads/image.jpg",
+//    //  width: 1280,  //optional
+//    //  height: 720,  //optional
+//    alt: "Image alt"//,  //optional
+//                    //mimeType: "image/jpeg", //optional (detects from url file extension if not set.)
+//                    // cardType: SeoTags.TwitterCardType.SummaryLargeImage   //optional
+//);
 
-        seoInfo.SetArticleInfo(
+seoInfo.SetArticleInfo(
             authorName: "Author Name",
             publishDate: DateTimeOffset.Now,
             modifiedDate: DateTimeOffset.Now,  //optional
@@ -40,828 +40,449 @@
 seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.FeedType.Rss);
     });
 }
-<div class="container">
-    <div class="row mb-1">
-        <div class="col-12">
-            <!-- breadcrumb -->
-            <div class="breadcrumb mb-1">
-                <nav>
-                    <a href="#">فروشگاه اینترنتی</a>
-                    <a href="#">کالای دیجیتال</a>
-                    <a href="#">گوشی موبایل</a>
-                    <a>گوشی موبایل سامسونگ مدل Galaxy A30s SM-A307FN/DS دو سیم کارت ظرفیت 32 گیگابایت</a>
-                </nav>
-            </div>
-            <!-- end breadcrumb -->
-        </div>
-    </div>
-    <div class="product-detail shadow-around mb-5 py-5">
-        <div class="row mb-3 mx-0">
 
 
 
-            <div class="col-xl-4 col-lg-4 col-md-6">
-                <div class="product-gallery">
-                    <div class="swiper-container gallery-slider swiper-container-initialized swiper-container-horizontal swiper-container-rtl">
-                        <div class="swiper-wrapper" style="transform: translate3d(1660px, 0px, 0px); transition-duration: 0ms;">
 
-
-                            @foreach (var item in Model.Images)
-                            {
-                                <div class="swiper-slide" data-swiper-slide-index="1" style="width: 415px;">
-                                    <img src="@item" data-zoom-image="@item" class="zoom-image" alt="gallery item">
-                                </div>
-                            }
-
-                        </div>
-                        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
-                    </div>
-                    <div class="swiper-container gallery-slider-thumbs swiper-container-initialized swiper-container-horizontal swiper-container-rtl">
-                        <div class="swiper-wrapper" style="transform: translate3d(622.5px, 0px, 0px); transition-duration: 0ms;">
-                            @{
-                                int i = 1;
-                                string classname = "swiper-slide";
-                            }
-
-                            @foreach (var item in Model.Images)
-                            {
-                                if (i == 1)
-                                {
-                                    classname += " swiper-slide-duplicate-prev";
-                                }
-                                else if (i == 2)
-                                {
-                                    classname += " swiper-slide-prev";
-                                }
-                                else if (i == 3)
-                                {
-                                    classname += " swiper-slide-active";
-                                }
-                                else
-                                {
-                                    classname += "swiper-slide-duplicate";
-                                }
-                                <div class="@classname" data-swiper-slide-index="@i" style="width: 103.75px;">
-                                    <img src="@item" alt="gallery item">
-                                </div>
-                                classname = "swiper-slide";
-                                i += 1;
-                            }
-
-                        </div>
-                        <!-- Add Arrows -->
-                        <div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide"></div>
-                        <div class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide"></div>
-                        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
-                    </div>
-                    <ul class="product--actions">
-                        <li>
-                            <!-- در صورت نیاز به استفاده از فرم از کد زیر استفاده کنید -->
-                            <!-- <form action="">
-                                <button class="add-to-favorite"><i class="fas fa-heart"></i></button>
-                            </form> -->
-                            <a href="#" class="is-action add-to-favorite"><i class="fas fa-heart"></i></a>
-                            <span class="tooltip--action">افزودن به علاقمندی</span>
-                        </li>
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#shareLinkModal"><i class="fas fa-share-alt"></i></a>
-                            <span class="tooltip--action">اشتراک گذاری</span>
-                        </li>
-                        <li>
-                            <a href="#" class="is-action add-to-compare"><i class="fas fa-adjust"></i></a>
-                            <span class="tooltip--action">افزودن به لیست مقایسه</span>
-                        </li>
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#chartModal"><i class="fas fa-chart-area"></i></a>
-                            <span class="tooltip--action">نمودار قیمت</span>
-                        </li>
+<!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="index.html">خانه</a></li>
+                        <li>جزئیات محصول</li>
                     </ul>
                 </div>
             </div>
-            <div class="col-xl-5 col-lg-4 col-md-6">
-                <div class="product-title mb-3">
-                    <h1>
-                        @Model.Name
-                    </h1>
-                    <h1 class="product-title-en">
-                        @Model.Type
-                    </h1>
-                </div>
-                <div class="d-block mb-2">
-                    <span class="font-weight-bold">برند:</span>
-                    <a href="#" class="link--with-border-bottom">@Model.Brand</a>
-                </div>
-                <div class="d-block mb-4">
-                    <span class="font-weight-bold">گارانتی:</span>
-                    <span>18 ماهه</span>
-                </div>
-                @if (Model.Features != null && Model.Features.Any())
-                {
-                    <div class="product-params-special">
-                        <ul data-title="ویژگی‌های محصول">
-                            @foreach (var item in Model.Features.FirstOrDefault())
-                            {
-                                <li>
-                                    <span>@item.Key</span>
-                                    <span>@item.Value</span>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                }
-
-                <div class="alert alert-warning">
-                    <div class="alert-body">
-                        <p class="d-flex align-items-center">
-                            <i class="fad fa-history ml-2"></i>
-                            حداکثر تا 3 روز تحویل داده می شود.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6">
-                <form asp-action="Index" asp-controller="Basket" method="post" class="box-info-product">
-
-                    <div class="d-block mb-3">
-                        <span class="d-block">
-                            تعداد:
-                        </span>
-                        <div class="num-block">
-                            <div class="num-in">
-                                <span class="plus"></span>
-                                <input type="hidden" value="@Model.Id" name="CatalogitemId" />
-                                <input type="text" class="in-num" name="quantity" value="1" readonly="">
-                                <span class="minus dis"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center justify-content-end mt-3">
-                        <div class="product-price">
-                            <div class="product-price-info">
-                                <div class="product-price-off">
-
-                                    @if (Model.PercentDiscount != 0)
-                                    {
-                                        <div>
-                                            %@Model.PercentDiscount
-                                            <span> تخفیف </span>
-                                        </div>
-                                    }
-                                </div>
-                                <div class="product-price-prev">
-                                    @if (Model.OldPrice != 0)
-                                    {
-                                        <span>
-                                            @Model.OldPrice.Value.ToString("n0")
-                                        </span>
-                                    }
-                                </div>
-                            </div>
-                            <div class="product-price-real">
-                                <div class="product-price-raw">@Model.Price.ToString("n0") </div>
-                                تومان
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <button type="submit" class="add-to-cart">
-                            افزودن به سبد خرید
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="py-3">
-            <div class="row mx-0">
-                <div class="col-12">
-                    <hr>
-                </div>
-            </div>
-        </div>
-        <div class="services pt-3 row mx-0">
-            <div class="col-md-3 col-sm-6 mb-md-0 mb-4">
-                <div class="service-item">
-                    <img src="./assets/images/services/delivery-person.png" alt="">
-                    <div class="service-item-body">
-                        <h6>تحویل سریع و رایگان</h6>
-                        <p>تحویل رایگان کالا برای کلیه سفارشات بیش از 500 هزار تومان</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-md-0 mb-4">
-                <div class="service-item">
-                    <img src="./assets/images/services/recieve.png" alt="">
-                    <div class="service-item-body">
-                        <h6>۷ روز ضمانت بازگشت</h6>
-                        <p>در صورت نارضایتی به هر دلیلی می توانید محصول را بازگردانید</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-md-0 mb-4">
-                <div class="service-item">
-                    <img src="./assets/images/services/headset.png" alt="">
-                    <div class="service-item-body">
-                        <h6>پشتیبانی ۲۴ ساعته</h6>
-                        <p>در صورت وجود هرگونه سوال یا ابهامی، با ما در تماس باشید</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-md-0 mb-4">
-                <div class="service-item">
-                    <img src="./assets/images/services/debit-card.png" alt="">
-                    <div class="service-item-body">
-                        <h6>پرداخت آنلاین ایمن</h6>
-                        <p>محصولات مدنظر خود را با خیال آسوده به صورت آنلاین خریداری کنید</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
-    <!-- product-tab-content -->
-    <div class="row mb-5">
-        <div class="col-12">
-            <div class="product-tab-content">
-                <ul class="nav nav-tabs" id="product-tab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="productDescription-tab" data-toggle="tab" href="#productDescription" role="tab" aria-controls="productDescription" aria-selected="false">توضیحات</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="productParams-tab" data-toggle="tab" href="#productParams" role="tab" aria-controls="productParams" aria-selected="true">مشخصات فنی</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="productComments-tab" data-toggle="tab" href="#productComments" role="tab" aria-controls="productComments" aria-selected="false">نظرات</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="product-tab">
-                    <div class="tab-pane fade" id="productDescription" role="tabpanel" aria-labelledby="productDescription-tab">
-                        <div class="product-desc">
-                            <div class="accordion accordion-product" id="accordionDescription">
-                                <div class="card">
-
-
-                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionDescription">
-                                        <div class="card-body">
-                                            <p>@Html.Raw(Model.Description)</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade active show" id="productParams" role="tabpanel" aria-labelledby="productParams-tab">
-                        <div class="product-params">
-
-                            @foreach (var group in Model.Features)
-                            {
-
-                                <section>
-                                    <h3 class="params-title"> @group.Key</h3>
-                                    <ul class="params-list">
-
-                                        @foreach (var item in group)
-                                        {
-                                            <li>
-                                                <div class="params-list-key">
-                                                    <span> @item.Key</span>
-                                                </div>
-                                                <div class="params-list-value">
-                                                    <span>
-                                                        @item.Value
-                                                    </span>
-                                                </div>
-                                            </li>
-                                        }
-                                    </ul>
-                                </section>
-                            }
-
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="productComments" role="tabpanel" aria-labelledby="productComments-tab">
-                        <!-- product-review -->
-                        <div class="product-review-form mb-3">
-                            <form action="#">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-6">
-                                        <div class="form-element-row">
-                                            <label for="phone-number" class="label-element">
-                                                عنوان نظر شما
-                                                (اجباری)
-                                            </label>
-                                            <input type="text" class="input-element">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>امتیاز شما:</label>
-                                            <div class="add-rating">
-                                                <input type="radio" name="rating" id="rating-1">
-                                                <label for="rating-1"></label>
-                                                <input type="radio" name="rating" id="rating-2">
-                                                <label for="rating-2"></label>
-                                                <input type="radio" name="rating" id="rating-3">
-                                                <label for="rating-3"></label>
-                                                <input type="radio" name="rating" id="rating-4">
-                                                <label for="rating-4"></label>
-                                                <input type="radio" name="rating" id="rating-5">
-                                                <label for="rating-5"></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-element-row">
-                                            <label for="phone-number" class="label-element">
-                                                ایمیل
-                                                شما
-                                            </label>
-                                            <input type="text" class="input-element">
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-element-row">
-                                            <label for="phone-number" class="label-element">نظر شما</label>
-                                            <textarea name="comment" id="comment" cols="30" rows="10" class="input-element"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <button class="btn btn-primary px-3">ارسال نظر <i class="fad fa-comment-alt-edit"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="section-title mb-1 mt-4">
-                                نظرات کاربران (۵)
-                            </div>
-                            <hr>
-                        </div>
-                        <div class="comments-list">
-                            <div class="row">
-                                <div class="col-md-3 aside">
-                                    <ul class="comments-user-shopping">
-                                        <li>
-                                            <div class="cell cell-name">
-                                                کاربر اینجانب
-                                            </div>
-                                            <div class="comments-buyer-badge">خریدار</div>
-                                        </li>
-                                        <li>
-                                            <div class="cell">
-                                                در تاریخ ۷ فروردین ۱۳۹۹
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="alert alert-info">
-                                        <i class="fas fa-thumbs-up"></i> خرید این محصول را توصیه می‌کنم
-                                    </div>
-                                    <ul class="comments-user-shopping">
-                                        <li>
-                                            <div class="cell cell-title">رنگ:</div>
-                                            <div class="cell color-cell">
-                                                <span class="shopping-color-value" style="background-color: #FFFFFF;"></span>سفید
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="cell cell-title">فروشنده:</div>
-                                            <div class="cell seller-cell">
-                                                <a href="#" class="border-bottom-dt">زندگیِ مدرن</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-9 article">
-                                    <div class="header">
-                                        <div>راضیم</div>
-                                    </div>
-                                    <p>
-                                        من ۳روز که خریدم و راضی هستم دوربینش خوبه فقط به نظرم باتری
-                                        زود تموم میشه البته دائما هم باهاش کار میکنم ولی هر روز
-                                        شارژش می‌کنم گوشیه خوش دستیه
-                                    </p>
-                                    <div class="footer">
-                                        <div class="comments-likes">
-                                            آیا این نظر برایتان مفید بود؟
-                                            <button class="btn-like" data-counter="۰">بله</button>
-                                            <button class="btn-like" data-counter="۰">خیر</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3 aside">
-                                    <ul class="comments-user-shopping">
-                                        <li>
-                                            <div class="cell cell-name">
-                                                کاربر اینجانب
-                                            </div>
-                                            <div class="comments-buyer-badge">خریدار</div>
-                                        </li>
-                                        <li>
-                                            <div class="cell">
-                                                در تاریخ ۷ فروردین ۱۳۹۹
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="alert alert-info">
-                                        <i class="fas fa-thumbs-up"></i> خرید این محصول را توصیه می‌کنم
-                                    </div>
-                                    <ul class="comments-user-shopping">
-                                        <li>
-                                            <div class="cell cell-title">رنگ:</div>
-                                            <div class="cell color-cell">
-                                                <span class="shopping-color-value" style="background-color: #000000;"></span>مشکی
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="cell cell-title">فروشنده:</div>
-                                            <div class="cell seller-cell">
-                                                <a href="#" class="border-bottom-dt">زندگیِ مدرن</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-9 article">
-                                    <div class="header">
-                                        <div>مدل 128 گیگ با رام 4 پیشنهاد میشه</div>
-                                    </div>
-                                    <p>
-                                        سلام بعد از چند روز استفاده ازش راضی هستم و فکرشو نمیکردم به
-                                        عنوان یه گوشی تقریبا میان رده راضیم کنه و تصورم یه گوشیه
-                                        ضعیف بود.به عنوان کسی که زیاد با کامپیوتر و گوشی سر و کار
-                                        داره و سرعت و امکانات براش مهمه کاملا توقعاتمو برآروده
-                                        کرد.طراحی به روز و جذابی هم داره.رنگ مشکی 128 گیگ با رام 4
-                                        رو گرفتم که زیبایی خاصی داره.از دیجیکالا هم تشکر میکنم که
-                                        محصولو به موقع در تعطیلات به دستم رسوند و گارانتی و برگه
-                                        نحوه رجستر کردن گوشی همراهش بود و بسته بندی خوبی
-                                        داشت.دوستانی هم که میگفتن مشکل هنگ داره بنده مشاهده نکردم و
-                                        قبل استفاده کاملا بروزرسانیش کردم اول.نکته آخر اینکه برای
-                                        اینکه عمر باتری بیشتر باشه تو تنظیمات از حالت فست شارژ خارج
-                                        کنید و استاندارد شارژ کنید بهتره و مواقع اضطراری از فست
-                                        استفاده کنید و برای اولین بار بگذارید شارژ گوشی به پانزده
-                                        درصد برسه و خالی بشه بعد بزنید به شارژ و ازش استفاده نکنید
-                                        تا فول بشه و بعد استفاده کنید.گوشی های هوشمند نیازی به شارژ
-                                        طولانی مدت ندارند.
-                                    </p>
-                                    <div class="comments-evaluation">
-                                        <div class="comments-evaluation-positive">
-                                            <span>نقاط قوت</span>
-                                            <ul>
-                                                <li>
-                                                    فینگر تاچ عالی نیست ولی رضایت بخشه.تاچ قوی داره
-                                                </li>
-                                                <li>
-                                                    نور صفحه نمایش زیاد و کیفت صفحه نمایش قابل قبوله
-                                                </li>
-                                                <li>
-                                                    سخت افزار مناسب و سرعت خوب
-                                                </li>
-                                                <li>
-                                                    داشتن کاور ژله ای شفاف همراه گوشی و صدای واضح و
-                                                    بلند
-                                                </li>
-                                                <li>میزان شارژ دهی مناسب و دوربین سلفی خوب</li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="comments-evaluation-negative">
-                                            <span>نقاط ضعف</span>
-                                            <ul>
-                                                <li>
-                                                    نداشتن گلاس صفحه
-                                                </li>
-                                                <li>سیم شارژر خیلی کوتاهه</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="footer">
-                                        <div class="comments-likes">
-                                            آیا این نظر برایتان مفید بود؟
-                                            <button class="btn-like" data-counter="۰">بله</button>
-                                            <button class="btn-like" data-counter="۰">خیر</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3 aside">
-                                    <ul class="comments-user-shopping">
-                                        <li>
-                                            <div class="cell cell-name">
-                                                کاربر اینجانب
-                                            </div>
-                                            <div class="comments-buyer-badge">خریدار</div>
-                                        </li>
-                                        <li>
-                                            <div class="cell">
-                                                در تاریخ ۷ فروردین ۱۳۹۹
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="alert alert-info">
-                                        <i class="fas fa-thumbs-up"></i> خرید این محصول را توصیه می‌کنم
-                                    </div>
-                                    <ul class="comments-user-shopping">
-                                        <li>
-                                            <div class="cell cell-title">رنگ:</div>
-                                            <div class="cell color-cell">
-                                                <span class="shopping-color-value" style="background-color: #FFFFFF;"></span>سفید
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="cell cell-title">فروشنده:</div>
-                                            <div class="cell seller-cell">
-                                                <a href="#" class="border-bottom-dt">زندگیِ مدرن</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-9 article">
-                                    <div class="header">
-                                        <div>راضیم</div>
-                                    </div>
-                                    <p>
-                                        من ۳روز که خریدم و راضی هستم دوربینش خوبه فقط به نظرم باتری
-                                        زود تموم میشه البته دائما هم باهاش کار میکنم ولی هر روز
-                                        شارژش می‌کنم گوشیه خوش دستیه
-                                    </p>
-                                    <div class="footer">
-                                        <div class="comments-likes">
-                                            آیا این نظر برایتان مفید بود؟
-                                            <button class="btn-like" data-counter="۰">بله</button>
-                                            <button class="btn-like" data-counter="۰">خیر</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3 aside">
-                                    <ul class="comments-user-shopping">
-                                        <li>
-                                            <div class="cell cell-name">
-                                                کاربر اینجانب
-                                            </div>
-                                            <div class="comments-buyer-badge">خریدار</div>
-                                        </li>
-                                        <li>
-                                            <div class="cell">
-                                                در تاریخ ۷ فروردین ۱۳۹۹
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="alert alert-info">
-                                        <i class="fas fa-thumbs-up"></i> خرید این محصول را توصیه می‌کنم
-                                    </div>
-                                    <ul class="comments-user-shopping">
-                                        <li>
-                                            <div class="cell cell-title">رنگ:</div>
-                                            <div class="cell color-cell">
-                                                <span class="shopping-color-value" style="background-color: #FFFFFF;"></span>سفید
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="cell cell-title">فروشنده:</div>
-                                            <div class="cell seller-cell">
-                                                <a href="#" class="border-bottom-dt">زندگیِ مدرن</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-9 article">
-                                    <div class="header">
-                                        <div>راضیم</div>
-                                    </div>
-                                    <p>
-                                        من ۳روز که خریدم و راضی هستم دوربینش خوبه فقط به نظرم باتری
-                                        زود تموم میشه البته دائما هم باهاش کار میکنم ولی هر روز
-                                        شارژش می‌کنم گوشیه خوش دستیه
-                                    </p>
-                                    <div class="footer">
-                                        <div class="comments-likes">
-                                            آیا این نظر برایتان مفید بود؟
-                                            <button class="btn-like" data-counter="۰">بله</button>
-                                            <button class="btn-like" data-counter="۰">خیر</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3 aside">
-                                    <ul class="comments-user-shopping">
-                                        <li>
-                                            <div class="cell cell-name">
-                                                کاربر اینجانب
-                                            </div>
-                                            <div class="comments-buyer-badge">خریدار</div>
-                                        </li>
-                                        <li>
-                                            <div class="cell">
-                                                در تاریخ ۷ فروردین ۱۳۹۹
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="alert alert-info">
-                                        <i class="fas fa-thumbs-up"></i> خرید این محصول را توصیه می‌کنم
-                                    </div>
-                                    <ul class="comments-user-shopping">
-                                        <li>
-                                            <div class="cell cell-title">رنگ:</div>
-                                            <div class="cell color-cell">
-                                                <span class="shopping-color-value" style="background-color: #FFFFFF;"></span>سفید
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="cell cell-title">فروشنده:</div>
-                                            <div class="cell seller-cell">
-                                                <a href="#" class="border-bottom-dt">زندگیِ مدرن</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-9 article">
-                                    <div class="header">
-                                        <div>راضیم</div>
-                                    </div>
-                                    <p>
-                                        من ۳روز که خریدم و راضی هستم دوربینش خوبه فقط به نظرم باتری
-                                        زود تموم میشه البته دائما هم باهاش کار میکنم ولی هر روز
-                                        شارژش می‌کنم گوشیه خوش دستیه
-                                    </p>
-                                    <div class="footer">
-                                        <div class="comments-likes">
-                                            آیا این نظر برایتان مفید بود؟
-                                            <button class="btn-like" data-counter="۰">بله</button>
-                                            <button class="btn-like" data-counter="۰">خیر</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3 aside">
-                                    <ul class="comments-user-shopping">
-                                        <li>
-                                            <div class="cell cell-name">
-                                                کاربر اینجانب
-                                            </div>
-                                            <div class="comments-buyer-badge">خریدار</div>
-                                        </li>
-                                        <li>
-                                            <div class="cell">
-                                                در تاریخ ۷ فروردین ۱۳۹۹
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="alert alert-danger">
-                                        <i class="fas fa-thumbs-down"></i> خرید این محصول را توصیه نمی‌کنم
-                                    </div>
-                                    <ul class="comments-user-shopping">
-                                        <li>
-                                            <div class="cell cell-title">رنگ:</div>
-                                            <div class="cell color-cell">
-                                                <span class="shopping-color-value" style="background-color: #FFFFFF;"></span>سفید
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="cell cell-title">فروشنده:</div>
-                                            <div class="cell seller-cell">
-                                                <a href="#" class="border-bottom-dt">زندگیِ مدرن</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-9 article">
-                                    <div class="header">
-                                        <div>راضیم</div>
-                                    </div>
-                                    <p>
-                                        من ۳روز که خریدم و راضی هستم دوربینش خوبه فقط به نظرم باتری
-                                        زود تموم میشه البته دائما هم باهاش کار میکنم ولی هر روز
-                                        شارژش می‌کنم گوشیه خوش دستیه
-                                    </p>
-                                    <div class="footer">
-                                        <div class="comments-likes">
-                                            آیا این نظر برایتان مفید بود؟
-                                            <button class="btn-like" data-counter="۰">بله</button>
-                                            <button class="btn-like" data-counter="۰">خیر</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3 aside">
-                                    <ul class="comments-user-shopping">
-                                        <li>
-                                            <div class="cell cell-name">
-                                                کاربر اینجانب
-                                            </div>
-                                            <div class="comments-buyer-badge">خریدار</div>
-                                        </li>
-                                        <li>
-                                            <div class="cell">
-                                                در تاریخ ۷ فروردین ۱۳۹۹
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="alert alert-info">
-                                        <i class="fas fa-thumbs-up"></i> خرید این محصول را توصیه می‌کنم
-                                    </div>
-                                    <ul class="comments-user-shopping">
-                                        <li>
-                                            <div class="cell cell-title">رنگ:</div>
-                                            <div class="cell color-cell">
-                                                <span class="shopping-color-value" style="background-color: #FFFFFF;"></span>سفید
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="cell cell-title">فروشنده:</div>
-                                            <div class="cell seller-cell">
-                                                <a href="#" class="border-bottom-dt">زندگیِ مدرن</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-9 article">
-                                    <div class="header">
-                                        <div>راضیم</div>
-                                    </div>
-                                    <p>
-                                        من ۳روز که خریدم و راضی هستم دوربینش خوبه فقط به نظرم باتری
-                                        زود تموم میشه البته دائما هم باهاش کار میکنم ولی هر روز
-                                        شارژش می‌کنم گوشیه خوش دستیه
-                                    </p>
-                                    <div class="footer">
-                                        <div class="comments-likes">
-                                            آیا این نظر برایتان مفید بود؟
-                                            <button class="btn-like" data-counter="۰">بله</button>
-                                            <button class="btn-like" data-counter="۰">خیر</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end product-review -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- end product-tab-content -->
-    <section class="product-carousel">
-        <div class="section-title">
-            <i class="fad fa-retweet"></i>
-            پیشنهادهای مشابه
-        </div>
-        <div class="swiper-container slider-lg swiper-container-initialized swiper-container-horizontal swiper-container-rtl">
-            <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);">
-                @foreach (var item in Model.SimilarCatalogs)
-                {
-                    <div class="swiper-slide" style="width: 214.333px; margin-left: 10px;">
-                        <div class="product-card">
-                            <div class="product-card-top">
-                                <a href="" class="product-image">
-                                    <img src="@item.Images" alt="product image">
-                                </a>
-
-
-                                <div class="product-card-actions">
-                                    <button class="add-to-wishlist"><i class="fas fa-heart"></i></button>
-                                    <button class="add-to-compare"><i class="fas fa-random"></i></button>
-                                </div>
-                            </div>
-                            <div class="product-card-middle">
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 65%;"></div>
-                                    </div>
-                                </div>
-                                <h6 class="product-name">
-                                    <a href="#">
-                                        @item.Name
-                                    </a>
-                                </h6>
-                                <div class="product-price product-price-clone">650,000 تومان</div>
-                            </div>
-                            <div class="product-card-bottom">
-                                <div class="product-price">
-                                    @item.Price.ToString("n0") تومان
-                                </div>
-                                <a href="#" class="btn-add-to-cart">
-                                    <i class="fad fa-cart-plus"></i>
-                                    افزودن به سبد خرید
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-            <!-- Add Arrows -->
-            <div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide" aria-disabled="false"></div>
-            <div class="swiper-button-prev swiper-button-disabled" tabindex="0" role="button" aria-label="Previous slide" aria-disabled="true"></div>
-            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
-        </div>
-    </section>
 </div>
+<!--breadcrumbs area end-->
 
+<div class="product_page_bg">
+    <div class="container">
+        <!--product details start-->
+        <div class="product_details">
+            <div class="row">
+                <div class="col-lg-5 col-md-6">
+                    <div class="product-details-tab">
+
+                        @if (Model.Images.Count > 1)
+                        {
+                            <div id="img-1" class="zoomWrapper single-zoom">
+
+                                <a href="#">
+                                    <img id="zoom1" src="@Model.Images.FirstOrDefault()" data-zoom-image="@Model.Images.FirstOrDefault()" alt="big-1">
+                                </a>
+
+                            </div>
+                            <div class="single-zoom-thumb">
+                                <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
+
+                                    @for (int d = 0; d < Model.Images.Count; d++)
+                                    {
+
+                                        <li>
+                                            <a href="#" class="elevatezoom-gallery active" data-update="" data-image="@Model.Images.ElementAt(d)" data-zoom-image="@Model.Images.ElementAt(d)">
+                                                <img src="@Model.Images.ElementAt(d)" alt="zo-th-1" />
+                                            </a>
+
+                                        </li>
+
+
+                                    }
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <img  src="@Model.Images.FirstOrDefault()"  alt="@Model.Name">
+                        }
+
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-6">
+                    <div class="product_d_right">
+                        <div>
+
+                            <h3><a href="#">@Model.Name</a></h3>
+                            <div class="product_nav">
+                                <ul>
+                                    <li class="prev"><a href="product-details.html"><i class="fa fa-angle-right"></i></a></li>
+                                    <li class="next"><a href="variable-product.html"><i class="fa fa-angle-left"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product_rating">
+                                <ul>
+                                    @{
+                                        int reateCounter = 0;
+                                        for (int j = 0; j < 5; j++)
+                                        {
+                                            if (Model.Rate > reateCounter)
+                                            {
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="ion-android-star"></i>
+                                                    </a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="ion-android-star-outline"></i>
+                                                    </a>
+                                                </li>
+                                            }
+                                            reateCounter++;
+                                        }
+                                    }
+                                    <li class="review"><a href="#">(1 نظر مشتری )</a></li>
+                                </ul>
+                            </div>
+                            <div class="price_box">
+                                @if (Model.OldPrice != null)
+                                {
+                                    <span class="old_price">@Model.OldPrice?.ToString("n0") تومان</span>
+                                }
+                                <span class="current_price">@Model.Price.ToString("n0") تومان</span>
+                            </div>
+                            <div class="product_desc">
+                                <p>@Html.Raw(Model.Description)  </p>
+                            </div>
+
+                            <form asp-action="Index" asp-controller="Basket" method="post" class="product_variant quantity">
+                                <label>تعداد</label>
+                                <input type="hidden" value="@Model.Id" name="CatalogitemId" />
+                                <input min="1" max="100" value="1" type="number" name="quantity">
+                                <button class="button" type="submit">افزودن به سبد خرید</button>
+
+                            </form>
+
+                            <div class=" product_d_action">
+                                <ul>
+                                    <li><a href="#" title="افزودن به لیست علاقمندی ها">+ افزودن به لیست علاقمندی ها</a></li>
+                                </ul>
+                            </div>
+                            <div class="product_meta">
+                                <span>دسته بندی: <a href="#">@Model.TypeName</a></span>
+                            </div>
+
+                        </div>
+                        <div class="priduct_social">
+                            <ul>
+                                <li><a class="facebook" href="#" title="facebook"><i class="fa fa-facebook"></i> لایک</a></li>
+                                <li><a class="twitter" href="#" title="twitter"><i class="fa fa-twitter"></i> توییت</a></li>
+                                <li><a class="pinterest" href="#" title="pinterest"><i class="fa fa-pinterest"></i> ذخیره</a></li>
+                                <li><a class="google-plus" href="#" title="google +"><i class="fa fa-google-plus"></i> اشتراک گذاری</a></li>
+                                <li><a class="linkedin" href="#" title="linkedin"><i class="fa fa-linkedin"></i> لینک</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--product details end-->
+        <!--product info start-->
+        <div class="product_d_info">
+            <div class="row">
+                <div class="col-12">
+                    <div class="product_d_inner">
+                        <div class="product_info_button">
+                            <ul class="nav" role="tablist" id="nav-tab">
+                                <li>
+                                    <a class="active" data-bs-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">توضیحات</a>
+                                </li>
+                                <li>
+                                    <a data-bs-toggle="tab" href="#sheet" role="tab" aria-controls="sheet" aria-selected="false">مشخصات</a>
+                                </li>
+                                <li>
+                                    <a data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false"> نظرات (1)</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="info" role="tabpanel">
+                                <div class="product_info_content">
+                                    @Html.Raw(Model.Description)
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="sheet" role="tabpanel">
+                                <div class="product_d_table">
+                                    <form action="#">
+                                        @if (Model.Features != null && Model.Features.Any())
+                                        {
+                                            <table>
+                                                <tbody>
+                                                    @foreach (var item in Model.Features.FirstOrDefault())
+                                                    {
+                                                     
+                                                        <tr>
+                                                            <td class="first_child">@item.Key</td>
+                                                            <td>@item.Value</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+
+                                        }
+                                        else
+                                        {
+                                          <span class="h3"> ویژگی خاصی ثبت نگردیده است!!!</span>
+                                        }
+
+                                    </form>
+                                </div>
+                             
+                            </div>
+
+                            <div class="tab-pane fade" id="reviews" role="tabpanel">
+                                <div class="reviews_wrapper">
+                        
+                                    <div class="reviews_comment_box">
+                                        <div class="comment_thmb">
+                                            <img src="~/NewThem/assets/img/blog/comment2.jpg" alt="">
+                                        </div>
+                                        <div class="comment_text">
+                                            <div class="reviews_meta">
+                                                <div class="product_rating">
+                                                    <ul>
+                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                                <p><strong>مدیر سایت </strong>- مهر 12, 1398</p>
+                                                <span>بسیار بسیار عالی</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="comment_title">
+                                        <h2>افزودن نظر</h2>
+                                        <p> آدرس ایمیل شما منتشر نخواهد شد. فیلدهای الزامی علامت گذاری شده اند </p>
+                                    </div>
+                                    <div class="product_rating mb-10">
+                                        <h3>امتیاز شما</h3>
+                                        <ul>
+                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="product_review_form">
+                                        <form action="#">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label for="review_comment">نظر شما </label>
+                                                    <textarea name="comment" id="review_comment"></textarea>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <label for="author">نام</label>
+                                                    <input id="author" type="text">
+
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <label for="email">ایمیل</label>
+                                                    <input id="email" type="text">
+                                                </div>
+                                            </div>
+                                            <button type="submit">ارسال</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--product info end-->
+        <!--product area start-->
+        <section class="product_area related_products">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section_title title_style2">
+                        <div class="title_content">
+                            <h2>محصولات <span>مرتبط</span></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="product_carousel product_details_column5 owl-carousel">
+                    @{
+                        var counterbestSellers = Model.SimilarCatalogs.Count;
+
+                        @for (int i = 0; i < counterbestSellers; i++)
+                           
+                            {
+                                <div class="col-lg-3">
+                                    <div class="product_items">
+                                        <article class="single_product">
+                                            <figure>
+                                                <div class="product_thumb">
+
+                                                    <a class="primary_img"
+                                                       href="~/Product/Details/pid-@Model.SimilarCatalogs.ElementAt(i).Id/@Model.SimilarCatalogs.ElementAt(i).Slug">
+                                                        <img src="@Model.SimilarCatalogs.ElementAt(i).Image" alt="">
+                                                    </a>
+
+                                                    @if (Model.SimilarCatalogs.ElementAt(i).DiscountPercentage > 0)
+                                                    {
+                                                        <div class="label_product">
+                                                            <span class="label_sale">@(Model.SimilarCatalogs.ElementAt(i).DiscountPercentage)%</span>
+                                                        </div>
+                                                    }
+
+                                                    <div class="quick_button">
+                                                        <a href="~/Product/Details/pid-@Model.SimilarCatalogs.ElementAt(i).Id/@Model.SimilarCatalogs.ElementAt(i).Slug"
+                                                           title="نمایش جزئیات" data-bs-toggle="modal" data-bs-target="#modal_box">
+                                                            <i class="icon-eye"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="product_content">
+                                                    <div class="product_content_inner">
+                                                        <p class="manufacture_product"><a href="#">قطعات</a></p>
+                                                        <h4 class="product_name">
+                                                            <a href="product-details.html">
+                                                                عنوان:
+                                                                @Model.SimilarCatalogs.ElementAt(i).Name
+                                                            </a>
+                                                        </h4>
+                                                        <div class="product_rating">
+                                                            <ul>
+                                                                @{
+                                                                    int DescountNumbereateCounter = 0;
+                                                                    for (int j = 0; j < 5; j++)
+                                                                    {
+                                                                        if (Model.SimilarCatalogs.ElementAt(i).Rate > DescountNumbereateCounter)
+                                                                        {
+                                                                            <li>
+                                                                                <a href="#">
+                                                                                    <i class="ion-android-star"></i>
+                                                                                </a>
+                                                                            </li>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <li>
+                                                                                <a href="#">
+                                                                                    <i class="ion-android-star-outline"></i>
+                                                                                </a>
+                                                                            </li>
+                                                                        }
+                                                                        DescountNumbereateCounter++;
+                                                                    }
+                                                                }
+
+
+
+
+                                                            </ul>
+                                                        </div>
+                                                        <div class="price_box">
+                                                            @if (Model.SimilarCatalogs.ElementAt(i).AvailableStock > 0)
+                                                            {
+                                                                @if (Model.SimilarCatalogs.ElementAt(i).OldPrice != null)
+                                                                {
+                                                                    <span class="old_price">@Model.SimilarCatalogs.ElementAt(i).OldPrice?.ToString("n0") تومان</span>
+                                                                }
+
+                                                                <span class="current_price">@Model.SimilarCatalogs.ElementAt(i).Price.ToString("n0") تومان</span>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="text-danger font-weight-bold">ناموجود </span>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="action_links">
+                                                        <ul>
+                                                            <li class="add_to_cart">
+                                                                <a href="~/Product/Details/pid-@Model.SimilarCatalogs.ElementAt(i).Id/@Model.SimilarCatalogs.ElementAt(i).Slug"
+                                                                   title="نمایش جزئیات"> نمایش جزئیات</a>
+                                                            </li>
+                                                            <li class="wishlist">
+                                                                <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@Model.SimilarCatalogs.ElementAt(i).Id"
+                                                                   title="افزودن به لیست علاقمندی ها">
+                                                                    <i class="icon-heart"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li class="compare">
+                                                                <a href="compare.html" title="مقایسه">
+                                                                    <i class="icon-rotate-cw"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </figure>
+                                        </article>
+
+                                    </div>
+                                </div>
+                            }
+                    }
+
+                    <div class="col-lg-3">
+                        <article class="single_product">
+                            <figure>
+                                <div class="product_thumb">
+                                    <a class="primary_img" href="product-details.html"><img src="~/NewThem/assets/img/product/product1.jpg" alt=""></a>
+                                    <div class="label_product">
+                                        <span class="label_sale">-56%</span>
+                                    </div>
+                                    <div class="quick_button">
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box" title="نمایش سریع"><i class="icon-eye"></i></a>
+                                    </div>
+                                </div>
+                                <div class="product_content">
+                                    <div class="product_content_inner">
+                                        <p class="manufacture_product"><a href="#">قطعات</a></p>
+                                        <h4 class="product_name"><a href="product-details.html">عنوان محصول شماره 19</a></h4>
+                                        <div class="product_rating">
+                                            <ul>
+                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="price_box">
+                                            <span class="old_price">320.00 تومان</span>
+                                            <span class="current_price">120.00 تومان</span>
+                                        </div>
+                                    </div>
+                                    <div class="action_links">
+                                        <ul>
+                                            <li class="add_to_cart"><a href="cart.html" title="افزودن به سبد خرید">افزودن به سبد خرید</a></li>
+                                            <li class="wishlist"><a href="wishlist.html" title="افزودن به لیست علاقمندی ها"><i class="icon-heart"></i></a></li>
+                                            <li class="compare"><a href="compare.html" title="مقایسه"><i class="icon-rotate-cw"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </figure>
+                        </article>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!--product area end-->
+
+    </div>
+</div>
 
 
 @section Scripts

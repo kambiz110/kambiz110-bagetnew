@@ -34,6 +34,10 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
             var query = context.CatalogItems
                 .Include(p => p.Discounts)
                 .Include(p => p.CatalogItemImages)
+                .Include(p=>p.CatalogBrand)
+                .Include(p=>p.CatalogCompany)
+                .Include(p=>p.CatalogType)
+                .Include(p=>p.CatologCar)
                 .OrderByDescending(p => p.Id)
                 .AsQueryable();
 
@@ -115,6 +119,11 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
                         Price = p.Price,
                         OldPrice = p.OldPrice,
                         Description=p.Description,
+                        Slug=p.Slug,
+                        CarName=p.CatologCar.Name,
+                        CompanyName=p.CatalogCompany.Name,
+                        TypeName=p.CatalogType.Type,
+                        BrrndName=p.CatalogBrand.Brand,
                         DiscountPercentage = p.Discounts.Count>0? p.Discounts.OrderByDescending(p => p.DiscountPercentage).FirstOrDefault().DiscountPercentage:0,
                         Rate = 4,
                         Images = p.CatalogItemImages.Select(p => GlobalConstants.serverImageUrl + p.Src).ToList(),
@@ -183,11 +192,16 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
         public int Id { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
+        public string Slug { get; set; }
         public int DiscountPercentage { get; set; }
         public string Description { get; set; }
         public int? OldPrice { get; set; }
         public List<string>  Images { get; set; }
         public byte Rate { get; set; }
         public int AvailableStock { get; set; }
+        public string TypeName { get; set; }
+        public string CarName { get; set; }
+        public string CompanyName { get; set; }
+        public string BrrndName { get; set; }
     }
 }

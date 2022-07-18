@@ -50,7 +50,7 @@
                                                         <div class="product_thumb">
 
                                                             <a class="primary_img"
-                                                               asp-action="Details" asp-controller="Product" asp-route-id="@Model.bestSellers.ElementAt(i).Id">
+                                                              href="~/Product/Details/pid-@Model.bestSellers.ElementAt(i).Id/@Model.bestSellers.ElementAt(i).Slug">
                                                                 <img src="@Model.bestSellers.ElementAt(i).Images.FirstOrDefault()" alt="">
                                                             </a>
 
@@ -62,7 +62,8 @@
                                                             }
 
                                                             <div class="quick_button">
-                                                                <a asp-action="Details" asp-controller="Product" asp-route-id="@Model.bestSellers.ElementAt(i).Id"
+                                                                <a href="~/Product/Details/pid-@Model.bestSellers.ElementAt(i).Id/@Model.bestSellers.ElementAt(i).Slug" 
+                                                                   
                                                                    title="نمایش جزئیات" data-bs-toggle="modal" data-bs-target="#modal_box">
                                                                     <i class="icon-eye"></i>
                                                                 </a>
@@ -128,7 +129,7 @@
                                                             <div class="action_links">
                                                                 <ul>
                                                                     <li class="add_to_cart">
-                                                                        <a asp-action="Details" asp-controller="Product" asp-route-id="@Model.bestSellers.ElementAt(i).Id"
+                                                                        <a href="~/Product/Details/pid-@Model.bestSellers.ElementAt(i).Id/@Model.bestSellers.ElementAt(i).Slug"
                                                                            title="نمایش جزئیات"> نمایش جزئیات</a>
                                                                     </li>
                                                                     <li class="wishlist">
@@ -154,7 +155,7 @@
                                                             <div class="product_thumb">
 
                                                                 <a class="primary_img"
-                                                                   asp-action="Details" asp-controller="Product" asp-route-id="@Model.bestSellers.ElementAt(i+1).Id">
+                                                                    href="~/Product/Details/pid-@Model.bestSellers.ElementAt(i+1).Id/@Model.bestSellers.ElementAt(i+1).Slug">
                                                                     <img src="@Model.bestSellers.ElementAt(i+1).Images.FirstOrDefault()" alt="">
                                                                 </a>
 
@@ -166,7 +167,7 @@
                                                                 }
 
                                                                 <div class="quick_button">
-                                                                    <a asp-action="Details" asp-controller="Product" asp-route-id="@Model.bestSellers.ElementAt(i+1).Id"
+                                                                    <a  href="~/Product/Details/pid-@Model.bestSellers.ElementAt(i+1).Id/@Model.bestSellers.ElementAt(i+1).Slug"
                                                                        title="نمایش جزئیات" data-bs-toggle="modal" data-bs-target="#modal_box">
                                                                         <i class="icon-eye"></i>
                                                                     </a>
@@ -232,7 +233,7 @@
                                                                 <div class="action_links">
                                                                     <ul>
                                                                         <li class="add_to_cart">
-                                                                            <a asp-action="Details" asp-controller="Product" asp-route-id="@Model.bestSellers.ElementAt(i+1).Id"
+                                                                            <a  href="~/Product/Details/pid-@Model.bestSellers.ElementAt(i+1).Id/@Model.bestSellers.ElementAt(i+1).Slug"
                                                                                title="نمایش جزئیات"> نمایش جزئیات</a>
                                                                         </li>
                                                                         <li class="wishlist">
@@ -289,7 +290,7 @@
                                                         <div class="product_thumb">
 
                                                             <a class="primary_img"
-                                                               asp-action="Details" asp-controller="Product" asp-route-id="@Model.MostDescountNumber.ElementAt(i).Id">
+                                                              href="~/Product/Details/pid-@Model.MostDescountNumber.ElementAt(i).Id/@Model.MostDescountNumber.ElementAt(i).Slug" >
                                                                 <img src="@Model.MostDescountNumber.ElementAt(i).Images.FirstOrDefault()" alt="">
                                                             </a>
 
@@ -301,7 +302,7 @@
                                                             }
 
                                                             <div class="quick_button">
-                                                                <a asp-action="Details" asp-controller="Product" asp-route-id="@Model.MostDescountNumber.ElementAt(i).Id"
+                                                                <a href="~/Product/Details/pid-@Model.MostDescountNumber.ElementAt(i).Id/@Model.MostDescountNumber.ElementAt(i).Slug" 
                                                                    title="نمایش جزئیات" data-bs-toggle="modal" data-bs-target="#modal_box">
                                                                     <i class="icon-eye"></i>
                                                                 </a>
@@ -367,7 +368,7 @@
                                                             <div class="action_links">
                                                                 <ul>
                                                                     <li class="add_to_cart">
-                                                                        <a asp-action="Details" asp-controller="Product" asp-route-id="@Model.MostDescountNumber.ElementAt(i).Id"
+                                                                        <a href="~/Product/Details/pid-@Model.MostDescountNumber.ElementAt(i).Id/@Model.MostDescountNumber.ElementAt(i).Slug" 
                                                                            title="نمایش جزئیات"> نمایش جزئیات</a>
                                                                     </li>
                                                                     <li class="wishlist">
@@ -393,7 +394,7 @@
                                                             <div class="product_thumb">
 
                                                                 <a class="primary_img"
-                                                                   asp-action="Details" asp-controller="Product" asp-route-id="@Model.MostDescountNumber.ElementAt(i+1).Id">
+                                                                   href="~/Product/Details/pid-@Model.MostDescountNumber.ElementAt(i+1).Id/@Model.MostDescountNumber.ElementAt(i+1).Slug" >
                                                                     <img src="@Model.MostDescountNumber.ElementAt(i+1).Images.FirstOrDefault()" alt="">
                                                                 </a>
 
@@ -405,7 +406,7 @@
                                                                 }
 
                                                                 <div class="quick_button">
-                                                                    <a asp-action="Details" asp-controller="Product" asp-route-id="@Model.MostDescountNumber.ElementAt(i+1).Id"
+                                                                    <a href="~/Product/Details/pid-@Model.MostDescountNumber.ElementAt(i+1).Id/@Model.MostDescountNumber.ElementAt(i+1).Slug" 
                                                                        title="نمایش جزئیات" data-bs-toggle="modal" data-bs-target="#modal_box">
                                                                         <i class="icon-eye"></i>
                                                                     </a>
@@ -471,7 +472,7 @@
                                                                 <div class="action_links">
                                                                     <ul>
                                                                         <li class="add_to_cart">
-                                                                            <a asp-action="Details" asp-controller="Product" asp-route-id="@Model.MostDescountNumber.ElementAt(i+1).Id"
+                                                                            <a href="~/Product/Details/pid-@Model.bestSellers.ElementAt(i).Id/@Model.MostDescountNumber.ElementAt(i+1).Slug" 
                                                                                title="نمایش جزئیات"> نمایش جزئیات</a>
                                                                         </li>
                                                                         <li class="wishlist">
@@ -527,7 +528,7 @@
                                                         <div class="product_thumb">
 
                                                             <a class="primary_img"
-                                                               asp-action="Details" asp-controller="Product" asp-route-id="@Model.MostPopular.ElementAt(i).Id">
+                                                                href="~/Product/Details/pid-@Model.MostPopular.ElementAt(i).Id/@Model.MostPopular.ElementAt(i).Slug">
                                                                 <img src="@Model.MostPopular.ElementAt(i).Images.FirstOrDefault()" alt="">
                                                             </a>
 
@@ -539,7 +540,7 @@
                                                             }
 
                                                             <div class="quick_button">
-                                                                <a asp-action="Details" asp-controller="Product" asp-route-id="@Model.MostPopular.ElementAt(i).Id"
+                                                                <a  href="~/Product/Details/pid-@Model.MostPopular.ElementAt(i).Id/@Model.MostPopular.ElementAt(i).Slug"
                                                                    title="نمایش جزئیات" data-bs-toggle="modal" data-bs-target="#modal_box">
                                                                     <i class="icon-eye"></i>
                                                                 </a>
@@ -605,7 +606,7 @@
                                                             <div class="action_links">
                                                                 <ul>
                                                                     <li class="add_to_cart">
-                                                                        <a asp-action="Details" asp-controller="Product" asp-route-id="@Model.MostPopular.ElementAt(i).Id"
+                                                                        <a  href="~/Product/Details/pid-@Model.MostPopular.ElementAt(i).Id/@Model.MostPopular.ElementAt(i).Slug"
                                                                            title="نمایش جزئیات"> نمایش جزئیات</a>
                                                                     </li>
                                                                     <li class="wishlist">
@@ -631,7 +632,7 @@
                                                             <div class="product_thumb">
 
                                                                 <a class="primary_img"
-                                                                   asp-action="Details" asp-controller="Product" asp-route-id="@Model.MostPopular.ElementAt(i+1).Id">
+                                                                   href="~/Product/Details/pid-@Model.MostPopular.ElementAt(i+1).Id/@Model.MostPopular.ElementAt(i+1).Slug">
                                                                     <img src="@Model.MostPopular.ElementAt(i+1).Images.FirstOrDefault()" alt="">
                                                                 </a>
 
@@ -643,7 +644,7 @@
                                                                 }
 
                                                                 <div class="quick_button">
-                                                                    <a asp-action="Details" asp-controller="Product" asp-route-id="@Model.MostPopular.ElementAt(i+1).Id"
+                                                                    <a href="~/Product/Details/pid-@Model.MostPopular.ElementAt(i+1).Id/@Model.MostPopular.ElementAt(i+1).Slug"
                                                                        title="نمایش جزئیات" data-bs-toggle="modal" data-bs-target="#modal_box">
                                                                         <i class="icon-eye"></i>
                                                                     </a>
@@ -709,7 +710,7 @@
                                                                 <div class="action_links">
                                                                     <ul>
                                                                         <li class="add_to_cart">
-                                                                            <a asp-action="Details" asp-controller="Product" asp-route-id="@Model.MostPopular.ElementAt(i+1).Id"
+                                                                            <a href="~/Product/Details/pid-@Model.MostPopular.ElementAt(i+1).Id/@Model.MostPopular.ElementAt(i+1).Slug"
                                                                                title="نمایش جزئیات"> نمایش جزئیات</a>
                                                                         </li>
                                                                         <li class="wishlist">
