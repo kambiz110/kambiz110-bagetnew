@@ -51,9 +51,10 @@
                                                             <th class="sorting_asc">@Html.DisplayNameFor(model => model.Data.ElementAt(0).StartDate)</th>
                                                             <th class="sorting_asc">@Html.DisplayNameFor(model => model.Data.ElementAt(0).EndDate) </th>
                                                             <th class="sorting_asc">@Html.DisplayNameFor(model => model.Data.ElementAt(0).RequiresCouponCode) </th>
+                                                            <th class="sorting_asc">@Html.DisplayNameFor(model => model.Data.ElementAt(0).Importance) </th>
                                     
 
-                                                            <th class="sorting_asc"> </th>
+                                                            <th class="sorting_asc">عملیات </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -87,14 +88,32 @@
                                                                     }
                                                                 }
                                                             </td>
-                                                           
+                                                            <td>
+                                                                @{
+                                                                    switch (item.Importance)
+                                                                    {
+                                                                        case 1:<span>عادی</span>
+                                                                    
+                                                                            break;
+                                                                        case 2:<span>صفحه اصلی</span>
+                                                                      
+                                                                            break;
+                                                                        case 3:<span>داغ ویژه</span>
+                                                                    
+                                                                            break;
+                                                                    
+                                                                        default:<span>بدون انتخاب </span>
+                                                                            break;
+                                                                    }
+                                                                }
+                                                            </td>
 
                                                             <td>
 
-                                                                <a href="~/Discount/Edit/@item.Id" class="btn btn-warning mr-1">ویرایش</a>
-                                                                <a class="btn btn-danger">حذف</a>
+                                                                <a href="~/Discount/Edit/@item.Id" class="btn btn-warning mr-1">مشاهده و ویرایش</a>
+                                                                <a href="~/Discount/Delete/@item.Id" class="btn btn-danger">حذف</a>
                                                                 @*<a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-warning">ویرایش</a>*@
-                                                                <a href="./Discount/Detail" class="btn btn-info"> جزئیات</a>
+                                                                @*<a href="./Discount/Detail" class="btn btn-info"> جزئیات</a>*@
                                                             </td>
                                                         </tr>
                                                         }

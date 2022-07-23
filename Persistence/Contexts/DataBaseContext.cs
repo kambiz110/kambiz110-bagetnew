@@ -67,6 +67,8 @@ namespace Persistence.Contexts
             }
             builder.Entity<CatalogType>()
                 .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
+            builder.Entity<Discount>()
+                .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
 
             builder.Entity<CatalogItemFeature>()
                 .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);

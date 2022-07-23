@@ -50,6 +50,14 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
             {
                 query = query.Where(p => p.CatalogTypeId == request.CatalogTypeId);
             }
+            if (request.CatalogCopmanyId != null)
+            {
+                query = query.Where(p => p.CatalogCompanyId == request.CatalogCopmanyId);
+            }
+            if (request.CatalogCarId != null)
+            {
+                query = query.Where(p => p.CatologCarId == request.CatalogCarId);
+            }
 
             if (!string.IsNullOrEmpty(request.SearchKey))
             {
@@ -143,6 +151,8 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
     {
         public int page { get; set; } = 1;
         public int pageSize { get; set; } = 10;
+        public int? CatalogCarId { get; set; }
+        public int? CatalogCopmanyId { get; set; }
         public int? CatalogTypeId { get; set; }
         public int[] brandId { get; set; }
         public bool AvailableStock { get; set; }

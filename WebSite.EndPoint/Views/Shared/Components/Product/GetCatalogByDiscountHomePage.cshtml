@@ -1,410 +1,362 @@
 ﻿@using Application.Catalogs.CatalogItems.Dto;
 @model GetHomePageTwoDiscountCatalogItemsViewModel;
 <!--top  Discount product area start-->
-<div class="product_area product_area_four color_three">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-9 col-md-12">
-                <div class="deals_product_style4">
-                    <div class="section_title title_style2">
-                        <div class="title_content">
-                            <h2><span>تخفیف های</span> داغ امروز</h2>
+@{
+    if (Model != null && Model.Vijeh.catalogItems.Count > 0 && Model.HomePage.catalogItems.Count > 0)
+    {
+        <div class="product_area product_area_four color_three">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 col-md-12">
+                        <div class="deals_product_style4">
+                            <div class="section_title title_style2">
+                                <div class="title_content">
+                                    <h2><span>تخفیف های</span> داغ و ویژه</h2>
+                                </div>
+                            </div>
+                            <div class="product_carousel deals_product_column1 owl-carousel">
+
+                                @foreach (var item in Model.Vijeh.catalogItems)
+                                {
+                                    <article class="single_product">
+                                        <figure>
+                                            <div class="product_thumb">
+                                                <a class="primary_img" href="product-countdown.html">
+                                                    <img src="@item.Src" alt="">
+                                                </a>
+                                                <div class="label_product">
+                                                    <span class="label_sale">-@Model.Vijeh.DiscountPercentage.%</span>
+                                                </div>
+                                            </div>
+                                            <div class="product_content">
+                                                <p class="manufacture_product"><a href="#">قطعات خودرو</a></p>
+                                                <h4 class="product_name">
+                                                    <a href="product-countdown.html">
+                                                        @item.Name
+                                                    </a>
+                                                </h4>
+                                                <div class="product_rating">
+                                                    <ul>
+                                                        @{
+                                                            int reateCounter = 0;
+                                                            for (int j = 0; j < 5; j++)
+                                                            {
+                                                                if (item.Rate > reateCounter)
+                                                                {
+                                                                    <li>
+                                                                        <a href="#">
+                                                                            <i class="ion-android-star"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <li>
+                                                                        <a href="#">
+                                                                            <i class="ion-android-star-outline"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                }
+                                                                reateCounter++;
+                                                            }
+                                                        }
+                                                    </ul>
+                                                </div>
+                                                <div class="price_box">
+                                                    @if (item.OldPrice != null && item.OldPrice != item.Price)
+                                                    {
+                                                        <span class="old_price">@item.OldPrice?.ToString("n0") تومان</span>
+                                                    }
+                                                    <span class="current_price">@item.Price.ToString("n0") تومان</span>
+                                                </div>
+                                                <div class="product_desc" style=" max-height: 77px!important; overflow:hidden !important">
+                                                    @Html.Raw(item.Description)
+                                                </div>
+                                                <div class="countdown_text">
+                                                    <p><span>عجله کنید !</span>مهلت اتمام تخفیف :</p>
+                                                </div>
+                                                <div class="product_timing">
+                                                    <div data-countdown="@Model.Vijeh.EndDate?.ToString("yyyy/mm/dd")"></div>
+                                                </div>
+                                            </div>
+                                        </figure>
+                                    </article>
+                                }
+
+
+
+                            </div>
                         </div>
                     </div>
-                    <div class="product_carousel deals_product_column1 owl-carousel">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a class="primary_img" href="product-countdown.html">
-                                        <img src="~/NewThem/assets/img/product/product3.jpg" alt="">
-                                    </a>
-                                    <div class="label_product">
-                                        <span class="label_sale">-52%</span>
-                                    </div>
-                                </div>
-                                <div class="product_content">
-                                    <p class="manufacture_product"><a href="#">قطعات</a></p>
-                                    <h4 class="product_name">
-                                        <a href="product-countdown.html">
-                                            عنوان محصول شماره
-                                            13
-                                        </a>
-                                    </h4>
-                                    <div class="product_rating">
-                                        <ul>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="price_box">
-                                        <span class="old_price">310.00 تومان</span>
-                                        <span class="current_price">110.00 تومان</span>
-                                    </div>
-                                    <div class="product_desc">
-                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله ...</p>
-                                    </div>
-                                    <div class="countdown_text">
-                                        <p><span>عجله کنید !</span>مهلت اتمام تخفیف :</p>
-                                    </div>
-                                    <div class="product_timing">
-                                        <div data-countdown="2022/12/15"></div>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a class="primary_img" href="product-countdown.html">
-                                        <img src="~/NewThem/assets/img/product/product8.jpg" alt="">
-                                    </a>
-                                    <div class="label_product">
-                                        <span class="label_sale">-52%</span>
-                                    </div>
-                                </div>
-                                <div class="product_content">
-                                    <p class="manufacture_product"><a href="#">قطعات</a></p>
-                                    <h4 class="product_name"><a href="product-countdown.html">عنوان محصول شماره 21</a></h4>
-                                    <div class="product_rating">
-                                        <ul>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="price_box">
-                                        <span class="old_price">310.00 تومان</span>
-                                        <span class="current_price">110.00 تومان</span>
-                                    </div>
-                                    <div class="product_desc">
-                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله ...</p>
-                                    </div>
-                                    <div class="countdown_text">
-                                        <p><span>عجله کنید !</span>مهلت اتمام تخفیف :</p>
-                                    </div>
-                                    <div class="product_timing">
-                                        <div data-countdown="2022/12/15"></div>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a class="primary_img" href="product-countdown.html">
-                                        <img src="~/NewThem/assets/img/product/product5.jpg" alt="">
-                                    </a>
-                                    <div class="label_product">
-                                        <span class="label_sale">-52%</span>
-                                    </div>
-                                </div>
-                                <div class="product_content">
-                                    <p class="manufacture_product"><a href="#">قطعات</a></p>
-                                    <h4 class="product_name">
-                                        <a href="product-countdown.html">
-                                            عنوان محصول شماره
-                                            17
-                                        </a>
-                                    </h4>
-                                    <div class="product_rating">
-                                        <ul>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="price_box">
-                                        <span class="old_price">310.00 تومان</span>
-                                        <span class="current_price">110.00 تومان</span>
-                                    </div>
-                                    <div class="product_desc">
-                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله ...</p>
-                                    </div>
-                                    <div class="countdown_text">
-                                        <p><span>عجله کنید !</span>مهلت اتمام تخفیف :</p>
-                                    </div>
-                                    <div class="product_timing">
-                                        <div data-countdown="2022/12/15"></div>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="small_product_sidebar">
-                    <div class="section_title title_style2">
-                        <h2>تخفیف های <span>جدید</span></h2>
-                    </div>
-                    <div class="product_slick small_product_active">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a class="primary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product13.jpg" alt="">
-                                    </a>
-                                    <a class="secondary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product4.jpg" alt="">
-                                    </a>
-                                </div>
-                                <div class="product_content">
-                                    <h4 class="product_name">
-                                        <a href="product-details.html">
-                                            عنوان محصول شماره
-                                            12
-                                        </a>
-                                    </h4>
-                                    <div class="product_rating">
-                                        <ul>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="price_box">
-                                        <span class="old_price">320.00 تومان</span>
-                                        <span class="current_price">120.00 تومان</span>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a class="primary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product3.jpg" alt="">
-                                    </a>
-                                    <a class="secondary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product4.jpg" alt="">
-                                    </a>
-                                </div>
-                                <div class="product_content">
-                                    <h4 class="product_name">
-                                        <a href="product-details.html">
-                                            عنوان محصول شماره
-                                            19
-                                        </a>
-                                    </h4>
-                                    <div class="product_rating">
-                                        <ul>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="price_box">
-                                        <span class="old_price">320.00 تومان</span>
-                                        <span class="current_price">120.00 تومان</span>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a class="primary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product5.jpg" alt="">
-                                    </a>
-                                    <a class="secondary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product6.jpg" alt="">
-                                    </a>
-                                </div>
-                                <div class="product_content">
-                                    <h4 class="product_name">
-                                        <a href="product-details.html">
-                                            عنوان محصول شماره
-                                            17
-                                        </a>
-                                    </h4>
-                                    <div class="product_rating">
-                                        <ul>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="price_box">
-                                        <span class="old_price">320.00 تومان</span>
-                                        <span class="current_price">120.00 تومان</span>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a class="primary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product7.jpg" alt="">
-                                    </a>
-                                    <a class="secondary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product8.jpg" alt="">
-                                    </a>
-                                </div>
-                                <div class="product_content">
-                                    <h4 class="product_name">
-                                        <a href="product-details.html">
-                                            عنوان محصول شماره
-                                            10
-                                        </a>
-                                    </h4>
-                                    <div class="product_rating">
-                                        <ul>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="price_box">
-                                        <span class="old_price">420.00 تومان</span>
-                                        <span class="current_price">180.00 تومان</span>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a class="primary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product11.jpg" alt="">
-                                    </a>
-                                    <a class="secondary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product12.jpg" alt="">
-                                    </a>
-                                </div>
-                                <div class="product_content">
-                                    <h4 class="product_name">
-                                        <a href="product-details.html">
-                                            عنوان محصول شماره
-                                            10
-                                        </a>
-                                    </h4>
-                                    <div class="product_rating">
-                                        <ul>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="price_box">
-                                        <span class="old_price">420.00 تومان</span>
-                                        <span class="current_price">180.00 تومان</span>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a class="primary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product9.jpg" alt="">
-                                    </a>
-                                    <a class="secondary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product10.jpg" alt="">
-                                    </a>
-                                </div>
-                                <div class="product_content">
-                                    <h4 class="product_name">
-                                        <a href="product-details.html">
-                                            عنوان محصول شماره
-                                            13
-                                        </a>
-                                    </h4>
-                                    <div class="product_rating">
-                                        <ul>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="price_box">
-                                        <span class="old_price">310.00 تومان</span>
-                                        <span class="current_price">110.00 تومان</span>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a class="primary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product10.jpg" alt="">
-                                    </a>
-                                    <a class="secondary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product9.jpg" alt="">
-                                    </a>
-                                </div>
-                                <div class="product_content">
-                                    <h4 class="product_name">
-                                        <a href="product-details.html">عنوان محصول شماره 29</a>
-                                    </h4>
-                                    <div class="product_rating">
-                                        <ul>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="price_box">
-                                        <span class="old_price">320.00 تومان</span>
-                                        <span class="current_price">120.00 تومان</span>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                    <a class="primary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product8.jpg" alt="">
-                                    </a>
-                                    <a class="secondary_img" href="product-details.html">
-                                        <img src="~/NewThem/assets/img/product/product7.jpg" alt="">
-                                    </a>
-                                </div>
-                                <div class="product_content">
-                                    <h4 class="product_name"><a href="product-details.html">عنوان محصول</a></h4>
-                                    <div class="product_rating">
-                                        <ul>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="price_box">
-                                        <span class="old_price">320.00 تومان</span>
-                                        <span class="current_price">120.00 تومان</span>
-                                    </div>
-                                </div>
-                            </figure>
-                        </article>
+                    <div class="col-lg-3">
+                        <div class="small_product_sidebar">
+                            <div class="section_title title_style2">
+                                <h2>تخفیف های <span>جدید</span></h2>
+                            </div>
+                            <div class="product_slick small_product_active">
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a class="primary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product13.jpg" alt="">
+                                            </a>
+                                            <a class="secondary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product4.jpg" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product_content">
+                                            <h4 class="product_name">
+                                                <a href="product-details.html">
+                                                    عنوان محصول شماره
+                                                    12
+                                                </a>
+                                            </h4>
+                                            <div class="product_rating">
+                                                <ul>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="price_box">
+                                                <span class="old_price">320.00 تومان</span>
+                                                <span class="current_price">120.00 تومان</span>
+                                            </div>
+                                        </div>
+                                    </figure>
+                                </article>
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a class="primary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product3.jpg" alt="">
+                                            </a>
+                                            <a class="secondary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product4.jpg" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product_content">
+                                            <h4 class="product_name">
+                                                <a href="product-details.html">
+                                                    عنوان محصول شماره
+                                                    19
+                                                </a>
+                                            </h4>
+                                            <div class="product_rating">
+                                                <ul>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="price_box">
+                                                <span class="old_price">320.00 تومان</span>
+                                                <span class="current_price">120.00 تومان</span>
+                                            </div>
+                                        </div>
+                                    </figure>
+                                </article>
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a class="primary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product5.jpg" alt="">
+                                            </a>
+                                            <a class="secondary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product6.jpg" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product_content">
+                                            <h4 class="product_name">
+                                                <a href="product-details.html">
+                                                    عنوان محصول شماره
+                                                    17
+                                                </a>
+                                            </h4>
+                                            <div class="product_rating">
+                                                <ul>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="price_box">
+                                                <span class="old_price">320.00 تومان</span>
+                                                <span class="current_price">120.00 تومان</span>
+                                            </div>
+                                        </div>
+                                    </figure>
+                                </article>
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a class="primary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product7.jpg" alt="">
+                                            </a>
+                                            <a class="secondary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product8.jpg" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product_content">
+                                            <h4 class="product_name">
+                                                <a href="product-details.html">
+                                                    عنوان محصول شماره
+                                                    10
+                                                </a>
+                                            </h4>
+                                            <div class="product_rating">
+                                                <ul>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="price_box">
+                                                <span class="old_price">420.00 تومان</span>
+                                                <span class="current_price">180.00 تومان</span>
+                                            </div>
+                                        </div>
+                                    </figure>
+                                </article>
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a class="primary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product11.jpg" alt="">
+                                            </a>
+                                            <a class="secondary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product12.jpg" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product_content">
+                                            <h4 class="product_name">
+                                                <a href="product-details.html">
+                                                    عنوان محصول شماره
+                                                    10
+                                                </a>
+                                            </h4>
+                                            <div class="product_rating">
+                                                <ul>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="price_box">
+                                                <span class="old_price">420.00 تومان</span>
+                                                <span class="current_price">180.00 تومان</span>
+                                            </div>
+                                        </div>
+                                    </figure>
+                                </article>
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a class="primary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product9.jpg" alt="">
+                                            </a>
+                                            <a class="secondary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product10.jpg" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product_content">
+                                            <h4 class="product_name">
+                                                <a href="product-details.html">
+                                                    عنوان محصول شماره
+                                                    13
+                                                </a>
+                                            </h4>
+                                            <div class="product_rating">
+                                                <ul>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="price_box">
+                                                <span class="old_price">310.00 تومان</span>
+                                                <span class="current_price">110.00 تومان</span>
+                                            </div>
+                                        </div>
+                                    </figure>
+                                </article>
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a class="primary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product10.jpg" alt="">
+                                            </a>
+                                            <a class="secondary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product9.jpg" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product_content">
+                                            <h4 class="product_name">
+                                                <a href="product-details.html">عنوان محصول شماره 29</a>
+                                            </h4>
+                                            <div class="product_rating">
+                                                <ul>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="price_box">
+                                                <span class="old_price">320.00 تومان</span>
+                                                <span class="current_price">120.00 تومان</span>
+                                            </div>
+                                        </div>
+                                    </figure>
+                                </article>
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            <a class="primary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product8.jpg" alt="">
+                                            </a>
+                                            <a class="secondary_img" href="product-details.html">
+                                                <img src="~/NewThem/assets/img/product/product7.jpg" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product_content">
+                                            <h4 class="product_name"><a href="product-details.html">عنوان محصول</a></h4>
+                                            <div class="product_rating">
+                                                <ul>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="price_box">
+                                                <span class="old_price">320.00 تومان</span>
+                                                <span class="current_price">120.00 تومان</span>
+                                            </div>
+                                        </div>
+                                    </figure>
+                                </article>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    }
+}
+
 <!--top  Discount product area end-->

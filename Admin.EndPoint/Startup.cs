@@ -75,6 +75,7 @@ namespace Admin.EndPoint
             services.AddTransient<IDeleteImageService, DeleteImageService>();
             services.AddTransient<IEDitDiscount, EDitDiscount>();
             services.AddTransient<ICRUDCatalogTypeImage, CRUDCatalogTypeImage>();
+            services.AddTransient<IDeletedDiscount, DeletedDiscount>();
 
 
             #region connection String SqlServer

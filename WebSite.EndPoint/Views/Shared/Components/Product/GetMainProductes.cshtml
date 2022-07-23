@@ -112,7 +112,7 @@
                                                                 <div class="price_box">
                                                                     @if (Model.bestSellers.ElementAt(i).AvailableStock > 0)
                                                                     {
-                                                                        @if (Model.bestSellers.ElementAt(i).OldPrice != null)
+                                                                        @if (Model.bestSellers.ElementAt(i).OldPrice != null && Model.bestSellers.ElementAt(i).OldPrice != Model.bestSellers.ElementAt(i).Price)
                                                                         {
                                                                             <span class="old_price">@Model.bestSellers.ElementAt(i).OldPrice?.ToString("n0") تومان</span>
                                                                         }
@@ -216,7 +216,7 @@
                                                                     <div class="price_box">
                                                                         @if (Model.bestSellers.ElementAt(i + 1).AvailableStock > 0)
                                                                         {
-                                                                            @if (Model.bestSellers.ElementAt(i + 1).OldPrice != null)
+                                                                            @if (Model.bestSellers.ElementAt(i + 1).OldPrice != null && Model.bestSellers.ElementAt(i + 1).OldPrice != Model.bestSellers.ElementAt(i + 1).Price)
                                                                             {
                                                                                 <span class="old_price">@Model.bestSellers.ElementAt(i + 1).OldPrice?.ToString("n0") تومان</span>
                                                                             }
@@ -351,7 +351,7 @@
                                                                 <div class="price_box">
                                                                     @if (Model.MostDescountNumber.ElementAt(i).AvailableStock > 0)
                                                                     {
-                                                                        @if (Model.MostDescountNumber.ElementAt(i).OldPrice != null)
+                                                                        @if (Model.MostDescountNumber.ElementAt(i).OldPrice != null && Model.MostDescountNumber.ElementAt(i).OldPrice != Model.MostDescountNumber.ElementAt(i).Price)
                                                                         {
                                                                             <span class="old_price">@Model.MostDescountNumber.ElementAt(i).OldPrice?.ToString("n0") تومان</span>
                                                                         }
@@ -455,7 +455,7 @@
                                                                     <div class="price_box">
                                                                         @if (Model.MostDescountNumber.ElementAt(i + 1).AvailableStock > 0)
                                                                         {
-                                                                            @if (Model.MostDescountNumber.ElementAt(i + 1).OldPrice != null)
+                                                                            @if (Model.MostDescountNumber.ElementAt(i + 1).OldPrice != null && Model.MostDescountNumber.ElementAt(i + 1).OldPrice != Model.MostDescountNumber.ElementAt(i + 1).Price)
                                                                             {
                                                                                 <span class="old_price">@Model.MostDescountNumber.ElementAt(i + 1).OldPrice?.ToString("n0") تومان</span>
                                                                             }
@@ -589,7 +589,7 @@
                                                                 <div class="price_box">
                                                                     @if (Model.MostPopular.ElementAt(i).AvailableStock > 0)
                                                                     {
-                                                                        @if (Model.MostPopular.ElementAt(i).OldPrice != null)
+                                                                        @if (Model.MostPopular.ElementAt(i).OldPrice != null && Model.MostPopular.ElementAt(i).OldPrice != Model.MostPopular.ElementAt(i).Price)
                                                                         {
                                                                             <span class="old_price">@Model.MostPopular.ElementAt(i).OldPrice?.ToString("n0") تومان</span>
                                                                         }
@@ -693,7 +693,7 @@
                                                                     <div class="price_box">
                                                                         @if (Model.MostPopular.ElementAt(i + 1).AvailableStock > 0)
                                                                         {
-                                                                            @if (Model.MostPopular.ElementAt(i + 1).OldPrice != null)
+                                                                            @if (Model.MostPopular.ElementAt(i + 1).OldPrice != null && Model.MostPopular.ElementAt(i + 1).OldPrice != Model.MostPopular.ElementAt(i + 1).Price)
                                                                             {
                                                                                 <span class="old_price">@Model.MostPopular.ElementAt(i + 1).OldPrice?.ToString("n0") تومان</span>
                                                                             }

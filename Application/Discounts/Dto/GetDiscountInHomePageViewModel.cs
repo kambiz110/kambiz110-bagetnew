@@ -17,12 +17,6 @@ namespace Application.Discounts.Dto
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Price { get; set; }
-        public string Description { get; set; }
-        public int? OldPrice { get; set; }
-        public List<string> Images { get; set; }
-        public byte Rate { get; set; }
-        public int AvailableStock { get; set; }
         public List<catalogitemDtoForHomePage> catalogItems { get; set; }
     }
     public class catalogitemDtoForHomePage
@@ -33,6 +27,7 @@ namespace Application.Discounts.Dto
         public string Name { get; set; }
         public string Src { get; set; }
         public int Price { get; set; }
+        public int Rate { get; set; }
         public int? OldPrice { get; set; }
         public string Description { get; set; }
     }

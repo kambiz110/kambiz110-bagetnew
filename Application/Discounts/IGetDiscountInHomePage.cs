@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Application.Discounts
 {
+    /// <summary>
+    /// نمایش محصول های داراری تخفیف بر اساس اهمیت صفحه نخست
+    /// </summary>
     public interface IGetDiscountInHomePage
     {
         BaseDto<GetDiscountInHomePageViewModel> Executed(int Importance, int count);
@@ -32,7 +35,7 @@ namespace Application.Discounts
         public BaseDto<GetDiscountInHomePageViewModel> Executed(int Importance, int count)
         {
             var data = context.Discount.AsNoTracking()
-                .Where(p => p.Importance == Importance)
+                .Where(p => p.Importance == Importance && p.UsePercentage==true)
                  .OrderByDescending(p => p.DiscountPercentage)
                 .Include(p => p.CatalogItems).ThenInclude(p => p.CatalogItemImages)
                 .Include(p => p.CatalogItems).ThenInclude(p => p.CatologCar)

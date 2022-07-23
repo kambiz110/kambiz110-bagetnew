@@ -17,14 +17,16 @@ namespace Admin.EndPoint.Controllers
         private readonly IGetDescountForEdit descountForEdit;
         private readonly ICatalogItemService catalogItemService;
         private readonly IEDitDiscount editDiscount;
+        private readonly IDeletedDiscount deletedDiscount;
 
         public DiscountController(IGetDescountesForAdmin getDescountes, IGetDescountForEdit descountForEdit
-            , ICatalogItemService catalogItemService , IEDitDiscount editDiscount)
+            , ICatalogItemService catalogItemService , IEDitDiscount editDiscount , IDeletedDiscount deletedDiscount)
         {
             this.getDescountes = getDescountes;
             this.descountForEdit = descountForEdit;
             this.catalogItemService = catalogItemService;
             this.editDiscount = editDiscount;
+            this.deletedDiscount = deletedDiscount;
         }
         public IActionResult Index(int page = 1, int pageSize = 10)
         {
@@ -39,6 +41,13 @@ namespace Admin.EndPoint.Controllers
             ViewData["Cars2"] = new SelectList(catalogItemService.GetCares(), "Id", "Name");
             var model = descountForEdit.GetDescount(id);
             return View(model.Data);
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+
+             deletedDiscount.Exequte(id);
+            return RedirectToAction("index");
         }
         [HttpPost]
         public IActionResult Edit(GetDescountsForEditViewModel dto)

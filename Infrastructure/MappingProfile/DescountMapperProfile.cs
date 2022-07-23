@@ -23,6 +23,7 @@ namespace Infrastructure.MappingProfile
                 {
                     Id = p.Id,
                     Name = p.Name,
+                    Rate=5,
                     Price = p.Price,
                     CarName = p.CatologCar.Name,
                     BrandName = p.CatalogBrand.Brand,
