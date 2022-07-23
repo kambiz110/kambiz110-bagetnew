@@ -3,6 +3,7 @@ using Application.Discounts.Dto;
 using Application.Interfaces.Contexts;
 using AutoMapper;
 using Domain.Discounts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,16 +29,24 @@ namespace Application.Discounts.EditDiscountServices
 
         public bool Execute(GetDescountsForEditViewModel dto)
         {
-            var discount = context.Discount.Where(p => p.Id == dto.Id).FirstOrDefault();
+            var discount = context.Discount.Where(p => p.Id == dto.Id).Include(p=>p.CatalogItems).FirstOrDefault();
             mapper.Map( dto, discount);
       
 
             if (dto.appliedToCatalogItem != null)
             {
                 var catalogItems = context.CatalogItems.Where(p => dto.appliedToCatalogItem.Contains(p.Id)).ToList();
+
+                for (int i = 0; i < catalogItems.Count; i++)
+                {
+                    if (discount.CatalogItems.Where(p=>p.Id== catalogItems.ElementAt(i).Id).Any())
+                    {
+                        catalogItems.Remove(catalogItems.ElementAt(i));
+                    }
+                }
                 discount.CatalogItems = catalogItems;
             }
-
+         
             context.Discount.Update(discount);
          var result =   context.SaveChanges();
             return result >0 ? true : false;

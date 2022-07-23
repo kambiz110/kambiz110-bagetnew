@@ -31,8 +31,8 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
         public PaginatedItemsDto<CatalogPLPDto> Execute(CatlogPLPRequestDto request)
         {
             int rowCount = 0;
-            var query = context.CatalogItems
-                .Include(p => p.Discounts)
+            var query = context.CatalogItems.AsNoTracking()
+                .Include(p => p.Discounts).AsNoTracking()
                 .Include(p => p.CatalogItemImages)
                 .Include(p=>p.CatalogBrand)
                 .Include(p=>p.CatalogCompany)
