@@ -16,64 +16,96 @@
 
             <form asp-page="edit" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group mb-4">
-                    <label asp-for="Banner.Name"> </label>
-                    <input type="text" class="form-control" asp-for="Banner.Name">
-                    <span asp-validation-for="Banner.Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Banner.Description" class="control-label"></label>
-                    <textarea asp-for="Banner.Description" class="form-control"></textarea>
-                    <span asp-validation-for="Banner.Description" class="text-danger"></span>
-                </div>
-                <div class="form-group mb-4">
-                    <label asp-for="Banner.Link"> </label>
-                    <input type="text" class="form-control" asp-for="Banner.Link">
-                    <span asp-validation-for="Banner.Link" class="text-danger"></span>
-                </div>
-                <div class="form-group mb-4">
-                    <label asp-for="Banner.Priority"> </label>
-                    <input type="text" class="form-control" asp-for="Banner.Priority">
-                    <span asp-validation-for="Banner.Priority" class="text-danger"></span>
-                </div>
-                <div class="form-group mb-4 align-middle row align-items-center">
-                    <label asp-for="Banner.IsActive" class="ml-2 mr-2"> </label>
-                    @if (Model.Banner.IsActive)
-                    {
-                        <input type="checkbox" class="form-control" style="display:inline; width:20px!important;" asp-for="Banner.IsActive" checked="checked">
-                    }
-                    else
-                    {
-                        <input type="checkbox" class="form-control" style="display:inline; width:20px!important;" asp-for="Banner.IsActive" >
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <div class="col-sm-12">
+                            <label asp-for="Banner.Name"> </label>
+                            <input type="text" class="form-control" asp-for="Banner.Name">
+                            <span asp-validation-for="Banner.Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-12">
+                            <label asp-for="Banner.Description" class="control-label"></label>
+                            <textarea asp-for="Banner.Description" class="form-control"></textarea>
+                            <span asp-validation-for="Banner.Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <div class="col-sm-12 mb-1">
+                            <label asp-for="Banner.Position"> </label>
+                            <select asp-for="Banner.Position" class="form-control" asp-items="@Html.GetEnumSelectList<Domain.Banners.Position>()"></select>
+                            <span asp-validation-for="Banner.Position" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-12 mb-1">
+                            <fieldset class="form-group">
+                                <label for="basicInput">اولویت </label>
 
-                    }
+                                <select type="number" asp-for="Banner.CategoriType" class="form-control">
+                                    <option value="1">دسته بندی</option>
+                                    <option value="2">برند</option>
+                                    <option value="3">خودرو</option>
+                                    <option value="4">محصول</option>
+                                    <option value="5">کمپانی</option>
+                                </select>
+                            </fieldset>
+                        </div>
+                        <div class="col-sm-12 mb-1">
+                            <label asp-for="Banner.Priority"> </label>
+                            <select type="number" asp-for="Banner.Priority" class="form-control">
+                                <option value="1">عادی</option>
+                                <option value="2">صفحه اصلی</option>
+                                <option value="3">ویژه</option>
+                            </select>
+                            <span asp-validation-for="Banner.Priority" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-12 mb-1">
+                            <label asp-for="Banner.UniqKey"> </label>
+                            <input type="text" class="form-control" asp-for="Banner.UniqKey">
+                            <span asp-validation-for="Banner.UniqKey" class="text-danger"></span>
+                        </div>
 
-                    <span asp-validation-for="Banner.IsActive" class="text-danger"></span>
-                </div>
-                <div class="form-group mb-4">
-                    <label asp-for="Banner.Position"> </label>
-                    <select asp-for="Banner.Position" class="form-control" asp-items="@Html.GetEnumSelectList<Domain.Banners.Position>()"></select>
-                    <span asp-validation-for="Banner.Position" class="text-danger"></span>
-                </div>
-                <div class="form-group mb-4">
-                    <label asp-for="Banner.Image"> </label>
-                    <input type="file" class="form-control" asp-for="BannerImage">
-                    <span asp-validation-for="BannerImage" class="text-danger"></span>
+
+
+
+                        <div class="col-sm-12 mb-1">
+                            <label asp-for="Banner.Image"> </label>
+                            <input type="file" class="form-control" asp-for="BannerImage">
+                            <span asp-validation-for="BannerImage" class="text-danger"></span>
+
+                        </div>
+                        <div class="col-sm-12 mb-1">
+
+                            @if (Model.Banner.Image != "" && Model.Banner.Image != null)
+                            {
+                                @*<span>@Model.Banner.ShowImage</span>*@
+                                <img src="@Model.Banner.ShowImage" width="300" height="175" />
+                            }
+                        </div>
+                        <div class="form-group col-sm-12 align-middle row align-items-center">
+                            <label asp-for="Banner.IsActive" class="ml-2 mr-2"> </label>
+                            @if (Model.Banner.IsActive)
+                            {
+                                <input type="checkbox" class="form-control" style="display:inline; width:20px!important;" asp-for="Banner.IsActive" checked="checked">
+                            }
+                            else
+                            {
+                                <input type="checkbox" class="form-control" style="display:inline; width:20px!important;" asp-for="Banner.IsActive">
+
+                            }   <span asp-validation-for="Banner.IsActive" class="text-danger"></span>
+                        </div>
+                    </div>
 
                 </div>
-                <div class="form-group mb-4">
 
-                    @if (Model.Banner.Image != "" && Model.Banner.Image != null)
-                    {
-                        @*<span>@Model.Banner.ShowImage</span>*@
-                        <img src="@Model.Banner.ShowImage" width="300" height="175" />
-                    }
+
+
+
+                <div class="row text-center mt-1">
+                    <input type="submit" name="time" value="ثبت" class="btn btn-primary col-5 ml-4 mr-1">
+                    <a asp-page="index" class="btn btn-info col-5">برگشت به لیست</a>
+
                 </div>
-                <input type="hidden" asp-for="Banner.Image">
-                <input type="hidden" asp-for="Banner.Id">
-                <input type="submit" name="time" value="ثبت" class="btn btn-primary">
-                <a asp-page="index" class="btn btn-info">برگشت به لیست</a>
             </form>
+         
 
         </div>
     </div>

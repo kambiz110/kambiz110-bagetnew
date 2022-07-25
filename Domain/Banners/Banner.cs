@@ -15,7 +15,9 @@ namespace Domain.Banners
         public string Image { get; set; }
         public string Link { get; set; }
         public bool IsActive { get; set; }
+        public int UniqKey { get; set; }
         public int Priority { get; set; }
+        public int CategoriType { get; set; }
         public Position Position { get; set; }
 
     }

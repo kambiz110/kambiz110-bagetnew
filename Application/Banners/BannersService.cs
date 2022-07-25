@@ -94,7 +94,8 @@ namespace Application.Banners
                 {
                     Image = p.Image,
                     IsActive = p.IsActive,
-                    Link = p.Link,
+                    UniqKey = p.UniqKey,
+                    CategoriType = p.CategoriType,
                     Name = p.Link,
                     Position = p.Position,
                     Priority = p.Priority,

@@ -30,13 +30,19 @@ namespace Application.Banners
         public string Image { get; set; }
         [ValidateNever]
         public string ShowImage { get; set; }
-        [Display(Name = "لینک")]
+        [ValidateNever]
         public string Link { get; set; }
+
         [Display(Name = "فعال")]
         public bool IsActive { get; set; }
         [Display(Name = "موقعیت نمایش")]
         public Position Position { get; set; }
         [Display(Name = "ترتیب نمایش")]
         public int Priority { get; set; }
+
+        [Display(Name = "شناسه یکتا لینک")]
+        public int UniqKey { get; set; }
+        [Display(Name = "ماهیت دسته بندی لینک")]
+        public int CategoriType { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Catalogs.CatalogTypes;
+using Application.Catalogs.CatalogTypes.Query;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,17 @@ namespace WebSite.EndPoint.Models.ViewComponents
 {
     public class GetCatalogeByTypeHomePage : ViewComponent
     {
-        private readonly IMenuCatolgType menuCatolgType;
+        private readonly IGetCatalogeTypeHomePage catalogeTypeHomePage;
 
-        public GetCatalogeByTypeHomePage(IMenuCatolgType menuCatolgType)
+        public GetCatalogeByTypeHomePage(IGetCatalogeTypeHomePage catalogeTypeHomePage)
         {
-            this.menuCatolgType = menuCatolgType;
+            this.catalogeTypeHomePage = catalogeTypeHomePage;
         }
-        public IViewComponentResult Invoke(int sortIndex, int count)
+        public IViewComponentResult Invoke()
         {
-            var model = menuCatolgType.ListCatalogTypeBySortIndex(sortIndex, count);
+            var model = catalogeTypeHomePage.Execut(null,3, 3);
             var viewName = $"~/Views/Shared/Components/Product/{this.ViewComponentContext.ViewComponentDescriptor.ShortName}.cshtml";
-            return View(viewName, model.Data);
+            return View(viewName, model);
         }
     }
 }

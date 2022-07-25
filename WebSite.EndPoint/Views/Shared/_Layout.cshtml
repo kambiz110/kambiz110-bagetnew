@@ -33,29 +33,8 @@
     @{
         Html.RenderPartial("_PartialHeader");
     }
-    <!--top tags area start-->
-    <div class="top_tags_area h_bottom_four">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="tags_content">
-                        <ul>
-                            <li><span>برترین برچسب ها:</span></li>
-                            <li><a href="~/Product/index?CatalogTypeId=1">چرخ و لاستیک</a></li>
-                            <li><a href="#">روشنایی و لامپ</a></li>
-                            <li><a href="#">اجزای بدنه</a></li>
-                            <li><a href="#">دستگاه های هوشمند</a></li>
-                            <li><a href="#">دستگاه ها</a></li>
-                            <li><a href="#">تعمیر قطعات</a></li>
-                            <li><a href="#">موتور خودرو</a></li>
-                            <li><a href="#">لوازم جانبی</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--top tags area end-->
+
+    @(await Component.InvokeAsync("GetCatalogTypeHeadHomePage", new { sortIndex=0,  count=14 }))
     <!--brand area start-->
     <div class="brand_area d-none">
         <div class="container">

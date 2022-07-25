@@ -9,11 +9,11 @@ namespace Application.Catalogs.CatalogTypes.Dto
 {
    public class GetCatalogeItemByTypeHomePageDto
     {
-        List<childCatalogeItemsByType> itemsByTypes { get; set; }
+        public List<childCatalogeItemsByType> itemsByTypes { get; set; }
     }
     public class childCatalogeItemsByType
     {
         public string Name { get; set; }
-        public List<CatalogPLPDto> catalogs { get; set; }
+        public List<CatalogItemShortPLP> catalogs { get; set; }
     }
 }

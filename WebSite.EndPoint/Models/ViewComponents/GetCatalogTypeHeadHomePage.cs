@@ -18,7 +18,7 @@ namespace WebSite.EndPoint.Models.ViewComponents
         public IViewComponentResult Invoke(int sortIndex, int count)
         {
             var model = menuCatolgType.ListCatalogTypeBySortIndex(sortIndex , count) ;
-            var viewName = $"~/Views/Shared/Components/Product/{this.ViewComponentContext.ViewComponentDescriptor.ShortName}.cshtml";
+            var viewName = $"~/Views/Shared/Components/CatalogType/{this.ViewComponentContext.ViewComponentDescriptor.ShortName}.cshtml";
             return View(viewName, model.Data);
         }
     }

@@ -5,6 +5,7 @@ using Application.Catalogs.CatalogItems.GetCatalogIItemPLP;
 using Application.Catalogs.CatalogItems.GetCatalogItemPDP;
 using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Catalogs.CatalogTypes;
+using Application.Catalogs.CatalogTypes.Query;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Catalogs.GetMenuItem;
 using Application.Discounts;
@@ -101,6 +102,7 @@ namespace WebSite.EndPoint
             services.AddTransient<IMenuCatolgType, MenuCatolgType>();
             services.AddTransient<IGetBanerHomePage, GetBanerHomePage>();
             services.AddTransient<IGetDiscountInHomePage, GetDiscountInHomePage>();
+            services.AddTransient<IGetCatalogeTypeHomePage, GetCatalogeTypeHomePage>();
             services.AddScoped<SaveVisitorFilter>();
 
             services.AddSignalR();

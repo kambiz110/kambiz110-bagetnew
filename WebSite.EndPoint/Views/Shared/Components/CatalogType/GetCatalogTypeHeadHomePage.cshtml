@@ -1,0 +1,22 @@
+﻿@using Application.Catalogs.CatalogTypes
+@model List<CatalogTypeDto>
+    <!--top tags area start-->
+    <div class="top_tags_area h_bottom_four">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="tags_content">
+                        <ul>
+                            <li><span>برترین برچسب ها:</span></li>
+                            @foreach (var item in Model)
+                            {
+                                <li><a href="~/Product/index?CatalogTypeId=@item.Id">@item.Type</a></li>
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--top tags area end-->
