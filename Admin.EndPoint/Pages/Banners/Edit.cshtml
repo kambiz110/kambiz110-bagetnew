@@ -16,6 +16,7 @@
 
             <form asp-page="edit" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Banner.Id" />
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                         <div class="col-sm-12">
@@ -73,7 +74,7 @@
 
                         </div>
                         <div class="col-sm-12 mb-1">
-
+                            <input type="hidden" asp-for="Banner.Image" />
                             @if (Model.Banner.Image != "" && Model.Banner.Image != null)
                             {
                                 @*<span>@Model.Banner.ShowImage</span>*@

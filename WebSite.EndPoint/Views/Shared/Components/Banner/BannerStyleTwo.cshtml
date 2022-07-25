@@ -1,25 +1,27 @@
 ﻿
 @model IEnumerable<BannerDto>
 @using Application.Banners
-<!--banner Style2 area start-->
-<div class="banner_area mb-80">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <figure class="single_banner">
-                    <div class="banner_thumb">
-                        <a href="shop.html"><img src="~/NewThem/assets/img/bg/banner4.jpg" alt=""></a>
-                    </div>
-                </figure>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <figure class="single_banner">
-                    <div class="banner_thumb">
-                        <a href="shop.html"><img src="~/NewThem/assets/img/bg/banner5.jpg" alt=""></a>
-                    </div>
-                </figure>
+
+@if (Model != null && Model.Any())
+{
+    <!--banner Style2 area start-->
+    <div class="banner_area mb-80">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model.Take(2))
+                {
+                <div class="col-lg-6 col-md-6">
+                    <figure class="single_banner">
+                        <div class="banner_thumb">
+                            <a href="@item.Link"><img src="@item.Image" alt=""></a>
+                        </div>
+                    </figure>
+                </div>
+                }
+                
+              
             </div>
         </div>
     </div>
-</div>
-<!--banner Style2 area end-->
+    <!--banner Style2 area end-->
+}

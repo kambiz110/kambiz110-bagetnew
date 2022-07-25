@@ -16,7 +16,7 @@ namespace WebSite.EndPoint.Models.ViewComponents
             this.banners = banners;
         }
 
-        public IViewComponentResult Invoke(int position = 1, int count = 3)
+        public IViewComponentResult Invoke(int position = 2, int count = 3)
         {
             var model = banners.Executed(position, count);
             var viewName = $"~/Views/Shared/Components/Banner/{this.ViewComponentContext.ViewComponentDescriptor.ShortName}.cshtml";

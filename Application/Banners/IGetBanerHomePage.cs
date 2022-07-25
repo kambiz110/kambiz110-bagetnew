@@ -30,7 +30,7 @@ namespace Application.Banners
         }
         public BaseDto<List<BannerDto>> Executed(int position, int count)
         {
-            var data = context.Banners.AsNoTracking().Where(p => ((int)p.Position == position))
+            var data = context.Banners.AsNoTracking().Where(p => ((int)p.Position == position) && p.Priority==2)
                 .Take(count).AsQueryable();
            var result = mapper.ProjectTo<BannerDto>(data).ToList();
             for (int i = 0; i < result.Count; i++)

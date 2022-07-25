@@ -25,14 +25,57 @@ namespace Application.Banners
         public void AddBanner(BannerDto banner)
         {
             var rr = mapper.Map<Banner>(banner);
+            var link = "";
+            switch (banner.CategoriType)
+            {
+                case 1: link = "~/Product/index?CatalogTypeId=" + banner.UniqKey;
+                    break;
+                case 2:
+                    link = "~/Product/index?brandId=" + banner.UniqKey;
+                    break;
+                case 3:
+                    link = "~/Product/index?CatalogCarId=" + banner.UniqKey;
+                    break;
+                case 4:
+                    link = $@"~/Product/Details/pid-{banner.UniqKey}/{banner.Name}";
+                    break;
+                case 5:
+                    link = "~/Product/index?CatalogCopmanyId=" + banner.UniqKey;
+                    break;
+                default:
+                    break;
+            }
+            rr.Link = link;
             context.Banners.Add(rr);
-            context.SaveChanges();
+        var result=    context.SaveChanges();
         }
 
         public BaseDto<BannerDto> Edit(BannerDto dto)
         {
             var model = context.Banners.SingleOrDefault(p => p.Id == dto.Id);
             mapper.Map(dto, model);
+            var link = "";
+            switch (dto.CategoriType)
+            {
+                case 1:
+                    link = "~/Product/index?CatalogTypeId=" + dto.UniqKey;
+                    break;
+                case 2:
+                    link = "~/Product/index?brandId=" + dto.UniqKey;
+                    break;
+                case 3:
+                    link = "~/Product/index?CatalogCarId=" + dto.UniqKey;
+                    break;
+                case 4:
+                    link = $@"~/Product/Details/pid-{dto.UniqKey}/{dto.Name}";
+                    break;
+                case 5:
+                    link = "~/Product/index?CatalogCopmanyId=" + dto.UniqKey;
+                    break;
+                default:
+                    break;
+            }
+            model.Link = link;
             context.SaveChanges();
             return new BaseDto<BannerDto>
               (
