@@ -7,37 +7,44 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-    //ViewData["Title"] = "Page Title";
+    ViewData["Title"] = Model.Slug;
+    var ccc = Model.SimilarCatalogs.Count;
+    string[] simelerUrl= new string[ccc];
+    string site = "https://CarYadakShop.com";
+    for (int i = 0; i < ccc; i++)
+    {
+        simelerUrl[i] = $@"{site}/Product/Details/pid-{Model.SimilarCatalogs.ElementAt(i).Id}/{Model.SimilarCatalogs.ElementAt(i).Slug}";
+    }
 
     Html.SetSeoInfo(seoInfo =>
     {
         seoInfo.SetCommonInfo(
-            pageTitle: "SEO Tags for ASP.NET Core",
-            description: "Create all SEO tags you need such as meta, link, twitter card (twitter:), open graph (og:), and ...",
-            url: "https://site.com/url/",
-            keywordTags: new[] { "SEO", "AspNetCore", "MVC", "RazorPages" }, //optional
-            seeAlsoUrls: new[] { "https://site.com/see-also-1", "https://site.com/see-also-2" }  //optional
+            pageTitle: Model.Slug,
+            description: Model.Slug + " خرید اینترنتی آنلاین اصلی با ضمانت بازگشت وجه و ارسال سریع به سراسر ایران",
+            url: $"{site}/Product/Details/pid-{Model.Images}/{Model.Slug}",
+            keywordTags: new[] { Model.TypeName,Model.BrrndName, Model.CompanyName, Model.Name, Model.Name }, //optional
+            seeAlsoUrls: simelerUrl  //optional
         );
 
-//seoInfo.SetImageInfo(
-//    url: "https://site.com/uploads/image.jpg",
-//    //  width: 1280,  //optional
-//    //  height: 720,  //optional
-//    alt: "Image alt"//,  //optional
-//                    //mimeType: "image/jpeg", //optional (detects from url file extension if not set.)
-//                    // cardType: SeoTags.TwitterCardType.SummaryLargeImage   //optional
-//);
-
-seoInfo.SetArticleInfo(
-            authorName: "Author Name",
-            publishDate: DateTimeOffset.Now,
-            modifiedDate: DateTimeOffset.Now,  //optional
-            authorUrl: "https://github.com/author-profile",  //optional
-            section: "Article Topic"  //optional
+        seoInfo.SetImageInfo(
+            url: Model.Images.FirstOrDefault(),
+             width: 500,  //optional
+              height: 500,  //optional
+            alt: Model.Slug,//,  //optional
+                            mimeType: "image/jpeg" //optional (detects from url file extension if not set.)
+                            // cardType: SeoTags.TwitterCardType.SummaryLargeImage   //optional
         );
 
-//Add another rss feed. (only for this page) (optional)
-seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.FeedType.Rss);
+        seoInfo.SetArticleInfo(
+                    authorName: "CarYadakShop.com",
+                    publishDate: DateTimeOffset.Now,
+                    modifiedDate: DateTimeOffset.Now,  //optional
+                    authorUrl: "https://CarYadakShop.com/",  //optional
+                    section: "Article Topic"  //optional
+                );
+
+        //Add another rss feed. (only for this page) (optional)
+        seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.FeedType.Rss);
     });
 }
 

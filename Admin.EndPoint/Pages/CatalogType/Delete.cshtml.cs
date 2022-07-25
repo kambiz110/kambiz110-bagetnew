@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Admin.EndPoint.ViewModels.Catalogs;
 using Application.Catalogs.CatalogTypes;
+using Application.Catalogs.CatalogTypes.Dto;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

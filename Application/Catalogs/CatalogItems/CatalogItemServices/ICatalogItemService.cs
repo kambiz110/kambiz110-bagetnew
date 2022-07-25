@@ -39,6 +39,10 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
         public int Id { get; set; }
         [Display(Name = "نام برند")]
         public string Brand { get; set; }
+
+
+        [Display(Name = "مسیر عکس ")]
+        public string Src { get; set; }
         public bool IsDakely { get; set; }
     }
     public class ListCatalogTypeDto

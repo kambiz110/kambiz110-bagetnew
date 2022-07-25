@@ -14,5 +14,6 @@ namespace Domain.Catalogs
         public CatalogType ParentCatalogType { get; set; }
 
         public ICollection<CatalogType> SubType { get; set; }
+        public ICollection<CatalogItem> CatalogItems { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace Application.Interfaces.Contexts
 
         DbSet<UserAddress> UserAddresses { get; set; }
 
-
+        DbSet<CatalogTypeImage> CatalogTypeImages { get; set; }
         DbSet<Order> Orders { get; set; }
         DbSet<OrderItem> OrderItems { get; set; }
 
@@ -40,7 +40,6 @@ namespace Application.Interfaces.Contexts
         DbSet<DiscountUsageHistory> DiscountUsageHistories { get; set; }
         DbSet<CatalogItemFavourite> CatalogItemFavourites { get; set; }
         DbSet<Banner> Banners { get; set; }
-        DbSet<CatalogTypeImage> CatalogTypeImages { get; set; }
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);

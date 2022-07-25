@@ -75,6 +75,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
                 Id = catalogitem.Id,
                 Name = catalogitem.Name,
                 Rate = 5,
+                Slug = catalogitem.Slug,
                 Brand = catalogitem.CatalogBrand.Brand,
                 Type = catalogitem.CatalogType.Type,
                 Price = catalogitem.Price,
@@ -99,6 +100,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
         public string Name { get; set; }
         public string Type { get; set; }
         public string Brand { get; set; }
+        public string Slug { get; set; }
         public int Price { get; set; }
         public int? OldPrice { get; set; }
         public int? PercentDiscount { get; set; }

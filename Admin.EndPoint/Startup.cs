@@ -1,3 +1,4 @@
+using Admin.EndPoint.Configurations;
 using Admin.EndPoint.MappingProfiles;
 using Application.Banners;
 using Application.Catalogs.CatalogBrands;
@@ -96,9 +97,7 @@ namespace Admin.EndPoint
             #endregion
 
             //mapper
-            services.AddAutoMapper(typeof(DescountMapperProfile));
-            services.AddAutoMapper(typeof(CatalogMappingProfile));
-            services.AddAutoMapper(typeof(CatalogVMMappingProfile));
+            services.RegisterAutoMapper();
 
 
             //fluentValidation

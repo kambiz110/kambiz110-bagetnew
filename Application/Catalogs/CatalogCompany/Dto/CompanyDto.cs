@@ -13,7 +13,8 @@ namespace Application.Catalogs.CatalogCompany.Dto
         public int Id { get; set; }
         [Display(Name = "نام کمپانی")]
         public string Name { get; set; }
-
+        [Display(Name = "مسیر عکس ")]
+        public string Src { get; set; }
         [Display(Name = "خودرو داخلی است ؟ ")]
         public bool IsDakely { get; set; }
 
@@ -24,7 +25,8 @@ namespace Application.Catalogs.CatalogCompany.Dto
 
         [Display(Name = "نام کمپانی")]
         public string Name { get; set; }
-
+        [Display(Name = "مسیر عکس ")]
+        public string Src { get; set; }
         [Display(Name = "خودرو داخلی است ؟ ")]
         public bool IsDakely { get; set; }
     }

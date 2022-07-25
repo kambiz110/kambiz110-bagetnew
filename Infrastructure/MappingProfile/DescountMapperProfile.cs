@@ -28,6 +28,7 @@ namespace Infrastructure.MappingProfile
                     CarName = p.CatologCar.Name,
                     BrandName = p.CatalogBrand.Brand,
                     OldPrice=p.OldPrice,
+                    Slug=p.Slug,
                     Description=p.Description,
                     Src=p.CatalogItemImages.FirstOrDefault().Src
                     

@@ -1,6 +1,7 @@
 ﻿@page
 @model Admin.EndPoint.Pages.CatalogType.EditModel
 @{
+    ViewData["Title"] = " ویرایش دسته بندی";
 }
 
 <div class="col-lg-12 col-12 layout-spacing">
@@ -26,9 +27,11 @@
 
 
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group mb-4">
+                <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
                     <label asp-for="CatalogType.Type"> </label>
                     <input type="text" class="form-control" asp-for="CatalogType.Type">
+
+                    <input type="hidden" class="form-control" asp-for="CatalogType.ParentCatalogTypeId">
                     <span asp-validation-for="CatalogType.Type" class="text-danger"></span>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
@@ -40,7 +43,11 @@
                 <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
                     <fieldset class="form-group">
                         <label for="basicInput">اولویت </label>
-                        <input type="number" class="form-control" asp-for="CatalogType.SortIndex" >
+                        <select type="number" asp-for="CatalogType.SortIndex" class="form-control">
+                            <option value="1">عادی</option>
+                            <option value="2">صفحه اصلی</option>
+                            <option value="3">ویژه</option>
+                        </select>
                     </fieldset>
                 </div>
                 <input type="hidden" asp-for="CatalogType.ParentCatalogTypeId" />

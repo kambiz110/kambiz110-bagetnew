@@ -34,6 +34,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebSite.EndPoint.Configurations;
 using WebSite.EndPoint.Hubs;
 using WebSite.EndPoint.Utilities.Filters;
 using WebSite.EndPoint.Utilities.Middlewares;
@@ -105,9 +106,7 @@ namespace WebSite.EndPoint
             services.AddSignalR();
 
             //mapper
-            services.AddAutoMapper(typeof(CatalogMappingProfile));
-            services.AddAutoMapper(typeof(UserMappingProfile));
-            services.AddAutoMapper(typeof(DescountMapperProfile));
+            services.RegisterAutoMapper();
 
         }
 

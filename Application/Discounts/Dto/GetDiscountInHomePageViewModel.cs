@@ -26,6 +26,7 @@ namespace Application.Discounts.Dto
         public string BrandName { get; set; }
         public string Name { get; set; }
         public string Src { get; set; }
+        public string Slug { get; set; }
         public int Price { get; set; }
         public int Rate { get; set; }
         public int? OldPrice { get; set; }

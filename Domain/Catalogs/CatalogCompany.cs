@@ -13,5 +13,6 @@ namespace Domain.Catalogs
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsDakely { get; set; }
+        public string Src { get; set; } = "Resources/images/Static/Default.jpg";
     }
 }

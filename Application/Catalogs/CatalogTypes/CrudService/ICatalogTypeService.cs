@@ -81,6 +81,15 @@ namespace Application.Catalogs.CatalogTypes
                  .Include(p => p.CatalogTypeImage)
                 .PagedResult(page,pageSize, out totalCount);
             var result = mapper.ProjectTo<CatalogTypeListDto>(model).ToList();
+            for (int i = 0; i < result.Count(); i++)
+            {
+                var childCount = context.CatalogTypes.Where(p => p.ParentCatalogTypeId == result[i].Id).Count();
+                if (childCount>0)
+                {
+                    result[i].IsChailren = true;
+                    result[i].SubTypeCount = childCount;
+                }
+            }
             return new PaginatedItemsDto<CatalogTypeListDto>(page, pageSize, totalCount, result);
         }
 
@@ -113,5 +122,6 @@ namespace Application.Catalogs.CatalogTypes
         public string Type { get; set; }
         public virtual CatalogTypeImage CatalogTypeImage { get; set; }
         public int SubTypeCount { get; set; }
+        public bool IsChailren { get; set; }
     }
 }
