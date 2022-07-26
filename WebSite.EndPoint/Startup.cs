@@ -103,6 +103,7 @@ namespace WebSite.EndPoint
             services.AddTransient<IGetBanerHomePage, GetBanerHomePage>();
             services.AddTransient<IGetDiscountInHomePage, GetDiscountInHomePage>();
             services.AddTransient<IGetCatalogeTypeHomePage, GetCatalogeTypeHomePage>();
+            services.AddTransient<IRenderCategoriesMenuService, RenderCategoriesMenuService>();
             services.AddScoped<SaveVisitorFilter>();
 
             services.AddSignalR();

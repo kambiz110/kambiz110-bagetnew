@@ -110,7 +110,9 @@
                                 <h2 class="categori_toggle">همه دسته بندی ها</h2>
                             </div>
                             <div class="categories_menu_toggle">
-                                <ul>
+                                @await Component.InvokeAsync("CategoriesMenu")
+
+                                <ul class="d-none">
                                     <li class="menu_item_children">
                                         <a href="#">
                                             قطعات ترمز <i class="fa fa-angle-left"></i>
@@ -192,8 +194,8 @@
                                             </li>
                                         </ul>
                                     </li>
-                            
-                                 
+
+
                                     <li><a href="#">نورپردازی</a></li>
                                     <li><a href="#">لوازم جانبی</a></li>
                                     <li><a href="#">اجزای بدنه</a></li>

@@ -2,7 +2,7 @@
 @model GetHomePageTwoDiscountCatalogItemsViewModel;
 <!--top  Discount product area start-->
 @{
-    if (Model != null && Model.Vijeh.catalogItems.Count > 0 && Model.HomePage.catalogItems.Count > 0)
+    if (Model != null && Model.Vijeh!=null && Model.HomePage!=null && Model.Vijeh.catalogItems.Count > 0 && Model.HomePage.catalogItems.Count > 0)
     {
         <div class="product_area product_area_four color_three">
             <div class="container">

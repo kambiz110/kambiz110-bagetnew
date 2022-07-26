@@ -1,4 +1,5 @@
 ﻿using Application.Banners;
+using Application.Catalogs.CatalogTypes.Query;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,18 @@ namespace WebSite.EndPoint.Models.ViewComponents
 {
     public class CategoriesMenu : ViewComponent
     {
-        private readonly IGetBanerHomePage banners;
+        private readonly IRenderCategoriesMenuService menuService;
 
-        public CategoriesMenu(IGetBanerHomePage banners)
+        public CategoriesMenu(IRenderCategoriesMenuService  menuService)
         {
-            this.banners = banners;
+            this.menuService = menuService;
         }
 
-        public IViewComponentResult Invoke(int position = 2, int count = 3)
+        public IViewComponentResult Invoke()
         {
-            var model = banners.Executed(position, count);
-            var viewName = $"~/Views/Shared/Components/Banner/{this.ViewComponentContext.ViewComponentDescriptor.ShortName}.cshtml";
-            return View(viewName, model.Data);
+            var model = menuService.Exequt();
+            var viewName = $"~/Views/Shared/{this.ViewComponentContext.ViewComponentDescriptor.ShortName}.cshtml";
+            return View(viewName, model);
         }
     }
 }

@@ -11,8 +11,7 @@ namespace Application.Catalogs.CatalogTypes.Dto
     {
         public int Id { get; set; }
         public string Type { get; set; }
-        public int SortIndex { get; set; }
         public int? ParentCatalogTypeId { get; set; }
-        public ICollection<CatalogType> SubType { get; set; }
+  
     }
 }

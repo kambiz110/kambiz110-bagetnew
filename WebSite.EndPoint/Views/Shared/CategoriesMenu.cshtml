@@ -1,8 +1,117 @@
-﻿
-@{
-    void RenderMenu(int a, int b)
+﻿@model IEnumerable<Application.Catalogs.CatalogTypes.Dto.CatalogTypeCategoriMenu>
+
+@functions
+{
+    void RenderCategoryRow(long? parentId, int level, int loopCount)
     {
- 
+        var cclass = "";
+        if (level == 0) cclass = "menu_item_children";// for li
+
+        if (level == 1) cclass = "categories_mega_menu";//for  ul
+
+        if (level == 2) cclass = "categorie_sub_menu";//for  ul
+
+
+        foreach (var item in Model.Where(p => p.ParentCatalogTypeId == parentId))
+        {
+
+            if (!Model.Any(p => p.ParentCatalogTypeId == item.Id))
+            {
+                var link = $"~/Product/index?CatalogTypeId={item.Id}";
+                if (level == 0)
+                {
+                    <li>
+                        <a href=@link>@item.Type</a>
+                    </li>
+                }
+                if (level == 1)
+                {
+                    var link1 = $"~/Product/index?CatalogTypeId={item.Id}";
+                    if (loopCount > 0)
+                    {
+                        <li class="menu_item_children">
+                            <a href=@link1>@item.Type</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <ul class="categories_mega_menu">
+                            <li class="menu_item_children">
+                                <a href=@link1>@item.Type</a>
+                            </li>
+                        </ul>
+                    }
+
+                }
+                if (level == 2)
+                {
+                    var link2 = $"~/Product/index?CatalogTypeId={item.Id}";
+                    if (loopCount > 0)
+                    {
+                        <li class="menu_item_children">
+                            <a href=@link2>@item.Type</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <ul class="categorie_sub_menu">
+                            <li>
+                                <a href=@link2>@item.Type</a>
+                            </li>
+
+                        </ul>
+                    }
+
+                }
+            }
+            //دارای فرزند می باشد
+            else
+            {
+
+
+                if (level == 0)
+                {
+                    var link = $"~/Product/index?CatalogTypeId={item.Id}";
+                    <ul>
+                        <li class="menu_item_children">
+                            <a href=@link>@item.Type</a>
+                        </li>
+                        @{RenderCategoryRow(item.Id, level + 1, loopCount + 1);}
+                    </ul>
+                }
+                if (level == 1)
+                {
+                    var link1 = $"~/Product/index?CatalogTypeId={item.Id}";
+                    <ul class="categories_mega_menu">
+                        <li class="menu_item_children">
+                            <a href=@link1>@item.Type</a>
+                        </li>
+                        @{RenderCategoryRow(item.Id, level + 1, loopCount + 1);}
+                    </ul>
+                }
+                if (level == 2)
+                {
+                    var link2 = $"~/Product/index?CatalogTypeId={item.Id}";
+                    <ul class="categorie_sub_menu">
+                        <li>
+                            <a href=@link2>@item.Type</a>
+                        </li>
+                        @{RenderCategoryRow(item.Id, level + 1, loopCount + 1);}
+                    </ul>
+                }
+
+            }
+
+
+        }
+    }
+}
+<ul>
+
+    @{
+        RenderCategoryRow(null, 0, 0);
     }
 
-}
+</ul>
+
+
