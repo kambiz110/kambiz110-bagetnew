@@ -1,4 +1,4 @@
-﻿
+﻿@addTagHelper *, Models
 
 <header>
     <div class="main_header">
@@ -110,107 +110,9 @@
                                 <h2 class="categori_toggle">همه دسته بندی ها</h2>
                             </div>
                             <div class="categories_menu_toggle">
-                                @await Component.InvokeAsync("CategoriesMenu")
-
-                                <ul class="d-none">
-                                    <li class="menu_item_children">
-                                        <a href="#">
-                                            قطعات ترمز <i class="fa fa-angle-left"></i>
-                                        </a>
-                                        <ul class="categories_mega_menu">
-                                            <li class="menu_item_children">
-                                                <a href="#">لباس ها</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="#">ژاکت</a></li>
-                                                    <li><a href="#">عصر</a></li>
-                                                    <li><a href="#">روز</a></li>
-                                                    <li><a href="#">ورزش</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu_item_children">
-                                                <a href="#">کیف های دستی</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="#">شانه</a></li>
-                                                    <li><a href="#">کوله ها</a></li>
-                                                    <li><a href="#">بچه ها</a></li>
-                                                    <li><a href="#">پالتو</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu_item_children">
-                                                <a href="#">کفش</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="#">چکمه های مچ پا</a></li>
-                                                    <li><a href="#">صندل پاپوش </a></li>
-                                                    <li><a href="#">دویدن</a></li>
-                                                    <li><a href="#">کتاب ها</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu_item_children">
-                                                <a href="#">لباس</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="#">کت</a></li>
-                                                    <li><a href="#">کت های بارانی</a></li>
-                                                    <li><a href="#">ژاکت</a></li>
-                                                    <li><a href="#">تی شرت</a></li>
-                                                    <li><a href="#">کت</a></li>
-                                                    <li><a href="#">کت های بارانی</a></li>
-                                                    <li><a href="#">ژاکت</a></li>
-                                                    <li><a href="#">تی شرت</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu_item_children">
-                                        <a href="#">
-                                            چرخ و لاستیک <i class="fa fa-angle-left"></i>
-                                        </a>
-                                        <ul class="categories_mega_menu column_3">
-                                            <li class="menu_item_children">
-                                                <a href="#">صندلی</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="#">اتاق غذاخوری</a></li>
-                                                    <li><a href="#">اتاق خواب</a></li>
-                                                    <li><a href="#"> خانه و محل کار</a></li>
-                                                    <li><a href="#">اتاق نشیمن</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu_item_children">
-                                                <a href="#">نور</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="#">نورپردازی سقف</a></li>
-                                                    <li><a href="#">نورپردازی دیوار</a></li>
-                                                    <li><a href="#">نورپردازی در فضای باز</a></li>
-                                                    <li><a href="#">نورپردازی هوشمند</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu_item_children">
-                                                <a href="#">مبل</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="#">مبل های پارچه ای</a></li>
-                                                    <li><a href="#">مبل های چرمی</a></li>
-                                                    <li><a href="#">مبل های گوشه ای</a></li>
-                                                    <li><a href="#">مبل تخت خواب شو</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-
-                                    <li><a href="#">نورپردازی</a></li>
-                                    <li><a href="#">لوازم جانبی</a></li>
-                                    <li><a href="#">اجزای بدنه</a></li>
-                                    <li><a href="#">شبکه کردن</a></li>
-                                    <li><a href="#">فیلترهای عملکرد</a></li>
-                                    <li><a href="#">قطعات موتور</a></li>
-                                    <li class="hidden"><a href="shop-left-sidebar.html">مبل های جدید</a></li>
-                                    <li class="hidden"><a href="shop-left-sidebar.html">مبل های شیک</a></li>
-                                    <li>
-                                        <a href="#" id="more-btn">
-                                            <i class="fa fa-plus" aria-hidden="true"></i>دسته
-                                            بندی های بیشتر
-                                        </a>
-                                    </li>
-                                </ul>
+                                @*@await Component.InvokeAsync("CategoriesMenu")*@
+                                <MenuItemTagHelperCopy></MenuItemTagHelperCopy>
+                             
                             </div>
                         </div>
                     </div>
@@ -227,7 +129,7 @@
                                             <li><a href="index-4.html">خانه 4</a></li>
                                         </ul>
                                     </li>
-                           
+
 
                                     <li><a href="about.html">درباره ما</a></li>
                                     <li><a href="contact.html"> تماس با ما</a></li>

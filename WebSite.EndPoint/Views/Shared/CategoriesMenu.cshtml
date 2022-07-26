@@ -17,27 +17,28 @@
 
             if (!Model.Any(p => p.ParentCatalogTypeId == item.Id))
             {
-                var link = $"~/Product/index?CatalogTypeId={item.Id}";
+
                 if (level == 0)
                 {
                     <li>
-                        <a href=@link>@item.Type</a>
+                        @Html.ActionLink(item.Type, "index", "Product", new { CatalogTypeId = item.Id })
                     </li>
                 }
                 if (level == 1)
                 {
-                    var link1 = $"~/Product/index?CatalogTypeId={item.Id}";
+
                     if (loopCount > 0)
                     {
                         <li class="menu_item_children">
-                            <a href=@link1>@item.Type</a>
+                            @Html.ActionLink(item.Type, "index", "Product", new { CatalogTypeId = item.Id })
+
                         </li>
                     }
                     else
                     {
-                        <ul class="categories_mega_menu">
+                        <ul class="categories_mega_menu column_1">
                             <li class="menu_item_children">
-                                <a href=@link1>@item.Type</a>
+                                @Html.ActionLink(item.Type, "index", "Product", new { CatalogTypeId = item.Id })
                             </li>
                         </ul>
                     }
@@ -45,18 +46,19 @@
                 }
                 if (level == 2)
                 {
-                    var link2 = $"~/Product/index?CatalogTypeId={item.Id}";
+
                     if (loopCount > 0)
                     {
                         <li class="menu_item_children">
-                            <a href=@link2>@item.Type</a>
+                           
+                            @Html.ActionLink(item.Type, "index", "Product", new { CatalogTypeId = item.Id })
                         </li>
                     }
                     else
                     {
                         <ul class="categorie_sub_menu">
                             <li>
-                                <a href=@link2>@item.Type</a>
+                                @Html.ActionLink(item.Type, "index", "Product", new { CatalogTypeId = item.Id })
                             </li>
 
                         </ul>
@@ -71,30 +73,33 @@
 
                 if (level == 0)
                 {
-                    var link = $"~/Product/index?CatalogTypeId={item.Id}";
+
                     <ul>
                         <li class="menu_item_children">
-                            <a href=@link>@item.Type</a>
+                            @Html.ActionLink(item.Type, "index", "Product", new { CatalogTypeId = item.Id })
                         </li>
-                        @{RenderCategoryRow(item.Id, level + 1, loopCount + 1);}
+                        <ul class="categories_mega_menu">
+                            @{RenderCategoryRow(item.Id, level + 1, loopCount + 1);}
+                        </ul>
                     </ul>
                 }
                 if (level == 1)
                 {
-                    var link1 = $"~/Product/index?CatalogTypeId={item.Id}";
+
                     <ul class="categories_mega_menu">
                         <li class="menu_item_children">
-                            <a href=@link1>@item.Type</a>
+                            @Html.ActionLink(item.Type, "index", "Product", new { CatalogTypeId = item.Id })
                         </li>
                         @{RenderCategoryRow(item.Id, level + 1, loopCount + 1);}
                     </ul>
                 }
                 if (level == 2)
                 {
-                    var link2 = $"~/Product/index?CatalogTypeId={item.Id}";
+
                     <ul class="categorie_sub_menu">
                         <li>
-                            <a href=@link2>@item.Type</a>
+
+                            @Html.ActionLink(item.Type, "index", "Product", new { CatalogTypeId = item.Id })
                         </li>
                         @{RenderCategoryRow(item.Id, level + 1, loopCount + 1);}
                     </ul>

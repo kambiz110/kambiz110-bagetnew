@@ -45,6 +45,7 @@ namespace WebSite.EndPoint.Models
                 liAll.AddCssClass("col-12");
                 ul.InnerHtml.AppendHtml(liAll);
 
+                //***************************
                 TagBuilder liCol_1 = CreateLi();
                 liCol_1.AddCssClass("col-3");
                 TagBuilder liCol_2 = CreateLi();
