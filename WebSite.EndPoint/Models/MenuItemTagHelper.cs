@@ -27,92 +27,146 @@ namespace WebSite.EndPoint.Models
         {
             var data = getMenuItemService.Execute();
             TagBuilder liMain = null;
+          
             foreach (var item in data.Where(p => p.ParentId == null))
             {
-
-                if (liMain == null)
+                var child = item.SubMenu; 
+                var childCount = child.Count();
+                string link = $"/product?CatalogTypeId={item.Id}";
+                /// فاقد فرزند
+                if (childCount == 0)
                 {
-                    liMain = CreateLiWithTag_a(item.Name, "");
-                }
-                else
-                {
-                    liMain.InnerHtml.AppendHtml(CreateLiWithTag_a(item.Name, ""));
-                }
 
-                var ul = new TagBuilder("ul");
-                ul.AddCssClass("row");
-                var liAll = CreateLiWithTag_a($"همه دسته بندی های  {item.Name}", "#");
-                liAll.AddCssClass("col-12");
-                ul.InnerHtml.AppendHtml(liAll);
-
-                //***************************
-                TagBuilder liCol_1 = CreateLi();
-                liCol_1.AddCssClass("col-3");
-                TagBuilder liCol_2 = CreateLi();
-                liCol_2.AddCssClass("col-3");
-                TagBuilder liCol_3 = CreateLi();
-                liCol_3.AddCssClass("col-3");
-                TagBuilder liCol_4 = CreateLi();
-                liCol_4.AddCssClass("col-3");
-
-                int index = 0;
-                foreach (var sub1 in data.Where(p => p.ParentId == item.Id))
-                {
-                    string link = $"/product?CatalogTypeId={sub1.Id}";
-
-                    if (index < 13)
-                    {
-                        var a = new TagBuilder("a");
-                        a.MergeAttribute("href", link);
-                        a.InnerHtml.Append(sub1.Name);
-                        liCol_1.InnerHtml.AppendHtml(a);
-
-                        liCol_1.InnerHtml.AppendHtml(CreateSub(data, sub1, index, out index));
-                        index++;
-                    }
-                    else if (index < 26)
+                    if (liMain == null)
                     {
 
-                        var a = new TagBuilder("a");
-                        a.MergeAttribute("href", link);
-                        a.InnerHtml.Append(sub1.Name);
-                        liCol_2.InnerHtml.AppendHtml(a);
-
-                        liCol_2.InnerHtml.AppendHtml(CreateSub(data, sub1, index, out index));
-                        index++;
-
-
-                    }
-                    else if (index < 39)
-                    {
-                        var a = new TagBuilder("a");
-                        a.MergeAttribute("href", link);
-                        a.InnerHtml.Append(sub1.Name);
-                        liCol_3.InnerHtml.AppendHtml(a);
-
-                        liCol_3.InnerHtml.AppendHtml(CreateSub(data, sub1, index, out index));
-                        index++;
-
-
+                        liMain = CreateLiWithTag_a(item.Name, link, "", false);
                     }
                     else
                     {
-                        var a = new TagBuilder("a");
-                        a.MergeAttribute("href", link);
-                        a.InnerHtml.Append(sub1.Name);
-                        liCol_4.InnerHtml.AppendHtml(a);
-
-                        liCol_4.InnerHtml.AppendHtml(CreateSub(data, sub1, index, out index));
-                        index++;
+                        liMain.InnerHtml.AppendHtml(CreateLiWithTag_a(item.Name, link, "", false));
                     }
                 }
-                ul.InnerHtml.AppendHtml(liCol_1);
-                ul.InnerHtml.AppendHtml(liCol_2);
-                ul.InnerHtml.AppendHtml(liCol_3);
-                ul.InnerHtml.AppendHtml(liCol_4);
-                liMain.InnerHtml.AppendHtml(ul);
+                //دارای فرزند
+                else
+                {
+                    if (liMain == null)
+                    {
+                        liMain = CreateLiWithTag_a(item.Name, link, "menu_item_children", true);
+                    }
+                    else
+                    {
+                        liMain.InnerHtml.AppendHtml(CreateLiWithTag_a(item.Name, link, "menu_item_children", true));
+                    }
+
+                    // end level 1
+                    int cloumn = 0;
+                 
+                    var ulSub = CreateUlSub1(data, child, item, cloumn, out cloumn);
+                   
+                    ulSub.InnerHtml.AppendHtml( CreateSubLi(data, child, ulSub));
+
+
+
+
+
+
+                    liMain.InnerHtml.AppendHtml(ulSub);
+                }
+
+
+            
             }
             return liMain;
+        }
+     
+        private TagBuilder CreateUlSub1(List<MenuItemDto> data, List<MenuItemDto> datachild, MenuItemDto sub1, int Cloumncount, out int IndexCount)
+        {
+            IndexCount = Cloumncount;
+            var ulsub2 = new TagBuilder("ul");
+            //چند تا از فرزندان فرزند دارند
+            foreach (var item in datachild)
+            {
+                if (data.Any(p=>p.ParentId==item.Id))
+                {
+                    IndexCount++;
+                }
+            }
+            var datachilCount = datachild.Count();
+            if (IndexCount>4)
+            {
+                IndexCount = 4;
+            }
+            var cloumn = datachilCount- IndexCount;
+            if (IndexCount==0)
+            {
+                cloumn = 0;
+            }
+            if (cloumn>0)
+            {
+                cloumn++;
+            } var classsss = "";
+            switch (cloumn)
+            {
+                case 0:
+                    classsss = "categories_mega_menu column_1";
+                    break;
+                case 1:
+                    classsss = "categories_mega_menu column_1";
+                    break;
+                case 2:
+                    classsss = "categories_mega_menu column_2";
+                    break;
+                case 3:
+                    classsss = "categories_mega_menu column_3";
+                    break;
+                case 4:
+                    classsss = "categories_mega_menu";
+                    break;
+                default:
+                    break;
+            }
+            ulsub2.AddCssClass(classsss);
+            return ulsub2;
+        }
+        private TagBuilder CreateUlSub2( )
+        {
+            var ulChild = new TagBuilder("ul");
+            ulChild.AddCssClass("categorie_sub_menu");
+
+            return ulChild;
+        }
+
+        private TagBuilder CreateSubLi(List<MenuItemDto> data, List<MenuItemDto> sub1, TagBuilder ul)
+        {
+
+           
+            
+            foreach (var sub2 in sub1)
+            {
+                var li = CreateLi();
+                string link = $"/product?CatalogTypeId={sub2.Id}";
+                li.InnerHtml.AppendHtml(Create_a(sub2.Name, link));
+                
+                if (data.Any(p=>p.ParentId==sub2.Id))
+                {
+                    li.AddCssClass("menu_item_children");
+                    var ulChild = CreateUlSub2();
+                    foreach (var item in data.Where(p => p.ParentId == sub2.Id).ToList())
+                    {
+                        var lii = CreateLi();
+                        string linkk = $"/product?CatalogTypeId={item.Id}";
+                        lii.InnerHtml.AppendHtml(Create_a(item.Name, linkk));
+                        ulChild.InnerHtml.AppendHtml(lii);
+                    }
+                    li.InnerHtml.AppendHtml(ulChild);
+                }
+             
+                ul.InnerHtml.AppendHtml(li);
+            }
+           
+           
+            return ul;
         }
 
         private TagBuilder CreateSub(List<MenuItemDto> data, MenuItemDto sub1, int count, out int IndexCount)
@@ -121,20 +175,27 @@ namespace WebSite.EndPoint.Models
             var ulsub2 = new TagBuilder("ul");
             foreach (var sub2 in data.Where(p => p.ParentId == sub1.Id))
             {
-                ulsub2.InnerHtml.AppendHtml(CreateLiWithTag_a(sub2.Name, $"/product?CatalogTypeId={sub2.Id}"));
+                ulsub2.InnerHtml.AppendHtml(CreateLiWithTag_a(sub2.Name, $"/product?CatalogTypeId={sub2.Id}", "", false));
                 IndexCount++;
             }
             return ulsub2;
         }
 
-        private TagBuilder CreateLiWithTag_a(string Text, string Link)
+        private TagBuilder CreateLiWithTag_a(string Text, string Link, string classs, bool addTag_i)
         {
             var a = new TagBuilder("a");
             a.MergeAttribute("href", $"{Link}");
-            a.MergeAttribute("title", Text);
+            //a.MergeAttribute("title", Text);
             a.InnerHtml.Append(Text);
             var li = new TagBuilder("li");
-
+            if (!String.IsNullOrEmpty(classs))
+            {
+               li.AddCssClass($"{classs}");
+            }
+            if (addTag_i)
+            {
+                a.InnerHtml.AppendHtml(Create_i());
+            }
             li.InnerHtml.AppendHtml(a);
             return li;
         }
@@ -143,8 +204,20 @@ namespace WebSite.EndPoint.Models
             var li = new TagBuilder("li");
             return li;
         }
-
-
+        private TagBuilder Create_a(string Text, string Link)
+        {
+            var a = new TagBuilder("a");
+            a.MergeAttribute("href", $"{Link}");
+            a.MergeAttribute("title", Text);
+            a.InnerHtml.Append(Text);
+            return a;
+        }
+        private TagBuilder Create_i()
+        {
+            var i = new TagBuilder("i");
+            i.AddCssClass("fa fa-angle-left");
+            return i;
+        }
 
     }
 }
