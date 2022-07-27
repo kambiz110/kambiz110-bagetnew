@@ -63,8 +63,8 @@ namespace WebSite.EndPoint.Models
                     int cloumn = 0;
                  
                     var ulSub = CreateUlSub1(data, child, item, cloumn, out cloumn);
-                   
-                    ulSub.InnerHtml.AppendHtml( CreateSubLi(data, child, ulSub));
+
+                     ulSub = CreateSubLi(data, child, ulSub);
 
 
 
@@ -93,24 +93,26 @@ namespace WebSite.EndPoint.Models
                 }
             }
             var datachilCount = datachild.Count();
+            var cloumn = 0;
             if (IndexCount>4)
             {
                 IndexCount = 4;
             }
-            var cloumn = datachilCount- IndexCount;
-            if (IndexCount==0)
-            {
-                cloumn = 0;
-            }
-            if (cloumn>0)
+        
+            if (datachilCount > IndexCount)
             {
                 cloumn++;
-            } var classsss = "";
+            }
+            if (datachilCount == IndexCount)
+            {
+                cloumn = IndexCount;
+            }
+            var classsss = "";
             switch (cloumn)
             {
-                case 0:
-                    classsss = "categories_mega_menu column_1";
-                    break;
+                //case 0:
+                //    classsss = "categories_mega_menu column_1";
+                //    break;
                 case 1:
                     classsss = "categories_mega_menu column_1";
                     break;
