@@ -114,7 +114,8 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
        .Select(p => new ListCatalogTypeDto
        {
            Id = p.Id,
-           Type = p.Type
+           Type = p.Type,
+           ParentId=p.ParentCatalogTypeId
        }).ToList();
             return types;
         }

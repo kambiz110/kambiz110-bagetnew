@@ -1,0 +1,183 @@
+﻿@using Application.ProductListPageService
+@model ProductListPageServiceDto
+@{
+    Layout = null;
+    var BRANSID = Context.Request.Query["brandId"];
+    var CATALOGTYPE = Context.Request.Query["CatalogTypeId"];
+
+    var ddd = "";
+}
+
+<form asp-action="Index" method="get"></form>
+
+    <div class="widget widget-filter-options shadow-around">
+        <div class="widget-title">برند</div>
+        <div class="search-in-options form-element-row">
+            <div class="form-element-with-icon">
+                <input type="text" class="input-element" placeholder="جستجوی نام برند...">
+                <i class="fad fa-file-search"></i>
+            </div>
+        </div>
+        <div class="widget-content">
+            <form asp-action="Index" method="get">
+                @foreach (var item in Model.BrandDtos)
+                {
+                    @if (BRANSID.ToList().Any(p => p == item.Id.ToString()))
+                    {
+                        <label class="container-checkbox">
+                            @item.Brand
+                            <input type="checkbox" checked name="brandId" value="@item.Id" onclick="submit();">
+                            <span class="checkmark"></span>
+                        </label>
+                    }
+                    else
+                    {
+                        <label class="container-checkbox">
+                            @item.Brand
+                            <input type="checkbox" name="brandId" value="@item.Id" onclick="submit();">
+                            <span class="checkmark"></span>
+                        </label>
+                    }
+
+                }
+
+                @foreach (var queryString in Context.Request.Query.Where(p => p.Key != "brandId").ToList())
+                {
+                    <input type="hidden" name="@queryString.Key" value="@queryString.Value" />
+                }
+            </form>
+    
+
+        </div>
+    </div>
+
+
+    <div class="widget widget-filter-options shadow-around">
+        <div class="widget-title">دسته بندی محصول</div>
+        <div class="search-in-options form-element-row">
+            <div class="form-element-with-icon">
+                <input type="text" class="input-element" placeholder="جستجوی نام دسته بندی...">
+                <i class="fad fa-file-search"></i>
+            </div>
+        </div>
+        <div class="widget-content">
+            <form asp-action="Index" method="get">
+                @foreach (var item in Model.catalogTypeDtos.Where(p => p.ParentId == null).ToList())
+                {
+
+
+                    var counttt = Model.catalogTypeDtos.Where(p => p.ParentId == item.Id).Count();
+                    <label class="container-checkbox">
+
+                        @item.Type
+                        @if (counttt > 0)
+                        {
+                            <span>(@counttt)</span>
+                        }
+                        @if (CATALOGTYPE.Any(p => p == item.Id.ToString()))
+                        {
+                            <input type="checkbox" checked name="CatalogTypeId" value="@item.Id" onclick="submit();">
+
+                        }
+                        else
+                        {
+                            <input type="checkbox" name="CatalogTypeId" value="@item.Id" onclick="submit();">
+                        }
+
+                        <span class="checkmark"></span>
+                    </label>
+
+
+                }
+
+            </form>
+          
+        </div>
+    </div>
+
+
+    <div class="widget widget-filter-options shadow-around">
+
+        <div class="widget shadow-around">
+            <div class="widget-content">
+                <div class="custom-control custom-switch">
+                    <form asp-action="Index" method="get">
+                        @{
+                            var AvailableStock = Context.Request.Query["AvailableStock"];
+                            if (AvailableStock == "true")
+                            {
+                                <input type="checkbox"
+                                       name="AvailableStock"
+                                       onclick="submit();"
+                                       value="false"
+                                       checked
+                                       class="custom-control-input" id="customSwitch1">
+                            }
+                            else
+                            {
+                                <input type="checkbox" name="AvailableStock"
+                                       value="true" class="custom-control-input"
+                                       id="customSwitch1" onclick="submit();">
+
+                            }
+                        }
+                    </form>
+             
+
+
+                    @foreach (var queryString in Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId").ToList())
+                    {
+                        foreach (var item in queryString.Value)
+                        {
+                            <input type="hidden" name="@queryString.Key" value="@item" />
+                        }
+                    }
+
+
+                    <label class="custom-control-label" for="customSwitch1">
+                        فقط کالاهای موجود در
+                        انبار
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="widget shadow-around">
+        <div class="widget-title">محدوده قیمت</div>
+        <div class="widget-content">
+            <form asp-action="Index" method="get">
+
+                <div class="mt-2 mb-2">
+                    <div class="filter-slider">
+                        <div id="slider-non-linear-step" class="price-slider"></div>
+                    </div>
+                    <ul class="filter-range">
+                        <li data-label="از" data-currency=" تومان">
+                            <input type="text" data-value="0" value="0" name="price[min]"
+                                   data-range="0" class="js-slider-range-from disabled example-val"
+                                   id="skip-value-lower" disabled="disabled">
+                        </li>
+                        <li data-label="تا" data-currency="تومان">
+                            <input type="text" data-value="17700000" value="17700000"
+                                   name="price[max]" data-range="17700000"
+                                   class="js-slider-range-to disabled example-val"
+                                   id="skip-value-upper" disabled="disabled">
+                        </li>
+                    </ul>
+                </div>
+                <div class="mt-3 mb-3">
+                    <button class="btn btn-primary d-inline-flex align-items-center">
+                        <i class="fad fa-funnel-dollar ml-2"></i>
+                        اعمال محدوده قیمت
+                    </button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+
+

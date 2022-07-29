@@ -31,7 +31,7 @@ namespace Application.Catalogs.CatalogTypes
         public BaseDto<List<CatalogTypeDto>> ListCatalogTypeBySortIndex(int type, int count)
         {
             var model = context.CatalogTypes
-        .Where(p => p.SortIndex >= type)
+        .Where(p => p.SortIndex >= type && p.ParentCatalogTypeId==null)
         .OrderByDescending(p=>p.SortIndex).Take(count)
          .Include(p => p.CatalogTypeImage)
          .AsQueryable();

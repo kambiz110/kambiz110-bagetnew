@@ -21,51 +21,7 @@
                 @await Component.InvokeAsync("BrandFilter")
 
 
-                <form   asp-action="Index" method="get">
-
-                    <div class="widget shadow-around">
-                        <div class="widget-content">
-                            <div class="custom-control custom-switch">
-                                @{
-                                    var AvailableStock = Context.Request.Query["AvailableStock"];
-                                    if (AvailableStock == "true")
-                                    {
-                                        <input type="checkbox"
-                                               name="AvailableStock"
-                                               onclick="submit();"
-                                               value="false"
-                                               checked
-                                               class="custom-control-input" id="customSwitch1">
-                                    }
-                                    else
-                                    {
-                                        <input type="checkbox" name="AvailableStock"
-                                               value="true" class="custom-control-input"
-                                               id="customSwitch1" onclick="submit();">
-
-                                    }
-                                }
-
-
-                                @foreach (var queryString in Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId").ToList())
-                                {
-                                    foreach (var item in queryString.Value)
-                                    {
-                                        <input type="hidden" name="@queryString.Key" value="@item" />
-                                    }
-                                }
-
-
-                                <label class="custom-control-label" for="customSwitch1">
-                                    فقط کالاهای موجود در
-                                    انبار
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-
+             
                 <div class="widget shadow-around">
                     <div class="widget-content">
                         <div class="custom-control custom-switch">
@@ -100,97 +56,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="widget widget-filter-options shadow-around">
-                    <div class="widget-title">رنگ</div>
-                    <div class="search-in-options form-element-row">
-                        <div class="form-element-with-icon">
-                            <input type="text" class="input-element" placeholder="جستجوی نام رنگ...">
-                            <i class="fad fa-file-search"></i>
-                        </div>
-                    </div>
-                    <div class="widget-content pl-3">
-                        <label class="container-checkbox">
-                            <span class="d-flex justify-content-between align-items-center">
-                                <span>مشکی</span>
-                                <span class="color-option" style="background-color: #000;"></span>
-                            </span>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            <span class="d-flex justify-content-between align-items-center">
-                                <span>آبی</span>
-                                <span class="color-option" style="background-color: #0000ff;"></span>
-                            </span>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            <span class="d-flex justify-content-between align-items-center">
-                                <span>خاکستری</span>
-                                <span class="color-option" style="background-color: #808080;"></span>
-                            </span>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            <span class="d-flex justify-content-between align-items-center">
-                                <span>سفید</span>
-                                <span class="color-option" style="background-color: #fff;"></span>
-                            </span>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            <span class="d-flex justify-content-between align-items-center">
-                                <span>سبز</span>
-                                <span class="color-option" style="background-color: #008000;"></span>
-                            </span>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            <span class="d-flex justify-content-between align-items-center">
-                                <span>قرمز</span>
-                                <span class="color-option" style="background-color: #f44336;"></span>
-                            </span>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            <span class="d-flex justify-content-between align-items-center">
-                                <span>طلایی</span>
-                                <span class="color-option" style="background-color: #c99212;"></span>
-                            </span>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            <span class="d-flex justify-content-between align-items-center">
-                                <span>نقره ای</span>
-                                <span class="color-option" style="background-color: #dedede;"></span>
-                            </span>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            <span class="d-flex justify-content-between align-items-center">
-                                <span>زرد</span>
-                                <span class="color-option" style="background-color: #ffff00;"></span>
-                            </span>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container-checkbox">
-                            <span class="d-flex justify-content-between align-items-center">
-                                <span>بنفش</span>
-                                <span class="color-option" style="background-color: #800080;"></span>
-                            </span>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                </div>
+         
                 <div class="d-md-none">
                     <button class="btn-filter-product-submit">جستجوی پیشرفته</button>
                 </div>

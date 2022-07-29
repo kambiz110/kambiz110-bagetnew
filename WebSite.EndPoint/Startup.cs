@@ -14,6 +14,7 @@ using Application.Interfaces.Contexts;
 using Application.Orders;
 using Application.Orders.CustomerOrdersServices;
 using Application.Payments;
+using Application.ProductListPageService;
 using Application.Users;
 using Application.Visitors.SaveVisitorInfo;
 using Application.Visitors.VisitorOnline;
@@ -104,6 +105,7 @@ namespace WebSite.EndPoint
             services.AddTransient<IGetDiscountInHomePage, GetDiscountInHomePage>();
             services.AddTransient<IGetCatalogeTypeHomePage, GetCatalogeTypeHomePage>();
             services.AddTransient<IRenderCategoriesMenuService, RenderCategoriesMenuService>();
+            services.AddTransient<IRightSildMultiEntityFilter, RightSildMultiEntityFilter>();
             services.AddScoped<SaveVisitorFilter>();
 
             services.AddSignalR();

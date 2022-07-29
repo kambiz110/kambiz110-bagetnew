@@ -35,8 +35,8 @@ namespace Application.Catalogs.CatalogTypes.Query
         public GetCatalogeItemByTypeHomePageDto Execut(int? parentId, int sortIndex = 0, int count = 9)
         {
             var model = context.CatalogTypes
- .Where(p => p.SortIndex == sortIndex)
- .OrderByDescending(p => p.SortIndex == sortIndex && p.ParentCatalogTypeId == parentId).Take(count)
+ .Where(p => p.SortIndex == sortIndex && p.ParentCatalogTypeId== parentId)
+ .OrderByDescending(p => p.Id).Take(count)
  .Include(p => p.CatalogTypeImage)
  .Include(p=>p.CatalogItems.Where(p=>p.Importance>1).OrderByDescending(p=>p.Importance).Take(15)).ThenInclude(p=>p.CatalogItemImages)
  .Include(p => p.CatalogItems.Where(p => p.Importance > 1).OrderByDescending(p => p.Importance).Take(15)).ThenInclude(p => p.Discounts)

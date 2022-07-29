@@ -28,11 +28,12 @@
     @await RenderSectionAsync("Styles", required: false)
 </head>
 
-<body>
+<body style="padding-top:0px;">
 
-    @{
+    @*@{
         Html.RenderPartial("_PartialHeader");
-    }
+    }*@
+    @await Html.PartialAsync("_PartialHeader.cshtml")
 
     @(await Component.InvokeAsync("GetCatalogTypeHeadHomePage", new { sortIndex=0,  count=14 }))
     <!--brand area start-->
