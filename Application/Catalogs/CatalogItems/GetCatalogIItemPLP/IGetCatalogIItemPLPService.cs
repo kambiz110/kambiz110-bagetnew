@@ -48,7 +48,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
 
             if (request.CatalogTypeId != null)
             {
-                query = query.Where(p => p.CatalogTypeId == request.CatalogTypeId);
+                query = query.Where(p => request.CatalogTypeId.Contains(p.CatalogTypeId));
             }
             if (request.CatalogCopmanyId != null)
             {
@@ -149,11 +149,14 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
 
     public class CatlogPLPRequestDto
     {
+        public int priceMin { get; set; }
+        public int priceMax { get; set; } 
+
         public int page { get; set; } = 1;
         public int pageSize { get; set; } = 10;
         public int? CatalogCarId { get; set; }
         public int? CatalogCopmanyId { get; set; }
-        public int? CatalogTypeId { get; set; }
+        public int[] CatalogTypeId { get; set; }
         public int[] brandId { get; set; }
         public bool AvailableStock { get; set; }
         public string SearchKey { get; set; }

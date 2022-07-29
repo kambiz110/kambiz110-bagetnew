@@ -1,5 +1,6 @@
 ﻿using Application.Catalogs.CatalogItems.GetCatalogIItemPLP;
 using Application.Catalogs.CatalogItems.GetCatalogItemPDP;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace WebSite.EndPoint.Controllers
         }
         public IActionResult Index(CatlogPLPRequestDto catlogPLPRequestDto)
         {
+            //var showResolvedFailures = HttpContext.Request.Query["CatalogTypeId"].ToList() ;
             var data = getCatalogIItemPLPService.Execute(catlogPLPRequestDto);
             return View(data);
         }
