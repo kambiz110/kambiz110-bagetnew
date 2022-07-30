@@ -2,8 +2,20 @@
 @using Application.Dtos;
 @model PaginatedItemsDto<CatalogPLPDto>
 @{
+    var QueryStringLink = "";
     ViewData["Title"] = "لیست محصولات";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int[] linkKey = new int[] { 1, 2, 3, 4, 5, 6 };
+    string[] linkText = new string[] { "پربازدید", "پرفروش ترین", "محبوب ترین", "جدیدترین", "ارزان ترین", "گران ترین", };
+    @foreach (var queryString in Context.Request.Query.Where(p => p.Key != "brandId").ToList())
+    {
+
+        QueryStringLink += QueryStringLink + $"{queryString.Key}={queryString.Value}&";
+    }
+    foreach (var queryString2 in Context.Request.Query.Where(p => p.Key != "CatalogTypeId").ToList())
+    {
+        QueryStringLink += QueryStringLink + $"{queryString2.Key}={queryString2.Value}&";
+    }
 }
 
 <!--breadcrumbs area start-->
@@ -30,332 +42,7 @@
                 <!--sidebar widget start-->
                 <aside class="sidebar_widget">
                     @(await Component.InvokeAsync("ProductListRightSlid"))
-                    @*<div class="widget_list widget_categories">
-            <h3>دسته بندی ها</h3>
-            <ul>
-                <li><a href="#">دوربین‌ها و دوربین‌های فیلم‌برداری</a></li>
-                <li class="widget_sub_categories">
-                    <a href="javascript:void(0)">کامپیوتر و شبکه</a>
-                    <ul class="widget_dropdown_categories">
-                        <li><a href="#">کامپیوتر</a></li>
-                        <li><a href="#">شبکه کردن</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">بازی و کنسول</a></li>
-                <li><a href="#">هدفون و بلندگو</a></li>
-                <li><a href="#">فیلم‌ها و بازی‌های ویدیویی</a></li>
-                <li><a href="#">تلفن هوشمند</a> </li>
-                <li><a href="#">دسته بندی نشده</a></li>
-            </ul>
-        </div>
-        <div class="widget shadow-around">
-            <div class="widget-title">محدوده قیمت</div>
-            <div class="widget-content">
-                <form action="#" class="filter-price">
-                    <div class="mt-2 mb-2">
-                        <div class="filter-slider">
-                            <div id="slider-non-linear-step" class="price-slider"></div>
-                        </div>
-                        <ul class="filter-range">
-                            <li data-label="از" data-currency=" تومان">
-                                <input type="text" data-value="0" value="0" name="price[min]"
-                                       data-range="0" class="js-slider-range-from disabled example-val"
-                                       id="skip-value-lower" disabled="disabled">
-                            </li>
-                            <li data-label="تا" data-currency="تومان">
-                                <input type="text" data-value="17700000" value="17700000"
-                                       name="price[max]" data-range="17700000"
-                                       class="js-slider-range-to disabled example-val"
-                                       id="skip-value-upper" disabled="disabled">
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="mt-3 mb-3">
-                        <button class="btn btn-primary d-inline-flex align-items-center">
-                            <i class="fad fa-funnel-dollar ml-2"></i>
-                            اعمال محدوده قیمت
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="sidebar-widget">
-            <div class="widget widget-filter-options shadow-around">
-                <div class="widget-title">برند</div>
-                <div class="search-in-options form-element-row">
-                    <div class="form-element-with-icon">
-                        <input type="text" class="input-element" placeholder="جستجوی نام برند...">
-                        <i class="fad fa-file-search"></i>
-                    </div>
-                </div>
-                <div class="widget-content">
-                    <label class="container-checkbox">
-                        سامسونگ
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        شیائومی
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        هوآوی
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        اپل
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        نوکیا
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        آنر
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        ال جی
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        ایسوس
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        سونی
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        گوگل
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        سونی اریکسون
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        جی ال ایکس
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-            </div>
-            <div class="widget shadow-around">
-                <div class="widget-content">
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                        <label class="custom-control-label" for="customSwitch1">
-                            فقط کالاهای موجود در
-                            انبار
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="widget shadow-around">
-                <div class="widget-content">
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="customSwitch2">
-                        <label class="custom-control-label" for="customSwitch2">فقط ارسال فوری</label>
-                    </div>
-                </div>
-            </div>
-            <div class="widget shadow-around">
-                <div class="widget-title">محدوده قیمت</div>
-                <div class="widget-content">
-                    <form action="#" class="filter-price">
-                        <div class="mt-2 mb-2">
-                            <div class="filter-slider">
-                                <div id="slider-non-linear-step" class="price-slider"></div>
-                            </div>
-                            <ul class="filter-range">
-                                <li data-label="از" data-currency=" تومان">
-                                    <input type="text" data-value="0" value="0" name="price[min]"
-                                           data-range="0" class="js-slider-range-from disabled example-val"
-                                           id="skip-value-lower" disabled="disabled">
-                                </li>
-                                <li data-label="تا" data-currency="تومان">
-                                    <input type="text" data-value="17700000" value="17700000"
-                                           name="price[max]" data-range="17700000"
-                                           class="js-slider-range-to disabled example-val"
-                                           id="skip-value-upper" disabled="disabled">
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="mt-3 mb-3">
-                            <button class="btn btn-primary d-inline-flex align-items-center">
-                                <i class="fad fa-funnel-dollar ml-2"></i>
-                                اعمال محدوده قیمت
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="widget widget-filter-options shadow-around">
-                <div class="widget-title">رنگ</div>
-                <div class="search-in-options form-element-row">
-                    <div class="form-element-with-icon">
-                        <input type="text" class="input-element" placeholder="جستجوی نام رنگ...">
-                        <i class="fad fa-file-search"></i>
-                    </div>
-                </div>
-                <div class="widget-content pl-3">
-                    <label class="container-checkbox">
-                        <span class="d-flex justify-content-between align-items-center">
-                            <span>مشکی</span>
-                            <span class="color-option" style="background-color: #000;"></span>
-                        </span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        <span class="d-flex justify-content-between align-items-center">
-                            <span>آبی</span>
-                            <span class="color-option" style="background-color: #0000ff;"></span>
-                        </span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        <span class="d-flex justify-content-between align-items-center">
-                            <span>خاکستری</span>
-                            <span class="color-option" style="background-color: #808080;"></span>
-                        </span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        <span class="d-flex justify-content-between align-items-center">
-                            <span>سفید</span>
-                            <span class="color-option" style="background-color: #fff;"></span>
-                        </span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        <span class="d-flex justify-content-between align-items-center">
-                            <span>سبز</span>
-                            <span class="color-option" style="background-color: #008000;"></span>
-                        </span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        <span class="d-flex justify-content-between align-items-center">
-                            <span>قرمز</span>
-                            <span class="color-option" style="background-color: #f44336;"></span>
-                        </span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        <span class="d-flex justify-content-between align-items-center">
-                            <span>طلایی</span>
-                            <span class="color-option" style="background-color: #c99212;"></span>
-                        </span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        <span class="d-flex justify-content-between align-items-center">
-                            <span>نقره ای</span>
-                            <span class="color-option" style="background-color: #dedede;"></span>
-                        </span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        <span class="d-flex justify-content-between align-items-center">
-                            <span>زرد</span>
-                            <span class="color-option" style="background-color: #ffff00;"></span>
-                        </span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        <span class="d-flex justify-content-between align-items-center">
-                            <span>بنفش</span>
-                            <span class="color-option" style="background-color: #800080;"></span>
-                        </span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-            </div>
-            <div class="d-md-none">
-                <button class="btn-filter-product-submit">جستجوی پیشرفته</button>
-            </div>
-        </div>
-        <div class="widget_list widget_categories">
-            <h3>تولید کننده</h3>
-            <ul>
-                <li>
-                    <input id="check1" type="checkbox">
-                    <label for="check1">شرکت الف (8)</label>
-                    <span class="checkmark"></span>
-                </li>
-                <li>
-                    <input id="check2" type="checkbox">
-                    <label for="check2">شرکت ب (8)</label>
-                    <span class="checkmark"></span>
-                </li>
-                <li>
-                    <input id="check3" type="checkbox">
-                    <label for="check3">شرکت پ (8)</label>
-                    <span class="checkmark"></span>
-                </li>
-                <li>
-                    <input id="check4" type="checkbox">
-                    <label for="check4">شرکت ت (8)</label>
-                    <span class="checkmark"></span>
-                </li>
-            </ul>
-        </div>
-        <div class="widget_list widget_categories">
-            <h3>دسته بندی ها</h3>
-            <ul>
-                <li>
-                    <input id="check5" type="checkbox">
-                    <label for="check5">لوازم جانبی (8)</label>
-                    <span class="checkmark"></span>
-                </li>
-                <li>
-                    <input id="check6" type="checkbox">
-                    <label for="check6">لباس (8)</label>
-                    <span class="checkmark"></span>
-                </li>
-                <li>
-                    <input id="check7" type="checkbox">
-                    <label for="check7">کیف های دستی (8)</label>
-                    <span class="checkmark"></span>
-                </li>
-                <li>
-                    <input id="check8" type="checkbox">
-                    <label for="check8">برترین ها (8)</label>
-                    <span class="checkmark"></span>
-                </li>
-            </ul>
-        </div>
-        <div class="widget_list tags_widget">
-            <h3>برچسب های محصول</h3>
-            <div class="tag_cloud">
-                <a href="#">بلوز</a>
-                <a href="#">لباس</a>
-                <a href="#">مد</a>
-                <a href="#">کیف دستی</a>
-                <a href="#">لپ تاپ</a>
-            </div>
-        </div>*@
+
                 </aside>
                 <!--sidebar widget end-->
             </div>
@@ -383,43 +70,49 @@
                     </div>
                     <div class=" ">
                         <ul class="nav nav-pills col-md-12">
+                            @for (int i = 0; i < linkKey.Length; i++)
+                            {
+                                var hrefSrc = $"/Product/index?IndexSortType={linkKey[i]}&{QueryStringLink}";
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@hrefSrc"> @linkText[i]</a>
+                                </li>
+                            }
+                            @*<li class="nav-item">
+                                    <b class="nav-link " aria-current="page">مرتب‌سازی بر اساس :</b>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="~/Product/index?sorttype=1"> پربازدیدترین</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-action="Index" asp-route-sorttype="2">  پرفروش‌ترین</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-action="Index" asp-route-sorttype="3"> محبوب‌ترین</a>
+                                </li>
 
-                            <li class="nav-item">
-                                <b class="nav-link " aria-current="page">مرتب‌سازی بر اساس :</b>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-action="Index" asp-route-sorttype="1"> پربازدیدترین</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-action="Index" asp-route-sorttype="2">  پرفروش‌ترین</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-action="Index" asp-route-sorttype="3"> محبوب‌ترین</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" asp-action="Index" asp-route-sorttype="4"> ‌جدیدترین</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-action="Index" asp-route-sorttype="5"> ارزان‌ترین</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-action="Index" asp-route-sorttype="6"> گران‌ترین</a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-action="Index" asp-route-sorttype="4"> ‌جدیدترین</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-action="Index" asp-route-sorttype="5"> ارزان‌ترین</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-action="Index" asp-route-sorttype="6"> گران‌ترین</a>
+                                </li>*@
                         </ul>
-                        @*    <form class="select_option" id="form_select_option_sorttype" action="index" method="get">
-                       <select name="sorttype" id="sorttype_select_option">
-            <option selected value="0">  مرتب سازی بر اساس...</option>
-            <option value="1">  پربازدیدترین</option>
-            <option value="2">   پرفروش‌ترین</option>
-            <option value="3">   محبوب‌ترین</option>
-            <option value="4">  ‌جدیدترین</option>
-            <option value="5">  ارزان‌ترین</option>
-            <option value="6">  گران‌ترین</option>
-        </select>
+                        @*<form class="select_option" id="form_select_option_sorttype" action="index" method="get">
+                                <select name="IndexSortType" id="sorttype_select_option" >
+                                    <option selected value="0">  مرتب سازی بر اساس...</option>
+                                    <option value="1">  پربازدیدترین</option>
+                                    <option value="2">   پرفروش‌ترین</option>
+                                    <option value="3">   محبوب‌ترین</option>
+                                    <option value="4">  ‌جدیدترین</option>
+                                    <option value="5">  ارزان‌ترین</option>
+                                    <option value="6">  گران‌ترین</option>
+                                </select>
 
 
-                        </form>*@
+                            </form>*@
 
                     </div>
                     <div class="d-none page_amount">
@@ -1920,33 +1613,56 @@
 }
 @section Scripts{
     <!-- JS Implementing Plugins -->
+
+    <script src="~/NewThem/assets/js/plugins.js"></script>
+    <script src="~/Theme/assets/js/plugins/swiper.min.js"></script>
     <script src="~/Theme/assets/js/plugins/jquery.nicescroll.min.js"></script>
+
     <script src="~/Theme/assets/js/plugins/nouislider.min.js"></script>
+
     <script src="~/Theme/assets/js/plugins/wNumb.js"></script>
+
     <script src="~/Theme/assets/js/theme.js"></script>
 
-
     <script>
+        $(function () {
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 5000000,
+                values: [0, 100000],
+                slide: function (event, ui) {
+                    $("#amount").val("تومان" + ui.values[0] + " تا " + ui.values[1]);
+                    $('input[name="priceMax"]').val(ui.values[1]);
+                    $('input[name="priceMin"]').val(ui.values[0]);
+                }
+                
+            });
+            $("#amount").val("تومان" + $("#slider-range").slider("values", 0) +
+                " - $" + $("#slider-range").slider("values", 1));
+           
+        });
+    </script>
 
-        $(document).ready(function () {
-            $('#sorttype_select_option').on('change', function () {
-                alert($(this).find(":selected").val());
 
+    <script type="text/javascript">
+
+        jQuery(function () {
+            jQuery('#sorttype_select_option').change(function () {
+                console.log("sorttype_select_option : change");
+                this.form.submit();
             });
 
-        });
+            //Assuming jQuery library is included in the page
+            $(function () {
+                console.log("kkkkkkkkkkkkkkkkkkk");
+                //whenever user changes the drop down,submit the form
+                $(document).on('change', '#sorttype_select_option', function () {
+                    console.log("sorttype_select_option : change");
+                    $("#sorttype_select_option").closest("form").submit();
+                });
+            });
 
     </script>
 
 }
-<script>
-
-    $(document).ready(function () {
-        $('#sorttype_select_option').on('change', function () {
-            alert($(this).find(":selected").val());
-
-        });
-
-    });
-
-</script>

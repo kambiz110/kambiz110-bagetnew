@@ -160,6 +160,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
         public int[] brandId { get; set; }
         public bool AvailableStock { get; set; }
         public string SearchKey { get; set; }
+        public int IndexSortType { get; set; }
         public SortType SortType { get; set; }
     }
 

@@ -23,6 +23,7 @@ namespace WebSite.EndPoint.Controllers
         }
         public IActionResult Index(CatlogPLPRequestDto catlogPLPRequestDto)
         {
+            //ViewBag.IndexSortType = catlogPLPRequestDto.IndexSortType.ToString();
             //var showResolvedFailures = HttpContext.Request.Query["CatalogTypeId"].ToList() ;
             var data = getCatalogIItemPLPService.Execute(catlogPLPRequestDto);
             return View(data);

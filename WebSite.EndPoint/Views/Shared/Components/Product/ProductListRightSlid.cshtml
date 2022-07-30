@@ -5,7 +5,6 @@
     var BRANSID = Context.Request.Query["brandId"];
     var CATALOGTYPE = Context.Request.Query["CatalogTypeId"];
 
-    var ddd = "";
 }
 
 <form asp-action="Index" method="get">
@@ -161,10 +160,11 @@
 <div class="widget shadow-around">
     <div class="widget-title">محدوده قیمت</div>
     <div class="widget-content">
-        <form action="index" method="get" class="filter-price">
+        <form action="/product/index" method="get" class="filter-price">
             <div class="mt-2 mb-2">
                 <div class="filter-slider">
-                    <div id="slider-non-linear-step" class="price-slider"></div>
+                    @*<div id="slider-non-linear-step" class="price-slider"></div>*@
+                    <input type="text" class="price-slider" id="amount" readonly  @*style="border:0; color:#f6931f; font-weight:bold;"*@>
                 </div>
                 <ul class="filter-range">
                     <li data-label="از" data-currency=" تومان">
@@ -180,6 +180,16 @@
                     </li>
                 </ul>
             </div>
+            @*<div class="filter-range">
+                <input type="text"  name="priceMin"
+                       data-range="0" class="js-slider-range-from  example-val"
+                       id="priceMin" >
+                <input type="text"
+                       name="priceMax" id="priceMax" class="js-slider-range-to  example-val" />
+                <input type="text" class="filter-range" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+            </div>*@
+
+            <div id="slider-range"></div>
             <div class="mt-3 mb-3">
                 <button type="submit" class="btn btn-primary d-inline-flex align-items-center">
                     <i class="fad fa-funnel-dollar ml-2"></i>
