@@ -34,10 +34,10 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
             var query = context.CatalogItems.AsNoTracking()
                 .Include(p => p.Discounts).AsNoTracking()
                 .Include(p => p.CatalogItemImages)
-                .Include(p=>p.CatalogBrand)
-                .Include(p=>p.CatalogCompany)
-                .Include(p=>p.CatalogType)
-                .Include(p=>p.CatologCar)
+                .Include(p => p.CatalogBrand)
+                .Include(p => p.CatalogCompany)
+                .Include(p => p.CatalogType)
+                .Include(p => p.CatologCar)
                 .OrderByDescending(p => p.Id)
                 .AsQueryable();
 
@@ -70,55 +70,55 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
                 query = query.Where(p => p.AvailableStock > 0);
             }
 
-
-            if (request.SortType == SortType.Bestselling)
+            if (request.IndexSortType == 1 /*SortType.MostVisited*/)
+            {
+                query = query
+                    .OrderByDescending(p => p.VisitCount);
+            }
+            if (request.IndexSortType == 2 /*SortType.Bestselling*/)
             {
                 query = query.Include(p => p.OrderItems)
                     .OrderByDescending(p => p.OrderItems.Count());
             }
 
-            if (request.SortType == SortType.MostPopular)
+            if (request.IndexSortType == 3 /*SortType.MostPopular*/)
             {
                 query = query.Include(p => p.CatalogItemFavourites)
                     .OrderByDescending(p => p.CatalogItemFavourites.Count());
             }
-            if (request.SortType == SortType.MostVisited)
-            {
-                query = query
-                    .OrderByDescending(p => p.VisitCount);
-            }
 
-            if (request.SortType == SortType.newest)
+
+            if (request.IndexSortType == 4 /*SortType.newes*/)
             {
                 query = query
                     .OrderByDescending(p => p.Id);
             }
 
-            if (request.SortType == SortType.cheapest)
+            if (request.IndexSortType == 5 /*SortType.cheapest*/)
             {
                 query = query
                     .Include(p => p.Discounts)
                     .OrderBy(p => p.Price);
             }
 
-            if (request.SortType == SortType.mostExpensive)
+            if (request.IndexSortType == 6 /*SortType.mostExpensive*/)
             {
                 query = query
                     .Include(p => p.Discounts)
                     .OrderByDescending(p => p.Price);
             }
 
-            if (request.SortType == SortType.mostDescounted)
+            if (request.IndexSortType == 7/*SortType.mostDescounted*/)
             {
                 query = query
                     .Include(p => p.Discounts)
                         .Where(p => p.Discounts.Count() > 0);
             }
-            if (query!=null && query.Any())
+            if (query != null && query.Any())
             {
                 var result = query.PagedResult(request.page, request.pageSize, out rowCount)
                        .ToList();
-                if (result.Count>0)
+                if (result.Count > 0)
                 {
                     var data = result.Select(p => new CatalogPLPDto
                     {
@@ -126,13 +126,13 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
                         Name = p.Name,
                         Price = p.Price,
                         OldPrice = p.OldPrice,
-                        Description=p.Description,
-                        Slug=p.Slug,
-                        CarName=p.CatologCar.Name,
-                        CompanyName=p.CatalogCompany.Name,
-                        TypeName=p.CatalogType.Type,
-                        BrrndName=p.CatalogBrand.Brand,
-                        DiscountPercentage = p.Discounts.Count>0? p.Discounts.OrderByDescending(p => p.DiscountPercentage).FirstOrDefault().DiscountPercentage:0,
+                        Description = p.Description,
+                        Slug = p.Slug,
+                        CarName = p.CatologCar.Name,
+                        CompanyName = p.CatalogCompany.Name,
+                        TypeName = p.CatalogType.Type,
+                        BrrndName = p.CatalogBrand.Brand,
+                        DiscountPercentage = p.Discounts.Count > 0 ? p.Discounts.OrderByDescending(p => p.DiscountPercentage).FirstOrDefault().DiscountPercentage : 0,
                         Rate = 4,
                         Images = p.CatalogItemImages.Select(p => GlobalConstants.serverImageUrl + p.Src).ToList(),
                         AvailableStock = p.AvailableStock,
@@ -150,7 +150,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
     public class CatlogPLPRequestDto
     {
         public int priceMin { get; set; }
-        public int priceMax { get; set; } 
+        public int priceMax { get; set; }
 
         public int page { get; set; } = 1;
         public int pageSize { get; set; } = 10;
@@ -210,7 +210,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
         public int DiscountPercentage { get; set; }
         public string Description { get; set; }
         public int? OldPrice { get; set; }
-        public List<string>  Images { get; set; }
+        public List<string> Images { get; set; }
         public byte Rate { get; set; }
         public int AvailableStock { get; set; }
         public string TypeName { get; set; }

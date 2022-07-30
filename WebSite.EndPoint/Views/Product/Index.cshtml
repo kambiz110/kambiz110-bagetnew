@@ -68,51 +68,64 @@
                         <button data-role="grid_list" type="button" class=" btn-list" data-bs-toggle="tooltip"
                                 title="لیست"></button>
                     </div>
-                    <div class=" ">
-                        <ul class="nav nav-pills col-md-12">
-                            @for (int i = 0; i < linkKey.Length; i++)
+                    <div class="">
+
+                        @*<  <ul class="nav nav-pills col-md-12">
+                              @for (int i = 0; i < linkKey.Length; i++)
+                              {
+                                  var hrefSrc = $"/Product/index?IndexSortType={linkKey[i]}&{QueryStringLink}";
+                                  <li class="nav-item">
+                                      <a class="nav-link" href="@hrefSrc"> @linkText[i]</a>
+                                  </li>
+                              }
+                            li class="nav-item">
+                                      <b class="nav-link " aria-current="page">مرتب‌سازی بر اساس :</b>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link" href="~/Product/index?sorttype=1"> پربازدیدترین</a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link" asp-action="Index" asp-route-sorttype="2">  پرفروش‌ترین</a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link" asp-action="Index" asp-route-sorttype="3"> محبوب‌ترین</a>
+                                  </li>
+
+                                  <li class="nav-item">
+                                      <a class="nav-link" asp-action="Index" asp-route-sorttype="4"> ‌جدیدترین</a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link" asp-action="Index" asp-route-sorttype="5"> ارزان‌ترین</a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link" asp-action="Index" asp-route-sorttype="6"> گران‌ترین</a>
+                                  </li>
+                                            </ul>*@
+                        <form id="form_select_option_sorttype" action="/product/index" method="get">
+                            <select name="IndexSortType" id="sorttype_select_option">
+                                <option selected value="0">  مرتب سازی بر اساس...</option>
+                                <option value="1">  پربازدیدترین</option>
+                                <option value="2">   پرفروش‌ترین</option>
+                                <option value="3">   محبوب‌ترین</option>
+                                <option value="4">  ‌جدیدترین</option>
+                                <option value="5">  ارزان‌ترین</option>
+                                <option value="6">  گران‌ترین</option>
+                                <option value="7">  بیشترین تخفیف</option>
+                            </select>
+                            @foreach (var queryString in Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId").ToList())
                             {
-                                var hrefSrc = $"/Product/index?IndexSortType={linkKey[i]}&{QueryStringLink}";
-                                <li class="nav-item">
-                                    <a class="nav-link" href="@hrefSrc"> @linkText[i]</a>
-                                </li>
+                                foreach (var item in queryString.Value)
+                                {
+                                    <input type="hidden" name="@queryString.Key" value="@item" />
+                                }
                             }
-                            @*<li class="nav-item">
-                                    <b class="nav-link " aria-current="page">مرتب‌سازی بر اساس :</b>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="~/Product/index?sorttype=1"> پربازدیدترین</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-action="Index" asp-route-sorttype="2">  پرفروش‌ترین</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-action="Index" asp-route-sorttype="3"> محبوب‌ترین</a>
-                                </li>
 
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-action="Index" asp-route-sorttype="4"> ‌جدیدترین</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-action="Index" asp-route-sorttype="5"> ارزان‌ترین</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-action="Index" asp-route-sorttype="6"> گران‌ترین</a>
-                                </li>*@
-                        </ul>
-                        @*<form class="select_option" id="form_select_option_sorttype" action="index" method="get">
-                                <select name="IndexSortType" id="sorttype_select_option" >
-                                    <option selected value="0">  مرتب سازی بر اساس...</option>
-                                    <option value="1">  پربازدیدترین</option>
-                                    <option value="2">   پرفروش‌ترین</option>
-                                    <option value="3">   محبوب‌ترین</option>
-                                    <option value="4">  ‌جدیدترین</option>
-                                    <option value="5">  ارزان‌ترین</option>
-                                    <option value="6">  گران‌ترین</option>
-                                </select>
-
-
-                            </form>*@
+                            @if (Context.Request.Query.Where(p => p.Key == "AvailableStock").Any())
+                            {
+                                var AvailableStock = Context.Request.Query.Where(p => p.Key == "AvailableStock").FirstOrDefault();
+                                <input type="hidden" name="@AvailableStock.Key" value="@AvailableStock.Value" />
+                            }
+                        </form>
 
                     </div>
                     <div class="d-none page_amount">
@@ -1611,7 +1624,7 @@
 
 
 }
-@section Scripts{
+                            @section Scripts{
     <!-- JS Implementing Plugins -->
 
     <script src="~/NewThem/assets/js/plugins.js"></script>
@@ -1624,44 +1637,36 @@
 
     <script src="~/Theme/assets/js/theme.js"></script>
 
-    <script>
-        $(function () {
-            $("#slider-range").slider({
-                range: true,
-                min: 0,
-                max: 5000000,
-                values: [0, 100000],
-                slide: function (event, ui) {
-                    $("#amount").val("تومان" + ui.values[0] + " تا " + ui.values[1]);
-                    $('input[name="priceMax"]').val(ui.values[1]);
-                    $('input[name="priceMin"]').val(ui.values[0]);
-                }
-                
-            });
-            $("#amount").val("تومان" + $("#slider-range").slider("values", 0) +
-                " - $" + $("#slider-range").slider("values", 1));
-           
-        });
-    </script>
-
-
-    <script type="text/javascript">
-
-        jQuery(function () {
-            jQuery('#sorttype_select_option').change(function () {
-                console.log("sorttype_select_option : change");
-                this.form.submit();
-            });
-
-            //Assuming jQuery library is included in the page
+    @*<script>
             $(function () {
-                console.log("kkkkkkkkkkkkkkkkkkk");
-                //whenever user changes the drop down,submit the form
-                $(document).on('change', '#sorttype_select_option', function () {
-                    console.log("sorttype_select_option : change");
-                    $("#sorttype_select_option").closest("form").submit();
+                $("#slider-range").slider({
+                    range: true,
+                    min: 0,
+                    max: 5000000,
+                    values: [0, 100000],
+                    slide: function (event, ui) {
+                        $("#amount").val("تومان" + ui.values[0] + " تا " + ui.values[1]);
+                        $('input[name="priceMax"]').val(ui.values[1]);
+                        $('input[name="priceMin"]').val(ui.values[0]);
+                    }
+
                 });
+                $("#amount").val("تومان" + $("#slider-range").slider("values", 0) +
+                    " - $" + $("#slider-range").slider("values", 1));
+
             });
+        </script>*@
+
+
+    <script>
+   
+
+        var comment_post_ID = jQuery("#sorttype_select_option").val();
+        jQuery("#sorttype_select_option").on('change', function (e) {
+            comment_post_ID = jQuery("#sorttype_select_option").val();
+           
+            $(this).closest('form').submit();
+        });
 
     </script>
 
