@@ -50,7 +50,7 @@ namespace Application.HomePageService
             {
                 AvailableStock = true,
                 page = 1,
-                pageSize = 20,
+                pageIndex = 20,
                 SortType = SortType.Bestselling
             }).Data.ToList();
 
@@ -58,14 +58,14 @@ namespace Application.HomePageService
             {
                 AvailableStock = true,
                 page = 1,
-                pageSize = 20,
+                pageIndex = 20,
                 SortType = SortType.MostPopular
             }).Data.ToList();
             var MostDescountNumber = getCatalogIItemPLPService.Execute(new CatlogPLPRequestDto
             {
                 AvailableStock = true,
                 page = 1,
-                pageSize = 20,
+                pageIndex = 20,
                 SortType = SortType.mostDescounted
             }).Data.ToList();
 

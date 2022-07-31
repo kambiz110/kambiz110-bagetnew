@@ -116,7 +116,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
             }
             if (query != null && query.Any())
             {
-                var result = query.PagedResult(request.page, request.pageSize, out rowCount)
+                var result = query.PagedResult(request.page, request.pageIndex, out rowCount)
                        .ToList();
                 if (result.Count > 0)
                 {
@@ -137,12 +137,12 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
                         Images = p.CatalogItemImages.Select(p => GlobalConstants.serverImageUrl + p.Src).ToList(),
                         AvailableStock = p.AvailableStock,
                     }).ToList();
-                    return new PaginatedItemsDto<CatalogPLPDto>(request.page, request.pageSize, rowCount, data);
+                    return new PaginatedItemsDto<CatalogPLPDto>(request.page, request.pageIndex, rowCount, data);
 
                 }
             }
 
-            return new PaginatedItemsDto<CatalogPLPDto>(request.page, request.pageSize, rowCount, new List<CatalogPLPDto>());
+            return new PaginatedItemsDto<CatalogPLPDto>(request.page, request.pageIndex, rowCount, new List<CatalogPLPDto>());
         }
     }
 
@@ -153,7 +153,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
         public int priceMax { get; set; }
 
         public int page { get; set; } = 1;
-        public int pageSize { get; set; } = 10;
+        public int pageIndex { get; set; } = 10;
         public int? CatalogCarId { get; set; }
         public int? CatalogCopmanyId { get; set; }
         public int[] CatalogTypeId { get; set; }

@@ -9,6 +9,60 @@
 }
 
 <form asp-action="Index" method="get">
+
+    <div class="widget shadow-around">
+        <div class="widget-content">
+            <div @*class="custom-control custom-switch"*@>
+
+                @{
+                    var AvailableStock = Context.Request.Query["AvailableStock"];
+                    if (AvailableStock == "true")
+                    {
+                        @*<input type="checkbox"
+                            name="AvailableStock"
+                            onclick="submit();"
+                            value="false"
+                            checked
+                            class="custom-control-input" id="customSwitch1">*@
+                        <label class="container-checkbox">
+                            فقط کالاهای موجود در
+                            انبار
+                            <input type="checkbox" checked name="AvailableStock" value="true" onclick="submit();">
+                            <span class="checkmark"></span>
+                        </label>
+                    }
+                    else
+                    {
+                        @*<input type="checkbox" name="AvailableStock"
+                            value="true" class="custom-control-input"
+                            id="customSwitch1" onclick="submit();">*@
+
+                        <label class="container-checkbox">
+                            فقط کالاهای موجود در
+                            انبار
+                            <input type="checkbox" name="AvailableStock" value="true" onclick="submit();">
+                            <span class="checkmark"></span>
+                        </label>
+                    }
+                }
+
+
+
+
+                @*@foreach (var queryString in Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId").ToList())
+                    {
+                        foreach (var item in queryString.Value)
+                        {
+                            <input type="hidden" name="@queryString.Key" value="@item" />
+                        }
+                    }*@
+
+
+
+            </div>
+        </div>
+    </div>
+
     <div class="widget widget-filter-options shadow-around">
         <div class="widget-title">خودرو</div>
         <div class="search-in-options form-element-row">
@@ -139,59 +193,6 @@
     </div>
 
 
-
-    <div class="widget shadow-around">
-        <div class="widget-content">
-            <div @*class="custom-control custom-switch"*@>
-
-                @{
-                    var AvailableStock = Context.Request.Query["AvailableStock"];
-                    if (AvailableStock == "true")
-                    {
-                        @*<input type="checkbox"
-                            name="AvailableStock"
-                            onclick="submit();"
-                            value="false"
-                            checked
-                            class="custom-control-input" id="customSwitch1">*@
-                        <label class="container-checkbox">
-                            فقط کالاهای موجود در
-                            انبار
-                            <input type="checkbox" checked name="AvailableStock" value="true" onclick="submit();">
-                            <span class="checkmark"></span>
-                        </label>
-                    }
-                    else
-                    {
-                        @*<input type="checkbox" name="AvailableStock"
-                            value="true" class="custom-control-input"
-                            id="customSwitch1" onclick="submit();">*@
-
-                        <label class="container-checkbox">
-                            فقط کالاهای موجود در
-                            انبار
-                            <input type="checkbox" name="AvailableStock" value="true" onclick="submit();">
-                            <span class="checkmark"></span>
-                        </label>
-                    }
-                }
-
-
-
-
-                @*@foreach (var queryString in Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId").ToList())
-                    {
-                        foreach (var item in queryString.Value)
-                        {
-                            <input type="hidden" name="@queryString.Key" value="@item" />
-                        }
-                    }*@
-
-
-
-            </div>
-        </div>
-    </div>
 
 
     @if (Context.Request.Query.Where(p => p.Key == "IndexSortType").Any())
