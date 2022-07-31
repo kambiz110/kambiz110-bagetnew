@@ -103,26 +103,24 @@
 
                                                 @foreach (var item in Model.CataolType.Pager.Pages)
                                                 {
+                                                    var active = "";
                                                     if (item == Model.CataolType.PageIndex)
                                                     {
-                                                        <li class="paginate_button page-item  active">
-                                                            <a asp-page="Index" asp-route-parentid="@Request.Query["parentid"]"
-                                                               asp-route-pageIndex="@item"
-                                                               aria-controls="html5-extension"
-                                                               data-dt-idx="2" tabindex="0"
-                                                               class="page-link"> @item</a>
-                                                        </li>
+                                                        active = "active";
+
                                                     }
                                                     else
                                                     {
-                                                        <li class="paginate_button page-item ">
-                                                            <a asp-page="Index" asp-route-parentid="@Request.Query["parentid"]"
-                                                               asp-route-pageIndex="@item"
-                                                               aria-controls="html5-extension"
-                                                               data-dt-idx="2" tabindex="0"
-                                                               class="page-link"> @item</a>
-                                                        </li>
+                                                        active = "";
+
                                                     }
+                                                    <li class="paginate_button page-item @(Model.CataolType.PageIndex==item?"active":"")">
+                                                        <a asp-page="Index" asp-route-parentid="@Request.Query["parentid"]"
+                                                           asp-route-pageIndex="@item"
+                                                           aria-controls="html5-extension"
+                                                           data-dt-idx="2" tabindex="0"
+                                                           class="page-link"> @item</a>
+                                                    </li>
 
                                                 }
 

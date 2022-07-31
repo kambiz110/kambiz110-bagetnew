@@ -112,7 +112,7 @@
                                 <option value="6">  گران‌ترین</option>
                                 <option value="7">  بیشترین تخفیف</option>
                             </select>
-                            @foreach (var queryString in Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId").ToList())
+                            @foreach (var queryString in Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId" || p.Key == "CatalogCarId").ToList())
                             {
                                 foreach (var item in queryString.Value)
                                 {

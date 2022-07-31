@@ -4,10 +4,51 @@
     Layout = null;
     var BRANSID = Context.Request.Query["brandId"];
     var CATALOGTYPE = Context.Request.Query["CatalogTypeId"];
+    var CATALOGCAR = Context.Request.Query["CatalogCarId"];
 
 }
 
 <form asp-action="Index" method="get">
+    <div class="widget widget-filter-options shadow-around">
+        <div class="widget-title">خودرو</div>
+        <div class="search-in-options form-element-row">
+            <div class="form-element-with-icon">
+                <input type="text" class="input-element" placeholder="جستجوی نام خودرو...">
+                <i class="fad fa-file-search"></i>
+            </div>
+        </div>
+        <div class="widget-content">
+
+            @foreach (var item in Model.CarDtos)
+            {
+                @if (CATALOGCAR.ToList().Any(p => p == item.Id.ToString()))
+                {
+                    <label class="container-checkbox">
+                        @item.Name
+                        <input type="checkbox" checked name="brandId" value="@item.Id" onclick="submit();">
+                        <span class="checkmark"></span>
+                    </label>
+                }
+                else
+                {
+                    <label class="container-checkbox">
+                        @item.Name
+                        <input type="checkbox" name="brandId" value="@item.Id" onclick="submit();">
+                        <span class="checkmark"></span>
+                    </label>
+                }
+
+            }
+
+            @*@foreach (var queryString in Context.Request.Query.Where(p => p.Key != "brandId").ToList())
+                {
+                    <input type="hidden" name="@queryString.Key" value="@queryString.Value" />
+                }*@
+
+
+
+        </div>
+    </div>
 
     <div class="widget widget-filter-options shadow-around">
         <div class="widget-title">برند</div>

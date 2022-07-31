@@ -28,19 +28,19 @@ namespace Application.Banners
             var link = "";
             switch (banner.CategoriType)
             {
-                case 1: link = "~/Product/index?CatalogTypeId=" + banner.UniqKey;
+                case 1: link = "/Product/index?CatalogTypeId=" + banner.UniqKey;
                     break;
                 case 2:
-                    link = "~/Product/index?brandId=" + banner.UniqKey;
+                    link = "/Product/index?brandId=" + banner.UniqKey;
                     break;
                 case 3:
-                    link = "~/Product/index?CatalogCarId=" + banner.UniqKey;
+                    link = "/Product/index?CatalogCarId=" + banner.UniqKey;
                     break;
                 case 4:
-                    link = $@"~/Product/Details/pid-{banner.UniqKey}/{banner.Name}";
+                    link = $@"/Product/Details/pid-{banner.UniqKey}/{banner.Name}";
                     break;
                 case 5:
-                    link = "~/Product/index?CatalogCopmanyId=" + banner.UniqKey;
+                    link = "/Product/index?CatalogCopmanyId=" + banner.UniqKey;
                     break;
                 default:
                     break;
@@ -58,19 +58,19 @@ namespace Application.Banners
             switch (dto.CategoriType)
             {
                 case 1:
-                    link = "~/Product/index?CatalogTypeId=" + dto.UniqKey;
+                    link = "/Product/index?CatalogTypeId=" + dto.UniqKey;
                     break;
                 case 2:
-                    link = "~/Product/index?brandId=" + dto.UniqKey;
+                    link = "/Product/index?brandId=" + dto.UniqKey;
                     break;
                 case 3:
-                    link = "~/Product/index?CatalogCarId=" + dto.UniqKey;
+                    link = "/Product/index?CatalogCarId=" + dto.UniqKey;
                     break;
                 case 4:
-                    link = $@"~/Product/Details/pid-{dto.UniqKey}/{dto.Name}";
+                    link = $@"/Product/Details/pid-{dto.UniqKey}/{dto.Name}";
                     break;
                 case 5:
-                    link = "~/Product/index?CatalogCopmanyId=" + dto.UniqKey;
+                    link = "/Product/index?CatalogCopmanyId=" + dto.UniqKey;
                     break;
                 default:
                     break;
