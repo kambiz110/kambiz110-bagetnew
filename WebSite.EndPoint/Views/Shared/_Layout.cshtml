@@ -30,78 +30,11 @@
 
 <body style="padding-top:0px;">
 
-    @*@{
-        Html.RenderPartial("_PartialHeader");
-    }*@
+
     @await Html.PartialAsync("_PartialHeader.cshtml")
 
     @(await Component.InvokeAsync("GetCatalogTypeHeadHomePage", new { sortIndex=0,  count=14 }))
-    <!--brand area start-->
-    <div class="brand_area d-none">
-        <div class="container">
-            <div class="col-12">
-                <div class="brand_container owl-carousel ">
-                    <div class="brand_list">
-                        <div class="single_brand">
-                            <a href="#"><img src="~/NewThem/assets/img/brand/brand1.jpg" alt=""></a>
-                        </div>
-                        <div class="single_brand">
-                            <a href="#"><img src="~/NewThem/assets/img/brand/brand2.jpg" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="brand_list">
-                        <div class="single_brand">
-                            <a href="#"><img src="~/NewThem/assets/img/brand/brand3.jpg" alt=""></a>
-                        </div>
-                        <div class="single_brand">
-                            <a href="#"><img src="~/NewThem/assets/img/brand/brand4.jpg" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="brand_list">
-                        <div class="single_brand">
-                            <a href="#"><img src="~/NewThem/assets/img/brand/brand5.jpg" alt=""></a>
-                        </div>
-                        <div class="single_brand">
-                            <a href="#"><img src="~/NewThem/assets/img/brand/brand6.jpg" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="brand_list">
-                        <div class="single_brand">
-                            <a href="#"><img src="~/NewThem/assets/img/brand/brand7.jpg" alt=""></a>
-                        </div>
-                        <div class="single_brand">
-                            <a href="#"><img src="~/NewThem/assets/img/brand/brand8.jpg" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="brand_list">
-                        <div class="single_brand">
-                            <a href="#"><img src="~/NewThem/assets/img/brand/brand1.jpg" alt=""></a>
-                        </div>
-                        <div class="single_brand">
-                            <a href="#"><img src="~/NewThem/assets/img/brand/brand2.jpg" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="brand_list">
-                        <div class="single_brand">
-                            <a href="#"><img src="~/NewThem/assets/img/brand/brand3.jpg" alt=""></a>
-                        </div>
-                        <div class="single_brand">
-                            <a href="#"><img src="~/NewThem/assets/img/brand/brand4.jpg" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="brand_list">
-                        <div class="single_brand">
-                            <a href="#"><img src="~/NewThem/assets/img/brand/brand5.jpg" alt=""></a>
-                        </div>
-                        <div class="single_brand">
-                            <a href="#"><img src="~/NewThem/assets/img/brand/brand6.jpg" alt=""></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--brand area end-->
+
 
     @RenderBody()
     <!--newsletter area start-->

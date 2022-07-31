@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebSite.EndPoint.Helper;
 
 namespace WebSite.EndPoint.Controllers
 {
@@ -23,6 +24,18 @@ namespace WebSite.EndPoint.Controllers
         }
         public IActionResult Index(CatlogPLPRequestDto catlogPLPRequestDto)
         {
+            if (catlogPLPRequestDto.pageIndex == 1)
+            {
+                if (true)
+                {
+
+                }
+                //HttpContext.Session.Remove("CatlogPLP");
+            }
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "CatlogPLP", catlogPLPRequestDto);
+
+            CatlogPLPRequestDto CatlogPLP = SessionHelper.GetObjectFromJson<CatlogPLPRequestDto>(HttpContext.Session, "productes");
+
             //ViewBag.IndexSortType = catlogPLPRequestDto.IndexSortType.ToString();
             //var showResolvedFailures = HttpContext.Request.Query["CatalogTypeId"].ToList() ;
             var data = getCatalogIItemPLPService.Execute(catlogPLPRequestDto);

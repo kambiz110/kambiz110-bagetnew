@@ -56,6 +56,7 @@ namespace WebSite.EndPoint
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddSession();
             services.AddSeoTags(seoInfo =>
             {
                 seoInfo.SetSiteInfo(
@@ -140,7 +141,7 @@ namespace WebSite.EndPoint
             app.UseSetVisitorId();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();
