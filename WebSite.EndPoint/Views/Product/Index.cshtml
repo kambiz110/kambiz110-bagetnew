@@ -6,17 +6,19 @@
 
     ViewData["Title"] = "لیست محصولات";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    @*int[] linkKey = new int[] { 1, 2, 3, 4, 5, 6 };
-        string[] linkText = new string[] { "پربازدید", "پرفروش ترین", "محبوب ترین", "جدیدترین", "ارزان ترین", "گران ترین", };
-        @foreach (var queryString in Context.Request.Query.Where(p => p.Key != "brandId").ToList())
-        {
+    var QueryStringLink = "";
+    var QueryStringLink2 = Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId" || p.Key == "CatalogCarId" || p.Key == "AvailableStock" || p.Key == "IndexSortType").ToList();
 
-            QueryStringLink += QueryStringLink + $"{queryString.Key}={queryString.Value}&";
-        }
-        foreach (var queryString2 in Context.Request.Query.Where(p => p.Key != "CatalogTypeId").ToList())
-        {
-            QueryStringLink += QueryStringLink + $"{queryString2.Key}={queryString2.Value}&";
-        }*@
+    string[] linkText = new string[QueryStringLink2.Count];
+    int counter = 0;
+    @foreach (var queryString in QueryStringLink2)
+    {
+
+        linkText[counter]=( $"{queryString.Key}={queryString.Value}");
+        counter++;
+    }
+    QueryStringLink = string.Join("&", linkText);
+    var test = "";
 }
 
 <!--breadcrumbs area start-->
@@ -71,49 +73,18 @@
                     </div>
                     <div class="">
 
-                        @*<  <ul class="nav nav-pills col-md-12">
-                              @for (int i = 0; i < linkKey.Length; i++)
-                              {
-                                  var hrefSrc = $"/Product/index?IndexSortType={linkKey[i]}&{QueryStringLink}";
-                                  <li class="nav-item">
-                                      <a class="nav-link" href="@hrefSrc"> @linkText[i]</a>
-                                  </li>
-                              }
-                            li class="nav-item">
-                                      <b class="nav-link " aria-current="page">مرتب‌سازی بر اساس :</b>
-                                  </li>
-                                  <li class="nav-item">
-                                      <a class="nav-link" href="~/Product/index?sorttype=1"> پربازدیدترین</a>
-                                  </li>
-                                  <li class="nav-item">
-                                      <a class="nav-link" asp-action="Index" asp-route-sorttype="2">  پرفروش‌ترین</a>
-                                  </li>
-                                  <li class="nav-item">
-                                      <a class="nav-link" asp-action="Index" asp-route-sorttype="3"> محبوب‌ترین</a>
-                                  </li>
-
-                                  <li class="nav-item">
-                                      <a class="nav-link" asp-action="Index" asp-route-sorttype="4"> ‌جدیدترین</a>
-                                  </li>
-                                  <li class="nav-item">
-                                      <a class="nav-link" asp-action="Index" asp-route-sorttype="5"> ارزان‌ترین</a>
-                                  </li>
-                                  <li class="nav-item">
-                                      <a class="nav-link" asp-action="Index" asp-route-sorttype="6"> گران‌ترین</a>
-                                  </li>
-                                            </ul>*@
                         <form id="form_select_option_sorttype" action="/product/index" method="get">
                             <select name="IndexSortType" id="sorttype_select_option">
                                 <option selected value="0">  مرتب سازی بر اساس...</option>
                                 <option value="1">  پربازدیدترین</option>
-                                <option value="2">   پرفروش‌ترین</option>
+                                <option value="2">   پرفروش‌ ترین</option>
                                 <option value="3">   محبوب‌ترین</option>
                                 <option value="4">  ‌جدیدترین</option>
                                 <option value="5">  ارزان‌ترین</option>
                                 <option value="6">  گران‌ترین</option>
                                 <option value="7">  بیشترین تخفیف</option>
                             </select>
-                            @foreach (var queryString in Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId" || p.Key == "CatalogCarId").ToList())
+                            @foreach (var queryString in Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId" || p.Key == "CatalogCarId" || p.Key == "AvailableStock").ToList())
                             {
                                 foreach (var item in queryString.Value)
                                 {
@@ -121,11 +92,7 @@
                                 }
                             }
 
-                            @if (Context.Request.Query.Where(p => p.Key == "AvailableStock").Any())
-                            {
-                                var AvailableStock = Context.Request.Query.Where(p => p.Key == "AvailableStock").FirstOrDefault();
-                                <input type="hidden" name="@AvailableStock.Key" value="@AvailableStock.Value" />
-                            }
+
                         </form>
 
                     </div>
@@ -1598,15 +1565,10 @@
                 <div class="shop_toolbar t_bottom">
                     <div class="pagination">
                         <ul>
-                            @*<li >
-                                    <a asp-action="Index" asp-controller="product" asp-route-parentid="@Context.Request.Query["parentid"]"
-                                       asp-route-pageIndex="1"
-                                      >  اول</a>
-                                </li>*@
+                      
 
                             <li class="@prevDisabled">
-                                <a asp-action="Index" asp-controller="product" 
-                                   asp-route-pageIndex="@(Model.PageIndex - 1)">
+                                <a href="/product?pageIndex=@(Model.PageIndex-1)&@QueryStringLink" >
                                     قبلی
                                 </a>
                             </li>
@@ -1617,25 +1579,20 @@
                                 else { current = ""; }
 
                                 <li class="@(current)">
-                                    <a asp-action="Index" asp-controller="product" 
-                                       asp-route-pageIndex="@item"> @item</a>
+                                    <a href="/product?pageIndex=@(item)&@QueryStringLink"> @item</a>
                                 </li>
 
                             }
                             <li class="next @nextDisabled">
 
-                                <a asp-action="Index" asp-controller="product" 
-                                   asp-route-pageIndex="@(Model.PageIndex + 1)"
+                                <a href="/product?pageIndex=@(Model.PageIndex+ 1)&@QueryStringLink"
+                                   
                                    class="">
                                     بعدی
                                 </a>
                             </li>
 
-                            @*<li >
-
-                                    <a asp-action="Index" asp-controller="product" asp-route-parentid="@Context.Request.Query["parentid"]"
-                                       asp-route-pageIndex="@Model.Pager.TotalPages"> آخر</a>
-                                </li>*@
+                         
 
                         </ul>
                     </div>

@@ -24,17 +24,17 @@ namespace WebSite.EndPoint.Controllers
         }
         public IActionResult Index(CatlogPLPRequestDto catlogPLPRequestDto)
         {
-            if (catlogPLPRequestDto.pageIndex == 1)
-            {
-                if (true)
-                {
+            //if (catlogPLPRequestDto.pageIndex == 1)
+            //{
+            //    if (true)
+            //    {
 
-                }
-                //HttpContext.Session.Remove("CatlogPLP");
-            }
-            SessionHelper.SetObjectAsJson(HttpContext.Session, "CatlogPLP", catlogPLPRequestDto);
+            //    }
+            //    //HttpContext.Session.Remove("CatlogPLP");
+            //}
+            //SessionHelper.SetObjectAsJson(HttpContext.Session, "CatlogPLP", catlogPLPRequestDto);
 
-            CatlogPLPRequestDto CatlogPLP = SessionHelper.GetObjectFromJson<CatlogPLPRequestDto>(HttpContext.Session, "productes");
+            //CatlogPLPRequestDto CatlogPLP = SessionHelper.GetObjectFromJson<CatlogPLPRequestDto>(HttpContext.Session, "productes");
 
             //ViewBag.IndexSortType = catlogPLPRequestDto.IndexSortType.ToString();
             //var showResolvedFailures = HttpContext.Request.Query["CatalogTypeId"].ToList() ;
