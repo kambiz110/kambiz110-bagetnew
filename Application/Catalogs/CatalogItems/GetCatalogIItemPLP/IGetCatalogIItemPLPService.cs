@@ -43,12 +43,17 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
 
             if (request.brandId != null)
             {
-                query = query.Where(p => request.brandId.Any(b => b == p.CatalogBrandId));
+                query = query.Where(p => request.brandId.Contains( p.CatalogBrandId));
             }
 
             if (request.CatalogTypeId != null)
             {
-                query = query.Where(p => request.CatalogTypeId.Contains(p.CatalogTypeId));
+                var serchLST = request.CatalogTypeId.Where(p => p != 0).ToArray();
+                if (serchLST.Length>0)
+                {
+ query = query.Where(p => serchLST.Contains(p.CatalogTypeId));
+                }
+               
             }
             if (request.CatalogCopmanyId != null)
             {

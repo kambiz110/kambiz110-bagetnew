@@ -195,10 +195,12 @@
 
 
 
-    @if (Context.Request.Query.Where(p => p.Key == "IndexSortType").Any())
+    @foreach (var queryString in  Context.Request.Query.Where(p => p.Key == "IndexSortType" || p.Key == "SearchKey").ToList())
     {
-        var IndexSortType = Context.Request.Query.Where(p => p.Key == "IndexSortType").FirstOrDefault();
-        <input type="hidden" name="@IndexSortType.Key" value="@IndexSortType.Value" />
+        foreach (var item in queryString.Value)
+        {
+            <input type="hidden" name="@queryString.Key" value="@item" />
+        }
     }
 
 </form>

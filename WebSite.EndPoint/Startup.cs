@@ -107,6 +107,7 @@ namespace WebSite.EndPoint
             services.AddTransient<IGetCatalogeTypeHomePage, GetCatalogeTypeHomePage>();
             services.AddTransient<IRenderCategoriesMenuService, RenderCategoriesMenuService>();
             services.AddTransient<IRightSildMultiEntityFilter, RightSildMultiEntityFilter>();
+            services.AddTransient<IGetCategoreTypeHeaderSearchKey, GetCategoreTypeHeaderSearchKey>();
             services.AddScoped<SaveVisitorFilter>();
 
             services.AddSignalR();

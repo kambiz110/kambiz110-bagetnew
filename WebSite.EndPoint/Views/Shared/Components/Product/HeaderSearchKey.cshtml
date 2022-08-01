@@ -1,0 +1,19 @@
+﻿@using Application.Catalogs.CatalogTypes.Dto
+@model List<GetCategoreTypeHeaderSearchKeyDto>
+@{
+
+    Layout = null;
+}
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="hover_category">
+        <select class="select_option" name="CatalogTypeId" id="categori2">
+            <option >همه دسته بندی ها</option>
+            <option value="2">لوازم جانبی</option>
+            @foreach (var item in Model)
+            {
+                <option value="@item.Id">@item.Type</option>
+            }
+        </select>
+    </div>
+}

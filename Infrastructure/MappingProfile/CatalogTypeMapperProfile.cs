@@ -16,6 +16,7 @@ namespace Infrastructure.MappingProfile
         public CatalogTypeMapperProfile()
         {
 
+            CreateMap<CatalogType, GetCategoreTypeHeaderSearchKeyDto>().ReverseMap();
             CreateMap<CatalogType, CatalogTypeCategoriMenu>().ReverseMap();
             CreateMap<CatalogTypeDto, CatalogTypeViewModel>().ReverseMap();
 

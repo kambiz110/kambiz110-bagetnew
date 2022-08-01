@@ -56,29 +56,10 @@
                     <div class="col-lg-10 col-md-6 col-sm-6 col-6">
                         <div class="header_right_box">
                             <div class="search_container">
-                                <form action="#">
-                                    <div class="hover_category">
-                                        <select class="select_option" name="select" id="categori2">
-                                            <option selected value="1">همه دسته بندی ها</option>
-                                            <option value="2">لوازم جانبی</option>
-                                            <option value="3">لوازم جانبی و موارد دیگر</option>
-                                            <option value="4">کره و تخم مرغ</option>
-                                            <option value="5">دوربین و ویدئو</option>
-                                            <option value="6">صفحه نمایش</option>
-                                            <option value="7">تبلت</option>
-                                            <option value="8">لبتاب</option>
-                                            <option value="9">کیف های دستی</option>
-                                            <option value="10">هدفون و بلندگو</option>
-                                            <option value="11">گیاهان و گیاهان دارویی</option>
-                                            <option value="12">سبزیجات</option>
-                                            <option value="13">خرید</option>
-                                            <option value="14">لبتاب و دسکتاپ</option>
-                                            <option value="15">ساعت</option>
-                                            <option value="16">الکترونیک</option>
-                                        </select>
-                                    </div>
+                                <form action="/product/index" method="get">
+                                    @(await Component.InvokeAsync("HeaderSearchKey", new { sortIndex=0,  count=9}))
                                     <div class="search_box">
-                                        <input placeholder="جستجوی محصول ..." type="text">
+                                        <input placeholder="جستجوی محصول ..." type="text" name="SearchKey">
                                         <button type="submit">محصول</button>
                                     </div>
                                 </form>

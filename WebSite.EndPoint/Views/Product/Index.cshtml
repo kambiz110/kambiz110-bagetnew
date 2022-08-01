@@ -7,7 +7,7 @@
     ViewData["Title"] = "لیست محصولات";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var QueryStringLink = "";
-    var QueryStringLink2 = Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId" || p.Key == "CatalogCarId" || p.Key == "AvailableStock" || p.Key == "IndexSortType").ToList();
+    var QueryStringLink2 = Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId" || p.Key == "CatalogCarId" || p.Key == "AvailableStock" || p.Key == "IndexSortType"|| p.Key == "SearchKey").ToList();
 
     string[] linkText = new string[QueryStringLink2.Count];
     int counter = 0;
@@ -84,7 +84,7 @@
                                 <option value="6">  گران‌ترین</option>
                                 <option value="7">  بیشترین تخفیف</option>
                             </select>
-                            @foreach (var queryString in Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId" || p.Key == "CatalogCarId" || p.Key == "AvailableStock").ToList())
+                            @foreach (var queryString in Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId" || p.Key == "CatalogCarId" || p.Key == "AvailableStock" || p.Key == "SearchKey").ToList())
                             {
                                 foreach (var item in queryString.Value)
                                 {

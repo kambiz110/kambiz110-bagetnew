@@ -47,7 +47,7 @@ namespace Application.BasketsService
             if (basket == null)
                 throw new Exception("");
 
-            var catalog = context.CatalogItems.Find(catalogItemId);
+            var catalog = context.CatalogItems.AsNoTracking().Where(p=>p.Id==catalogItemId).Include(p=>p.Discounts).FirstOrDefault();
             basket.AddItem(catalogItemId, quantity, catalog.Price);
 
             context.SaveChanges();
@@ -61,8 +61,9 @@ namespace Application.BasketsService
         {
             var basket = context.Baskets
               .Include(p => p.Items)
-              .ThenInclude(p => p.CatalogItem)
-              .ThenInclude(p => p.CatalogItemImages)
+              .ThenInclude(p => p.CatalogItem).ThenInclude(p=>p.Discounts)
+              .Include(p => p.Items)
+              .ThenInclude(p => p.CatalogItem).ThenInclude(p => p.CatalogItemImages)
               .SingleOrDefault(p => p.BuyerId == UserId);
             if (basket == null)
             {
