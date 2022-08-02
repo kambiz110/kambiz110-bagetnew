@@ -37,6 +37,13 @@ namespace WebSite.EndPoint.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var query = from state in ModelState.Values
+                            from error in state.Errors
+                            select error.ErrorMessage;
+
+                var errorList = query.ToList();
+                errorList.Remove("The value '' is invalid.");
+                ViewBag.Errors = errorList;
                 return View(model);
             }
             User newUser = new User()
@@ -50,16 +57,21 @@ namespace WebSite.EndPoint.Controllers
             var result = _userManager.CreateAsync(newUser, model.Password).Result;
             if (result.Succeeded)
             {
+
                 var user = _userManager.FindByNameAsync(newUser.Email).Result;
                 TransferBasketForuser(user.Id);
                 _signInManager.SignInAsync(user, true).Wait();
                 return RedirectToAction(nameof(Profile));
             }
+            var query2 = result.Errors.Select(p => p.Description).ToList();
 
-            foreach (var item in result.Errors)
-            {
-                ModelState.AddModelError(item.Code, item.Description);
-            }
+
+
+            var errorList2 = query2;
+            
+            ViewBag.Errors = errorList2;
+
+
             return View(model);
         }
 
@@ -86,13 +98,18 @@ namespace WebSite.EndPoint.Controllers
             var user = _userManager.FindByNameAsync(model.Email).Result;
             if (user == null)
             {
+
                 ModelState.AddModelError("", "کاربر یافت نشد");
                 return View(model);
             }
             _signInManager.SignOutAsync();
             var result = _signInManager.PasswordSignInAsync(user, model.Password
                 , model.IsPersistent, true).Result;
-
+            if (result.IsLockedOut)
+            {
+                ModelState.AddModelError("", "حساب کاربری شما غیر فعال گردیده است شما می توانید بعد از 20 دقیقه مجددا وارد شوید!!!");
+                return View();
+            }
             if (result.Succeeded)
             {
                 TransferBasketForuser(user.Id);
@@ -102,6 +119,7 @@ namespace WebSite.EndPoint.Controllers
             {
                 //
             }
+            ModelState.AddModelError(string.Empty, "نام کاربری و یا رمز عبور را به درستی وارد نمائید !!!");
 
             return View(model);
         }

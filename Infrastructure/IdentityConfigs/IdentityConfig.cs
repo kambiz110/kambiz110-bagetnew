@@ -36,7 +36,7 @@ namespace Infrastructure.IdentityConfigs
                 options.Password.RequireNonAlphanumeric = false;
                 options.User.RequireUniqueEmail = true;
                 options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(20);
             });
             return services;
         }
