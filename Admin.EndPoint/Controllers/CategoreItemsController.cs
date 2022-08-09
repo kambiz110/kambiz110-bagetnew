@@ -127,6 +127,21 @@ namespace Admin.EndPoint.Controllers
             var result = deleteImageService.delete(data.itemId, data.src);
             return new JsonResult(result);
         }
-    
+        [HttpPost]
+        public IActionResult AddCatalogItemToStoreroom(int id , int count)
+        {
+           
+            return new JsonResult("hello");
+        }
+        public IActionResult HistorieCatalogItemToStoreroom(int id)
+        {
+           
+            return new JsonResult(null);
+        }
+        public IActionResult NotAvailableItem(int id)
+        {
+           
+            return new JsonResult(null);
+        }
     }
 }

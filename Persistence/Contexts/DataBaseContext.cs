@@ -46,6 +46,7 @@ namespace Persistence.Contexts
         public DbSet<CatalogItemFavourite>   CatalogItemFavourites { get; set; }
         public DbSet<Banner> Banners { get; set; }
         public DbSet<CatalogTypeImage>  CatalogTypeImages { get; set; }
+        public DbSet<Storeroom>  Storerooms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

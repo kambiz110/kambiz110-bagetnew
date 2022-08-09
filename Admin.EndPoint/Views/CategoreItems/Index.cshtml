@@ -10,7 +10,7 @@
 @{
     ViewData["Title"] = " محصول";
 
-    SearchInCategoreItemsDto productes = SessionHelper.GetObjectFromJson<SearchInCategoreItemsDto>(Context.Session, "productes")??new SearchInCategoreItemsDto ();
+    SearchInCategoreItemsDto productes = SessionHelper.GetObjectFromJson<SearchInCategoreItemsDto>(Context.Session, "productes") ?? new SearchInCategoreItemsDto();
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
@@ -82,46 +82,59 @@
 
                                         if (Model.Data != null && Model.Data.Any())
                                         {
-                           
-                                                <table class="table table-striped table-bordered zero-configuration dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
-                                                    <thead>
+
+                                            <table class="table table-striped table-bordered zero-configuration dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th class="sorting_asc">شناسه</th>
+                                                        <th class="sorting_asc">نام</th>
+                                                        <th class="sorting_asc">دسته بندی</th>
+                                                        <th class="sorting_asc">برند </th>
+                                                        <th class="sorting_asc">قیمت </th>
+                                                        <th class="sorting_asc">موجودی </th>
+                                                        <th class="sorting_asc"> حداقل انبار </th>
+                                                        <th class="sorting_asc"> حداکثر انبار </th>
+                                                        <th class="sorting_asc"> عملیات</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    @foreach (var item in Model.Data)
+                                                    {
                                                         <tr role="row">
-                                                            <th class="sorting_asc">شناسه</th>
-                                                            <th class="sorting_asc">نام</th>
-                                                            <th class="sorting_asc">دسته بندی</th>
-                                                            <th class="sorting_asc">برند </th>
-                                                            <th class="sorting_asc">قیمت </th>
-                                                            <th class="sorting_asc">موجودی </th>
-                                                            <th class="sorting_asc"> حداقل انبار </th>
-                                                            <th class="sorting_asc"> حداکثر انبار </th>
-                                                            <th class="sorting_asc"> </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
+                                                            <td>@item.Id</td>
+                                                            <td>@item.Name</td>
+                                                            <td>@item.Type</td>
+                                                            <td>@item.Brand</td>
+                                                            <td>@item.Price.ToString("n0")</td>
+                                                            <td>@item.AvailableStock</td>
+                                                            <td>@item.RestockThreshold</td>
+                                                            <td>@item.MaxStockThreshold</td>
+                                                            <td>
 
-                                                        @foreach (var item in Model.Data)
-                                                        {
-                                                            <tr role="row">
-                                                                <td>@item.Id</td>
-                                                                <td>@item.Name</td>
-                                                                <td>@item.Type</td>
-                                                                <td>@item.Brand</td>
-                                                                <td>@item.Price.ToString("n0")</td>
-                                                                <td>@item.AvailableStock</td>
-                                                                <td>@item.RestockThreshold</td>
-                                                                <td>@item.MaxStockThreshold</td>
-                                                                <td>
-
-                                                                    <a asp-action="EditCatalogItem" asp-controller="CategoreItems" asp-route-id="@item.Id" class="btn btn-warning ml-1 mr-1">ویرایش</a>
+                                                                @*<a asp-action="EditCatalogItem" asp-controller="CategoreItems" asp-route-id="@item.Id" class="btn btn-warning ml-1 mr-1">ویرایش</a>
                                                                     <a class="btn btn-danger">حذف</a>
-                                                                    <a href="/CatalogItems/Detail" class="btn btn-info"> جزئیات</a>
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                      
-                                        
+                                                                    <a href="/CatalogItems/Detail" class="btn btn-info"> جزئیات</a>*@
+                                                                <div class="btn-group">
+                                                                    <button type="button" class="btn btn-dark btn-sm">بیشتر</button>
+                                                                    <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference25" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                                                    </button>
+                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference25">
+                                                                        <a class="dropdown-item" asp-action="EditCatalogItem" asp-controller="CategoreItems" asp-route-id="@item.Id">ویرایش</a>
+                                                                        <a class="dropdown-item" asp-action="AddCatalogItemToStoreroom" asp-controller="CategoreItems" asp-route-id="@item.Id" data-toggle="modal" data-target="#exampleModal" onclick="return sendDataToModal(event ,@(item.Id))"> افزایش موجودی</a>
+                                                                        <a class="dropdown-item" asp-action="HistorieCatalogItemToStoreroom" asp-controller="CategoreItems" asp-route-id="@item.Id">سوابق انبار</a>
+                                                                        <a class="dropdown-item" asp-action="NotAvailableItem" asp-controller="CategoreItems" asp-route-id="@item.Id"> ناموجود کردن</a>
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+
+
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-md-5">
@@ -202,9 +215,9 @@
                                         }
                                         else
                                         {
-<h2>
-    هیچ محصولی با مشخصات جستجو شده وجود ندارد!!!
-</h2>
+                                            <h2>
+                                                هیچ محصولی با مشخصات جستجو شده وجود ندارد!!!
+                                            </h2>
                                         }
                                     }
 
@@ -219,23 +232,72 @@
         </section>
     </div>
 </div>
+<!-- Modal -->
 
+<div class="modal fade" id="exampleModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">افزایش موجودی محصول</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="AddCatalogItemToStoreroom" method="post" id="form_AddCatalogItemToStoreroom">
+                
+                        <label for="basicInput"> تعداد </label>
+                        <input type="number" name="count" class="form-control" id="catalogItemCount">
+                       
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">انصراف</button>
+                <button type="button" class="btn btn-primary" onclick="return sendDataToServer(event ,5)">ثبت</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section Styles{
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
 
     <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
 
 }
 @section Scripts {
 
-
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
     <script src="~/lib/select2/js/select2.js"></script>
-<script>
+    <script>
 
-    $(document).ready(function () {
-        $('.basic-single').select2({
-            placeholder: '... انتخاب کنید'
+        $(document).ready(function () {
+            $('.basic-single').select2({
+                placeholder: '... انتخاب کنید'
+            });
         });
-    });
-</script>
+        function sendDataToServer(e, a) {
+           
+            e.preventDefault();
+            $.post('/CategoreItems/AddCatalogItemToStoreroom', { id: $('#hidden_id').val(), count: $('#catalogItemCount').val() }, function (response) {
+                swal.fire(
+                    'موفق!',
+                    'کاتالوگ با موفقیت ثبت شد' + response,
+                    'success'
+                );
+                $('#exampleModal').modal('toggle');
+              //  $(".mypar").html(response);
+            });
+        }
+        function sendDataToModal(e, a) {
+        
+            console.log("نام : ", @(Model.Data.FirstOrDefault(p=>p.Id==1).Name));
+            e.preventDefault();
+   /*         $('#exampleModal h5 .modal-title').html(b);*/
+            $("#form_AddCatalogItemToStoreroom input#hidden_id").remove();
+         $('#form_AddCatalogItemToStoreroom').append('<input type="hidden" id="hidden_id" name="id" value=' + a + '>');
+           
+        }
+    </script>
 
 }
