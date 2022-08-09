@@ -19,6 +19,7 @@ using Application.Users;
 using Application.Visitors.SaveVisitorInfo;
 using Application.Visitors.VisitorOnline;
 using Domain.Users;
+using EndPoint.Site.Useful.Ultimite;
 using Infrastructure.IdentityConfigs;
 using Infrastructure.MappingProfile;
 using Microsoft.AspNetCore.Builder;
@@ -76,6 +77,7 @@ namespace WebSite.EndPoint
             services.AddScoped<InMemoryContext>();
 
             services.AddIdentityService(Configuration);
+            services.AddScoped<IUserClaimsPrincipalFactory<User>, CustomUserClaimsPrincipalFactory>();
             services.AddAuthorization();
             services.ConfigureApplicationCookie(option =>
             {

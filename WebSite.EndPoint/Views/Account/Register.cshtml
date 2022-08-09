@@ -40,7 +40,19 @@
                         </div>
                         <form asp-action="register" asp-controller="account" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            @if (ViewBag.Errors != null)
+                            {
+                                <div class=" alert alert-danger">
+                                    <ul>
+                                        @foreach (var item in ViewBag.Errors)
+                                        {
+                                            <li>@item</li>
 
+                                        }
+                                    </ul>
+                                </div>
+
+                            }
                             <div class="form-element-row">
                                 <label asp-for="FullName" class="label-element"> </label>
                                 <div class="form-element-with-icon">
@@ -66,7 +78,7 @@
                                 </div>
                                 <span asp-validation-for="Password" class="text-danger"></span>
 
-                            </div>   
+                            </div>
                             <div class="form-element-row">
                                 <label asp-for="RePassword" class="label-element"> </label>
                                 <div class="form-element-with-icon">
@@ -99,7 +111,7 @@
                             <div class="form-element-row text-left">
                                 <button class="btn-element btn-success-element">
                                     <i class="fad fa-user-edit"></i>
-                                    ثبت نام در فروشگاه زنجانی 
+                                    ثبت نام در فروشگاه زنجانی
                                 </button>
                             </div>
 

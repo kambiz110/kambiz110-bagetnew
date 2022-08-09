@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using WebSite.EndPoint.Models.Validator;
 
 namespace WebSite.EndPoint.Models.ViewModels.Register
 {
@@ -29,6 +30,7 @@ namespace WebSite.EndPoint.Models.ViewModels.Register
         [Compare(nameof(Password), ErrorMessage = "پسورد و تکرار آن باید برابر باشد")]
         [Display(Name = "تکرار پسورد")]
         public string RePassword { get; set; }
+        [MobliPhon]
         [Display(Name = "شماره موبایل ")]
         [Required(ErrorMessage = "{0} را وارد نمایید")]
         public string PhoneNumber { get; set; }
