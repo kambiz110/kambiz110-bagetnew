@@ -57,7 +57,11 @@ namespace Application.Payments
             };
             return paymentDto;
         }
-
+        /// <summary>
+        /// ثبت برای ارسال به درگاه پرداخت
+        /// </summary>
+        /// <param name="OrderId"></param>
+        /// <returns></returns>
         public PaymentOfOrderDto PayForOrder(int OrderId)
         {
             var order = context.Orders
@@ -84,7 +88,13 @@ namespace Application.Payments
 
 
         }
-
+        /// <summary>
+        /// ثبت نهایی خرید
+        /// </summary>
+        /// <param name="Id">شناسه یکتای خرید</param>
+        /// <param name="Authority">از بانک دریافت می شود</param>
+        /// <param name="RefId">از بانک در یافت می شود</param>
+        /// <returns></returns>
         public bool VerifyPayment(Guid Id, string Authority, long RefId)
         {
             var payment = context.Payments
@@ -111,7 +121,9 @@ namespace Application.Payments
         public PaymentMethod PaymentMethod { get; set; }
     }
 
-
+    /// <summary>
+    /// اطلاعات لازم برای درگاه زرین پال
+    /// </summary>
     public class PaymentDto
     {
         public Guid Id { get; set; }

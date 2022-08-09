@@ -14,11 +14,13 @@ namespace WebSite.EndPoint.Controllers
 {
     public class PayController : Controller
     {
-
+        /// <summary>
+        /// کلاس های مربوط به زرین پال
+        /// </summary>
         private readonly Payment _payment;
         private readonly Authority _authority;
         private readonly Transactions _transactions;
-
+        //****************************************
 
         private readonly IConfiguration configuration;
         private readonly IPaymentService paymentService;
@@ -30,7 +32,7 @@ namespace WebSite.EndPoint.Controllers
             this.paymentService = paymentService;
             merchendId = configuration["ZarinpalMerchendId"];
              
-
+            ///سازنده های مربوط به زرین پال
             var expose = new Expose();
             _payment = expose.CreatePayment();
             _authority = expose.CreateAuthority();
@@ -79,16 +81,20 @@ namespace WebSite.EndPoint.Controllers
                 {
                     return NotFound();
                 }
-
+                //برای چک کردن جعلی نبودن درخواست که فعلا از طرف زرین پال دارای مشکل است
                 //var verification = _payment.Verification(new DtoVerification
                 //{
                 //    Amount = payment.Amount,
                 //    Authority = Authority,
                 //    MerchantId = merchendId,
                 //}, Payment.Mode.zarinpal).Result;
+                //if (verification.Status==100)
+                //{
 
+                //}
 
                 //using RestSharp;
+                //برای چک کردن جعلی نبودن پرداخت
                 var client = new RestClient("https://www.zarinpal.com/pg/rest/WebGate/PaymentVerification.json");
                 client.Timeout = -1;
                 var request = new RestRequest(Method.POST);
