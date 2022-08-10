@@ -12,7 +12,7 @@ namespace Domain.Catalogs
         public int Id { get; set; }
         public int StockCount { get; set; }
         public int CatalogItemId { get; set; }
-        public string UserId { get; private set; }
+        public string UserId { get; set; }
         public CatalogItem CatalogItem { get; set; }
         public DateTime InsertTime { get; set; } = DateTime.Now;
     }

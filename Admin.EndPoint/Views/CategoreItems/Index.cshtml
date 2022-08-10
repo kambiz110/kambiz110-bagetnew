@@ -283,7 +283,7 @@
             $.post('/CategoreItems/AddCatalogItemToStoreroom', { id: $('#hidden_id').val(), count: $('#catalogItemCount').val() }, function (response) {
                 swal.fire(
                     'موفق!',
-                    'کاتالوگ با موفقیت ثبت شد' + response,
+                     response,
                     'success'
                 );
                 $('#exampleModal').modal('toggle');
@@ -301,7 +301,8 @@
 
             e.preventDefault();
             /*         $('#exampleModal h5 .modal-title').html(b);*/
-            $("#form_AddCatalogItemToStoreroom input#hidden_id").remove();
+            $("input#hidden_id").remove();
+            $("input#catalogItemCount").val("");
             $('#form_AddCatalogItemToStoreroom').append('<input type="hidden" id="hidden_id" name="id" value=' + a + '>');
 
         }

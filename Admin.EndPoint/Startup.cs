@@ -16,6 +16,7 @@ using Application.Discounts;
 using Application.Discounts.AddNewDiscountServices;
 using Application.Discounts.EditDiscountServices;
 using Application.Interfaces.Contexts;
+using Application.Storerooms.Command;
 using Application.Visitors.GetTodayReport;
 using FluentValidation;
 using Infrastructure.ExternalApi.ImageServer;
@@ -50,9 +51,9 @@ namespace Admin.EndPoint
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+          
             services.AddRazorPages().AddRazorRuntimeCompilation();
-            services.AddControllers();
+            services.AddControllersWithViews();
             services.AddSession();
             services.AddScoped<ICrudCompanyService, CrudCompanyService>();
             services.AddScoped<IGetTodayReportService, GetTodayReportService>();
@@ -77,6 +78,7 @@ namespace Admin.EndPoint
             services.AddTransient<IEDitDiscount, EDitDiscount>();
             services.AddTransient<ICRUDCatalogTypeImage, CRUDCatalogTypeImage>();
             services.AddTransient<IDeletedDiscount, DeletedDiscount>();
+            services.AddTransient<IAddStoreroom, AddStoreroom>();
 
 
             #region connection String SqlServer
@@ -131,21 +133,20 @@ namespace Admin.EndPoint
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting();
+         
             app.UseSession();
+            app.UseRouting();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
-                endpoints.MapControllerRoute(
-          name: "areas",
-           pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-
+                
                 endpoints.MapControllerRoute(
                               name: "default",
                               pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         
         }

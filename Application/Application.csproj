@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Catalogs\CatalogCompany\Query\" />
+    <Folder Include="Storerooms\Query\" />
   </ItemGroup>
 
 </Project>

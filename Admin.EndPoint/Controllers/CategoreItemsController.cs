@@ -8,7 +8,10 @@ using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Discounts;
 using Application.Dtos;
+using Application.Storerooms.Command;
+using Application.Storerooms.Dto;
 using Infrastructure.ExternalApi.ImageServer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,11 +22,13 @@ using System.Threading.Tasks;
 
 namespace Admin.EndPoint.Controllers
 {
+    [Authorize]
     public class CategoreItemsController : Controller
     {
         private readonly IAddNewCatalogItemService addNewCatalogItemService;
         private readonly IImageUploadService imageUploadService;
         private readonly IDeleteImageService deleteImageService;
+        private readonly IAddStoreroom addStoreroom;
         private readonly IGetAdminEditCatalogItem getAdminEditCatalogItem;
         private readonly ICatalogItemService catalogItemService;
         private readonly IRemoveFeacherService removeFeacherService;
@@ -33,7 +38,8 @@ namespace Admin.EndPoint.Controllers
             , IRemoveFeacherService removeFeacherService,
             IAddNewCatalogItemService addNewCatalogItemService,
             IImageUploadService imageUploadService
-            , IDeleteImageService deleteImageService, IGetDescountForEdit descountForEdit )
+            , IDeleteImageService deleteImageService,
+            IAddStoreroom addStoreroom, IGetDescountForEdit descountForEdit )
         {
             this.getAdminEditCatalogItem = getAdminEditCatalogItem;
             this.catalogItemService = catalogItemService;
@@ -41,6 +47,7 @@ namespace Admin.EndPoint.Controllers
             this.addNewCatalogItemService = addNewCatalogItemService;
             this.imageUploadService = imageUploadService;
             this.deleteImageService = deleteImageService;
+            this.addStoreroom = addStoreroom;
             this.descountForEdit = descountForEdit;
         }
 
@@ -130,8 +137,9 @@ namespace Admin.EndPoint.Controllers
         [HttpPost]
         public IActionResult AddCatalogItemToStoreroom(int id , int count)
         {
-           
-            return new JsonResult("hello");
+          var  userId = ClaimUtility.GetUserId(User);
+            var result = addStoreroom.add(new AddStoreroomDto() { CatalogItemId=id,StockCount=count,UserId= userId });
+            return new JsonResult(result?"موفق":"نا موفق");
         }
         public IActionResult HistorieCatalogItemToStoreroom(int id)
         {
