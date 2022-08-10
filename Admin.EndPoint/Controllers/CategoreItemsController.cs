@@ -143,5 +143,10 @@ namespace Admin.EndPoint.Controllers
            
             return new JsonResult(null);
         }
+        public IActionResult GetProduct(int id)
+        {
+            var ee = catalogItemService.GetCatalogItem(id);
+            return new JsonResult(ee);
+        }
     }
 }

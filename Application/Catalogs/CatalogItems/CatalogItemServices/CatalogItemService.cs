@@ -169,5 +169,16 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
             var data = mapper.Map<List<CarDto>>(cares);
             return data;
         }
+
+        public CatalogItemListItemDto GetCatalogItem(int id)
+        {
+            var catalog = context.CatalogItems.FirstOrDefault(p => p.Id == id);
+            if (catalog!=null)
+            {
+   var result = mapper.Map<CatalogItemListItemDto>(catalog);
+            return result;
+            }
+            return null;
+        }
     }
 }

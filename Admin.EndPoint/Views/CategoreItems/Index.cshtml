@@ -238,17 +238,17 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">افزایش موجودی محصول</h5>
+                <h5 class="modal-title" id="id01">افزایش موجودی : {{name}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form action="AddCatalogItemToStoreroom" method="post" id="form_AddCatalogItemToStoreroom">
-                
-                        <label for="basicInput"> تعداد </label>
-                        <input type="number" name="count" class="form-control" id="catalogItemCount">
-                       
+
+                    <label for="basicInput"> تعداد </label>
+                    <input type="number" name="count" class="form-control" id="catalogItemCount">
+
 
                 </form>
             </div>
@@ -260,13 +260,14 @@
     </div>
 </div>
 @section Styles{
+
     <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
 
     <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
 
 }
 @section Scripts {
-
+    <script src="~/lib/W3/w3.js"></script>
     <script src="~/Sweetalert2/sweetalert2.min.js"></script>
     <script src="~/lib/select2/js/select2.js"></script>
     <script>
@@ -277,7 +278,7 @@
             });
         });
         function sendDataToServer(e, a) {
-           
+
             e.preventDefault();
             $.post('/CategoreItems/AddCatalogItemToStoreroom', { id: $('#hidden_id').val(), count: $('#catalogItemCount').val() }, function (response) {
                 swal.fire(
@@ -286,17 +287,23 @@
                     'success'
                 );
                 $('#exampleModal').modal('toggle');
-              //  $(".mypar").html(response);
+                //  $(".mypar").html(response);
             });
         }
-        function sendDataToModal(e, a) {
-        
-            console.log("نام : ", @(Model.Data.FirstOrDefault(p=>p.Id==1).Name));
-            e.preventDefault();
-   /*         $('#exampleModal h5 .modal-title').html(b);*/
-            $("#form_AddCatalogItemToStoreroom input#hidden_id").remove();
-         $('#form_AddCatalogItemToStoreroom').append('<input type="hidden" id="hidden_id" name="id" value=' + a + '>');
+
+
+        function myFunction(myObject) {
+            w3.displayObject("id01", myObject);
            
+        }
+        function sendDataToModal(e, a) {
+            w3.getHttpObject("/CategoreItems/GetProduct/" + a, myFunction);
+
+            e.preventDefault();
+            /*         $('#exampleModal h5 .modal-title').html(b);*/
+            $("#form_AddCatalogItemToStoreroom input#hidden_id").remove();
+            $('#form_AddCatalogItemToStoreroom').append('<input type="hidden" id="hidden_id" name="id" value=' + a + '>');
+
         }
     </script>
 

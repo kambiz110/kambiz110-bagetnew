@@ -12,6 +12,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
     public interface ICatalogItemService
     {
         List<CarDto> GetCares();
+        CatalogItemListItemDto GetCatalogItem(int id);
         List<CompanyDto> GetCompanes();
         List<CatalogBrandDto> GetBrand();
         List<ListCatalogTypeDto> GetCatalogType();
