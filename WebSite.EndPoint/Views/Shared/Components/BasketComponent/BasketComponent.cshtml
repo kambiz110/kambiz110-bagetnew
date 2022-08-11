@@ -16,7 +16,7 @@
         @if (Model != null)
         {
 
-            <span class="cart_price">
+            <span class="cart_price" style="margin-right: 0px !important;">
                 @Model.Total().ToString("n0") تومان <i class="ion-ios-arrow-down"></i>
             </span>
             <span class="cart_count">@Model.Items.Count()</span>

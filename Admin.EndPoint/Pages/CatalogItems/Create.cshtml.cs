@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Admin.EndPoint.Helper;
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Dtos;
+using Application.Storerooms.Command;
+using Application.Storerooms.Dto;
 using Infrastructure.ExternalApi.ImageServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +21,17 @@ namespace Admin.EndPoint.Pages.CatalogItems
         private readonly IAddNewCatalogItemService addNewCatalogItemService;
         private readonly ICatalogItemService catalogItemService;
         private readonly IImageUploadService imageUploadService;
+        private readonly IAddStoreroom addStoreroom;
 
         public CreateModel(IAddNewCatalogItemService addNewCatalogItemService
             , ICatalogItemService catalogItemService
-            , IImageUploadService imageUploadService )
+            , IImageUploadService imageUploadService
+            , IAddStoreroom addStoreroom)
         {
             this.addNewCatalogItemService = addNewCatalogItemService;
             this.catalogItemService = catalogItemService;
             this.imageUploadService = imageUploadService;
+            this.addStoreroom = addStoreroom;
         }
 
         public SelectList Categories { get; set; }
@@ -75,6 +81,12 @@ namespace Admin.EndPoint.Pages.CatalogItems
           
             Data.Images = images;
             var resultService = addNewCatalogItemService.Execute(Data);
+            if (resultService.IsSuccess)
+            {
+                var userId = ClaimUtility.GetUserId(User);
+                var result = addStoreroom.add(new AddStoreroomDto() { CatalogItemId = resultService.Data, StockCount = Data.AvailableStock, UserId = userId });
+
+            }
             return new JsonResult(resultService);
         }
     }

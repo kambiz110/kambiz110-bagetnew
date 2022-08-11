@@ -91,6 +91,7 @@ namespace WebSite.EndPoint.Controllers
         public IActionResult setQuantity(int basketItemId, int quantity)
         {
             return Json(basketService.SetQuantities(basketItemId, quantity));
+        
         }
 
 
@@ -104,6 +105,10 @@ namespace WebSite.EndPoint.Controllers
             string userId = ClaimUtility.GetUserId(User);
             model.Basket = basketService.GetBasketForUser(userId);
             model.UserAddresses = userAddressService.GetAddress(userId);
+            if (model==null || model.Basket==null || model.Basket.Items.Count()<1)
+            {
+                return Redirect("~/");
+            }
             return View(model);
         }
         /// <summary>

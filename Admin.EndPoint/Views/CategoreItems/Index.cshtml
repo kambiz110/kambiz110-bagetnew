@@ -282,8 +282,8 @@
             e.preventDefault();
             $.post('/CategoreItems/AddCatalogItemToStoreroom', { id: $('#hidden_id').val(), count: $('#catalogItemCount').val() }, function (response) {
                 swal.fire(
-                    'موفق!',
-                     response,
+                    response,
+                     "",
                     'success'
                 );
                 $('#exampleModal').modal('toggle');

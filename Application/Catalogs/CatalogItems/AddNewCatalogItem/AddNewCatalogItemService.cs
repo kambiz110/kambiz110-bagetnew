@@ -1,4 +1,5 @@
-﻿using Application.Dtos;
+﻿using Application.Catalogs.CatalogItems.IncreaseCatalogItems;
+using Application.Dtos;
 using Application.Interfaces.Contexts;
 using AutoMapper;
 using Common.Useful;
@@ -13,10 +14,13 @@ namespace Application.Catalogs.CatalohItems.AddNewCatalogItem
     {
         private readonly IDataBaseContext context;
         private readonly IMapper mapper;
-        public AddNewCatalogItemService(IDataBaseContext context, IMapper mapper)
+        private readonly IincreaseCattalogItem iincreaseCattalog;
+
+        public AddNewCatalogItemService(IDataBaseContext context, IMapper mapper, IincreaseCattalogItem iincreaseCattalog)
         {
             this.context = context;
             this.mapper = mapper;
+            this.iincreaseCattalog = iincreaseCattalog;
         }
         public BaseDto<int> Execute(AddNewCatalogItemDto request)
         {
@@ -31,7 +35,7 @@ namespace Application.Catalogs.CatalohItems.AddNewCatalogItem
                         request.AvailableStock, request.RestockThreshold, request.MaxStockThreshold
                         ,request.Importance,request.Width,request.Height , request.Length, request.Weight);
 
-
+                 
 
                     // var catalogItem2 = mapper.Map<CatalogItem>(request);
                     context.CatalogItems.Update(catalogItem2);

@@ -59,6 +59,10 @@ namespace Application.BasketsService
         /// <returns></returns>
         public BasketDto GetBasketForUser(string UserId)
         {
+            if (String.IsNullOrEmpty(UserId))
+            {
+                return null;
+            }
             var basket = context.Baskets
               .Include(p => p.Items)
               .ThenInclude(p => p.CatalogItem).ThenInclude(p=>p.Discounts)

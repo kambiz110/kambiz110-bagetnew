@@ -6,6 +6,7 @@ using Application.Catalogs.CatalogCars.CrudService;
 using Application.Catalogs.CatalogCompany.CrudService;
 using Application.Catalogs.CatalogFeature.Command;
 using Application.Catalogs.CatalogItems.GetCatalogItemAdmin;
+using Application.Catalogs.CatalogItems.IncreaseCatalogItems;
 using Application.Catalogs.CatalogItems.RemoveImage;
 using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Catalogs.CatalogTypeImages;
@@ -79,6 +80,7 @@ namespace Admin.EndPoint
             services.AddTransient<ICRUDCatalogTypeImage, CRUDCatalogTypeImage>();
             services.AddTransient<IDeletedDiscount, DeletedDiscount>();
             services.AddTransient<IAddStoreroom, AddStoreroom>();
+            services.AddTransient<IincreaseCattalogItem, increaseCattalogItem>();
 
 
             #region connection String SqlServer

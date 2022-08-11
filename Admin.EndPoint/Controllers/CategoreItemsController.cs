@@ -3,6 +3,7 @@ using Admin.EndPoint.ViewModels.Catalogs;
 using Application.Catalogs.CatalogFeature.Command;
 using Application.Catalogs.CatalogFeature.Dto;
 using Application.Catalogs.CatalogItems.GetCatalogItemAdmin;
+using Application.Catalogs.CatalogItems.IncreaseCatalogItems;
 using Application.Catalogs.CatalogItems.RemoveImage;
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
@@ -33,13 +34,16 @@ namespace Admin.EndPoint.Controllers
         private readonly ICatalogItemService catalogItemService;
         private readonly IRemoveFeacherService removeFeacherService;
         private readonly IGetDescountForEdit descountForEdit;
+        private readonly IincreaseCattalogItem iincreaseCattalog;
+
         public CategoreItemsController(IGetAdminEditCatalogItem getAdminEditCatalogItem
             , ICatalogItemService catalogItemService
             , IRemoveFeacherService removeFeacherService,
             IAddNewCatalogItemService addNewCatalogItemService,
             IImageUploadService imageUploadService
             , IDeleteImageService deleteImageService,
-            IAddStoreroom addStoreroom, IGetDescountForEdit descountForEdit )
+            IAddStoreroom addStoreroom, IGetDescountForEdit descountForEdit,
+            IincreaseCattalogItem iincreaseCattalog)
         {
             this.getAdminEditCatalogItem = getAdminEditCatalogItem;
             this.catalogItemService = catalogItemService;
@@ -49,6 +53,7 @@ namespace Admin.EndPoint.Controllers
             this.deleteImageService = deleteImageService;
             this.addStoreroom = addStoreroom;
             this.descountForEdit = descountForEdit;
+            this.iincreaseCattalog = iincreaseCattalog;
         }
 
         public IActionResult Index(int page = 1, int pageSize = 100, string search = "")
@@ -87,7 +92,9 @@ namespace Admin.EndPoint.Controllers
             ViewData["Companes"] = new SelectList(catalogItemService.GetCompanes(), "Id", "Name");
             ViewData["Categories"] = new SelectList(catalogItemService.GetCatalogType(), "Id", "Type");
             ViewData["Brands"] = new SelectList(catalogItemService.GetBrand(), "Id", "Brand");
+           
             var model = getAdminEditCatalogItem.Execute(id);
+            TempData["AvailableStock"] = model.AvailableStock;
             return View(model);
         }
         [HttpPost]
@@ -116,7 +123,11 @@ namespace Admin.EndPoint.Controllers
                     images.Add(new AddNewCatalogItemImage_Dto { Src = item });
                 }
             }
-
+            if (Data.AvailableStock - (int)TempData["AvailableStock"]>0)
+            {
+                var userId = ClaimUtility.GetUserId(User);
+                var result = addStoreroom.add(new AddStoreroomDto() { CatalogItemId = Data.Id, StockCount = Data.AvailableStock - (int)TempData["AvailableStock"], UserId = userId });
+            }
             Data.Images = images;
             var resultService = addNewCatalogItemService.Execute(Data);
             return new JsonResult(resultService);
@@ -139,6 +150,7 @@ namespace Admin.EndPoint.Controllers
         {
           var  userId = ClaimUtility.GetUserId(User);
             var result = addStoreroom.add(new AddStoreroomDto() { CatalogItemId=id,StockCount=count,UserId= userId });
+           var addResult= iincreaseCattalog.addStock(id, count);
             return new JsonResult(result?"موفق":"نا موفق");
         }
         public IActionResult HistorieCatalogItemToStoreroom(int id)
