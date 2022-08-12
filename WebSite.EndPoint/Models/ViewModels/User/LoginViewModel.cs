@@ -19,7 +19,7 @@ namespace WebSite.EndPoint.Models.ViewModels.User
         public string Password { get; set; }
 
         [Display(Name = "Remember Me")]
-        public bool IsPersistent { get; set; } = false;
+        public bool IsPersistent { get; set; } = true;
 
         public string ReturnUrl { get; set; }
 

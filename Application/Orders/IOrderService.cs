@@ -47,6 +47,7 @@ namespace Application.Orders
             // بدست آوردن محصول های داخل سبد
             var catalogItems = context.CatalogItems
                 .Include(p => p.CatalogItemImages)
+                .Include(p=>p.Discounts)
                 .Where(p => Ids.Contains(p.Id));
 
 

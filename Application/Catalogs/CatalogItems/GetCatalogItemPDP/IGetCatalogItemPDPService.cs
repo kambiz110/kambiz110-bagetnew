@@ -37,6 +37,10 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
                 .Include(p => p.CatologCar)
                 .Include(p => p.Discounts)
                 .SingleOrDefault(p => p.Id == Id);
+            if (catalogitem==null)
+            {
+                return null;
+            }
             catalogitem.VisitCount += 1;
             context.SaveChanges();
 
