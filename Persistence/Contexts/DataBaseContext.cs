@@ -56,6 +56,10 @@ namespace Persistence.Contexts
             // .HasOne(a => a.CatalogType)
             // .WithOne(b => b.CatalogTypeImage)
             // .HasForeignKey<CatalogType>(b => b.CatalogTypeImageId);
+            builder.Entity<Order>(b =>
+            {
+                b.Property(x => x.Id).ValueGeneratedOnAdd().UseIdentityColumn(3030, 1);
+            });
             foreach (var entityType in builder.Model.GetEntityTypes())
             {
                 if (entityType.ClrType.GetCustomAttributes(typeof(AuditableAttribute), true).Length > 0)
