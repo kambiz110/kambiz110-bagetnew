@@ -56,7 +56,7 @@ namespace Admin.EndPoint.Controllers
             this.iincreaseCattalog = iincreaseCattalog;
         }
 
-        public IActionResult Index(int page = 1, int pageSize = 100, string search = "")
+        public IActionResult Index(int pageIndex = 1, int pageSize = 20, string search = "")
         {
             if (search == "clear")
             {
@@ -65,7 +65,7 @@ namespace Admin.EndPoint.Controllers
 
             SearchInCategoreItemsDto productes = SessionHelper.GetObjectFromJson<SearchInCategoreItemsDto>(HttpContext.Session, "productes");
 
-            var CatalogItems = catalogItemService.GetCatalogList(page, pageSize , productes);
+            var CatalogItems = catalogItemService.GetCatalogList(pageIndex, pageSize , productes);
             ViewData["Cars"] = new SelectList(catalogItemService.GetCares(), "Id", "Name");
             ViewData["Companes"] = new SelectList(catalogItemService.GetCompanes(), "Id", "Name");
             ViewData["Categories"] = new SelectList(catalogItemService.GetCatalogType(), "Id", "Type");

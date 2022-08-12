@@ -69,7 +69,8 @@ namespace Application.Orders
             //ایجاد سفارش محصول
             var order = new Order(basket.BuyerId, address, orderItems, paymentMethod,basket.AppliedDiscount);
             context.Orders.Add(order);
-            context.Baskets.Remove(basket);
+            //حذف سبد خردید
+          //  context.Baskets.Remove(basket);
             context.SaveChanges();
 
             if(basket.AppliedDiscount != null)

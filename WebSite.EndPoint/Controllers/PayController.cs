@@ -54,18 +54,19 @@ namespace WebSite.EndPoint.Controllers
                 return BadRequest();
             }
             string callbackUrl = Url.Action(nameof(Verify), "pay", new { payment.Id}, protocol: Request.Scheme);
-            var resultZarinpalRequest = await _payment.Request(new DtoRequest()
-            {
-                Amount = payment.Amount,
-                CallbackUrl = callbackUrl,
-                Description = payment.Description,
-                Email = payment.Email,
-                MerchantId = merchendId,
-                Mobile = payment.PhoneNumber,
-            }, Payment.Mode.zarinpal
-                );
-
-            return Redirect($"https://zarinpal.com/pg/StartPay/{resultZarinpalRequest.Authority}");
+            //برای تست خطوط زیر کامنت شده است
+            //var resultZarinpalRequest = await _payment.Request(new DtoRequest()
+            //{
+            //    Amount = payment.Amount,
+            //    CallbackUrl = callbackUrl,
+            //    Description = payment.Description,
+            //    Email = payment.Email,
+            //    MerchantId = merchendId,
+            //    Mobile = payment.PhoneNumber,
+            //}, Payment.Mode.zarinpal
+            //    );
+            return RedirectToAction("Verify", "pay", new { Id=new Guid().ToString(), Authority = "test_Authority" });
+           // return Redirect($"https://zarinpal.com/pg/StartPay/{resultZarinpalRequest.Authority}");
         }
 
 
@@ -73,7 +74,7 @@ namespace WebSite.EndPoint.Controllers
         {
             string Status = HttpContext.Request.Query["Status"];
             
-            if(Status != "" && Status.ToString().ToLower() =="ok"
+            if(Status != "" && Status !=null&& Status.ToString().ToLower() =="ok"
                 && Authority != "")
             {
                 var payment = paymentService.GetPayment(Id);
@@ -108,25 +109,26 @@ namespace WebSite.EndPoint.Controllers
                 if (verification.Status == 100)
                 {
                     bool verifyResult = paymentService.VerifyPayment(Id, Authority, verification.RefID);
-                  if(verifyResult)
+                    if (verifyResult)
                     {
-                        return Redirect("/customers/orders");
+                        TempData["message"] = "پرداخت انجام شد ";
+                        return RedirectToAction("checkout", "basket", new { payResult = true });
                     }
                     else
                     {
                         TempData["message"] = "پرداخت انجام شد اما ثبت نشد";
-                        return RedirectToAction("checkout", "basket");
+                        return RedirectToAction("checkout", "basket", new { payResult = false });
                     }
                 }
                 else
                 {
                     TempData["message"] = "پرداخت شما ناموفق بوده است . لطفا مجددا تلاش نمایید یا در صورت بروز مشکل با مدیریت سایت تماس بگیرید .";
-                    return RedirectToAction("checkout", "basket");
+                    return RedirectToAction("checkout", "basket", new { payResult = false });
                 }
 
             }
             TempData["message"] = "پرداخت شما ناموفق بوده است .";
-            return RedirectToAction("checkout", "basket");
+            return RedirectToAction("checkout", "basket", new { payResult = false });
         }
     }
 

@@ -19,8 +19,8 @@ namespace Application.Users.Dto
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Remember Me")]
-        public bool IsPersistent { get; set; } = false;
+        [Display(Name = "مرا بخاطر بسپار")]
+        public bool IsPersistent { get; set; } = true;
 
         public string ReturnUrl { get; set; }
 

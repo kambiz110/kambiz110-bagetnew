@@ -103,7 +103,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
             }
 
             var model = mapper.ProjectTo<CatalogItemListItemDto>(data).ToList();
-            return new PaginatedItemsDto<CatalogItemListItemDto>(page, page, rowCount, model);
+            return new PaginatedItemsDto<CatalogItemListItemDto>(page, pageSize, rowCount, model);
 
         }
 

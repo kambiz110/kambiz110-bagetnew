@@ -139,7 +139,7 @@ namespace WebSite.EndPoint.Controllers
             }
         }
 
-        public IActionResult Checkout()
+        public IActionResult Checkout(bool payResult)
         {
             return View();
         }

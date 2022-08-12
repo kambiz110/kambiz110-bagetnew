@@ -33,6 +33,12 @@ namespace Admin.EndPoint.Controllers
         {
             if (!ModelState.IsValid)
             {
+                string messages = string.Join("; ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage));
+
+                String messages2 = String.Join(Environment.NewLine, ModelState.Values.SelectMany(v => v.Errors)
+                                                           .Select(v => v.ErrorMessage + " " + v.Exception));
                 return View(model);
             }
             var user = _userManager.FindByNameAsync(model.Email).Result;
