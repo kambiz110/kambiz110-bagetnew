@@ -28,6 +28,7 @@ namespace Application.Storerooms.Command
             dbObj.CatalogItemId = dto.CatalogItemId;
             dbObj.StockCount = dto.StockCount;
             dbObj.UserId = dto.UserId;
+            dbObj.Status = (StoreroomStatus)dto.Status;
             context.Storerooms.Add(dbObj);
             var result = context.SaveChanges();
             return result > 0 ? true : false;

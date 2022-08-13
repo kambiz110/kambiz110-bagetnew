@@ -84,7 +84,7 @@ namespace Admin.EndPoint.Pages.CatalogItems
             if (resultService.IsSuccess)
             {
                 var userId = ClaimUtility.GetUserId(User);
-                var result = addStoreroom.add(new AddStoreroomDto() { CatalogItemId = resultService.Data, StockCount = Data.AvailableStock, UserId = userId });
+                var result = addStoreroom.add(new AddStoreroomDto() { CatalogItemId = resultService.Data, StockCount = Data.AvailableStock, UserId = userId, Status = 1 });
 
             }
             return new JsonResult(resultService);

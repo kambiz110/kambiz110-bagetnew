@@ -25,6 +25,7 @@ namespace Admin.EndPoint.Pages.CatalogItems
         public SelectList Cars { get; set; }
         public void OnGet(int page = 1, int pageSize = 100)
         {
+            Redirect("/CategoreItems/Index");
             CatalogItems = catalogItemService.GetCatalogList(page, pageSize ,null);
         }
     }

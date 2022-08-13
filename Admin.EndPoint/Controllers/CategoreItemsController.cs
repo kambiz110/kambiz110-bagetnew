@@ -126,7 +126,7 @@ namespace Admin.EndPoint.Controllers
             if (Data.AvailableStock - (int)TempData["AvailableStock"]>0)
             {
                 var userId = ClaimUtility.GetUserId(User);
-                var result = addStoreroom.add(new AddStoreroomDto() { CatalogItemId = Data.Id, StockCount = Data.AvailableStock - (int)TempData["AvailableStock"], UserId = userId });
+                var result = addStoreroom.add(new AddStoreroomDto() { CatalogItemId = Data.Id, StockCount = Data.AvailableStock - (int)TempData["AvailableStock"], UserId = userId ,Status=2 });
             }
             Data.Images = images;
             var resultService = addNewCatalogItemService.Execute(Data);
@@ -149,7 +149,7 @@ namespace Admin.EndPoint.Controllers
         public IActionResult AddCatalogItemToStoreroom(int id , int count)
         {
           var  userId = ClaimUtility.GetUserId(User);
-            var result = addStoreroom.add(new AddStoreroomDto() { CatalogItemId=id,StockCount=count,UserId= userId });
+            var result = addStoreroom.add(new AddStoreroomDto() { CatalogItemId=id,StockCount=count,UserId= userId, Status = 3 });
            var addResult= iincreaseCattalog.addStock(id, count);
             return new JsonResult(result?"موفق":"نا موفق");
         }

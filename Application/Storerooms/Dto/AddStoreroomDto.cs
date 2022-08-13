@@ -12,5 +12,6 @@ namespace Application.Storerooms.Dto
         public int StockCount { get; set; }
         public int CatalogItemId { get; set; }
         public string UserId { get;  set; }
+        public int Status { get;  set; }
     }
 }
