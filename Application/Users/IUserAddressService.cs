@@ -13,6 +13,8 @@ namespace Application.Users
     {
         List<UserAddressDto> GetAddress(string UserId);
         void AddnewAddress(AddUserAddressDto address);
+        AddUserAddressDto GetForEdit(int id, string userId);
+        void EditAddress(AddUserAddressDto dto);
     }
 
     public class UserAddressService : IUserAddressService
@@ -32,7 +34,27 @@ namespace Application.Users
             context.UserAddresses.Add(data);
             context.SaveChanges();
         }
-
+        public void EditAddress(AddUserAddressDto dto)
+        {
+            var UserAddress = context.UserAddresses.Where(p => p.Id == dto.Id && p.UserId ==dto.UserId).FirstOrDefault();
+            if (UserAddress!=null)
+            {
+     var data = mapper.Map(dto, UserAddress);
+            context.UserAddresses.Update(data);
+            context.SaveChanges();
+            }
+       
+        }
+        public AddUserAddressDto GetForEdit(int id , string userId)
+        {
+            var address = context.UserAddresses.Where(p => p.Id == id && p.UserId == userId).FirstOrDefault(); 
+            if (address!=null)
+            {
+                var data = mapper.Map<AddUserAddressDto>(address);
+                return data;
+            }
+            return new AddUserAddressDto();
+        }
         public List<UserAddressDto> GetAddress(string UserId)
         {
             var address = context.UserAddresses.Where(p => p.UserId == UserId);
@@ -54,6 +76,7 @@ namespace Application.Users
 
     public class AddUserAddressDto
     {
+        public int Id { get; set; } = 0;
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }

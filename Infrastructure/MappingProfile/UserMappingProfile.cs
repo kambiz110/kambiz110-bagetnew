@@ -15,9 +15,9 @@ namespace Infrastructure.MappingProfile
     {
         public UserMappingProfile()
         {
-            CreateMap<UserAddress, UserAddressDto>();
-            CreateMap<AddUserAddressDto, UserAddress>();
-            CreateMap<UserAddress, Address>();
+            CreateMap<UserAddress, UserAddressDto>().ReverseMap(); ;
+            CreateMap<AddUserAddressDto, UserAddress>().ReverseMap(); ;
+            CreateMap<UserAddress, Address>().ReverseMap(); ;
         }
     }
 }

@@ -38,5 +38,19 @@ namespace WebSite.EndPoint.Areas.Customers.Controllers
             userAddressService.AddnewAddress(address);
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult Edit(int id)
+        {
+            string userId = ClaimUtility.GetUserId(User);
+            return View(userAddressService.GetForEdit(id, userId));
+        }
+
+        [HttpPost]
+        public IActionResult Edit(AddUserAddressDto address)
+        {
+            string userId = ClaimUtility.GetUserId(User);
+            address.UserId = userId;
+            userAddressService.EditAddress(address);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
