@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Persistence.Contexts
 {
-    public class IdentityDatabaseContext:IdentityDbContext<User>, IIdentityDatabaseContext
+    public class IdentityDatabaseContext:IdentityDbContext<User,Role ,string,UserClaim,UserRole,UserLogin,RoleClaim,UserTokens>, IIdentityDatabaseContext
     {
         public IdentityDatabaseContext(DbContextOptions<IdentityDatabaseContext> options)
             : base(options)

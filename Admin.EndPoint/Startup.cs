@@ -18,6 +18,7 @@ using Application.Discounts.AddNewDiscountServices;
 using Application.Discounts.EditDiscountServices;
 using Application.Interfaces.Contexts;
 using Application.Storerooms.Command;
+using Application.Users.Token;
 using Application.Visitors.GetTodayReport;
 using FluentValidation;
 using Infrastructure.ExternalApi.ImageServer;
@@ -81,6 +82,7 @@ namespace Admin.EndPoint
             services.AddTransient<IDeletedDiscount, DeletedDiscount>();
             services.AddTransient<IAddStoreroom, AddStoreroom>();
             services.AddTransient<IincreaseCattalogItem, increaseCattalogItem>();
+            services.AddTransient<IGeneritTokenUser, GeneritTokenUser>();
 
 
             #region connection String SqlServer

@@ -1,4 +1,5 @@
 ﻿using Application.Users.Dto;
+using Application.Users.Token;
 using Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,13 @@ namespace Admin.EndPoint.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IGeneritTokenUser tokenUser;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager , IGeneritTokenUser tokenUser)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            this.tokenUser = tokenUser;
         }
 
         public IActionResult Login(string returnUrl = "/")
@@ -58,6 +61,7 @@ namespace Admin.EndPoint.Controllers
             }
             if (result.Succeeded)
             {
+                var token = tokenUser.creatToken(user.Id);
                 string redirect;
                 if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                 {

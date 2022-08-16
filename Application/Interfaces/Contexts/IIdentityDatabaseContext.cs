@@ -11,5 +11,9 @@ namespace Application.Interfaces.Contexts
     public interface IIdentityDatabaseContext
     {
         DbSet<User> Users { get; set; }
+        DbSet<UserTokens> UserTokens { get; set; }
+        int SaveChanges();
+        int SaveChanges(bool acceptAllChangesOnSuccess);
+
     }
 }

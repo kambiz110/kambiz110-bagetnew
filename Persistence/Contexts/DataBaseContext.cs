@@ -50,12 +50,6 @@ namespace Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.Entity<User>().Property<DateTime?>("InsertTime");
-            //builder.Entity<User>().Property<DateTime?>("UpdateTime");
-            //builder.Entity<CatalogTypeImage>()
-            // .HasOne(a => a.CatalogType)
-            // .WithOne(b => b.CatalogTypeImage)
-            // .HasForeignKey<CatalogType>(b => b.CatalogTypeImageId);
             builder.Entity<Order>(b =>
             {
                 b.Property(x => x.Id).ValueGeneratedOnAdd().UseIdentityColumn(3030, 1);

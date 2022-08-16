@@ -1,9 +1,15 @@
+using Application.Interfaces.Contexts;
+using Domain.Users;
+using Infrastructure.IdentityConfigs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Persistence.Contexts;
+using StaticFile.Site.Useful.Ultimite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +30,17 @@ namespace StaticFile.EndPoint
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddTransient<IIdentityDatabaseContext, IdentityDatabaseContext>();
+            services.AddIdentityService(Configuration);
+            services.AddScoped<IUserClaimsPrincipalFactory<User>, CustomUserClaimsPrincipalFactory>();
+            services.AddAuthorization();
+            services.ConfigureApplicationCookie(option =>
+            {
+                option.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                option.LoginPath = "/account/login";
+                option.AccessDeniedPath = "/Account/AccessDenied";
+                option.SlidingExpiration = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

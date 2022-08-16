@@ -1,10 +1,15 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Domain.Users;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace StaticFile.EndPoint.Controllers
@@ -13,12 +18,16 @@ namespace StaticFile.EndPoint.Controllers
     [ApiController]
     public class ImagesController : ControllerBase
     {
+
         private readonly IHostingEnvironment _environment;
 
         public ImagesController(IHostingEnvironment hostingEnvironment)
         {
             _environment = hostingEnvironment;
         }
+
+     
+
         public IActionResult Post(string apiKey)
         {
             if (apiKey != "mysecretkey")
@@ -80,7 +89,7 @@ namespace StaticFile.EndPoint.Controllers
                 Status = true,
             };
         }
-
+       
     }
 
     public class UploadDto

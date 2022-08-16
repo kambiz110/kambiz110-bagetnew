@@ -11,5 +11,6 @@ namespace Domain.Users
     {
         public string FullName { get; set; }
         public virtual ICollection<IdentityUserRole<string>> UserRoles { get; set; }
+        public virtual UserTokens UserTokens { get; set; }
     }
 }

@@ -17,10 +17,10 @@ namespace Infrastructure.IdentityConfigs
             string connection = configuration["ConnectionString:SqlServer"];
             services.AddDbContext<IdentityDatabaseContext>(option => option.UseSqlServer(connection));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<IdentityDatabaseContext>()
                 .AddDefaultTokenProviders()
-                .AddRoles<IdentityRole>()
+                .AddRoles<Role>()
                 .AddErrorDescriber<CustomIdentityError>()
                 .AddPasswordValidator<MyPasswordValidator>(); 
 
