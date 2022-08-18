@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Admin.EndPoint.Binders;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Discounts.AddNewDiscountServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Admin.EndPoint.Pages.Discounts
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly IAddNewDiscountService addNewDiscountService;

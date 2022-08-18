@@ -1,4 +1,5 @@
 ﻿using Common.Useful;
+using Domain.Users;
 using Persistence.Contexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,18 +8,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Users;
-using Microsoft.EntityFrameworkCore;
-using Domain.Catalogs;
 
 namespace Persistence.Seeding
 {
     public class DataSeeder : ISeeder
     {
-        public async Task SeedAsync(DataBaseContext dbContext, IdentityDatabaseContext identityDatabase, IServiceProvider serviceProvider )
+        public async Task SeedAsync(DataBaseContext dbContext, IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
 
             // creating admin user;
             await CreateUser(
@@ -27,21 +25,21 @@ namespace Persistence.Seeding
                 GlobalConstants.DataSeeding.AdminName,
                 GlobalConstants.DataSeeding.AdminEmail,
                 GlobalConstants.AdministratorRoleName);
-            // creating admin user;
-            await CreateUser(
+
+            // creating teacher user;
+      await CreateUser(
                 userManager,
                 roleManager,
-                GlobalConstants.DataSeeding.CustomerName,
-                GlobalConstants.DataSeeding.CustomerEmail,
-                GlobalConstants.UserRoleName);
-            await CatalogAndbrandSeed(dbContext);
+                GlobalConstants.DataSeeding.ManegerName,
+                GlobalConstants.DataSeeding.ManegerEmail,
+                GlobalConstants.ManegerRoleName);
 
-
-
+           
+          
         }
         private static async Task<string> CreateUser(
             UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager,
+            RoleManager<Role> roleManager,
             string name,
             string email,
             string roleName = null)
@@ -49,10 +47,11 @@ namespace Persistence.Seeding
             var user = new User
             {
                 UserName = email,
+                FullName = name,
                 Email = email,
             };
 
-            var userpassword = GlobalConstants.DataSeeding.CustomerPassword;
+            var userpassword = GlobalConstants.DataSeeding.ManegerPassword;
             var adminpassword = GlobalConstants.DataSeeding.AdminPassword;
             if (roleName != null)
             {
@@ -78,63 +77,6 @@ namespace Persistence.Seeding
             }
 
             return user.Id;
-        }
-        private async Task CatalogAndbrandSeed(DataBaseContext dbContext)
-        {
-            foreach (var catalog in GetCatalogTypes())
-            {
-              
-                if (!dbContext.CatalogTypes.AsNoTracking().Where(p => p.Id == catalog.Id).Any())
-                {
-                    await dbContext.CatalogTypes.AddAsync(catalog);
-                }
-               
-            }
-            foreach (var brand in GetCatalogBrands())
-            {
-                if (!dbContext.CatalogBrands.AsNoTracking().Where(p => p.Id == brand.Id).Any())
-                {
-                    await dbContext.CatalogBrands.AddAsync(brand);
-                }
-            }
-            foreach (var car in GetCatalogCars())
-            {
-                if (!dbContext.CatologCars.AsNoTracking().Where(p => p.Id == car.Id).Any())
-                {
-                    await dbContext.CatologCars.AddAsync(car);
-                }
-            }
-        }
-
-        private static IEnumerable<CatalogType> GetCatalogTypes()
-        {
-            return new List<CatalogType>()
-            {
-                new CatalogType() {  Id=1,  Type="جلوبندی"},
-                new CatalogType() {  Id= 2,  Type="دیفرانسیل" , ParentCatalogTypeId = 1},
-                new CatalogType() {  Id= 3,  Type="موتور" , ParentCatalogTypeId=2},
-                new CatalogType() {  Id= 4,  Type="گریبکس", ParentCatalogTypeId=2},
-                new CatalogType() {  Id= 5,  Type="داشبورد", ParentCatalogTypeId=2},
-            };
-        }
-
-        private static IEnumerable<CatalogBrand> GetCatalogBrands()
-        {
-            return new List<CatalogBrand>()
-            {
-                new CatalogBrand() { Id=1, Brand = "ایساکو" },
-                new CatalogBrand() { Id=2, Brand = "اعزام" },
-                new CatalogBrand() { Id=3, Brand = "ایران یدک" }
-            };
-        }
-        private static IEnumerable<CatologCar> GetCatalogCars()
-        {
-            return new List<CatologCar>()
-            {
-                new CatologCar() { Id=1, Name = "تیبا" },
-                new CatologCar() { Id=2, Name = "پراید" },
-                new CatologCar() { Id=3, Name = "ساینا" }
-            };
         }
     }
 }

@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 using Persistence.Contexts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Persistence.Seeds;
-using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Seeding
 {
   public  class ApplicationDbContextSeeder : ISeeder
     {
-        public async Task SeedAsync(DataBaseContext dbContext, IdentityDatabaseContext identityDatabase , IServiceProvider serviceProvider )
+        public async Task SeedAsync(DataBaseContext dbContext, IServiceProvider serviceProvider)
         {
             if (dbContext == null)
             {
@@ -35,11 +33,10 @@ namespace Persistence.Seeding
 
             foreach (var seeder in seeders)
             {
-                await seeder.SeedAsync(dbContext, identityDatabase, serviceProvider );
-                await identityDatabase.SaveChangesAsync();
+                await seeder.SeedAsync(dbContext, serviceProvider);
+                await dbContext.SaveChangesAsync();
               //  logger.LogInformation($"Seeder {seeder.GetType().Name} done.");
             }
-           
         }
     }
 }

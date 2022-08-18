@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Admin.EndPoint.Helper;
 using Admin.EndPoint.ViewModels.Catalogs;
 using Application.Catalogs.CatalogTypeImages;
 using Application.Catalogs.CatalogTypes;
 using Application.Catalogs.CatalogTypes.Dto;
 using Application.Dtos;
+using Application.Users.Token;
 using AutoMapper;
 using Infrastructure.ExternalApi.ImageServer;
 using Microsoft.AspNetCore.Http;
@@ -21,14 +23,18 @@ namespace Admin.EndPoint.Pages.CatalogType
         private readonly IMapper mapper;
         private readonly IImageUploadService imageUploadService;
         private readonly ICRUDCatalogTypeImage cRUDCatalogTypeImage;
+        private readonly IGetUserToken getUserToken;
 
         public CreateModel(ICatalogTypeService catalogTypeService, IMapper mapper,
-            IImageUploadService imageUploadService , ICRUDCatalogTypeImage cRUDCatalogTypeImage)
+            IImageUploadService imageUploadService
+            , ICRUDCatalogTypeImage cRUDCatalogTypeImage
+            , IGetUserToken getUserToken)
         {
             this.catalogTypeService = catalogTypeService;
             this.mapper = mapper;
             this.imageUploadService = imageUploadService;
             this.cRUDCatalogTypeImage = cRUDCatalogTypeImage;
+            this.getUserToken = getUserToken;
         }
 
         [BindProperty]
@@ -54,7 +60,7 @@ namespace Admin.EndPoint.Pages.CatalogType
             if (Files.Count > 0)
             {
                 //Upload 
-                var resultUpload = imageUploadService.Upload(Files);
+                var resultUpload = imageUploadService.Upload(Files, ClaimUtility.GetUserId(User), getUserToken.getToken(User.Identity.Name));
                 foreach (var item in resultUpload)
                 {
                     images.Add(item);

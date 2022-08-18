@@ -2,6 +2,7 @@
 using Application.Discounts;
 using Application.Discounts.Dto;
 using Application.Discounts.EditDiscountServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Admin.EndPoint.Controllers
 {
+    [Authorize]
     public class DiscountController : Controller
     {
         private readonly IGetDescountesForAdmin getDescountes;

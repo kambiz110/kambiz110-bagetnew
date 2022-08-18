@@ -1,4 +1,5 @@
 using Admin.EndPoint.Configurations;
+using Admin.EndPoint.Helper;
 using Admin.EndPoint.MappingProfiles;
 using Application.Banners;
 using Application.Catalogs.CatalogBrands;
@@ -18,8 +19,10 @@ using Application.Discounts.AddNewDiscountServices;
 using Application.Discounts.EditDiscountServices;
 using Application.Interfaces.Contexts;
 using Application.Storerooms.Command;
+using Application.Users.Query;
 using Application.Users.Token;
 using Application.Visitors.GetTodayReport;
+using Domain.Users;
 using FluentValidation;
 using Infrastructure.ExternalApi.ImageServer;
 using Infrastructure.IdentityConfigs;
@@ -27,6 +30,7 @@ using Infrastructure.MappingProfile;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -83,6 +87,8 @@ namespace Admin.EndPoint
             services.AddTransient<IAddStoreroom, AddStoreroom>();
             services.AddTransient<IincreaseCattalogItem, increaseCattalogItem>();
             services.AddTransient<IGeneritTokenUser, GeneritTokenUser>();
+            services.AddTransient<IGetUserToken, GetUserToken>();
+            services.AddTransient<IGetUsers, GetUsers>();
 
 
             #region connection String SqlServer
@@ -101,7 +107,7 @@ namespace Admin.EndPoint
                 option.SlidingExpiration = true;
             });
             #endregion
-
+           // services.AddTransient<IUserClaimsPrincipalFactory<User>, CustomUserClaimsPrincipalFactory>();
             //mapper
             services.RegisterAutoMapper();
 

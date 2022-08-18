@@ -12,13 +12,13 @@ namespace Infrastructure.ExternalApi.ImageServer
 {
     public interface IImageUploadService
     {
-        List<string> Upload(List<IFormFile> files);
+        List<string> Upload(List<IFormFile> files, string apiKey, string token);
     }
     public class ImageUploadService : IImageUploadService
     {
-        public List<string> Upload(List<IFormFile> files)
+        public List<string> Upload(List<IFormFile> files, string apiKey, string token)
         {
-            var client = new RestClient("https://localhost:44327/api/Images?apikey=mysecretkey");
+            var client = new RestClient($"https://localhost:44327/api/Images?apikey={apiKey}&token={token}");
             client.Timeout = -1;
             var request = new RestRequest(Method.POST);
             if (files.Count()>0)

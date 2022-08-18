@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Application.Catalogs.CatalogBrands;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Admin.EndPoint.Pages.CatalogBrand
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ICatalogBrandCrudService catalogBrandCrudService;

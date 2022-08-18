@@ -11,6 +11,7 @@ using Application.Discounts;
 using Application.Dtos;
 using Application.Storerooms.Command;
 using Application.Storerooms.Dto;
+using Application.Users.Token;
 using Infrastructure.ExternalApi.ImageServer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -35,6 +36,7 @@ namespace Admin.EndPoint.Controllers
         private readonly IRemoveFeacherService removeFeacherService;
         private readonly IGetDescountForEdit descountForEdit;
         private readonly IincreaseCattalogItem iincreaseCattalog;
+        private readonly IGetUserToken getUserToken;
 
         public CategoreItemsController(IGetAdminEditCatalogItem getAdminEditCatalogItem
             , ICatalogItemService catalogItemService
@@ -43,7 +45,8 @@ namespace Admin.EndPoint.Controllers
             IImageUploadService imageUploadService
             , IDeleteImageService deleteImageService,
             IAddStoreroom addStoreroom, IGetDescountForEdit descountForEdit,
-            IincreaseCattalogItem iincreaseCattalog)
+            IincreaseCattalogItem iincreaseCattalog,
+            IGetUserToken getUserToken)
         {
             this.getAdminEditCatalogItem = getAdminEditCatalogItem;
             this.catalogItemService = catalogItemService;
@@ -54,6 +57,7 @@ namespace Admin.EndPoint.Controllers
             this.addStoreroom = addStoreroom;
             this.descountForEdit = descountForEdit;
             this.iincreaseCattalog = iincreaseCattalog;
+            this.getUserToken = getUserToken;
         }
 
         public IActionResult Index(int pageIndex = 1, int pageSize = 20, string search = "")
@@ -117,7 +121,7 @@ namespace Admin.EndPoint.Controllers
             if (Files.Count > 0)
             {
                 //Upload 
-                var result = imageUploadService.Upload(Files);
+                var result = imageUploadService.Upload(Files , ClaimUtility.GetUserId(User) , getUserToken.getToken(User.Identity.Name));
                 foreach (var item in result)
                 {
                     images.Add(new AddNewCatalogItemImage_Dto { Src = item });

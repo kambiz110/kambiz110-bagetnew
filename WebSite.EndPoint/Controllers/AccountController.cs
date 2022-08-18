@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WebSite.EndPoint.Models.ViewModels.Register;
 using WebSite.EndPoint.Models.ViewModels.User;
@@ -112,6 +113,7 @@ namespace WebSite.EndPoint.Controllers
             }
             if (result.Succeeded)
             {
+                var addClaimes = _userManager.AddClaimAsync(user, new Claim("FullName", user.FullName)).Result;
                 TransferBasketForuser(user.Id);
                 return Redirect(model?.ReturnUrl ?? "/");
             }

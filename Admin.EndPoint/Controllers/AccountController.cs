@@ -1,4 +1,5 @@
-﻿using Application.Users.Dto;
+﻿using Admin.EndPoint.Helper;
+using Application.Users.Dto;
 using Application.Users.Token;
 using Domain.Users;
 using Microsoft.AspNetCore.Identity;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Admin.EndPoint.Controllers
@@ -61,6 +63,9 @@ namespace Admin.EndPoint.Controllers
             }
             if (result.Succeeded)
             {
+               // addsmsService sendSms = new addsmsService();
+              //  sendSms.singleUserSendSMS("ورود به حساب کاربری ادمین موفق !",new string[] { "09055510734" });
+             var addClaimes = _userManager.AddClaimAsync(user, new Claim("FullName", user.FullName)).Result;
                 var token = tokenUser.creatToken(user.Id);
                 string redirect;
                 if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))

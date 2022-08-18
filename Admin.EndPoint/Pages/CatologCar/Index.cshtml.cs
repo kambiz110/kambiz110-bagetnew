@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Application.Catalogs.CatalogCars.CrudService;
 using Application.Catalogs.CatalogCars.Dto;
 using Application.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Admin.EndPoint.Pages.CatologCar
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ICrudCarService crudCompanyService;

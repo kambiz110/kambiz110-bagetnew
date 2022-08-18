@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Catalogs.CatalogTypes;
 using Application.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Admin.EndPoint.Pages.CatalogType
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ICatalogTypeService catalogTypeService;

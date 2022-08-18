@@ -1,0 +1,202 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using Application.Dtos
+@using Application.Users.Dto
+@model PaginatedItemsDto<UserShowAdminDto>
+@{
+    ViewData["Title"] = "لیست کاربران";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int counter = 1;
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<div class="layout-px-spacing">
+
+
+    <div class="row layout-spacing">
+        <div class="col-lg-12">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-header">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                            <h4>لیست کاربران</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-content widget-content-area">
+                    <div class="table-responsive mb-4">
+                        @{
+
+                            if (Model.Data != null && Model.Data.Any())
+                            {
+                                <table id="style-3" class="table style-3  table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="checkbox-column text-center"> شناسه </th>
+
+                                            <th>نام و نام خانوادگی</th>
+
+                                            <th>ایمیل</th>
+                                            <th>شماره موبایل</th>
+                                            <th class="text-center">وضیعت</th>
+                                            <th class="text-center">عمل</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var item in Model.Data)
+                                        {
+                                            <tr>
+                                                <td class="checkbox-column text-center"> @counter </td>
+
+                                                <td>@item.FullName</td>
+                                                <td>@item.UserName</td>
+                                                <td>@item.PhoneNumber</td>
+
+                                                <td class="text-center"><span class="shadow-none badge badge-primary">تایید شده</span></td>
+                                                <td class="text-center">
+                                                    <ul class="table-controls">
+                                                        <li><a href="javascript:void(0);" class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="ویرایش"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-6 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
+                                                        <li><a href="javascript:void(0);" class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="حذف"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
+                                                    </ul>
+                                                </td>
+                                                @{counter++;}
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="dataTables_info" id="html5-extension_info" role="status" aria-live="polite">
+
+                                                صفحه @Model.PageIndex
+                                                از
+                                                @Model.Pager.TotalPages
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="dataTables_paginate paging_simple_numbers" id="html5-extension_paginate">
+                                                <ul class="pagination">
+
+                                                    <li class="paginate_button page-item">
+
+                                                        <a asp-action="Index" asp-controller="users" asp-route-parentid="@(HttpContextAccessor.HttpContext.Request.Query["parentid"])"
+                                                           asp-route-pageIndex="1"
+                                                           aria-controls="html5-extension"
+                                                           data-dt-idx="2" tabindex="0"
+                                                           class="page-link"> صفحه اول</a>
+                                                    </li>
+
+                                                    <li class="paginate_button page-item active">
+                                                        <a asp-action="Index" asp-controller="users" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                           asp-route-pageIndex="@(Model.PageIndex - 1)"
+                                                           class="btn btn-default @prevDisabled">
+                                                            قبلی
+                                                        </a>
+                                                    </li>
+
+                                                    @foreach (var item in Model.Pager.Pages)
+                                                    {
+                                                        if (item == Model.PageIndex)
+                                                        {
+                                                            <li class="paginate_button page-item  active">
+                                                                <a asp-action="Index" asp-controller="users" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                                   asp-route-pageIndex="@item"
+                                                                   aria-controls="html5-extension"
+                                                                   data-dt-idx="2" tabindex="0"
+                                                                   class="page-link"> @item</a>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li class="paginate_button page-item ">
+                                                                <a asp-action="Index" asp-controller="users" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                                   asp-route-pageIndex="@item"
+                                                                   aria-controls="html5-extension"
+                                                                   data-dt-idx="2" tabindex="0"
+                                                                   class="page-link"> @item</a>
+                                                            </li>
+                                                        }
+
+                                                    }
+
+                                                    <li class="paginate_button page-item ">
+
+                                                        <a asp-action="Index" asp-controller="users" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                           asp-route-pageIndex="@(Model.PageIndex + 1)"
+                                                           class="btn btn-default @nextDisabled">
+                                                            بعدی
+                                                        </a>
+                                                    </li>
+
+                                                    <li class="paginate_button page-item">
+                                                        <a asp-action="Index" asp-controller="users" asp-route-parentid="@HttpContextAccessor.HttpContext.Request.Query["parentid"]"
+                                                           asp-route-pageIndex="@Model.Pager.TotalPages"
+                                                           aria-controls="html5-extension"
+                                                           data-dt-idx="2" tabindex="0"
+                                                           class="page-link"> صفحه آخر</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="h4">
+                                    هیچ کاربری فعلا  وجود ندارد!!!
+                                </p>
+                            }
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Styles{
+    <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
+    <link rel="stylesheet" type="text/css" href="~/Theme/plugins/table/datatable/datatables.css">
+    @*       <link rel="stylesheet" type="text/css" href="~/Theme/assets/css/forms/theme-checkbox-radio.css">
+        <link rel="stylesheet" type="text/css" href="~/Theme/plugins/table/datatable/dt-global_style.css">*@
+    <link rel="stylesheet" type="text/css" href="~/Theme/plugins/table/datatable/custom_dt_custom.css">
+    <!-- END PAGE LEVEL CUSTOM STYLES -->
+}
+@section Scripts{
+    @*<script>
+            $(document).ready(function () {
+                App.init();
+            });
+        </script>*@
+    @*<script src="~/Theme/assets/js/custom.js"></script>*@
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="~/Theme/plugins/table/datatable/datatables.js"></script>
+    <script>
+
+
+        c3 = $('#style-3').DataTable({
+            "paging": false,
+            "bPaginate": false,
+             "bInfo": false, // hide showing entries
+            "oLanguage": {
+        
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "جستجو در همین جدول...",
+                "sLengthMenu": "نتایج :  _MENU_",
+            },
+          
+            "lengthMenu": [5, 10, 20, 50],
+            "pageLength": 5
+        });
+
+        multiCheck(c3);
+    </script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+}
+

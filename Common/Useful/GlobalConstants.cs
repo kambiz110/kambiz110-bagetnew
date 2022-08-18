@@ -20,7 +20,7 @@ namespace Common.Useful
 
         public const string StudentLayout = "_LayoutStudent";
 
-        public const string TeacherRoleName = "Teacher";
+        public const string ManegerRoleName = "Maneger";
         public const string UserRoleName = "User";
 
         public const string AdministratorAndTeacherAuthorizationString = "Administrator, Teacher";
@@ -44,11 +44,12 @@ namespace Common.Useful
         public static class DataSeeding
         {
             public const string AdminPassword = "K@rd!N1399";
-            public const string CustomerPassword = "Ww@1400+";
+            public const string ManegerPassword = "Ww@1400+";
 
             public const string AdminName = "Admin";
-
+            public const string ManegerName = "Maneger";
             public const string AdminEmail = "admin@admin.com";
+            public const string ManegerEmail = "Maneger@Maneger.com";
             public const string CustomerName = "customer";
 
             public const string CustomerEmail = "customer@customer.com";

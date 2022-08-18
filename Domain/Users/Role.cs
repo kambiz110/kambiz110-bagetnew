@@ -9,5 +9,10 @@ namespace Domain.Users
 {
    public class Role : IdentityRole<string>
     {
+        public Role(string name)
+        : base(name)
+        {
+
+        }
     }
 }

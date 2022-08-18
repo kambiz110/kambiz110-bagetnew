@@ -1,5 +1,6 @@
 ﻿
 using Application.Users;
+using Application.Users.Dto;
 using AutoMapper;
 using Domain.Order;
 using Domain.Users;
@@ -15,9 +16,10 @@ namespace Infrastructure.MappingProfile
     {
         public UserMappingProfile()
         {
-            CreateMap<UserAddress, UserAddressDto>().ReverseMap(); ;
-            CreateMap<AddUserAddressDto, UserAddress>().ReverseMap(); ;
-            CreateMap<UserAddress, Address>().ReverseMap(); ;
+            CreateMap<UserAddress, UserAddressDto>().ReverseMap(); 
+            CreateMap<AddUserAddressDto, UserAddress>().ReverseMap();
+            CreateMap<UserAddress, Address>().ReverseMap(); 
+            CreateMap<User, UserShowAdminDto>().ReverseMap(); 
         }
     }
 }

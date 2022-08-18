@@ -1,8 +1,10 @@
-﻿using Domain.Users;
+﻿using Application.Interfaces.Contexts;
+using Domain.Users;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -20,17 +22,20 @@ namespace StaticFile.EndPoint.Controllers
     {
 
         private readonly IHostingEnvironment _environment;
+        private readonly IIdentityDatabaseContext context;
 
-        public ImagesController(IHostingEnvironment hostingEnvironment)
+        public ImagesController(IHostingEnvironment hostingEnvironment , IIdentityDatabaseContext context)
         {
             _environment = hostingEnvironment;
+            this.context = context;
         }
 
      
 
-        public IActionResult Post(string apiKey)
+        public IActionResult Post(string apiKey ,string token)
         {
-            if (apiKey != "mysecretkey")
+            var user = context.Users.Include(p => p.UserTokens).FirstOrDefault(p=>p.Id== apiKey);
+            if (user.UserTokens == null && user.UserTokens.Value!= token)
             {
                 return BadRequest();
             }

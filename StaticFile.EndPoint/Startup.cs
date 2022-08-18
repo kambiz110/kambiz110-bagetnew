@@ -32,15 +32,6 @@ namespace StaticFile.EndPoint
             services.AddControllersWithViews();
             services.AddTransient<IIdentityDatabaseContext, IdentityDatabaseContext>();
             services.AddIdentityService(Configuration);
-            services.AddScoped<IUserClaimsPrincipalFactory<User>, CustomUserClaimsPrincipalFactory>();
-            services.AddAuthorization();
-            services.ConfigureApplicationCookie(option =>
-            {
-                option.ExpireTimeSpan = TimeSpan.FromMinutes(10);
-                option.LoginPath = "/account/login";
-                option.AccessDeniedPath = "/Account/AccessDenied";
-                option.SlidingExpiration = true;
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

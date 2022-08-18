@@ -8,7 +8,9 @@ using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Dtos;
 using Application.Storerooms.Command;
 using Application.Storerooms.Dto;
+using Application.Users.Token;
 using Infrastructure.ExternalApi.ImageServer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,22 +18,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Admin.EndPoint.Pages.CatalogItems
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly IAddNewCatalogItemService addNewCatalogItemService;
         private readonly ICatalogItemService catalogItemService;
         private readonly IImageUploadService imageUploadService;
         private readonly IAddStoreroom addStoreroom;
+        private readonly IGetUserToken getUserToken;
 
         public CreateModel(IAddNewCatalogItemService addNewCatalogItemService
             , ICatalogItemService catalogItemService
             , IImageUploadService imageUploadService
-            , IAddStoreroom addStoreroom)
+            , IAddStoreroom addStoreroom
+            , IGetUserToken getUserToken)
         {
             this.addNewCatalogItemService = addNewCatalogItemService;
             this.catalogItemService = catalogItemService;
             this.imageUploadService = imageUploadService;
             this.addStoreroom = addStoreroom;
+            this.getUserToken = getUserToken;
         }
 
         public SelectList Categories { get; set; }
@@ -72,7 +78,7 @@ namespace Admin.EndPoint.Pages.CatalogItems
             if (Files.Count > 0)
             {
                 //Upload 
-                var result = imageUploadService.Upload(Files);
+                var result = imageUploadService.Upload(Files ,ClaimUtility.GetUserId(User), getUserToken.getToken(User.Identity.Name));
                 foreach (var item in result)
                 {
                     images.Add(new AddNewCatalogItemImage_Dto { Src = item });

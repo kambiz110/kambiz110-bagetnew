@@ -77,7 +77,7 @@ namespace WebSite.EndPoint
             services.AddScoped<InMemoryContext>();
 
             services.AddIdentityService(Configuration);
-            services.AddScoped<IUserClaimsPrincipalFactory<User>, CustomUserClaimsPrincipalFactory>();
+           // services.AddScoped<IUserClaimsPrincipalFactory<User>, CustomUserClaimsPrincipalFactory>();
             services.AddAuthorization();
             services.ConfigureApplicationCookie(option =>
             {
