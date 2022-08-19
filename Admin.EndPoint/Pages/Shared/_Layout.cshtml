@@ -225,10 +225,20 @@
                         <div class="user-profile-section">
                             <div class="media mx-auto">
                                 <img src="~/Theme/assets/img/90x90.jpg" class="img-fluid mr-2" alt="avatar">
-                                <div class="media-body">
-                                    <h5> کاربر</h5>
-                                    <p>مدیر پروژه</p>
-                                </div>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <div class="media-body">
+                                        <h5> کاربر</h5>
+                                        <p>  @User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="media-body">
+                                        <h5> کاربر</h5>
+                                        <p> عادی</p>
+                                    </div>
+                                }
                             </div>
                         </div>
                         <div class="dropdown-item">
@@ -276,8 +286,20 @@
                     <figure class="user-cover-image"></figure>
                     <div class="user-info">
                         <img src="~/Theme/assets/img/90x90.jpg" alt="avatar">
-                        <h6 class=""> کاربر  </h6>
-                        <p class="">مدیر پروژه</p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                          
+                                <h6 class=""> کاربر</h6>
+                                <p class="">  @User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value</p>
+                        
+                        }
+                        else
+                        {
+                      
+                                <h6 class=""> کاربر</h6>
+                                <p class=""> عادی</p>
+                          
+                        }
                     </div>
                 </div>
 
@@ -320,7 +342,25 @@
                     </li>
 
 
-
+                    <li class="menu">
+                        <a href="#users" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                <span>کاربران</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu recent-submenu list-unstyled" id="users" data-parent="#accordionExample">
+                            <li >
+                                <a href="user_profile.html"> پروفایل </a>
+                            </li>
+                            <li>
+                                <a href="user_account_setting.html"> تنظیمات اکانت </a>
+                            </li>
+                        </ul>
+                    </li>
 
                     <li class="menu">
                         <a href="#authentication" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -339,24 +379,7 @@
                             <li>
                                 <a href="auth_register_boxed.html"> جعبه ثبت نام </a>
                             </li>
-                            <li>
-                                <a href="auth_lockscreen_boxed.html"> جعبه بازکردن </a>
-                            </li>
-                            <li>
-                                <a href="auth_pass_recovery_boxed.html"> جعبه بازیابی ID </a>
-                            </li>
-                            <li>
-                                <a href="auth_login.html"> ورود </a>
-                            </li>
-                            <li>
-                                <a href="auth_register.html"> ثبت نام </a>
-                            </li>
-                            <li>
-                                <a href="auth_lockscreen.html"> بازکردن </a>
-                            </li>
-                            <li>
-                                <a href="auth_pass_recovery.html"> بازیابی ID </a>
-                            </li>
+                 
                         </ul>
                     </li>
 

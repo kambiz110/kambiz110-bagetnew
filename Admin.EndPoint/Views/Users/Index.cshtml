@@ -23,6 +23,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-6">
+                        <form asp-action="Index" method="get">
+                            <div class="input-group">
+                                <input type="text" name="q" class="form-control float-right" placeholder="جستجو در دیتابیس...">
+
+                              
+                                <button type="submit" class="btn btn-primary">جستجو</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-sm-4 col-xs-6">
+                        <div class="form-group form-group-sm">
+
+
+                            <form class="form-inline d-inline" asp-action="Index" method="post">
+                                <button type="submit" name="search" value="clear" class="btn btn-default d-inline">
+                                    پاک کن
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
                 <div class="widget-content widget-content-area">
                     <div class="table-responsive mb-4">
                         @{
@@ -32,7 +57,7 @@
                                 <table id="style-3" class="table style-3  table-hover">
                                     <thead>
                                         <tr>
-                                            <th class="checkbox-column text-center"> شناسه </th>
+                                            <th class="checkbox-column text-center"> ردیف </th>
 
                                             <th>نام و نام خانوادگی</th>
 
@@ -40,6 +65,7 @@
                                             <th>شماره موبایل</th>
                                             <th class="text-center">وضیعت</th>
                                             <th class="text-center">عمل</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -54,11 +80,19 @@
                                                 <td>@item.PhoneNumber</td>
 
                                                 <td class="text-center"><span class="shadow-none badge badge-primary">تایید شده</span></td>
+
                                                 <td class="text-center">
-                                                    <ul class="table-controls">
-                                                        <li><a href="javascript:void(0);" class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="ویرایش"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 p-1 br-6 mb-1"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                                        <li><a href="javascript:void(0);" class="bs-tooltip" data-toggle="tooltip" data-placement="top" title="" data-original-title="حذف"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash p-1 br-6 mb-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a></li>
-                                                    </ul>
+                                                    <div class="dropdown custom-dropdown">
+                                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                                        </a>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink2">
+                                                            <a class="dropdown-item" href="javascript:void(0);">خریدها</a>
+                                                            <a class="dropdown-item" href="javascript:void(0);">بازنشانی رمز</a>
+                                                            <a class="dropdown-item" href="/users/AllRoleInUser/@item.Id">نقش ها</a>
+                                                            <a class="dropdown-item" href="javascript:void(0);">غیر فعال کردن</a>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 @{counter++;}
                                             </tr>
@@ -187,7 +221,7 @@
             "oLanguage": {
         
                 "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "جستجو در همین جدول...",
+                "sSearchPlaceholder": "جستجو در همین صفحه...",
                 "sLengthMenu": "نتایج :  _MENU_",
             },
           

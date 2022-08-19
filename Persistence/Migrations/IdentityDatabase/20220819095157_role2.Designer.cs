@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Contexts;
 
 namespace Persistence.Migrations.IdentityDatabase
 {
     [DbContext(typeof(IdentityDatabaseContext))]
-    partial class IdentityDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220819095157_role2")]
+    partial class role2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,8 +197,6 @@ namespace Persistence.Migrations.IdentityDatabase
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("UserRoles", "identity");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<string>");
@@ -269,6 +269,13 @@ namespace Persistence.Migrations.IdentityDatabase
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<string>");
 
+                    b.Property<string>("RoleId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("RoleId1")
+                        .IsUnique()
+                        .HasFilter("[RoleId1] IS NOT NULL");
+
                     b.HasDiscriminator().HasValue("UserRole");
                 });
 
@@ -288,17 +295,18 @@ namespace Persistence.Migrations.IdentityDatabase
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Domain.Users.Role", null)
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Users.User", null)
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Users.UserRole", b =>
+                {
+                    b.HasOne("Domain.Users.Role", null)
+                        .WithOne("UserRole")
+                        .HasForeignKey("Domain.Users.UserRole", "RoleId1");
                 });
 
             modelBuilder.Entity("Domain.Users.UserTokens", b =>
@@ -310,7 +318,7 @@ namespace Persistence.Migrations.IdentityDatabase
 
             modelBuilder.Entity("Domain.Users.Role", b =>
                 {
-                    b.Navigation("UserRoles");
+                    b.Navigation("UserRole");
                 });
 
             modelBuilder.Entity("Domain.Users.User", b =>

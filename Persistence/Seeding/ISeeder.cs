@@ -9,6 +9,6 @@ namespace Persistence.Seeding
 {
     public interface ISeeder
     {
-        Task SeedAsync(DataBaseContext dbContext, IServiceProvider serviceProvider);
+        Task SeedAsync(IdentityDatabaseContext dbContext, IServiceProvider serviceProvider);
     }
 }

@@ -11,7 +11,7 @@ namespace Persistence.Seeding
 {
   public  class ApplicationDbContextSeeder : ISeeder
     {
-        public async Task SeedAsync(DataBaseContext dbContext, IServiceProvider serviceProvider)
+        public async Task SeedAsync(IdentityDatabaseContext dbContext, IServiceProvider serviceProvider)
         {
             if (dbContext == null)
             {

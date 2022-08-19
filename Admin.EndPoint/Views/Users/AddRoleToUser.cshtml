@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewData["Title"] = "افزودن نقش به کاربر";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model Application.Users.Dto.AddRoleToUserDto
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+
+
+
+
+
+<div class="layout-px-spacing">
+    <h1 class="ml-1">افزودن نقش به کاربر</h1>
+    <div class="col-md-4">
+        <form asp-action="AddRoleToUser">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+
+                <input type="hidden" asp-for="Id" class="form-control" />
+
+            </div>
+
+            <div class="col-sm-12 col-md-12 h3">
+                <label asp-for="FullName" class=""></label>
+                <span class="text-danger p-1">
+                    :
+                    @Html.DisplayFor(model => model.FullName)
+                </span>
+            </div>
+            <div class="form-group col-sm-12 col-md-12">
+                <label asp-for="Role" class="control-label"></label>
+
+                <select asp-for="Role" class="form-control" asp-items="(IEnumerable<SelectListItem>)@ViewData["Roles"]">
+                    <option>لطفا انتخاب نمائید</option>
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <input type="submit" value="ثبت" class="btn btn-primary" />
+                <a asp-action="UserRoles" asp-route-id="@Model.Id" class="btn btn-danger ml-2">بازگشت</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+

@@ -7,7 +7,7 @@ using System.Text;
 namespace Domain.Users
 {
     [Auditable]
-    public class User : IdentityUser
+    public class User : IdentityUser<string>
     {
         public string FullName { get; set; }
         public virtual ICollection<IdentityUserRole<string>> UserRoles { get; set; }

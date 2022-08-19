@@ -10,6 +10,7 @@ namespace Application.Interfaces.Contexts
 {
     public interface IIdentityDatabaseContext
     {
+        DbSet<Role> Roles { get; set; }
         DbSet<User> Users { get; set; }
         DbSet<UserTokens> UserTokens { get; set; }
         int SaveChanges();

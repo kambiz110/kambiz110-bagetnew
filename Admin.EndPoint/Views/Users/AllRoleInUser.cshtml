@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewData["Title"] = "AllRoleInUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model Application.Users.Dto.RolesInUserDto
+
+
+
+
+
+
+<div class="layout-px-spacing">
+    <h1>نقش های کاربر</h1>
+    <hr />
+    <div class="col-md-6">
+        <form asp-action="AllRoleInUser">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                @if (Model != null && Model.getShortRoles != null)
+                {
+                    <h3>
+                      <span class="h5 badge-btn badge-light rounded text-danger">با کلیک روی نقش می توانید آن را حذف نمائید.</span><br />
+                        @{
+                            for (int i = 0; i < Model.getShortRoles.RolesName.Count(); i++)
+                            {
+                                <a href="/Users/DeleteRoleInUser/@Model.UserId/@Model.getShortRoles.RolesName.ElementAt(i)"><span class="badge badge-secondary m2">@Model.getShortRoles.RolesName.ElementAt(i)</span></a>
+                            }
+                        }
+
+                    </h3>
+                }
+                else
+                {
+                    <span>کاربر فاقد نقش می باشد</span>
+                }
+
+            </div>
+        </form>
+    </div>
+    <div class="row ml-2">
+        @Html.ActionLink("افزودن نقش", "AddRoleToUser", new { userId = ViewBag.UserId }, new { @class = "btn btn-success mr-1" })
+
+        <a asp-action="Index" class="btn btn-info mr-1">بازگشت</a>
+    </div>
+</div>
+
+
+
+
+

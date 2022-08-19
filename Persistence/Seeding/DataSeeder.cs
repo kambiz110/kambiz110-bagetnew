@@ -13,7 +13,7 @@ namespace Persistence.Seeding
 {
     public class DataSeeder : ISeeder
     {
-        public async Task SeedAsync(DataBaseContext dbContext, IServiceProvider serviceProvider)
+        public async Task SeedAsync(IdentityDatabaseContext dbContext, IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
@@ -46,6 +46,7 @@ namespace Persistence.Seeding
         {
             var user = new User
             {
+                Id = Guid.NewGuid().ToString(),
                 UserName = email,
                 FullName = name,
                 Email = email,

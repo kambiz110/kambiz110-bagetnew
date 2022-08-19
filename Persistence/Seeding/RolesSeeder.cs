@@ -14,21 +14,24 @@ namespace Persistence.Seeding
 {
     internal class RolesSeeder : ISeeder
     {
-        public async Task SeedAsync(DataBaseContext dbContext, IServiceProvider serviceProvider)
+        public async Task SeedAsync(IdentityDatabaseContext dbContext, IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
 
             await SeedRoleAsync(roleManager, GlobalConstants.AdministratorRoleName);
             await SeedRoleAsync(roleManager, GlobalConstants.ManegerRoleName);
+            await SeedRoleAsync(roleManager, GlobalConstants.PostManegerRoleName);
+            await SeedRoleAsync(roleManager, GlobalConstants.SelerManegerRoleName);
             await SeedRoleAsync(roleManager, GlobalConstants.UserRoleName);
         }
 
         private static async Task SeedRoleAsync(RoleManager<Role> roleManager, string roleName)
         {
-            var role = await roleManager.FindByNameAsync(roleName);
-            if (role == null)
+            var role = await roleManager.RoleExistsAsync(roleName);
+            if (!role)
             {
-                var result = await roleManager.CreateAsync(new Role(roleName ));
+                Role rool = new Role() { Id=Guid.NewGuid().ToString(),Name= roleName ,NormalizedName=roleName};
+                var result = await roleManager.CreateAsync(rool);
                 if (!result.Succeeded)
                 {
                     throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));

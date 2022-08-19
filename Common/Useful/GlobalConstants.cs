@@ -21,6 +21,9 @@ namespace Common.Useful
         public const string StudentLayout = "_LayoutStudent";
 
         public const string ManegerRoleName = "Maneger";
+
+        public const string PostManegerRoleName = "PostManeger";
+        public const string SelerManegerRoleName = "SelerManeger";
         public const string UserRoleName = "User";
 
         public const string AdministratorAndTeacherAuthorizationString = "Administrator, Teacher";

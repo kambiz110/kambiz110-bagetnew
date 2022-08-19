@@ -9,10 +9,15 @@ namespace Domain.Users
 {
    public class Role : IdentityRole<string>
     {
+        public Role()
+       : this(null)
+        {
+        }
         public Role(string name)
         : base(name)
         {
 
         }
+        public ICollection<IdentityUserRole<string>> UserRoles { get; set; }
     }
 }
