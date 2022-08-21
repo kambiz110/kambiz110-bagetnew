@@ -23,14 +23,14 @@ namespace Application.Catalogs.CatalogTypes.Query
     public class GetCatalogeTypeHomePage : IGetCatalogeTypeHomePage
     {
         private readonly IDataBaseContext context;
-        private readonly IUriComposerService uriComposerService;
+      
 
         public GetCatalogeTypeHomePage(IDataBaseContext context
-            , IUriComposerService uriComposerService)
+           )
         {
             this.context = context;
 
-            this.uriComposerService = uriComposerService;
+        
         }
         public GetCatalogeItemByTypeHomePageDto Execut(int? parentId, int sortIndex = 0, int count = 9)
         {

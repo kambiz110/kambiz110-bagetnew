@@ -3,6 +3,7 @@ using Application.Discounts.Dto;
 using Application.Dtos;
 using Application.Interfaces.Contexts;
 using AutoMapper;
+using Common.Useful;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,26 +18,28 @@ namespace Application.Discounts
     /// </summary>
     public interface IGetDiscountInHomePage
     {
-        BaseDto<GetDiscountInHomePageViewModel> Executed(int Importance, int count);
+        BaseDto<GetDiscountInHomePageViewModel> Vijeh();
+        BaseDto<GetDiscountInHomePageViewModel> HomePage();
     }
     public class GetDiscountInHomePage : IGetDiscountInHomePage
     {
         private readonly IDataBaseContext context;
         private readonly IMapper mapper;
-        private readonly IUriComposerService uriComposerService;
+     
 
-        public GetDiscountInHomePage(IDataBaseContext context, IMapper mapper, IUriComposerService uriComposerService)
+        public GetDiscountInHomePage(IDataBaseContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
-            this.uriComposerService = uriComposerService;
+           
         }
 
-        public BaseDto<GetDiscountInHomePageViewModel> Executed(int Importance, int count)
+        public BaseDto<GetDiscountInHomePageViewModel> Vijeh()
         {
             var data = context.Discount.AsNoTracking()
-                .Where(p => p.Importance == Importance && p.UsePercentage==true)
+                .Where(p => p.Importance == 3 && p.UsePercentage==true)
                  .OrderByDescending(p => p.DiscountPercentage)
+                 .Include(p => p.CatalogItems.Take(5))
                 .Include(p => p.CatalogItems).ThenInclude(p => p.CatalogItemImages)
                 .Include(p => p.CatalogItems).ThenInclude(p => p.CatologCar)
                 .Include(p => p.CatalogItems).ThenInclude(p => p.CatalogBrand)
@@ -46,7 +49,49 @@ namespace Application.Discounts
             {
                 for (int j = 0; j < result.catalogItems.Count; j++)
                 {
-                    result.catalogItems.ElementAt(j).Src = uriComposerService.ComposeImageUri(result.catalogItems.ElementAt(j).Src);
+                    result.catalogItems.ElementAt(j).Src = GlobalConstants.serverImageUrl + (result.catalogItems.ElementAt(j).Src);
+                }
+
+
+                return new BaseDto<GetDiscountInHomePageViewModel>(
+                 true,
+                 null,
+                 result
+                 );
+            }
+            return new BaseDto<GetDiscountInHomePageViewModel>(
+              false,
+              null,
+              null
+              );
+        }
+        public BaseDto<GetDiscountInHomePageViewModel> HomePage()
+        {
+            var data = context.Discount.AsNoTracking()
+                .Where(p => p.Importance == 2 && p.UsePercentage==true)
+                 .OrderByDescending(p => p.DiscountPercentage)
+                .Include(p => p.CatalogItems).ThenInclude(p => p.CatalogItemImages)
+                .Include(p => p.CatalogItems).ThenInclude(p => p.CatologCar)
+                .Include(p => p.CatalogItems).ThenInclude(p => p.CatalogBrand)
+            .AsQueryable();
+            var result = mapper.ProjectTo<GetDiscountInHomePageViewModel>(data).FirstOrDefault();
+            var catlogcount = result.catalogItems.Count();
+            var takke = 12;
+            if (catlogcount>4 && catlogcount<8)
+            {
+                takke = 4;
+            }
+            if (catlogcount>8 && catlogcount<12)
+            {
+                takke = 8;
+            }
+          
+            result.catalogItems = result.catalogItems.Take(takke).ToList();
+            if (result != null)
+            {
+                for (int j = 0; j < result.catalogItems.Count; j++)
+                {
+                    result.catalogItems.ElementAt(j).Src = GlobalConstants.serverImageUrl + (result.catalogItems.ElementAt(j).Src);
                 }
 
 

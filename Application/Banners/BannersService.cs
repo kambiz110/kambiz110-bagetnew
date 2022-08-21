@@ -3,6 +3,7 @@ using Application.Dtos;
 using Application.Interfaces.Contexts;
 using AutoMapper;
 using Common;
+using Common.Useful;
 using Domain.Banners;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,13 @@ namespace Application.Banners
     {
         private readonly IDataBaseContext context;
         private readonly IMapper mapper;
-        private readonly IUriComposerService uriComposerService;
+      
 
-        public BannersService(IDataBaseContext context, IMapper mapper, IUriComposerService uriComposerService)
+        public BannersService(IDataBaseContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
-            this.uriComposerService = uriComposerService;
+            
         }
 
         public void AddBanner(BannerDto banner)
@@ -90,8 +91,7 @@ namespace Application.Banners
         {
             var data = context.Banners.Find(Id);
             var result = mapper.Map<BannerDto>(data);
-            result.ShowImage = uriComposerService
-                    .ComposeImageUri(result.Image);
+            result.ShowImage = GlobalConstants.serverImageUrl + (result.Image);
             return new BaseDto<BannerDto>(
                 true,
                 null,
@@ -109,8 +109,7 @@ namespace Application.Banners
             var result = mapper.ProjectTo<BannerDto>(model).ToList();
             for (int i = 0; i < result.Count; i++)
             {
-                result.ElementAt(i).Image= uriComposerService
-                    .ComposeImageUri(result.ElementAt(i).Image);
+                result.ElementAt(i).Image= GlobalConstants.serverImageUrl + (result.ElementAt(i).Image);
             }
             return new PaginatedItemsDto<BannerDto>(page, pageSize, totalCount, result);
         }

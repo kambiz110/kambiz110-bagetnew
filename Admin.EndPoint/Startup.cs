@@ -101,7 +101,7 @@ namespace Admin.EndPoint
             services.AddAuthorization();
             services.ConfigureApplicationCookie(option =>
             {
-                option.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                option.ExpireTimeSpan = TimeSpan.FromHours(4);
                 option.LoginPath = "/account/login";
                 option.AccessDeniedPath = "/Account/AccessDenied";
                 option.SlidingExpiration = true;

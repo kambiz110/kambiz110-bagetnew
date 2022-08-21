@@ -20,7 +20,7 @@
                             {
                                 <div class="single_categories_product">
                                     <div class="categories_product_thumb">
-                                        <a href="~/Product/index?CatalogTypeId=@item.Id"><img src="@item.CatalogTypeImage.Src" alt=""></a>
+                                        <a href="~/Product/index?CatalogTypeId=@item.Id"><img src="@item.CatalogTypeImage?.Src" alt=""></a>
                                     </div>
                                     <div class="categories_product_content">
                                         <h4><a href="~/Product/index?CatalogTypeId=@item.Id"> @item.Type</a></h4>

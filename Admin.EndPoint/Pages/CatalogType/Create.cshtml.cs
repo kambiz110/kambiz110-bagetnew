@@ -11,12 +11,14 @@ using Application.Dtos;
 using Application.Users.Token;
 using AutoMapper;
 using Infrastructure.ExternalApi.ImageServer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Admin.EndPoint.Pages.CatalogType
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly ICatalogTypeService catalogTypeService;

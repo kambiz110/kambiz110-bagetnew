@@ -6,12 +6,14 @@ using Admin.EndPoint.Helper;
 using Application.Banners;
 using Application.Users.Token;
 using Infrastructure.ExternalApi.ImageServer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Admin.EndPoint.Pages.Banners
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly IBannersService banners;

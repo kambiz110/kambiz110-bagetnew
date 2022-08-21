@@ -3,6 +3,7 @@ using Application.Interfaces.Contexts;
 using AutoMapper;
 using Common;
 using Domain.Catalogs;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Catalogs.CatalogTypeImages
 {
-   public interface ICRUDCatalogTypeImage
+    public interface ICRUDCatalogTypeImage
     {
         BaseDto<CatalogTypeImageDto> Add(CatalogTypeImageDto catalogType);
         BaseDto Remove(int Id);
@@ -33,9 +34,10 @@ namespace Application.Catalogs.CatalogTypeImages
         }
         public BaseDto<CatalogTypeImageDto> Add(CatalogTypeImageDto catalogType)
         {
-            var model = mapper.Map<CatalogTypeImage>(catalogType);
+            var model = mapper.Map(catalogType,new CatalogTypeImage() { } );
+
             context.CatalogTypeImages.Add(model);
-            context.SaveChanges();
+            var resultsave = context.SaveChanges();
             return new BaseDto<CatalogTypeImageDto>
                (
                true,
@@ -71,7 +73,7 @@ namespace Application.Catalogs.CatalogTypeImages
         }
         public BaseDto<CatalogTypeImageDto> FindByCatalogTypeId(int Id)
         {
-            var data = context.CatalogTypeImages.Where(p=>p.CatalogTypeId==Id).FirstOrDefault();
+            var data = context.CatalogTypeImages.AsNoTracking().Where(p => p.CatalogTypeId == Id).FirstOrDefault();
             var result = mapper.Map<CatalogTypeImageDto>(data);
 
             return new BaseDto<CatalogTypeImageDto>(
@@ -84,7 +86,7 @@ namespace Application.Catalogs.CatalogTypeImages
         public PaginatedItemsDto<CatalogTypeImageDto> GetList(int? parentId, int page, int pageSize)
         {
             int totalCount = 0;
-            var model = context.CatalogTypeImages
+            var model = context.CatalogTypeImages.AsNoTracking()
                 .PagedResult(page, pageSize, out totalCount);
             var result = mapper.ProjectTo<CatalogTypeImageDto>(model).ToList();
             return new PaginatedItemsDto<CatalogTypeImageDto>(page, pageSize, totalCount, result);
@@ -92,9 +94,13 @@ namespace Application.Catalogs.CatalogTypeImages
 
         public BaseDto Remove(int Id)
         {
-            var catalogType = context.CatalogTypeImages.Find(Id);
-            context.CatalogTypeImages.Remove(catalogType);
-            context.SaveChanges();
+            var catalogTypeImage = context.CatalogTypeImages.Find(Id);
+            if (catalogTypeImage != null)
+            {
+                context.CatalogTypeImages.Remove(catalogTypeImage);
+                context.SaveChanges();
+            }
+
             return new BaseDto
             (
              true,
@@ -104,9 +110,13 @@ namespace Application.Catalogs.CatalogTypeImages
 
         public BaseDto RemoveCatalogTypeId(int Id)
         {
-            var catalogType = context.CatalogTypeImages.Where(p => p.CatalogTypeId == Id).FirstOrDefault();
-            context.CatalogTypeImages.Remove(catalogType);
-            context.SaveChanges();
+            var catalogType = context.CatalogTypeImages.AsNoTracking().Where(p => p.CatalogTypeId == Id).FirstOrDefault();
+            if (catalogType != null)
+            {
+                context.CatalogTypeImages.Remove(catalogType);
+                context.SaveChanges();
+            }
+
             return new BaseDto
             (
              true,

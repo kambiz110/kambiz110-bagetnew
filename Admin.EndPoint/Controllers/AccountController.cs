@@ -2,6 +2,7 @@
 using Application.Users.Dto;
 using Application.Users.Token;
 using Domain.Users;
+using Infrastructure.SMS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -63,9 +64,10 @@ namespace Admin.EndPoint.Controllers
             }
             if (result.Succeeded)
             {
-               // addsmsService sendSms = new addsmsService();
+               // SmsServices sendSms = new SmsServices();
+               // sendSms.verificationCodeWithPatern(user.FullName,"09055510734");
               //  sendSms.singleUserSendSMS("ورود به حساب کاربری ادمین موفق !",new string[] { "09055510734" });
-             var addClaimes = _userManager.AddClaimAsync(user, new Claim("FullName", user.FullName)).Result;
+                var addClaimes = _userManager.AddClaimAsync(user, new Claim("FullName", user.FullName)).Result;
                 var token = tokenUser.creatToken(user.Id);
                 string redirect;
                 if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
@@ -89,6 +91,13 @@ namespace Admin.EndPoint.Controllers
         {
             _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+        public JsonResult testsms()
+        {
+            SmsServices sendSms = new SmsServices();
+        //    sendSms.verificationCodeWithPatern("test", "09055510734");
+            sendSms.singleUserSendSMS("ورود به حساب کاربری ادمین موفق !",new string[] { "09055510734" });
+            return Json("test sms");
         }
     }
 }

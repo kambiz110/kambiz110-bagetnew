@@ -62,8 +62,8 @@ namespace Application.Catalogs.CatalogTypes
 
         public BaseDto<CatalogTypeDto> FindById(int Id)
         {
-            var data = context.CatalogTypes.Where(p=>p.Id==Id)
-                .Include(p=>p.CatalogTypeImage).FirstOrDefault();
+            var data = context.CatalogTypes.AsNoTracking().Where(p=>p.Id==Id)
+                .Include(p=>p.CatalogTypeImage).AsNoTracking().FirstOrDefault();
             var result = mapper.Map<CatalogTypeDto>(data);
 
             return new BaseDto<CatalogTypeDto>(

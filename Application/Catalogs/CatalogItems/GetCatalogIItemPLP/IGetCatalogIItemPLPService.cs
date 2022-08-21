@@ -20,13 +20,13 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
     public class GetCatalogIItemPLPService : IGetCatalogIItemPLPService
     {
         private readonly IDataBaseContext context;
-        private readonly IUriComposerService uriComposerService;
+       
 
         public GetCatalogIItemPLPService(IDataBaseContext context
-            , IUriComposerService uriComposerService)
+           )
         {
             this.context = context;
-            this.uriComposerService = uriComposerService;
+           
         }
         public PaginatedItemsDto<CatalogPLPDto> Execute(CatlogPLPRequestDto request)
         {

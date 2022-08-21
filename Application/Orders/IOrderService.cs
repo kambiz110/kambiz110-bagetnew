@@ -2,6 +2,7 @@
 using Application.Discounts;
 using Application.Interfaces.Contexts;
 using AutoMapper;
+using Common.Useful;
 using Domain.Order;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,17 +23,17 @@ namespace Application.Orders
 
         private readonly IDataBaseContext context;
         private readonly IMapper mapper;
-        private readonly IUriComposerService uriComposerService;
+      
         private readonly IDiscountHistoryService discountHistoryService;
 
         public OrderService(IDataBaseContext context
             , IMapper mapper
-            , IUriComposerService uriComposerService
+           
             , IDiscountHistoryService discountHistoryService )
         {
             this.context = context;
             this.mapper = mapper;
-            this.uriComposerService = uriComposerService;
+           
             this.discountHistoryService = discountHistoryService;
         }
 
@@ -57,8 +58,7 @@ namespace Application.Orders
 
                var orderitem = new OrderItem(catalogItem.Id,
                    catalogItem.Name,
-                   uriComposerService
-                   .ComposeImageUri
+                  GlobalConstants.serverImageUrl +
                    (catalogItem?.CatalogItemImages?.FirstOrDefault()?.Src ?? ""),
                    catalogItem.Price, basketItem.Quantity);
                return orderitem;

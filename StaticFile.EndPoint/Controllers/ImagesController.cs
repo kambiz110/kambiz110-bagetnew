@@ -46,8 +46,8 @@ namespace StaticFile.EndPoint.Controllers
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 if (files != null)
                 {
-                    //upload
-                    return Ok(UploadFile(files));
+                    var uploadresult = UploadFile(files);
+                    return Ok(uploadresult);
                 }
                 else
                 {

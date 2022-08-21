@@ -1,5 +1,6 @@
 ﻿using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Interfaces.Contexts;
+using Common.Useful;
 using Domain.Baskets;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,13 +26,13 @@ namespace Application.BasketsService
     public class BasketService : IBasketService
     {
         private readonly IDataBaseContext context;
-        private readonly IUriComposerService uriComposerService;
+       
 
         public BasketService(IDataBaseContext context
-            , IUriComposerService uriComposerService)
+           )
         {
             this.context = context;
-            this.uriComposerService = uriComposerService;
+            
         }
 
 
@@ -85,7 +86,7 @@ namespace Application.BasketsService
                     CatalogName = item.CatalogItem.Name,
                     Quantity = item.Quantity,
                     UnitPrice = item.UnitPrice,
-                    ImageUrl = uriComposerService.ComposeImageUri(item?.CatalogItem?
+                    ImageUrl = GlobalConstants.serverImageUrl +(item?.CatalogItem?
                      .CatalogItemImages?.FirstOrDefault()?.Src ?? ""),
 
                 }).ToList(),
@@ -127,7 +128,7 @@ namespace Application.BasketsService
                     Quantity = item.Quantity,
                     UnitPrice = item.CatalogItem.Price,
                     OldPrice=item.CatalogItem.OldPrice,
-                    ImageUrl = uriComposerService.ComposeImageUri(item?.CatalogItem?
+                    ImageUrl = GlobalConstants.serverImageUrl + (item?.CatalogItem?
                    .CatalogItemImages?.FirstOrDefault()?.Src ?? ""),
 
                 }).ToList()

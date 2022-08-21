@@ -19,8 +19,8 @@ namespace WebSite.EndPoint.Models.ViewComponents
         public IViewComponentResult Invoke()
         {
             var model =new GetHomePageTwoDiscountCatalogItemsViewModel();
-            var Vijeh = getDiscountInHomePage.Executed(3, 1).Data;
-            var HomePage = getDiscountInHomePage.Executed(2, 1).Data;
+            var Vijeh = getDiscountInHomePage.Vijeh().Data;
+            var HomePage = getDiscountInHomePage.HomePage().Data;
             model.Vijeh = Vijeh;
             model.HomePage = HomePage;
             var viewName = $"~/Views/Shared/Components/Product/{this.ViewComponentContext.ViewComponentDescriptor.ShortName}.cshtml";

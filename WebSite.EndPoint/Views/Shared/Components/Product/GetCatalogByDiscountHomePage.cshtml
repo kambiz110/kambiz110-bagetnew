@@ -6,7 +6,7 @@
     {
         <div class="product_area product_area_four color_three">
             <div class="container">
-                <div class="row">
+                <div class="row" style="border-bottom: 2px solid #e3dde9;">
                     <div class="col-lg-9 col-md-12">
                         <div class="deals_product_style4">
                             <div class="section_title title_style2">
@@ -29,12 +29,12 @@
                                                 </div>
                                             </div>
                                             <div class="product_content">
-                                                <p class="manufacture_product"><a href="#">قطعات خودرو</a></p>
-                                                <h4 class="product_name">
+                                                <p class="manufacture_product"><a href="#"><span class="text-danger">خودرو</span> :@item.CarName | <span class="text-danger">برند</span>: @item.BrandName</a></p>
+                                                <h3 class="product_name">
                                                     <a href="~/Product/Details/pid-@item.Id/@item.Slug">
                                                         @item.Name
                                                     </a>
-                                                </h4>
+                                                </h3>
                                                 <div class="product_rating">
                                                     <ul>
                                                         @{
@@ -69,7 +69,7 @@
                                                     }
                                                     <span class="current_price">@item.Price.ToString("n0") تومان</span>
                                                 </div>
-                                                <div class="product_desc" style=" max-height: 77px!important; overflow:hidden !important">
+                                                <div class="product_desc" style=" max-height: 123px!important; overflow:hidden !important">
                                                     @Html.Raw(item.Description)
                                                 </div>
                                                 <div class="countdown_text">
@@ -105,9 +105,11 @@
                                              
                                             </div>
                                             <div class="product_content">
+                                                <p class="manufacture_product"><a href="#"><span class="text-danger">خودرو</span> :@item.CarName | <span class="text-danger">برند</span>: @item.BrandName</a></p>
+
                                                 <h4 class="product_name">
                                                     <a href="~/Product/Details/pid-@item.Id/@item.Slug">
-                                                       @item.Name
+                                                        @item.Name
                                                     </a>
                                                 </h4>
                                                 <div class="product_rating">

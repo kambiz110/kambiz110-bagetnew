@@ -19,15 +19,15 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
 
         private readonly IDataBaseContext context;
         private readonly IMapper mapper;
-        private readonly IUriComposerService uriComposerService;
+       
 
         public CatalogItemService(IDataBaseContext context
             , IMapper mapper
-            , IUriComposerService uriComposerService)
+            )
         {
             this.context = context;
             this.mapper = mapper;
-            this.uriComposerService = uriComposerService;
+            
         }
 
         public void AddToMyFavourite(string UserId, int CatalogItemId)

@@ -20,15 +20,15 @@ namespace Application.HomePageService
     public class HomePageService : IHomePageService
     {
         private readonly IDataBaseContext context;
-        private readonly IUriComposerService uriComposerService;
+       
         private readonly IGetCatalogIItemPLPService getCatalogIItemPLPService;
 
         public HomePageService(IDataBaseContext context
-            , IUriComposerService uriComposerService
+          
             , IGetCatalogIItemPLPService getCatalogIItemPLPService)
         {
             this.context = context;
-            this.uriComposerService = uriComposerService;
+         
             this.getCatalogIItemPLPService = getCatalogIItemPLPService;
         }
 

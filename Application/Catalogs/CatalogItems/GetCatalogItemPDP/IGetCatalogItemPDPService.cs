@@ -18,12 +18,12 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
     public class GetCatalogItemPDPService : IGetCatalogItemPDPService
     {
         private readonly IDataBaseContext context;
-        private readonly IUriComposerService uriComposerService;
+      
 
-        public GetCatalogItemPDPService(IDataBaseContext context, IUriComposerService uriComposerService)
+        public GetCatalogItemPDPService(IDataBaseContext context )
         {
             this.context = context;
-            this.uriComposerService = uriComposerService;
+           
         }
         public CatalogItemPDPDto Execute(int Id)
         {
@@ -84,7 +84,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
                 Type = catalogitem.CatalogType.Type,
                 Price = catalogitem.Price,
                 Description = catalogitem.Description,
-                Images = catalogitem.CatalogItemImages.Select(p => uriComposerService.ComposeImageUri(p.Src)).ToList(),
+                Images = catalogitem.CatalogItemImages.Select(p => GlobalConstants.serverImageUrl + (p.Src)).ToList(),
                 OldPrice = catalogitem.OldPrice ?? catalogitem.Price,
                 PercentDiscount = catalogitem.PercentDiscount,
                 CarName = catalogitem.CatologCar.Name,

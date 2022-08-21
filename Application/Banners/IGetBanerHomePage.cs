@@ -2,6 +2,7 @@
 using Application.Dtos;
 using Application.Interfaces.Contexts;
 using AutoMapper;
+using Common.Useful;
 using Domain.Banners;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,13 +21,13 @@ namespace Application.Banners
     {
         private readonly IDataBaseContext context;
         private readonly IMapper mapper;
-        private readonly IUriComposerService uriComposerService;
+       
 
-        public GetBanerHomePage(IDataBaseContext context, IMapper mapper, IUriComposerService uriComposerService)
+        public GetBanerHomePage(IDataBaseContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
-            this.uriComposerService = uriComposerService;
+         
         }
         public BaseDto<List<BannerDto>> Executed(int position, int count)
         {
@@ -35,7 +36,7 @@ namespace Application.Banners
            var result = mapper.ProjectTo<BannerDto>(data).ToList();
             for (int i = 0; i < result.Count; i++)
             {
-                result.ElementAt(i).Image = uriComposerService.ComposeImageUri(result.ElementAt(i).Image);
+                result.ElementAt(i).Image = GlobalConstants.serverImageUrl + (result.ElementAt(i).Image);
             }
             
             return new BaseDto<List<BannerDto>>(

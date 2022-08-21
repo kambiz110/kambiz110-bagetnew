@@ -2,6 +2,7 @@
 using Application.Dtos;
 using Application.Interfaces.Contexts;
 using AutoMapper;
+using Common.Useful;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,14 +20,14 @@ namespace Application.Catalogs.CatalogTypes
     {
         private readonly IDataBaseContext context;
         private readonly IMapper mapper;
-        private readonly IUriComposerService uriComposerService;
+
 
         public MenuCatolgType(IDataBaseContext context, IMapper mapper
-            , IUriComposerService uriComposerService)
+            )
         {
             this.context = context;
             this.mapper = mapper;
-            this.uriComposerService = uriComposerService;
+     
         }
         public BaseDto<List<CatalogTypeDto>> ListCatalogTypeBySortIndex(int type, int count)
         {
@@ -38,8 +39,12 @@ namespace Application.Catalogs.CatalogTypes
             var result = mapper.ProjectTo<CatalogTypeDto>(model).ToList();
             for (int i = 0; i < result.Count; i++)
             {
-                result.ElementAt(i).CatalogTypeImage.Src = uriComposerService.ComposeImageUri(result.ElementAt(i).CatalogTypeImage.Src);
-            }
+                if (result.ElementAt(i).CatalogTypeImage!=null)
+                {
+     result.ElementAt(i).CatalogTypeImage.Src = GlobalConstants.serverImageUrl+(result.ElementAt(i).CatalogTypeImage.Src);
+          
+                }
+             }
             return new BaseDto<List<CatalogTypeDto>>(true,new List<string> { "موفق"},result);
         }
     }

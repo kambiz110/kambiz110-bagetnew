@@ -9,13 +9,16 @@ using Application.Catalogs.CatalogTypes;
 using Application.Catalogs.CatalogTypes.Dto;
 using Application.Users.Token;
 using AutoMapper;
+using Domain.Catalogs;
 using Infrastructure.ExternalApi.ImageServer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Admin.EndPoint.Pages.CatalogType
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly ICatalogTypeService catalogTypeService;
@@ -62,13 +65,14 @@ namespace Admin.EndPoint.Pages.CatalogType
                     images.Add(item);
                 }
             }
+            var model = mapper.Map<CatalogTypeDto>(CatalogType);
             if (images.Count > 0)
             {
                 var removeImage = cRUDCatalogTypeImage.RemoveCatalogTypeId(CatalogType.Id);
                 var uploadResult = cRUDCatalogTypeImage.Add(new CatalogTypeImageDto { Id = 0, CatalogTypeId = CatalogType.Id, Src = images.FirstOrDefault() });
-
+                model.CatalogTypeImage= mapper.Map(uploadResult.Data, new CatalogTypeImage() { });
             }
-            var model = mapper.Map<CatalogTypeDto>(CatalogType);
+            
             var result = catalogTypeService.Edit(model);
            
            

@@ -21,12 +21,12 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemAdmin
     {
         private readonly IDataBaseContext context;
         private readonly IMapper mapper;
-        private readonly IUriComposerService uriComposerService;
-        public GetAdminEditCatalogItem(IDataBaseContext context, IMapper mapper , IUriComposerService uriComposerService)
+        
+        public GetAdminEditCatalogItem(IDataBaseContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
-           this. uriComposerService = uriComposerService;
+         
         }
 
         public AddNewCatalogItemDto Execute(int Id)
