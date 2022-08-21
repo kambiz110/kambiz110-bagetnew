@@ -51,7 +51,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
                 var serchLST = request.CatalogTypeId.Where(p => p != 0).ToArray();
                 if (serchLST.Length>0)
                 {
- query = query.Where(p => serchLST.Contains(p.CatalogTypeId));
+                query = query.Where(p => serchLST.Contains(p.CatalogTypeId));
                 }
                
             }
@@ -157,7 +157,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
         public int priceMin { get; set; }
         public int priceMax { get; set; }
 
-        public int page { get; set; } = 1;
+        public int page { get; set; } = 12;
         public int pageIndex { get; set; } = 1;
         public int? CatalogCarId { get; set; }
         public int? CatalogCopmanyId { get; set; }

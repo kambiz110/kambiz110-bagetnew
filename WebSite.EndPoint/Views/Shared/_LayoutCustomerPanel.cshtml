@@ -25,7 +25,7 @@
                                     <h6><strong>نام کاربری</strong></h6>
                                 </div>
                                 <div class="d-block">
-                                    <strong class="text-muted"> @User.FindFirst(System.Security.Claims.ClaimTypes.GivenName).Value.ToString()</strong>
+                                    <strong class="text-muted"> @User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value</strong>
                                 </div>
                             </div>
                         </div>

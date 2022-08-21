@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Admin.EndPoint.Helper;
+using Admin.EndPoint.Helper.UploadFile;
 using Admin.EndPoint.ViewModels.Catalogs;
 using Application.Catalogs.CatalogTypeImages;
 using Application.Catalogs.CatalogTypes;
@@ -23,12 +24,12 @@ namespace Admin.EndPoint.Pages.CatalogType
     {
         private readonly ICatalogTypeService catalogTypeService;
         private readonly IMapper mapper;
-        private readonly IImageUploadService imageUploadService;
+        private readonly IUploadFile imageUploadService;
         private readonly ICRUDCatalogTypeImage cRUDCatalogTypeImage;
         private readonly IGetUserToken getUserToken;
 
         public CreateModel(ICatalogTypeService catalogTypeService, IMapper mapper,
-            IImageUploadService imageUploadService
+            IUploadFile imageUploadService
             , ICRUDCatalogTypeImage cRUDCatalogTypeImage
             , IGetUserToken getUserToken)
         {
@@ -62,8 +63,8 @@ namespace Admin.EndPoint.Pages.CatalogType
             if (Files.Count > 0)
             {
                 //Upload 
-                var resultUpload = imageUploadService.Upload(Files, ClaimUtility.GetUserId(User), getUserToken.getToken(User.Identity.Name));
-                foreach (var item in resultUpload)
+                var resultUpload = imageUploadService.UploadFileToServers(Files);
+                foreach (var item in resultUpload.FileNameAddress)
                 {
                     images.Add(item);
                 }

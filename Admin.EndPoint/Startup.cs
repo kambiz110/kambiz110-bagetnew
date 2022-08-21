@@ -1,5 +1,6 @@
 using Admin.EndPoint.Configurations;
 using Admin.EndPoint.Helper;
+using Admin.EndPoint.Helper.UploadFile;
 using Admin.EndPoint.MappingProfiles;
 using Application.Banners;
 using Application.Catalogs.CatalogBrands;
@@ -67,7 +68,7 @@ namespace Admin.EndPoint
             services.AddTransient<ICatalogTypeService, CatalogTypeService>();
             services.AddTransient<IAddNewCatalogItemService,  AddNewCatalogItemService>();
             services.AddTransient<ICatalogItemService,  CatalogItemService>();
-            services.AddTransient<IImageUploadService,  ImageUploadService>();
+        // services.AddTransient<IImageUploadService,  ImageUploadService>();
             services.AddTransient<IAddNewDiscountService,  AddNewDiscountService>();
             services.AddTransient<IDiscountService,  DiscountService>();
             services.AddTransient<IDiscountHistoryService,  DiscountHistoryService>();
@@ -89,6 +90,7 @@ namespace Admin.EndPoint
             services.AddTransient<IGeneritTokenUser, GeneritTokenUser>();
             services.AddTransient<IGetUserToken, GetUserToken>();
             services.AddTransient<IGetUsers, GetUsers>();
+            services.AddTransient<IUploadFile, UploadFile>();
 
 
             #region connection String SqlServer

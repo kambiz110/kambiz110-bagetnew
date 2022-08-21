@@ -1,4 +1,5 @@
 ﻿using Admin.EndPoint.Helper;
+using Admin.EndPoint.Helper.UploadFile;
 using Admin.EndPoint.ViewModels.Catalogs;
 using Application.Catalogs.CatalogFeature.Command;
 using Application.Catalogs.CatalogFeature.Dto;
@@ -28,7 +29,7 @@ namespace Admin.EndPoint.Controllers
     public class CategoreItemsController : Controller
     {
         private readonly IAddNewCatalogItemService addNewCatalogItemService;
-        private readonly IImageUploadService imageUploadService;
+        private readonly IUploadFile imageUploadService;
         private readonly IDeleteImageService deleteImageService;
         private readonly IAddStoreroom addStoreroom;
         private readonly IGetAdminEditCatalogItem getAdminEditCatalogItem;
@@ -42,7 +43,7 @@ namespace Admin.EndPoint.Controllers
             , ICatalogItemService catalogItemService
             , IRemoveFeacherService removeFeacherService,
             IAddNewCatalogItemService addNewCatalogItemService,
-            IImageUploadService imageUploadService
+            IUploadFile imageUploadService
             , IDeleteImageService deleteImageService,
             IAddStoreroom addStoreroom, IGetDescountForEdit descountForEdit,
             IincreaseCattalogItem iincreaseCattalog,
@@ -121,8 +122,8 @@ namespace Admin.EndPoint.Controllers
             if (Files.Count > 0)
             {
                 //Upload 
-                var result = imageUploadService.Upload(Files , ClaimUtility.GetUserId(User) , getUserToken.getToken(User.Identity.Name));
-                foreach (var item in result)
+                var result = imageUploadService.UploadFileToServersResized(Files ,1000 ,600);
+                foreach (var item in result.FileNameAddress)
                 {
                     images.Add(new AddNewCatalogItemImage_Dto { Src = item });
                 }

@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.ExternalApi.ImageServer
 {
-    public interface IImageUploadService
+     interface IImageUploadService
     {
         List<string> Upload(List<IFormFile> files, string apiKey, string token);
     }
-    public class ImageUploadService : IImageUploadService
+     class ImageUploadService : IImageUploadService
     {
         public List<string> Upload(List<IFormFile> files, string apiKey, string token)
         {

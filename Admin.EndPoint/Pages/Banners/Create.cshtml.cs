@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Admin.EndPoint.Helper;
+using Admin.EndPoint.Helper.UploadFile;
 using Application.Banners;
 using Application.Users.Token;
 using Infrastructure.ExternalApi.ImageServer;
@@ -17,11 +18,11 @@ namespace Admin.EndPoint.Pages.Banners
     public class CreateModel : PageModel
     {
         private readonly IBannersService banners;
-        private readonly IImageUploadService imageUploadService;
+        private readonly IUploadFile imageUploadService;
         private readonly IGetUserToken getUserToken;
 
         public CreateModel(IBannersService banners,
-            IImageUploadService imageUploadService, IGetUserToken getUserToken)
+            IUploadFile imageUploadService, IGetUserToken getUserToken)
         {
             this.banners = banners;
             this.imageUploadService = imageUploadService;
@@ -44,10 +45,10 @@ namespace Admin.EndPoint.Pages.Banners
         {
             if (BannerImage != null && BannerImage.Length > 0)
             {
-                var result = imageUploadService.Upload(new List<IFormFile> { BannerImage }, ClaimUtility.GetUserId(User), getUserToken.getToken(User.Identity.Name));
-                if (result.Count > 0)
+                var result = imageUploadService.UploadFileToServers(new List<IFormFile> { BannerImage });
+                if (result.FileNameAddress.Count > 0)
                 {
-                    Banner.Image = result.FirstOrDefault();
+                    Banner.Image = result.FileNameAddress.FirstOrDefault();
                     banners.AddBanner(Banner);
                 }
                 return RedirectToPage("Index");

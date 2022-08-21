@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Admin.EndPoint.Helper;
+using Admin.EndPoint.Helper.UploadFile;
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Dtos;
@@ -23,13 +24,13 @@ namespace Admin.EndPoint.Pages.CatalogItems
     {
         private readonly IAddNewCatalogItemService addNewCatalogItemService;
         private readonly ICatalogItemService catalogItemService;
-        private readonly IImageUploadService imageUploadService;
+        private readonly IUploadFile imageUploadService;
         private readonly IAddStoreroom addStoreroom;
         private readonly IGetUserToken getUserToken;
 
         public CreateModel(IAddNewCatalogItemService addNewCatalogItemService
             , ICatalogItemService catalogItemService
-            , IImageUploadService imageUploadService
+            , IUploadFile imageUploadService
             , IAddStoreroom addStoreroom
             , IGetUserToken getUserToken)
         {
@@ -78,8 +79,8 @@ namespace Admin.EndPoint.Pages.CatalogItems
             if (Files.Count > 0)
             {
                 //Upload 
-                var result = imageUploadService.Upload(Files ,ClaimUtility.GetUserId(User), getUserToken.getToken(User.Identity.Name));
-                foreach (var item in result)
+                var result = imageUploadService.UploadFileToServersResized(Files, 1000, 600);
+                foreach (var item in result.FileNameAddress)
                 {
                     images.Add(new AddNewCatalogItemImage_Dto { Src = item });
                 }
