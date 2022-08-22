@@ -9,8 +9,19 @@
 <div class="checkout-section shadow-around">
     <div class="checkout-section-content">
         <form method="post" asp-action="AddNewAddress" asp-controller="Address" asp-area="customers" data-select2-id="select2-data-18-nzre" class="m-2">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (ViewBag.error != null)
+            {
+                <ol>
+                    @foreach (var item in ViewBag.error)
+                    {
+                    <li class="text-danger"> <i class='fas fa-exclamation-triangle' style='font-size:15px;color:red'></i>  @item</li>
+
+                    }
+                </ol>
+            }
             <div class="row" data-select2-id="select2-data-17-414m">
-                <div class="col-lg-6 mb-3">
+                <div class="col-lg-4 mb-3">
                     <div class="text-sm text-muted mb-1">استان:</div>
                     <div class="text-dark font-weight-bold">
                         <div class="form-element-row mb-0">
@@ -19,7 +30,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6 mb-3">
+                <div class="col-lg-4 mb-3">
                     <div class="text-sm text-muted mb-1">شهر:</div>
                     <div class="text-dark font-weight-bold">
                         <div class="form-element-row mb-0">
@@ -27,13 +38,20 @@
                         </div>
                     </div>
                 </div>
-
-
-                <div class="col-lg-6 mb-3">
+                <div class="col-lg-4 mb-3">
                     <div class="text-sm text-muted mb-1">کد پستی:</div>
                     <div class="text-dark font-weight-bold">
                         <div class="form-element-row mb-0">
                             <input type="text" class="input-element" asp-for="ZipCode">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-3">
+                    <div class="text-sm text-muted mb-1">شماره موبایل:</div>
+                    <div class="text-dark font-weight-bold">
+                        <div class="form-element-row mb-0">
+                            <input type="text" class="input-element" asp-for="PhoneNumber">
                         </div>
                     </div>
                 </div>
@@ -62,7 +80,7 @@
 
     </div>
 </div>
- 
+
 
 <div class="modal fade" id="editAddressModal" tabindex="-1" aria-labelledby="editAddressModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -139,3 +157,4 @@
         </div>
     </div>
 </div>
+<partial name="/Views/Shared/_ValidationScriptsPartial.cshtml" />

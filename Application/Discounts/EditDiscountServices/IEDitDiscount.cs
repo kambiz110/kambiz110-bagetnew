@@ -35,16 +35,16 @@ namespace Application.Discounts.EditDiscountServices
 
             if (dto.appliedToCatalogItem != null)
             {
-                var catalogItems = context.CatalogItems.Where(p => dto.appliedToCatalogItem.Contains(p.Id)).ToList();
+                var catalogItems = context.CatalogItems.AsNoTracking().Where(p => dto.appliedToCatalogItem.Contains(p.Id)).ToList();
 
                 for (int i = 0; i < catalogItems.Count; i++)
                 {
-                    if (discount.CatalogItems.Where(p=>p.Id== catalogItems.ElementAt(i).Id).Any())
+                    if (!discount.CatalogItems.Where(p => p.Id == catalogItems.ElementAt(i).Id).Any())
                     {
-                        catalogItems.Remove(catalogItems.ElementAt(i));
+                        discount.CatalogItems.Add(catalogItems.ElementAt(i));
                     }
                 }
-                discount.CatalogItems = catalogItems;
+             
             }
          
             context.Discount.Update(discount);

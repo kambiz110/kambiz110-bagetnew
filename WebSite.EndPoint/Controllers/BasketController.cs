@@ -141,7 +141,10 @@ namespace WebSite.EndPoint.Controllers
 
         public IActionResult Checkout(bool payResult)
         {
-            return View();
+            string userId = ClaimUtility.GetUserId(User);
+            var paymentId = TempData["paymentId"];
+            var model = paymentService.GetPaymentWithOrderForCheckoutPage(paymentId.ToString(), userId);
+            return View(model);
         }
 
 

@@ -65,12 +65,12 @@ namespace WebSite.EndPoint.Controllers
             //    Mobile = payment.PhoneNumber,
             //}, Payment.Mode.zarinpal
             //    );
-            return RedirectToAction("Verify", "pay", new { Id=new Guid().ToString(), Authority = "test_Authority" });
+            return RedirectToAction("Verify", "pay", new { Id=new Guid().ToString(), Authority = "test_Authority" ,paymentId= PaymentId.ToString()});
            // return Redirect($"https://zarinpal.com/pg/StartPay/{resultZarinpalRequest.Authority}");
         }
 
 
-        public IActionResult Verify(Guid Id, string Authority)
+        public IActionResult Verify(Guid Id, string Authority ,string PaymentId)
         {
             string Status = HttpContext.Request.Query["Status"];
             
@@ -128,7 +128,8 @@ namespace WebSite.EndPoint.Controllers
 
             }
             TempData["message"] = "پرداخت شما ناموفق بوده است .";
-            return RedirectToAction("checkout", "basket", new { payResult = false });
+            TempData["paymentId"] = PaymentId;
+            return RedirectToAction("checkout", "basket", new { payResult = false  });
         }
     }
 

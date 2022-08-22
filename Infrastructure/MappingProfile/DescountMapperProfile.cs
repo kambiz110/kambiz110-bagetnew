@@ -36,11 +36,18 @@ namespace Infrastructure.MappingProfile
                 .ReverseMap();
 
             CreateMap<Discount, GetDescountsForEditViewModel>()
-                 .ForMember(dest => dest.catalogItems, opt =>
-                opt.MapFrom(src => src.CatalogItems.Select(p=> new catalogitemDtoForEditDescount { 
-               Id=p.Id,   Name=p.Name, Price=p.Price ,CarName=p.CatologCar.Name,BrandName=p.CatalogBrand.Brand 
-                })))
-                .ReverseMap();
+                 .ForMember(dest => dest.catalogItemsview, opt =>
+                opt.MapFrom(src => src.CatalogItems.Select(p => new catalogitemDtoForEditDescount
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    CarName = p.CatologCar.Name,
+                    BrandName = p.CatalogBrand.Brand
+                })));
+            CreateMap<GetDescountsForEditViewModel,Discount>();
+
+
         }
     }
 }

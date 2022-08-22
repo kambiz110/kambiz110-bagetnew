@@ -95,6 +95,16 @@ namespace Domain.Order
             }
             return totalPrice;
         }
+        public int TotalPriceWithPostalDelivery()
+        {
+            int totalPrice = _orderItems.Sum(p => p.UnitPrice * p.Units);
+            if (AppliedDiscount != null)
+            {
+                totalPrice -= AppliedDiscount.GetDiscountAmount(totalPrice);
+            }
+            totalPrice = totalPrice + 60000;
+            return totalPrice;
+        }
 
         /// <summary>
         /// دریافت مبلغ کل بدون در نظر گرفتن کد تخفیف
@@ -150,12 +160,14 @@ namespace Domain.Order
         public string ZipCode { get; private set; }
         public string PostalAddress { get; private set; }
         public string ReciverName { get; private set; }
-        public Address(string city, string state, string zipCode, string postalAddress)
+        public string PhoneNumber { get; private set; }
+        public Address(string city, string state, string zipCode, string postalAddress ,string phoneNumber)
         {
             this.City = city;
             State = state;
             ZipCode = zipCode;
             PostalAddress = postalAddress;
+            PhoneNumber = phoneNumber;
         }
     }
 

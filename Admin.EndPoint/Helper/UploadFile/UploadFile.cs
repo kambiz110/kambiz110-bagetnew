@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using System.Drawing;
-using ImageResizer;
+
 
 namespace Admin.EndPoint.Helper.UploadFile
 {

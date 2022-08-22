@@ -14,6 +14,7 @@ namespace Application.Payments
     {
         PaymentOfOrderDto PayForOrder(int OrderId);
         PaymentDto GetPayment(Guid Id);
+        PaymentToCheckoutPageDto GetPaymentWithOrderForCheckoutPage(string Id, string userId);
         bool VerifyPayment(Guid Id, string Authority, long RefId);
 
     }
@@ -57,6 +58,35 @@ namespace Application.Payments
             };
             return paymentDto;
         }
+
+        public PaymentToCheckoutPageDto GetPaymentWithOrderForCheckoutPage(string Id ,string userId)
+        {
+            var user = identityContext.Users.SingleOrDefault(p => p.Id == userId);
+            if (user!=null )
+            {
+                var payment = context.Payments.Where(p => p.Id == new Guid(Id) && p.IsPay == false )
+                 .Include(p => p.Order).FirstOrDefault();
+                if (payment.Order.UserId==user.Id)
+                {
+                    return new PaymentToCheckoutPageDto { 
+                    payAddress=new PayAddress() {
+                        City= payment.Order.Address.City,
+                        PhoneNumber= payment.Order.Address.PhoneNumber,
+                    PostalAddress= payment.Order.Address.PostalAddress,
+                        ReciverName= payment.Order.Address.ReciverName }
+                    ,Amount= payment.Amount,
+                    Id=payment.Id,
+                     Userid=user.Id
+                    
+                    };
+                }
+                return null;
+            }
+
+
+            return null;
+        }
+
         /// <summary>
         /// ثبت برای ارسال به درگاه پرداخت
         /// </summary>
@@ -74,7 +104,7 @@ namespace Application.Payments
 
             if (payment == null)
             {
-                payment = new Payment(order.TotalPrice(), order.Id);
+                payment = new Payment(order.TotalPriceWithPostalDelivery(), order.Id);
                 context.Payments.Add(payment);
                 context.SaveChanges();
             }
@@ -133,4 +163,20 @@ namespace Application.Payments
         public int Amount { get; set; }
         public string Userid { get; set; }
     }
-}
+    public class PaymentToCheckoutPageDto
+    {
+        public Guid Id { get; set; }
+        public int Amount { get; set; }
+        public string Userid { get; set; }
+        public PayAddress payAddress { get; set; }
+    }
+    public class PayAddress
+    {
+        public string State { get;  set; }
+        public string City { get;  set; }
+
+        public string PostalAddress { get;  set; }
+        public string ReciverName { get;  set; }
+        public string PhoneNumber { get;  set; }
+    }
+    }

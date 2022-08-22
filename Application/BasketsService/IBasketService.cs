@@ -216,12 +216,24 @@ namespace Application.BasketsService
         public string BuyerId { get; set; }
         public List<BasketItemDto> Items { get; set; } = new List<BasketItemDto>();
         public int DiscountAmount { get; set; }
+        public int TotalWithoutPostDelivery()
+        {
+            if (Items.Count > 0)
+            {
+                int total = Items.Sum(p => p.UnitPrice * p.Quantity);
+                total -= DiscountAmount;
+              
+                return total;
+            }
+            return 0;
+        }
         public int Total()
         {
             if (Items.Count > 0)
             {
                 int total = Items.Sum(p => p.UnitPrice * p.Quantity);
                 total -= DiscountAmount;
+                total+=total=60000;
                 return total;
             }
             return 0;

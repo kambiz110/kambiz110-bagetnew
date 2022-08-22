@@ -43,7 +43,7 @@ namespace Application.Discounts.Dto
         public int Weight { get; set; }
         public List<int> appliedToCatalogItem { get; set; }
 
-        public List<catalogitemDtoForEditDescount> catalogItems { get; set; }
+        public List<catalogitemDtoForEditDescount> catalogItemsview { get; set; }
     }
     public class catalogitemDtoForEditDescount
     {

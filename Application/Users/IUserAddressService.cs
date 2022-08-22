@@ -1,14 +1,17 @@
 ﻿using Application.Interfaces.Contexts;
+using Application.Users.Dto;
 using AutoMapper;
 using Domain.Users;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Users
 {
+
     public interface IUserAddressService
     {
         List<UserAddressDto> GetAddress(string UserId);
@@ -72,16 +75,30 @@ namespace Application.Users
         public string ZipCode { get; set; }
         public string PostalAddress { get; set; }
         public string ReciverName { get; set; }
+        public string PhoneNumber { get; set; }
     }
 
     public class AddUserAddressDto
     {
         public int Id { get; set; } = 0;
+        [Display(Name = "شهر ")]
+        [Required(ErrorMessage = "{0} را وارد نمایید")]
         public string City { get; set; }
+        [Required(ErrorMessage = "نام استان را وارد نمایید")]
         public string State { get; set; }
+        [Display(Name = "کد پستی")]
+        [DataType(DataType.PostalCode)]
+        [RegularExpression(pattern: @"\b(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}\b" ,ErrorMessage =  "کد پستی شما نادرست می‌باشد")]
         public string ZipCode { get; set; }
+        [Required(ErrorMessage = "آدرس کامل را وارد نمایید")]
         public string PostalAddress { get; set; }
+        [Required(ErrorMessage = "نام دریافت کننده را وارد نمایید")]
         public string ReciverName { get; set; }
+
         public string UserId { get; set; }
+        [MobliPhon]
+        [Display(Name = "شماره موبایل ")]
+        [Required(ErrorMessage = "{0} را وارد نمایید")]
+        public string PhoneNumber { get; set; }
     }
 }

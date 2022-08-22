@@ -185,7 +185,7 @@
     </div>
 </div>
 
-@if (Model.catalogItems.Any())
+@if (Model.catalogItemsview.Any())
 {
     <div class="widget-content searchable-container list">
 
@@ -239,7 +239,7 @@
                 </div>
             </div>
 
-           @foreach (var item in Model.catalogItems)
+           @foreach (var item in Model.catalogItemsview)
            {
         <div class="items">
             <div class="item-content">

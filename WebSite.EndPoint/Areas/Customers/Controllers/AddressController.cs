@@ -33,6 +33,16 @@ namespace WebSite.EndPoint.Areas.Customers.Controllers
         [HttpPost]
         public IActionResult AddNewAddress(AddUserAddressDto address)
         {
+            if (!ModelState.IsValid)
+            {
+                var query = from state in ModelState.Values
+                            from error in state.Errors
+                            select error.ErrorMessage;
+
+                var errorList = query.ToList();
+                ViewBag.error = errorList;
+                return View(address);
+            }
             string userId = ClaimUtility.GetUserId(User);
             address.UserId = userId;
             userAddressService.AddnewAddress(address);

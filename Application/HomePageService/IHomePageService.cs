@@ -49,23 +49,23 @@ namespace Application.HomePageService
             var Bestselling = getCatalogIItemPLPService.Execute(new CatlogPLPRequestDto
             {
                 AvailableStock = true,
-                page = 1,
-                pageIndex = 20,
+                page = 12,
+                pageIndex = 1,
                 SortType = SortType.Bestselling
             }).Data.ToList();
 
             var MostPopular = getCatalogIItemPLPService.Execute(new CatlogPLPRequestDto
             {
                 AvailableStock = true,
-                page = 1,
-                pageIndex = 20,
+                page = 12,
+                pageIndex = 1,
                 SortType = SortType.MostPopular
             }).Data.ToList();
             var MostDescountNumber = getCatalogIItemPLPService.Execute(new CatlogPLPRequestDto
             {
                 AvailableStock = true,
-                page = 1,
-                pageIndex = 20,
+                page = 12,
+                pageIndex = 1,
                 SortType = SortType.mostDescounted
             }).Data.ToList();
 

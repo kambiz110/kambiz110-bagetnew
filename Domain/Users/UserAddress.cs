@@ -17,6 +17,7 @@ namespace Domain.Users
         public string PostalAddress { get; private set; }
         public string UserId { get; private set; }
         public string ReciverName { get; private set; }
+        public string PhoneNumber { get; set; }
 
         public UserAddress(string city, string state,
             string zipCode, string postalAddress,

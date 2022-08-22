@@ -38,10 +38,10 @@ namespace Application.Catalogs.CatalogTypes.Query
  .Where(p => p.SortIndex == sortIndex && p.ParentCatalogTypeId== parentId)
  .OrderByDescending(p => p.Id).Take(count)
  .Include(p => p.CatalogTypeImage)
- .Include(p=>p.CatalogItems.Where(p=>p.Importance>1).OrderByDescending(p=>p.Importance).Take(15)).ThenInclude(p=>p.CatalogItemImages)
- .Include(p => p.CatalogItems.Where(p => p.Importance > 1).OrderByDescending(p => p.Importance).Take(15)).ThenInclude(p => p.Discounts)
- .Include(p => p.CatalogItems.Where(p => p.Importance > 1).OrderByDescending(p => p.Importance).Take(15)).ThenInclude(p => p.CatologCar)
- .Include(p => p.CatalogItems.Where(p => p.Importance > 1).OrderByDescending(p => p.Importance).Take(15)).ThenInclude(p => p.CatalogBrand)
+ .Include(p=>p.CatalogItems.Where(p=>p.Importance>0).OrderByDescending(p=>p.Importance).Take(15)).ThenInclude(p=>p.CatalogItemImages)
+ .Include(p => p.CatalogItems.Where(p => p.Importance > 0).OrderByDescending(p => p.Importance).Take(15)).ThenInclude(p => p.Discounts)
+ .Include(p => p.CatalogItems.Where(p => p.Importance > 0).OrderByDescending(p => p.Importance).Take(15)).ThenInclude(p => p.CatologCar)
+ .Include(p => p.CatalogItems.Where(p => p.Importance > 0).OrderByDescending(p => p.Importance).Take(15)).ThenInclude(p => p.CatalogBrand)
   .ToList();
             List<childCatalogeItemsByType> _itemsByTypes = new List<childCatalogeItemsByType>();
             foreach (var item in model)

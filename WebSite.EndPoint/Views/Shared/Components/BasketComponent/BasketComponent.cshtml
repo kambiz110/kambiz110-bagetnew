@@ -17,7 +17,7 @@
         {
 
             <span class="cart_price" style="margin-right: 0px !important;">
-                @Model.Total().ToString("n0") تومان <i class="ion-ios-arrow-down"></i>
+                @Model.TotalWithoutPostDelivery().ToString("n0") تومان <i class="ion-ios-arrow-down"></i>
             </span>
             <span class="cart_count">@Model.Items.Count()</span>
         }
@@ -77,7 +77,7 @@
                 </div>*@
                     <div class="cart_total mt-10">
                         <span>جمع کل:</span>
-                        <span class="price">@Model.Total().ToString("n0") تومان</span>
+                        <span class="price">@Model.TotalWithoutPostDelivery().ToString("n0") تومان</span>
                     </div>
                 </div>
             }
