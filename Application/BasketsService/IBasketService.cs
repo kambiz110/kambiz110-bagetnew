@@ -69,7 +69,7 @@ namespace Application.BasketsService
               .ThenInclude(p => p.CatalogItem).ThenInclude(p=>p.Discounts)
               .Include(p => p.Items)
               .ThenInclude(p => p.CatalogItem).ThenInclude(p => p.CatalogItemImages)
-              .SingleOrDefault(p => p.BuyerId == UserId);
+            .OrderByDescending(p=>p.Id) .FirstOrDefault(p => p.BuyerId == UserId);
             if (basket == null)
             {
                 return null;

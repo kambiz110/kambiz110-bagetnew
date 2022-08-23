@@ -41,6 +41,7 @@ namespace Application.Orders
         {
             var basket = context.Baskets
                          .Include(p => p.Items)
+                         .ThenInclude(p => p.CatalogItem).ThenInclude(p => p.Discounts)
                          .Include(p=> p.AppliedDiscount)
                          .SingleOrDefault(p => p.Id == BasketId);
             //بدست آودن شناسه ای دی محصول های داخل سبد

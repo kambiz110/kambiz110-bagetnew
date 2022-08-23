@@ -49,7 +49,7 @@ namespace Application.Payments
 
             PaymentDto paymentDto = new PaymentDto
             {
-                Amount = payment.Order.TotalPrice(),
+                Amount = payment.Order.TotalPriceWithPostalDelivery(),
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 Userid = user.Id,

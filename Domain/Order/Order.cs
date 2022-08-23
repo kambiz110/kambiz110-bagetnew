@@ -28,6 +28,7 @@ namespace Domain.Order
         public decimal DiscountAmount { get; private set; }
         public Discount AppliedDiscount { get; private set; }
         public int? AppliedDiscountId { get; private set; }
+        public DateTime ZamanSabt { get; set; } = DateTime.Now;
 
 
         public Order(string userId, Address address,

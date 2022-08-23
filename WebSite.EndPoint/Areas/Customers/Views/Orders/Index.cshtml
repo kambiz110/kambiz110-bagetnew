@@ -1,9 +1,18 @@
 ﻿@using Application.Orders.CustomerOrdersServices;
+@using WebSite.EndPoint.Utilities
 @model List<MyOrderDto>;
 @{
     ViewData["Title"] = "سفارشات من";
     Layout = "~/Views/Shared/_LayoutCustomerPanel.cshtml";
-    var data = Model;
+
+
+
+    var WaitingForPayment =  Model.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.WaitingForPayment).ToList();
+    var Paid = Model.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.Paid).ToList();
+    var Processing  = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Processing && p.PaymentStatus == Domain.Order.PaymentStatus.Paid).ToList();
+    var Delivered = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Delivered).ToList();
+    var Returned = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Returned).ToList();
+    var Cancelled =  Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Cancelled).ToList();
 
 }
 
@@ -28,31 +37,31 @@
             <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="wait-for-payment-tab" data-toggle="tab" href="#wait-for-payment" role="tab" aria-controls="wait-for-payment" aria-selected="true">
                     در انتظار پرداخت
-                    <span class="badge badge-secondary">4</span>
+                    <span class="badge badge-secondary">@WaitingForPayment.Count()</span>
                 </a>
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="pain-in-progress-tab" data-toggle="tab" href="#pain-in-progress" role="tab" aria-controls="pain-in-progress" aria-selected="false">
                     در حال پردازش
-                    <span class="badge badge-secondary">2</span>
+                    <span class="badge badge-secondary">@Processing.Count()</span>
                 </a>
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="delivered-tab" data-toggle="tab" href="#delivered" role="tab" aria-controls="delivered" aria-selected="false">
                     تحویل داده شده
-                    <span class="badge badge-secondary">2</span>
+                    <span class="badge badge-secondary">@Delivered.Count()</span>
                 </a>
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="returned-tab" data-toggle="tab" href="#returned" role="tab" aria-controls="returned" aria-selected="false">
                     مرجوعی
-                    <span class="badge badge-secondary">0</span>
+                    <span class="badge badge-secondary">@Returned.Count()</span>
                 </a>
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="canceled-tab" data-toggle="tab" href="#canceled" role="tab" aria-controls="canceled" aria-selected="false">
                     لغو شده
-                    <span class="badge badge-secondary">5</span>
+                    <span class="badge badge-secondary">@Cancelled.Count()</span>
                 </a>
             </li>
         </ul>
@@ -82,8 +91,7 @@
             <section class="table--order shadow-around mt-4">
                 <div class="table-responsive">
                     @{
-                        data = Model.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.WaitingForPayment).ToList();
-                        if (data.Count() > 0)
+                        if (WaitingForPayment.Count() > 0)
                         {
                             <table class="table">
                                 <thead>
@@ -96,13 +104,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in data)
+                                    @foreach (var item in WaitingForPayment)
                                     {
+                                        var rand = new Random().Next(1111,9999);
                                         <tr>
-                                            <td class="order-code">YCSH-@item.Id</td>
-                                            <td> @item.Date</td>
+                                            <td class="order-code">YCSH-@rand-@item.Id</td>
+                                            <td> @item.Date.ToPersianDateStrFarsi()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
-                                            <td>@item.OrderStatus.ToString()</td>
+                                            <td>در انتظار پرداخت</td>
                                             <td class="order-detail-link">
                                                 <a href="#">
                                                     <i class="far fa-chevron-left"></i>
@@ -131,8 +140,10 @@
         <div class="tab-pane fade" id="pain-in-progress" role="tabpanel" aria-labelledby="pain-in-progress-tab">
             <section class="table--order shadow-around mt-4">
                 <div class="table-responsive">
-                    @{data = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Processing).ToList();
-                        if (data.Count() > 0)
+                    @{
+                        
+                     
+                        if (Processing.Count() > 0)
                         {
                             <table class="table">
                                 <thead>
@@ -145,17 +156,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in data)
+                                    @foreach (var item in Processing)
                                     {
+                                        var rand = new Random().Next(1111, 9999);
                                         <tr>
-                                            <td class="order-code">YCSH-@item.Id</td>
-                                            <td> @item.Date</td>
+                                            <td class="order-code">YCSH-@rand-@item.Id</td>
+                                            <td> @item.Date.ToPersianDateStrFarsi()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
-                                            <td>@item.OrderStatus.ToString()</td>
+                                            <td>در حال پردازش</td>
                                             <td class="order-detail-link">
-                                                <a href="#">
-                                                    <i class="far fa-chevron-left"></i>
-                                                </a>
+                                                <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
                                             </td>
                                         </tr>
                                     }
@@ -180,8 +190,8 @@
         <div class="tab-pane fade" id="delivered" role="tabpanel" aria-labelledby="delivered-tab">
             <section class="table--order shadow-around mt-4">
                 <div class="table-responsive">
-                    @{data = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Delivered).ToList();
-                        if (data.Count() > 0)
+                    @{
+                        if (Delivered.Count() > 0)
                         {
                             <table class="table">
                                 <thead>
@@ -194,17 +204,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in data)
+                                    @foreach (var item in Delivered)
                                     {
+                                        var rand = new Random().Next(1111, 9999);
                                         <tr>
-                                            <td class="order-code">YCSH-@item.Id</td>
-                                            <td> @item.Date</td>
+                                            <td class="order-code">YCSH-@rand-@item.Id</td>
+                                            <td> @item.Date.ToPersianDateStrFarsi()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
-                                            <td>@item.OrderStatus.ToString()</td>
+                                            <td>تحویل داده شد</td>
                                             <td class="order-detail-link">
-                                                <a href="#">
-                                                    <i class="far fa-chevron-left"></i>
-                                                </a>
+                                                <i style="font-size:24px" class="fa">&#xf046;</i>
                                             </td>
                                         </tr>
                                     }
@@ -229,8 +238,8 @@
         <div class="tab-pane fade" id="returned" role="tabpanel" aria-labelledby="returned-tab">
             <section class="table--order shadow-around mt-4">
                 <div class="table-responsive">
-                    @{data = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Returned).ToList();
-                        if (data.Count() > 0)
+                    @{
+                        if (Returned.Count() > 0)
                         {
                             <table class="table">
                                 <thead>
@@ -243,17 +252,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in data)
+                                    @foreach (var item in Returned)
                                     {
+                                        var rand = new Random().Next(1111, 9999);
                                         <tr>
-                                            <td class="order-code">YCSH-@item.Id</td>
-                                            <td> @item.Date</td>
+                                            <td class="order-code">YCSH-@rand-@item.Id</td>
+                                            <td> @item.Date.ToPersianDateStrFarsi()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
-                                            <td>@item.OrderStatus.ToString()</td>
+                                            <td>مرجوعی</td>
                                             <td class="order-detail-link">
-                                                <a href="#">
-                                                    <i class="far fa-chevron-left"></i>
-                                                </a>
+                                                <i class='fas fa-redo' style='font-size:36px'></i>
                                             </td>
                                         </tr>
                                     }
@@ -278,8 +286,8 @@
         <div class="tab-pane fade" id="canceled" role="tabpanel" aria-labelledby="canceled-tab">
             <section class="table--order shadow-around mt-4">
                 <div class="table-responsive">
-                    @{data = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Cancelled).ToList();
-                        if (data.Count() > 0)
+                    @{
+                        if (Cancelled.Count() > 0)
                         {
                             <table class="table">
                                 <thead>
@@ -292,17 +300,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in data)
+                                    @foreach (var item in Cancelled)
                                     {
+                                        var rand = new Random().Next(1111, 9999);
                                         <tr>
-                                            <td class="order-code">YCSH-@item.Id</td>
-                                            <td> @item.Date</td>
+                                            <td class="order-code">YCSH-@rand-@item.Id</td>
+                                            <td> @item.Date.ToPersianDateStrFarsi()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
-                                            <td>@item.OrderStatus.ToString()</td>
+                                            <td>لغو شده</td>
                                             <td class="order-detail-link">
-                                                <a href="#">
-                                                    <i class="far fa-chevron-left"></i>
-                                                </a>
+                                                <i class="fa fa-close" style="font-size:48px;color:red"></i>
                                             </td>
                                         </tr>
                                     }

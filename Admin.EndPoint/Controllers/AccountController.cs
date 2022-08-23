@@ -3,6 +3,7 @@ using Application.Users.Dto;
 using Application.Users.Token;
 using Domain.Users;
 using Infrastructure.SMS;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace Admin.EndPoint.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
