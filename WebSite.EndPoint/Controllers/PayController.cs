@@ -40,8 +40,8 @@ namespace WebSite.EndPoint.Controllers
 
         }
 
-
-        public async Task<IActionResult> Index(Guid PaymentId)
+    
+            public async Task<IActionResult> Index(Guid PaymentId)
         {
             var payment = paymentService.GetPayment(PaymentId);
             if (payment == null)
@@ -130,6 +130,14 @@ namespace WebSite.EndPoint.Controllers
             TempData["message"] = "پرداخت شما ناموفق بوده است .";
             TempData["paymentId"] = PaymentId;
             return RedirectToAction("checkout", "basket", new { payResult = false  });
+        }
+        [HttpGet]
+        [Route("pay/CancelPay/{PaymentId}")]
+        public async Task<IActionResult> CancelPay(Guid PaymentId)
+        {
+
+            await paymentService.CanselPayment(PaymentId);
+            return Redirect("/customers/orders/index");
         }
     }
 

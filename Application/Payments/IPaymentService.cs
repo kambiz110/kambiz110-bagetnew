@@ -16,6 +16,7 @@ namespace Application.Payments
         PaymentDto GetPayment(Guid Id);
         PaymentToCheckoutPageDto GetPaymentWithOrderForCheckoutPage(string Id, string userId);
         bool VerifyPayment(Guid Id, string Authority, long RefId);
+        Task CanselPayment(Guid paymentId);
 
     }
 
@@ -27,6 +28,24 @@ namespace Application.Payments
         {
             this.context = context;
             identityContext = identityDatabaseContext;
+        }
+
+        public async Task CanselPayment(Guid paymentId)
+        {
+            var pay = context.Payments.Where(p => p.Id == paymentId).FirstOrDefault();
+            if (pay!=null)
+            {
+                var order = context.Orders.FirstOrDefault(p=>p.Id==pay.OrderId);
+                if (order!=null)
+                {
+                    order.OrderCancelled();
+                    order.PaymentCanceled();
+                    pay.PaymentCanceled();
+                    await context.SaveChangesAsync();
+                }
+            }
+            
+            
         }
 
         public PaymentDto GetPayment(Guid Id)

@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Contexts;
 using Application.Orders.CustomerOrdersServices;
+using Domain.Order;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Application.Orders.AdminOrderServices
 {
     public interface IAdminOrdersService
     {
-        List<MyOrderDto> GetShopOrder(string searchkey);
+        List<MyOrderDto> GetShopOrder(string searchkey,int orderStatus);
     }
 
     public class AdminOrdersService : IAdminOrdersService
@@ -24,24 +25,31 @@ namespace Application.Orders.AdminOrderServices
             this.context = context;
         }
 
-        public List<MyOrderDto> GetShopOrder(string searchkey)
+        public List<MyOrderDto> GetShopOrder(string searchkey, int orderStatus)
         {
 
 
-            var orders = context.Orders.AsNoTracking()
+            var orders = context.Orders.Where(p=>((int)p.OrderStatus)== orderStatus)
                 .Include(p => p.OrderItems)
-                .Where(p =>p.PaymentStatus== Domain.Order.PaymentStatus.Paid && p.OrderStatus== Domain.Order.OrderStatus.Processing)
-                .OrderByDescending(p => p.Id)
+                .OrderByDescending(p => p.Id).AsQueryable();
+            if (!String.IsNullOrEmpty(searchkey))
+            {
+                orders = orders.Where(p => p.Address.ReciverName.Contains(searchkey.Trim())
+                 || p.Address.PhoneNumber.Contains(searchkey.Trim())
+                  || p.Address.PostalAddress.Contains(searchkey.Trim())).AsQueryable();
+            }
+            var result = orders.ToList()
                 .Select(p => new MyOrderDto
                 {
                     Id = p.Id,
                     Date = p.ZamanSabt,
                     OrderStatus = p.OrderStatus,
                     PaymentStatus = p.PaymentStatus,
-                    Price = p.TotalPrice()
+                    Price = p.TotalPrice(),
+                    PaymentId=context.Payments.FirstOrDefault(m=>m.OrderId==p.Id)?.Id
 
                 }).ToList();
-            return orders;
+            return result;
         }
     }
 }

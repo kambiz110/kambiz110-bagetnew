@@ -78,7 +78,13 @@ namespace Domain.Order
             OrderStatus = OrderStatus.Returned;
         }
 
-
+        /// <summary>
+        /// پرداخت لغو شد
+        /// </summary>
+        public void PaymentCanceled()
+        {
+            PaymentStatus = PaymentStatus.Canceled;
+        }
         /// <summary>
         /// لغو سفارش
         /// </summary>
@@ -196,6 +202,10 @@ namespace Domain.Order
         /// پرداخت انجام شد
         /// </summary>
         Paid = 1,
+        /// <summary>
+        /// پرداخت لغو شد
+        /// </summary>
+        Canceled = 2,
     }
 
     public enum OrderStatus

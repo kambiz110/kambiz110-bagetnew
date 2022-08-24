@@ -7,7 +7,7 @@
 
 
 
-    var WaitingForPayment =  Model.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.WaitingForPayment).ToList();
+    var WaitingForPayment =  Model.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.WaitingForPayment && p.Date>DateTime.Now.AddDays(-7)).ToList();
     var Paid = Model.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.Paid).ToList();
     var Processing  = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Processing && p.PaymentStatus == Domain.Order.PaymentStatus.Paid).ToList();
     var Delivered = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Delivered).ToList();
@@ -112,9 +112,12 @@
                                             <td> @item.Date.ToPersianDateStrFarsi()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
                                             <td>در انتظار پرداخت</td>
-                                            <td class="order-detail-link">
-                                                <a href="#">
-                                                    <i class="far fa-chevron-left"></i>
+                                            <td class="">
+                                                <a asp-area="" asp-controller="Pay" asp-action="Index" asp-route-PaymentId="@item.PaymentId">
+                                                    <i class="fad fa-redo"  style="font-size:23px;color:lawngreen"></i>
+                                                </a>
+                                                <a href="/pay/CancelPay/@item.PaymentId" >
+                                                    <i class="fa fa-close" style="font-size:29px;color:red"></i>
                                                 </a>
                                             </td>
                                         </tr>

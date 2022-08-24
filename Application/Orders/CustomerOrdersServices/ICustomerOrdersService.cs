@@ -26,27 +26,29 @@ namespace Application.Orders.CustomerOrdersServices
 
         public List<MyOrderDto> GetMyOrder(string userId)
         {
-
  
-            var orders = context.Orders
+            var orders = context.Orders.Where(p => p.UserId == userId)
                 .Include(p => p.OrderItems)
-                .Where(p => p.UserId == userId)
-                .OrderByDescending(p => p.Id)
+                
+                .OrderByDescending(p => p.Id).ToList();
+            var result = orders
                 .Select(p => new MyOrderDto
                 {
                     Id = p.Id,
                     Date = p.ZamanSabt,
                     OrderStatus = p.OrderStatus,
                     PaymentStatus = p.PaymentStatus,
-                    Price = p.TotalPrice()
+                    Price = p.TotalPrice(),
+                    PaymentId=context.Payments.FirstOrDefault(m=>m.OrderId==p.Id)?.Id
 
                 }).ToList();
-            return orders;
+            return result;
         }
     }
 
     public class MyOrderDto
     {
+        public Guid? PaymentId { get; set; }
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public int Price { get; set; }

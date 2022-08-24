@@ -72,7 +72,7 @@ namespace Application.Orders
             var order = new Order(basket.BuyerId, address, orderItems, paymentMethod,basket.AppliedDiscount);
             context.Orders.Add(order);
             //حذف سبد خردید
-          //  context.Baskets.Remove(basket);
+           context.Baskets.Remove(basket);
             context.SaveChanges();
 
             if(basket.AppliedDiscount != null)

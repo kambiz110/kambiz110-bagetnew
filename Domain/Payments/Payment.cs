@@ -18,10 +18,12 @@ namespace Domain.Payments
         public Order.Order Order { get; private set; }
         public int OrderId { get; private set; }
 
+        public PaymentStatus PaymentStatus { get; private set; }
         public Payment(int amount, int orderId)
         {
             Amount = amount;
             OrderId = orderId;
+            PaymentWaitingForPayment();
         }
 
         public void PaymentIsDone(string authority, long refId)
@@ -31,5 +33,41 @@ namespace Domain.Payments
             Authority = authority;
             RefId = refId;
         }
+        /// <summary>
+        /// پرداخت انجام شد
+        /// </summary>
+        public void PaymentDone()
+        {
+            PaymentStatus = PaymentStatus.Paid;
+        }
+        /// <summary>
+        /// پرداخت لغو شد
+        /// </summary>
+        public void PaymentCanceled()
+        {
+            PaymentStatus = PaymentStatus.Canceled;
+        }
+        /// <summary>
+        /// منتظر پرداخت
+        /// </summary>
+        public void PaymentWaitingForPayment()
+        {
+            PaymentStatus = PaymentStatus.WaitingForPayment;
+        }
+    }
+    public enum PaymentStatus
+    {
+        /// <summary>
+        /// منتظر پرداخت
+        /// </summary>
+        WaitingForPayment = 0,
+        /// <summary>
+        /// پرداخت انجام شد
+        /// </summary>
+        Paid = 1,
+        /// <summary>
+        /// پرداخت لغو شد
+        /// </summary>
+        Canceled = 2,
     }
 }

@@ -4,6 +4,7 @@ using Domain.Catalogs;
 using Domain.Discounts;
 using Domain.Order;
 using Domain.Payments;
+using Domain.Postals;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -41,6 +42,7 @@ namespace Application.Interfaces.Contexts
         DbSet<CatalogItemFavourite> CatalogItemFavourites { get; set; }
         DbSet<Banner> Banners { get; set; }
         DbSet<Storeroom> Storerooms { get; set; }
+        DbSet<PostProduct> PostProducts { get; set; }
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);

@@ -6,6 +6,7 @@ using Domain.Catalogs;
 using Domain.Discounts;
 using Domain.Order;
 using Domain.Payments;
+using Domain.Postals;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityConfigurations;
@@ -47,6 +48,7 @@ namespace Persistence.Contexts
         public DbSet<Banner> Banners { get; set; }
         public DbSet<CatalogTypeImage>  CatalogTypeImages { get; set; }
         public DbSet<Storeroom>  Storerooms { get; set; }
+        public DbSet<PostProduct> PostProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -64,6 +66,8 @@ namespace Persistence.Contexts
                     builder.Entity(entityType.Name).Property<bool>("IsRemoved").HasDefaultValue(false);
                 }
             }
+            builder.Entity<Payment>()
+                .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
             builder.Entity<CatalogType>()
                 .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
             builder.Entity<Discount>()
