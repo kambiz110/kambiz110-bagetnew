@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Admin.EndPoint.Controllers
 {
-    [Authorize]
+
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
