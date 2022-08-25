@@ -92,7 +92,14 @@ namespace Domain.Order
         {
             OrderStatus = OrderStatus.Cancelled;
         }
-
+        public void OrderRequestReturned()
+        {
+            OrderStatus = OrderStatus.RequestReturned;
+        }
+        public void OrderRequestCancelled()
+        {
+            OrderStatus = OrderStatus.RequestCancelled;
+        }
         public int TotalPrice()
         {
             int totalPrice = _orderItems.Sum(p => p.UnitPrice * p.Units);
@@ -227,6 +234,14 @@ namespace Domain.Order
         /// لغو شد
         /// </summary>
         Cancelled = 3,
+        /// <summary>
+        ///درخواست مرجوعی
+        /// </summary>
+        RequestReturned = 4,
+        /// <summary>
+        ///درخواست لغو 
+        /// </summary>
+        RequestCancelled = 5,
     }
 
 }

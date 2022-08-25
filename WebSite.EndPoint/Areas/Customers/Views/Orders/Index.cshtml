@@ -7,12 +7,12 @@
 
 
 
-    var WaitingForPayment =  Model.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.WaitingForPayment && p.Date>DateTime.Now.AddDays(-7)).ToList();
+    var WaitingForPayment = Model.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.WaitingForPayment && p.Date > DateTime.Now.AddDays(-7)).ToList();
     var Paid = Model.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.Paid).ToList();
-    var Processing  = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Processing && p.PaymentStatus == Domain.Order.PaymentStatus.Paid).ToList();
+    var Processing = Model.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.Paid && (p.OrderStatus == Domain.Order.OrderStatus.Processing || p.OrderStatus == Domain.Order.OrderStatus.RequestReturned || p.OrderStatus == Domain.Order.OrderStatus.RequestCancelled)).ToList();
     var Delivered = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Delivered).ToList();
     var Returned = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Returned).ToList();
-    var Cancelled =  Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Cancelled).ToList();
+    var Cancelled = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Cancelled).ToList();
 
 }
 
@@ -21,9 +21,11 @@
     .empty-box .message p {
         color: #766969 !important;
     }
+
     .empty-box .icon i {
         color: #766969 !important;
     }
+
     .table-responsive table thead {
         background: #766969 !important;
     }
@@ -106,17 +108,17 @@
                                 <tbody>
                                     @foreach (var item in WaitingForPayment)
                                     {
-                                        var rand = new Random().Next(1111,9999);
+                                        var rand = new Random().Next(1111, 9999);
                                         <tr>
                                             <td class="order-code">YCSH-@rand-@item.Id</td>
                                             <td> @item.Date.ToPersianDateStrFarsi()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
                                             <td>در انتظار پرداخت</td>
                                             <td class="">
-                                                <a asp-area="" asp-controller="Pay" asp-action="Index" asp-route-PaymentId="@item.PaymentId">
-                                                    <i class="fad fa-redo"  style="font-size:23px;color:lawngreen"></i>
+                                                <a class="mr-2" asp-area="" asp-controller="Pay" asp-action="Index" asp-route-PaymentId="@item.PaymentId">
+                                                    <i class="fad fa-redo" style="font-size:23px;color:lawngreen"></i>
                                                 </a>
-                                                <a href="/pay/CancelPay/@item.PaymentId" >
+                                                <a class="mr-2" href="/pay/CancelPay/@item.PaymentId">
                                                     <i class="fa fa-close" style="font-size:29px;color:red"></i>
                                                 </a>
                                             </td>
@@ -144,8 +146,8 @@
             <section class="table--order shadow-around mt-4">
                 <div class="table-responsive">
                     @{
-                        
-                     
+
+
                         if (Processing.Count() > 0)
                         {
                             <table class="table">
@@ -155,7 +157,7 @@
                                         <th>تاریخ ثبت سفارش</th>
                                         <th>مبلغ کل</th>
                                         <th> وضعیت</th>
-                                        <th>عملیات پرداخت</th>
+                                        <th>عملیات </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -166,9 +168,45 @@
                                             <td class="order-code">YCSH-@rand-@item.Id</td>
                                             <td> @item.Date.ToPersianDateStrFarsi()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
-                                            <td>در حال پردازش</td>
-                                            <td class="order-detail-link">
-                                                <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                                            <td>
+                                                @{
+                                                    var message = "";
+                                                    switch (item.OrderStatus)
+                                                    {
+                                                        case Domain.Order.OrderStatus.Processing:
+                                                            message = " در حال پردازش";
+                                                            break;
+                                                        case Domain.Order.OrderStatus.RequestReturned:
+                                                            message = "در حال بررسی درخواست مرجوعی";
+                                                            break;
+                                                        case Domain.Order.OrderStatus.RequestCancelled:
+                                                            message = "در حال بررسی درخواست لغو";
+                                                            break;
+
+                                                    }
+                                                    <span>@message</span>
+                                                }
+                                            </td>
+                                            <td class="">
+                                                @{
+
+                                                    switch (item.OrderStatus)
+                                                    {
+                                                        case Domain.Order.OrderStatus.Processing:
+                                                          
+                                                            <a href="/Customers/orders/ChangeOrederStat/@item.Id/5" class="btn btn-outline-danger">لغو کردن<i class="fa fa-trash"></i></a>
+                                                            break;
+                                                        case Domain.Order.OrderStatus.RequestReturned:
+                                                            <i class="fa fa-undo font-weight-bold" style="font-size:24px;color:darkgoldenrod"></i>
+                                                            break;
+                                                        case Domain.Order.OrderStatus.RequestCancelled:
+                                                            <i class="fa fa-trash" style="font-size:24px;color:red"></i>
+                                                            break;
+
+                                                    }
+
+                                                }
+
                                             </td>
                                         </tr>
                                     }
@@ -203,7 +241,7 @@
                                         <th>تاریخ ثبت سفارش</th>
                                         <th>مبلغ کل</th>
                                         <th> وضعیت</th>
-                                        <th>عملیات پرداخت</th>
+                                        <th>عملیات </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -215,8 +253,8 @@
                                             <td> @item.Date.ToPersianDateStrFarsi()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
                                             <td>تحویل داده شد</td>
-                                            <td class="order-detail-link">
-                                                <i style="font-size:24px" class="fa">&#xf046;</i>
+                                            <td>
+                                                <a href="/Customers/orders/ChangeOrederStat/@item.Id/4" class="btn btn-outline-primary">مرجوع کردن<i class="fa fa-redo"></i></a>
                                             </td>
                                         </tr>
                                     }
@@ -251,7 +289,7 @@
                                         <th>تاریخ ثبت سفارش</th>
                                         <th>مبلغ کل</th>
                                         <th> وضعیت</th>
-                                        <th>عملیات پرداخت</th>
+                                        <th>عملیات </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -299,7 +337,7 @@
                                         <th>تاریخ ثبت سفارش</th>
                                         <th>مبلغ کل</th>
                                         <th> وضعیت</th>
-                                        <th>عملیات پرداخت</th>
+                                        <th>عملیات </th>
                                     </tr>
                                 </thead>
                                 <tbody>

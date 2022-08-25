@@ -1,0 +1,110 @@
+﻿@model IEnumerable<Application.Orders.CustomerOrdersServices.MyOrderDto>
+@using Admin.EndPoint.Helper
+@{
+    ViewData["Title"] = "شفارشات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="layout-px-spacing">
+
+    <div class="row layout-top-spacing" id="cancel-row">
+
+        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+            <div class="widget-content widget-content-area br-6">
+                <div class="table-responsive mb-4 mt-4">
+                    <table id="default-ordering" class="table table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>شماره سفارش</th>
+                                <th>تاریخ ثبت سفارش</th>
+                                <th>مبلغ کل</th>
+                                <th> وضعیت</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (Model != null && Model.Any())
+                            {
+                                foreach (var item in Model)
+                                {
+                            <tr>
+                                <td >YCSH-@item.Id</td>
+                                <td> @item.Date.ToPersianDateStrFarsi()</td>
+                                <td>@item.Price.ToString("n0") تومان</td>
+                                <td>
+                                    @{
+                                        var message = "";
+                                        switch (item.OrderStatus)
+                                        {
+                                            case Domain.Order.OrderStatus.Processing:
+                                                message = " درخواست ارسال";
+                                                break;
+                                            case Domain.Order.OrderStatus.RequestReturned:
+                                                message = " درخواست مرجوعی";
+                                                break;
+                                            case Domain.Order.OrderStatus.RequestCancelled:
+                                                message = "درخواست لغو";
+                                                break;
+
+                                        }
+                                        <span>@message</span>
+                                    }
+                                </td>
+
+                                <td class="text-center">
+                                    <a href="/pay/CancelPay/@item.PaymentId" class="btn btn-primary">مشاهده</a>
+                                </td>
+                            </tr>
+                                }
+                            }
+                            else
+                            {
+
+                            }
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>شماره سفارش</th>
+                                <th>تاریخ ثبت سفارش</th>
+                                <th>مبلغ کل</th>
+                                <th> وضعیت</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@section Styles{
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="~/Theme/plugins/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="~/Theme/plugins/table/datatable/dt-global_style.css">
+    <!-- END PAGE LEVEL STYLES -->
+}
+@section Scripts{
+    <script src="~/Theme/plugins/table/datatable/datatables.js"></script>
+    <script>
+
+        $('#default-ordering').DataTable({
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "صفحه _PAGE_ از _PAGES_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "جستجو کنید...",
+                "sLengthMenu": "نتایج :  _MENU_",
+            },
+            "order": [[3, "desc"]],
+            "stripeClasses": [],
+            "lengthMenu": [7, 10, 20, 50],
+            "pageLength": 7,
+            drawCallback: function () { $('.dataTables_paginate > .pagination').addClass(' pagination-style-13 pagination-bordered mb-5'); }
+        });
+    </script>
+}

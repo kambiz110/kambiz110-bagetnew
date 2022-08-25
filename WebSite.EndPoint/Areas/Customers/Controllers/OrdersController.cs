@@ -29,5 +29,12 @@ namespace WebSite.EndPoint.Areas.Customers.Controllers
             var orders = customerOrdersService.GetMyOrder(user.Id);
             return View(orders);
         }
+        [Route("Customers/orders/ChangeOrederStat/{orderId}/{status}")]
+        public async Task<IActionResult> ChangeOrederStat(int orderId, int status)
+        {
+            var user = userManager.GetUserAsync(User).Result;
+           await customerOrdersService.chengeOrederStatuse(orderId, status, user.Id);
+            return RedirectToAction("Index");
+        }
     }
 }

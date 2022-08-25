@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Contexts;
 using Application.Orders.CustomerOrdersServices;
+using Application.Orders.Dto;
 using Domain.Order;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,7 +13,8 @@ namespace Application.Orders.AdminOrderServices
 {
     public interface IAdminOrdersService
     {
-        List<MyOrderDto> GetShopOrder(string searchkey,int orderStatus);
+        OderDitalesForAdminDto GetAdminOrderDitales(Guid PaymentId);
+        List<MyOrderDto> GetShopAdminOrder(string searchkey,int orderStatus);
     }
 
     public class AdminOrdersService : IAdminOrdersService
@@ -25,7 +27,34 @@ namespace Application.Orders.AdminOrderServices
             this.context = context;
         }
 
-        public List<MyOrderDto> GetShopOrder(string searchkey, int orderStatus)
+        public OderDitalesForAdminDto GetAdminOrderDitales(Guid PaymentId)
+        {
+            var payment = context.Payments.Where(p => p.Id == PaymentId)
+                 .Include(p => p.Order).ThenInclude(p => p.OrderItems)
+                 .FirstOrDefault();
+            if (payment!=null)
+            {
+                var model = new OderDitalesForAdminDto
+                {
+                    Address=payment.Order.Address,
+                    Amount=payment.Amount,
+                    OrderId=payment.Order.Id,
+                    OrederItems=payment.Order.OrderItems.Select(o=> new OrederItemsForOrderDto {
+                    Id=o.Id,
+                    CatalogItemid=o.CatalogItemId,
+                    ProductName=o.ProductName,
+                    UnitPrice=o.UnitPrice,
+                    Units=o.Units
+                 
+                    }).ToList(),
+                    PaymentId= PaymentId                   
+                };
+                return model;
+            }
+            return null;
+        }
+
+        public List<MyOrderDto> GetShopAdminOrder(string searchkey, int orderStatus)
         {
 
 

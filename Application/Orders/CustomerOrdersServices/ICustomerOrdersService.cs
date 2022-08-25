@@ -12,6 +12,7 @@ namespace Application.Orders.CustomerOrdersServices
     public interface ICustomerOrdersService
     {
         List<MyOrderDto> GetMyOrder(string userId);
+        Task chengeOrederStatuse(int orderId , int status, string userId);
     }
 
     public class CustomerOrdersService : ICustomerOrdersService
@@ -22,6 +23,28 @@ namespace Application.Orders.CustomerOrdersServices
         public CustomerOrdersService(IDataBaseContext context)
         {
             this.context = context;
+        }
+
+        public async Task chengeOrederStatuse(int orderId, int status, string userId)
+        {
+            var order = context.Orders.Where(p => p.UserId == userId &&p.Id==orderId).FirstOrDefault();
+            if (order!=null)
+            {
+                switch (status)
+                {
+                    case 4:
+                        order.OrderRequestReturned();
+                        break;
+                    case 5:
+                        order.OrderRequestCancelled();
+                        break;
+                    default:
+                        break;
+                }
+               await context.SaveChangesAsync();
+               
+            }
+          
         }
 
         public List<MyOrderDto> GetMyOrder(string userId)
