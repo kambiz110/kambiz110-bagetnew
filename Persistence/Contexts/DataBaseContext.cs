@@ -83,6 +83,9 @@ namespace Persistence.Contexts
             builder.Entity<CatalogCompany>()
                 .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
 
+            builder.Entity<CatalogItemFavourite>()
+                .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
+
 
 
             builder.ApplyConfiguration(new CatalogBrandEntityTypeConfiguration());

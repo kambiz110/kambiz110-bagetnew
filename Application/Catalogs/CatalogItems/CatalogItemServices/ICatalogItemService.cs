@@ -19,6 +19,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
         PaginatedItemsDto<CatalogItemListItemDto> GetCatalogList(int page, int pageSize , SearchInCategoreItemsDto dto);
 
         void AddToMyFavourite(string UserId, int CatalogItemId);
+        void RemoveMyFavourite(string UserId, int CatalogItemId);
         PaginatedItemsDto<FavouriteCatalogItemDto> GetMyFavourite(string UserId, int page = 1, int pageSize = 20);
 
     }
@@ -31,6 +32,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
         public int Rate { get; set; }
         public int AvailableStock { get; set; }
         public string Name { get; set; }
+        public string Slug { get; set; }
         public string Image { get; set; }
     }
 

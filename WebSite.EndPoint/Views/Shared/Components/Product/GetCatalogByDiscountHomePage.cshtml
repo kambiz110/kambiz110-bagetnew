@@ -79,6 +79,25 @@
                                                     <div data-countdown="@Model.Vijeh.EndDate?.ToString("yyyy/MM/dd")"></div>
                                                 </div>
                                             </div>
+                                            <div class="action_links">
+                                                <ul>
+                                                    <li class="add_to_cart">
+                                                        <a href="~/Product/Details/pid-@item.Id/@item.Slug"
+                                                           title="نمایش جزئیات"> نمایش جزئیات</a>
+                                                    </li>
+                                                    <li class="wishlist">
+                                                        <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@item.Id"
+                                                           title="افزودن به لیست علاقمندی ها">
+                                                            <i class="icon-heart"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li class="compare">
+                                                        <a href="#" title="مقایسه">
+                                                            <i class="icon-rotate-cw"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </figure>
                                     </article>
                                 }
@@ -102,7 +121,7 @@
                                                 <a class="primary_img" href="~/Product/Details/pid-@item.Id/@item.Slug">
                                                     <img src="@item.Src" alt="">
                                                 </a>
-                                             
+
                                             </div>
                                             <div class="product_content">
                                                 <p class="manufacture_product"><a href="#"><span class="text-danger">خودرو</span> :@item.CarName | <span class="text-danger">برند</span>: @item.BrandName</a></p>
@@ -146,7 +165,27 @@
                                                     }
                                                     <span class="current_price">@item.Price.ToString("n0") تومان</span>
                                                 </div>
+                                                <div class="action_links">
+                                                    <ul>
+                                                        <li class="add_to_cart">
+                                                            <a href="~/Product/Details/pid-@item.Id/@item.Slug"
+                                                               title="نمایش جزئیات"> نمایش جزئیات</a>
+                                                        </li>
+                                                        <li class="wishlist">
+                                                            <a asp-area="Customers" asp-controller="MyFavourite" asp-action="AddToMyFavourite" asp-route-CatalogItemId="@item.Id"
+                                                               title="افزودن به لیست علاقمندی ها">
+                                                                <i class="icon-heart"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="compare">
+                                                            <a href="#" title="مقایسه">
+                                                                <i class="icon-rotate-cw"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
+                                           
                                         </figure>
                                     </article>
                                 }

@@ -157,6 +157,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
                 Price = p.Price,
                 Rate = 4,
                 AvailableStock = p.AvailableStock,
+                Slug=p.Slug,
                 Image = GlobalConstants.serverImageUrl+p.CatalogItemImages.FirstOrDefault().Src,
             }).ToList();
             return new PaginatedItemsDto<FavouriteCatalogItemDto>(page, pageSize, rowCount, data);
@@ -179,6 +180,14 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
             return result;
             }
             return null;
+        }
+
+        public void RemoveMyFavourite(string UserId, int CatalogItemId)
+        {
+            var catalogItemFavourites = context.CatalogItemFavourites.Where(p=>p.CatalogItemId == CatalogItemId && p.UserId== UserId).FirstOrDefault();
+      
+            context.CatalogItemFavourites.Remove(catalogItemFavourites);
+            context.SaveChanges();
         }
     }
 }

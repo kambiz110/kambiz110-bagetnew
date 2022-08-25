@@ -38,5 +38,12 @@ namespace WebSite.EndPoint.Areas.Customers.Controllers
             catalogItemService.AddToMyFavourite(user.Id, CatalogItemId);
             return RedirectToAction(nameof(Index));
         }
+        [Route("Customers/MyFavourite/RemoveMyFavourite/{CatalogItemId}")]
+        public IActionResult RemoveMyFavourite(int CatalogItemId)
+        {
+            var user = userManager.GetUserAsync(User).Result;
+            catalogItemService.RemoveMyFavourite(user.Id, CatalogItemId);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

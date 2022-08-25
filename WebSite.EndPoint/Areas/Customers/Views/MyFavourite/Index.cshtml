@@ -21,7 +21,7 @@
                             <img src="@item.Image" alt="@item.Name">
                         </a>
                         <div class="product-card-actions">
-                            <button class="add-to-wishlist added"><i class="fas fa-heart"></i></button>
+                            <a href="/Customers/MyFavourite/RemoveMyFavourite/@item.Id" class="add-to-wishlist added"><i class="fas fa-heart"></i></a>
                             <button class="add-to-compare"><i class="fas fa-random"></i></button>
                         </div>
                     </div>
@@ -29,11 +29,11 @@
                         <div class="ratings-container">
                             <div class="ratings">
                                 @{ int rate = item.Rate * 20; }
-                                <div class="ratings-val" style="width: @rate%;"></div>
+                                <div class="ratings-val" style="width: @rate %;"></div>
                             </div>
                         </div>
                         <h6 class="product-name">
-                            <a asp-action="Details" asp-controller="Product" asp-route-id="@item.Id">
+                            <a href="~/Product/Details/pid-@item.Id/@item.Slug">
                                 @item.Name
                             </a>
                         </h6>
@@ -52,7 +52,7 @@
                                 <b class="text-danger">ناموجود </b>
                             </div>
                         }
-                        <a asp-action="Details" asp-controller="Product" asp-route-id="@item.Id" class="btn-add-to-cart">
+                       <a href="~/Product/Details/pid-@item.Id/@item.Slug" class="btn-add-to-cart">
                             <i class="fad fa-cart-plus"></i>
                             مشاهده محصول
                         </a>
