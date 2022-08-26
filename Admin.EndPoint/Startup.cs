@@ -20,6 +20,7 @@ using Application.Discounts.AddNewDiscountServices;
 using Application.Discounts.EditDiscountServices;
 using Application.Interfaces.Contexts;
 using Application.Orders.AdminOrderServices;
+using Application.PostalProducts;
 using Application.Storerooms.Command;
 using Application.Users.Query;
 using Application.Users.Token;
@@ -93,6 +94,7 @@ namespace Admin.EndPoint
             services.AddTransient<IGetUsers, GetUsers>();
             services.AddTransient<IUploadFile, UploadFile>();
             services.AddTransient<IAdminOrdersService, AdminOrdersService>();
+            services.AddTransient<IAddPostalProductService, AddPostalProductService>();
 
 
             #region connection String SqlServer

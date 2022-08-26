@@ -1,6 +1,8 @@
 ﻿using Application.Interfaces.Contexts;
 using Application.Orders.CustomerOrdersServices;
 using Application.Orders.Dto;
+using Application.PostalProducts.Dto;
+using AutoMapper;
 using Domain.Order;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,24 +23,30 @@ namespace Application.Orders.AdminOrderServices
     {
 
         private readonly IDataBaseContext context;
+        private readonly IMapper mapper;
 
-        public AdminOrdersService(IDataBaseContext context)
+        public AdminOrdersService(IDataBaseContext context,IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         public OderDitalesForAdminDto GetAdminOrderDitales(Guid PaymentId)
         {
             var payment = context.Payments.Where(p => p.Id == PaymentId)
                  .Include(p => p.Order).ThenInclude(p => p.OrderItems)
+                 .Include(p => p.Order).ThenInclude(p => p.PostProduct)
+             
                  .FirstOrDefault();
             if (payment!=null)
             {
                 var model = new OderDitalesForAdminDto
                 {
-                    Address=payment.Order.Address,
+                    postalProductDto=payment.Order.PostProduct!=null?mapper.Map<AddPostalProductDto>(payment.Order.PostProduct):new AddPostalProductDto { },
+                    Address =payment.Order.Address,
                     Amount=payment.Amount,
                     OrderId=payment.Order.Id,
+                    Date=payment.Order.ZamanSabt,
                     OrederItems=payment.Order.OrderItems.Select(o=> new OrederItemsForOrderDto {
                     Id=o.Id,
                     CatalogItemid=o.CatalogItemId,

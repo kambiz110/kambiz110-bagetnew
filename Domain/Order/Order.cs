@@ -1,6 +1,7 @@
 ﻿using Domain.Attributes;
 using Domain.Catalogs;
 using Domain.Discounts;
+using Domain.Postals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace Domain.Order
         public decimal DiscountAmount { get; private set; }
         public Discount AppliedDiscount { get; private set; }
         public int? AppliedDiscountId { get; private set; }
+        public PostProduct PostProduct { get; private set; }
         public DateTime ZamanSabt { get; set; } = DateTime.Now;
 
 

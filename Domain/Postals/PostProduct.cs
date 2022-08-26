@@ -17,7 +17,7 @@ namespace Domain.Postals
         public Order.Order Order { get;  set; }
         public int OrderId { get;  set; }
         public string PostOfficeName { get;  set; }
-        public DateTime InsertDate { get; set; } = DateTime.Now;
+        public DateTime InsertDate { get; set; }
         public DateTime ReciveDate { get; set; } 
     }
     public enum PostalType

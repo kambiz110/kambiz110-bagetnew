@@ -86,6 +86,9 @@ namespace Persistence.Contexts
             builder.Entity<CatalogItemFavourite>()
                 .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
 
+            builder.Entity<PostProduct>()
+    .HasOne(a => a.Order)
+    .WithOne(b => b.PostProduct);
 
 
             builder.ApplyConfiguration(new CatalogBrandEntityTypeConfiguration());

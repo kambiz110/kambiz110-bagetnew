@@ -18,6 +18,7 @@ namespace Infrastructure.MappingProfile
                 cfg.AddProfile(new CatalogTypeMapperProfile());
                 cfg.AddProfile(new DescountMapperProfile());
                 cfg.AddProfile(new UserMappingProfile());
+                cfg.AddProfile(new PostalProductMappingProfile());
             });
         }
     }
