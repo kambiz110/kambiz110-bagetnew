@@ -102,6 +102,10 @@ namespace Domain.Order
         {
             OrderStatus = OrderStatus.RequestCancelled;
         }
+        public void OrderPostOfficalDelivered()
+        {
+            OrderStatus = OrderStatus.PostOfficalDelivered;
+        }
         public int TotalPrice()
         {
             int totalPrice = _orderItems.Sum(p => p.UnitPrice * p.Units);
@@ -244,6 +248,11 @@ namespace Domain.Order
         ///درخواست لغو 
         /// </summary>
         RequestCancelled = 5,
+
+        /// <summary>
+        ///تحویل مامور پست گردید 
+        /// </summary>
+        PostOfficalDelivered= 6,
     }
 
 }

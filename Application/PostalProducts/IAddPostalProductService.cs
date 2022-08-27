@@ -32,14 +32,19 @@ namespace Application.PostalProducts
                 {
                     _mapper.Map(dto, postal);
                     context.PostProducts.Update(postal);
-                 await   context.SaveChangesAsync();
+                    var order = context.Orders.FirstOrDefault(p => p.Id == dto.OrderId);
+                    order.OrderPostOfficalDelivered();
+                    await   context.SaveChangesAsync();
                 }
             }
             else
             {
               var postamodel=  _mapper.Map<PostProduct>(dto);
                 context.PostProducts.Add(postamodel);
+                var order = context.Orders.FirstOrDefault(p => p.Id == dto.OrderId);
+                order.OrderPostOfficalDelivered();
                 await context.SaveChangesAsync();
+
             }
         }
     }
