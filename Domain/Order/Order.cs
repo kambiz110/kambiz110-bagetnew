@@ -1,6 +1,7 @@
 ﻿using Domain.Attributes;
 using Domain.Catalogs;
 using Domain.Discounts;
+using Domain.Payments;
 using Domain.Postals;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace Domain.Order
         public Discount AppliedDiscount { get; private set; }
         public int? AppliedDiscountId { get; private set; }
         public PostProduct PostProduct { get; private set; }
+        public ReturnPaymentInvoice ReturnPaymentInvoice { get; private set; }
         public DateTime ZamanSabt { get; set; } = DateTime.Now;
 
 
@@ -253,6 +255,22 @@ namespace Domain.Order
         ///تحویل مامور پست گردید 
         /// </summary>
         PostOfficalDelivered= 6,
+        /// <summary>
+        ///در انتظار بازگشت وجه لغو شده  
+        /// </summary>
+        PendingPaymentCancelled = 7,
+        /// <summary>
+        ///اتمام بازگشت وجه لغو شده
+        /// </summary>
+        IsDonePaymentCancelled = 8,
+        /// <summary>
+        ///در انتظار بازگشت وجه مرجوعی
+        /// </summary>
+        PendingPaymentReturned = 9,
+        /// <summary>
+        ///اتمام بازگشت وجه مرجوعی
+        /// </summary>
+        IsDonePaymentReturned = 10,
     }
 
 }

@@ -10,7 +10,7 @@ namespace Domain.Postals
    public class PostProduct
     {
         public int Id { get; set; }
-        public string Title { get; set; }
+        public PostalCompany PostalCompane { get; set; }
         public string TrackingNumber { get; set; }
         public PostalType PostalType { get; set; }
         public PostalStatus PostalStatus { get; set; }
@@ -30,6 +30,23 @@ namespace Domain.Postals
         ///  ارسال محصول
         /// </summary>
         SendPoatal = 1,
+
+
+    }
+    public enum PostalCompany
+    {
+        /// <summary>
+        /// الوپیک
+        /// </summary>
+        alopeyk = 1,
+        /// <summary>
+        ///  تیپاکس
+        /// </summary>
+        tipax = 2,
+        /// <summary>
+        ///  پست ایران
+        /// </summary>
+        post_ir = 3,
 
 
     }

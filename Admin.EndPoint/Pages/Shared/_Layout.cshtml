@@ -1,5 +1,4 @@
-﻿@using System.Security.Claims;
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -8,24 +7,14 @@
     <title>@ViewData["Title"]|یدکی زنجانی </title>
     <link rel="icon" type="image/x-icon" href="~/Theme/assets/img/favicon.ico" />
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    @*<link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">*@
-    <link href="~/Theme/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
+    <link href="~/Theme/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Theme/assets/css/plugins.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="~/Theme/assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
-    <link href="~/Theme/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
-    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <link href="~/lib/fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet" />
-    <style>
-        .apexcharts-canvas {
-            margin: 0 auto;
-        }
-    </style>
     @RenderSectionAsync("Styles", false)
 </head>
-<body class="sidebar-noneoverflow" data-spy="scroll" data-target="#navSection" data-offset="140">
+<body class="sidebar-noneoverflow">
 
     <!--  BEGIN NAVBAR  -->
     <div class="header-container fixed-top">
@@ -75,6 +64,9 @@
                 </li>
             </ul>
 
+
+
+
             <ul class="navbar-item flex-row search-ul">
                 <li class="nav-item align-self-center search-animated">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -119,42 +111,8 @@
 
                                 </div>
                             </a>
-                            <a class="dropdown-item">
-                                <div class="">
-                                    <div class="media">
-                                        <div class="user-img">
-                                            <div class="avatar avatar-xl">
-                                                <span class="avatar-title rounded-circle">ه ش</span>
-                                            </div>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="">
-                                                <h5 class="usr-name">هومن شکیبا</h5>
-                                                <p class="msg-title">پیام شما</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item">
-                                <div class="">
 
-                                    <div class="media">
-                                        <div class="user-img">
-                                            <div class="avatar avatar-xl">
-                                                <span class="avatar-title rounded-circle">ز ج</span>
-                                            </div>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="">
-                                                <h5 class="usr-name">زهرا جوان</h5>
-                                                <p class="msg-title">اکانت شما بروز شد</p>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                </div>
-                            </a>
                         </div>
                     </div>
                 </li>
@@ -166,37 +124,8 @@
                     <div class="dropdown-menu position-absolute animated fadeInUp" aria-labelledby="notificationDropdown">
                         <div class="notification-scroll">
 
-                            <div class="dropdown-item">
-                                <div class="media server-log">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-server"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>
-                                    <div class="media-body">
-                                        <div class="data-info">
-                                            <h6 class="">راه اندازی مجدد سرور</h6>
-                                            <p class="">45 دقیقه دیگر</p>
-                                        </div>
 
-                                        <div class="icon-status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="dropdown-item">
-                                <div class="media ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                                    <div class="media-body">
-                                        <div class="data-info">
-                                            <h6 class="">لایسنس به زودی منقضی می شود</h6>
-                                            <p class="">8 ساعت دیگر</p>
-                                        </div>
-
-                                        <div class="icon-status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="dropdown-item">
                                 <div class="media file-upload">
@@ -288,25 +217,31 @@
                         <img src="~/Theme/assets/img/90x90.jpg" alt="avatar">
                         @if (User.Identity.IsAuthenticated)
                         {
-                          
-                                <h6 class=""> کاربر</h6>
-                                <p class="">  @User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value</p>
-                        
+
+                            <h6 class=""> کاربر</h6>
+                            <p class="">  @User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value</p>
+
                         }
                         else
                         {
-                      
-                                <h6 class=""> کاربر</h6>
-                                <p class=""> عادی</p>
-                          
+
+                            <h6 class=""> کاربر</h6>
+                            <p class=""> عادی</p>
+
                         }
                     </div>
                 </div>
 
                 <div class="shadow-bottom"></div>
                 <ul class="list-unstyled menu-categories" id="accordionExample">
+
+
+
+
+
+
                     <li class="menu">
-                        <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <a href="#dashboard" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                                 <span>داشبورد</span>
@@ -364,7 +299,7 @@
                     <li class="menu">
                         <a href="#orders" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                <i style='font-size:24px' class='fas'>&#xf217;</i>
                                 <span>سفارشات</span>
                             </div>
                             <div>
@@ -399,10 +334,6 @@
                         </ul>
                     </li>
 
-
-
-
-
                 </ul>
 
             </nav>
@@ -411,37 +342,40 @@
         <!--  END SIDEBAR  -->
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
-            @RenderBody()
-        </div>
-        <div class="footer-wrapper">
-            <div class="footer-section f-section-1">
-                <p class=""> © کپی رایت</p>
+            <div class="layout-px-spacing">
+
+                @RenderBody()
+
             </div>
-            <div class="footer-section f-section-2">
-                <span class="copyright">کلیه حقوق این سایت متعلق به  : <a href="#"> فروشگاه لوازم یدکی زنجانی </a>  می باشد</span>
+            <div class="footer-wrapper">
+                <div class="footer-section f-section-1">
+                    <p class=""> © کپی رایت</p>
+                </div>
+                <div class="footer-section f-section-2">
+                    <span class="copyright">کلیه حقوق این سایت متعلق به  : <a href="#"> فروشگاه لوازم یدکی زنجانی </a>  می باشد</span>
+                </div>
             </div>
         </div>
+        <!--  END CONTENT AREA  -->
+
     </div>
-    <!--  END CONTENT AREA  -->
     <!-- END MAIN CONTAINER -->
-    <!--  BEGIN FOOTER  -->
-    <!--  END FOOTER  -->
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="~/lib/fontawesome-free-5.15.4-web/js/all.min.js"></script>
     <script src="~/Theme/assets/js/libs/jquery-3.1.1.min.js"></script>
     <script src="~/Theme/bootstrap/js/popper.min.js"></script>
     <script src="~/Theme/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/Theme/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="~/Theme/assets/js/app.js"></script>
+    <script src="~/lib/fontawesome-free-5.15.4-web/js/all.min.js"></script>
     <script>
-                                    //$(document).ready(function () {
-                                    //    App.init();
-                                    //});
+        $(document).ready(function () {
+            App.init();
+        });
     </script>
-    <script src="~/Theme/plugins/highlight/highlight.pack.js"></script>
     <script src="~/Theme/assets/js/custom.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <!-- END PAGE LEVEL SCRIPTS -->
     @await RenderSectionAsync("Scripts", required: false)
-
 </body>
 </html>

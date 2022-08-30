@@ -8,8 +8,8 @@ namespace Common.Useful
 {
     public static class GlobalConstants
     {
-        public const string serverImageUrl = "https://localhost:44339/";
-        
+        public const string serverImageUrl2222 = "https://localhost:44339/";
+        public const string serverImageUrl = "https://apnl.yadakcarshop.com/";
         public const string SystemName = "ZanjaniShop";
 
         public const string Administration = "Administration";

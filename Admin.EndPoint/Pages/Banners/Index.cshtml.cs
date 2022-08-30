@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Admin.EndPoint.Pages.Banners
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator,Maneger")]
     public class IndexModel : PageModel
     {
         private readonly IBannersService bannersService;

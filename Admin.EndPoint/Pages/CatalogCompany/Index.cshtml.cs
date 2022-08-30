@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Admin.EndPoint.Pages.CatalogCompany
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator,Maneger")]
     public class IndexModel : PageModel
     {
         private readonly ICrudCompanyService crudCompanyService;

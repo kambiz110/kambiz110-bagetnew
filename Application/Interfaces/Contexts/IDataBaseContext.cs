@@ -43,6 +43,7 @@ namespace Application.Interfaces.Contexts
         DbSet<Banner> Banners { get; set; }
         DbSet<Storeroom> Storerooms { get; set; }
         DbSet<PostProduct> PostProducts { get; set; }
+        DbSet<SmsCode> SmsCodes { get; set; }
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);

@@ -6,6 +6,10 @@ namespace Application.Dtos
 {
     public class BaseDto<T>
     {
+        public BaseDto()
+        {
+
+        }
         public BaseDto(bool IsSuccess, List<string> Message, T Data)
         {
             this.IsSuccess = IsSuccess;
@@ -38,6 +42,16 @@ namespace Application.Dtos
         }
         public string Message { get;  set; }
         public bool IsSuccess { get;  set; }
+    }
+    public class ResultDto<T>
+    {
+        public ResultDto()
+        {
+
+        }
+        public T Data { get;  set; }
+        public string Message { get; set; }
+        public bool IsSuccess { get; set; }
     }
 
 

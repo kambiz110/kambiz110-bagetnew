@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Admin.EndPoint.Pages.CatalogType
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator,Maneger")]
     public class CreateModel : PageModel
     {
         private readonly ICatalogTypeService catalogTypeService;

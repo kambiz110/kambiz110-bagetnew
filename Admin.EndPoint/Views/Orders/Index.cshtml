@@ -6,7 +6,73 @@
 }
 
 <div class="layout-px-spacing">
+    <div class="row ml-1 col-12">
+        <nav class="navbar navbar-expand-sm submenu-nav">
+            <ul class="navbar-nav">
 
+
+                <li class="nav-item">
+
+                    <a href="/Orders/Index?orderStatus=0" class="btn btn-default btn-change-state w3-green m-1">
+                        درخواست ارسال  <i class="nav-icon fa fa-plus-circle"></i>
+                    </a>
+
+                </li>
+                <li class="nav-item">
+
+                    <a href="/Orders/Index?orderStatus=4" class="btn btn-default btn-change-state w3-orange m-1" data-action="Edit" data-controller="Quiz" data-area="Admin">
+                        درخواست مرجوعی <i class="nav-icon fa fa-edit"></i>
+                    </a>
+
+                </li>
+                <li class="nav-item">
+
+                    <a href="/Orders/Index?orderStatus=5" class="btn btn-default btn-change-state w3-pink m-1" data-action="Delete" data-controller="Quiz" data-area="Admin">
+                        درخواست لغو <i class="nav-icon fas fa-exclamation-circle"></i>
+                    </a>
+
+                </li>
+                @*<li class="nav-item">
+
+                    <a href="/Orders/Index?orderStatus=6" class="btn btn-default btn-change-state w3-purple m-1" data-action="Details" data-controller="Quiz" data-area="Admin">
+                        ارسال شده <i class="nav-icon fa fa-clipboard-list"></i>
+                    </a>
+
+                </li>
+                <li class="nav-item">
+
+                    <a href="/Orders/Index?orderStatus=2" class="btn btn-default btn-change-state w3-blue m-1" data-action="Access" data-controller="Quiz" data-area="Admin">
+                        مرجوع شده <i class="nav-icon fas fa-shield-alt"></i>
+                    </a>
+
+                </li>
+
+                <li class="nav-item active">
+
+                    <a href="/Orders/Index?orderStatus=3" class="btn btn-default btn-change-state w3-deep-orange m-1" data-action="Result" data-controller="Quiz" data-area="Admin">
+                        لغو شده <i class="fas fa-chalkboard-teacher"></i>
+                    </a>
+
+                </li>*@
+
+                <li class="nav-item active">
+
+                    <a href="/Orders/Index?orderStatus=9" class="btn btn-default btn-change-state w3-deep-orange m-1" data-action="Result" data-controller="Quiz" data-area="Admin">
+                        در انتظار بازگشت وجه مرجوعی<i class="fas fa-credit-card"></i>
+                    </a>
+
+                </li>
+                <li class="nav-item active">
+
+                    <a href="/Orders/Index?orderStatus=7" class="btn btn-default btn-change-state w3-deep-orange m-1" data-action="Result" data-controller="Quiz" data-area="Admin">
+                        در انتظار بازگشت وجه لغو شده<i class="fas fa-credit-card"></i>
+                    </a>
+
+                </li>
+
+            </ul>
+        </nav>
+    </div>
     <div class="row layout-top-spacing" id="cancel-row">
 
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
@@ -28,43 +94,61 @@
                             {
                                 foreach (var item in Model)
                                 {
-                            <tr>
-                                <td >YCSH-@item.Id</td>
-                                <td> @item.Date.ToPersianDateStrFarsi()</td>
-                                <td>@item.Price.ToString("n0") تومان</td>
-                                <td>
-                                    @{
-                                        var message = "";
-                                        switch (item.OrderStatus)
-                                        {
-                                            case Domain.Order.OrderStatus.Processing:
-                                                message = " درخواست ارسال";
-                                                break;
-                                            case Domain.Order.OrderStatus.RequestReturned:
-                                                message = " درخواست مرجوعی";
-                                                break;
-                                            case Domain.Order.OrderStatus.RequestCancelled:
-                                                message = "درخواست لغو";
-                                                break;
+                                    <tr>
+                                        <td>YCSH-@item.Id</td>
+                                        <td> @item.Date.ToPersianDateStrFarsi()</td>
+                                        <td>@item.Price.ToString("n0") تومان</td>
+                                        <td>
+                                            @{
+                                                var message = "";
+                                                switch (item.OrderStatus)
+                                                {
+                                                    case Domain.Order.OrderStatus.Processing:
+                                                        message = " درخواست ارسال";
+                                                        break;
+                                                    case Domain.Order.OrderStatus.RequestReturned:
+                                                        message = " درخواست مرجوعی";
+                                                        break;
+                                                    case Domain.Order.OrderStatus.Cancelled:
+                                                        message = "لغو شد";
+                                                        break;
+                                                    case Domain.Order.OrderStatus.RequestCancelled:
+                                                        message = "درخواست لغو";
+                                                        break;
+                                                    case Domain.Order.OrderStatus.PostOfficalDelivered:
+                                                        message = "تحویل مامور پست گردید";
+                                                        break;
+                                                    case Domain.Order.OrderStatus.Delivered:
+                                                        message = "تحویل داده شد";
+                                                        break;
+                                                    case Domain.Order.OrderStatus.Returned:
+                                                        message = "مرجوع شده";
+                                                        break;
+                                                    case Domain.Order.OrderStatus.PendingPaymentCancelled:
+                                                        message = "در انتظار بازگشت وجه لغو شده";
+                                                        break;
+                                                    case Domain.Order.OrderStatus.PendingPaymentReturned:
+                                                        message = "در انتظار بازگشت وجه مرجوع شده";
+                                                        break;
 
-                                        }
-                                        <span>@message</span>
-                                    }
-                                </td>
+                                                }
+                                                <span>@message</span>
+                                            }
+                                        </td>
 
-                                <td class="text-center">
-                                    <a href="/Orders/OrderDetails/@item.PaymentId" class="btn btn-primary">مشاهده</a>
-                                </td>
-                            </tr>
+                                        <td class="text-center">
+                                            <a href="/Orders/OrderDetails/@item.PaymentId" class="btn btn-primary">مشاهده</a>
+                                        </td>
+                                    </tr>
                                 }
                             }
                             else
                             {
+                                <tr> هیچ رکوردی با این مشخصات یافت نگردید.</tr>
+                                    }
 
-                            }
-
-                        </tbody>
-                        <tfoot>
+                            </tbody>
+                        @*<tfoot>
                             <tr>
                                 <th>شماره سفارش</th>
                                 <th>تاریخ ثبت سفارش</th>
@@ -72,7 +156,7 @@
                                 <th> وضعیت</th>
                                 <th>عملیات</th>
                             </tr>
-                        </tfoot>
+                        </tfoot>*@
                     </table>
                 </div>
             </div>

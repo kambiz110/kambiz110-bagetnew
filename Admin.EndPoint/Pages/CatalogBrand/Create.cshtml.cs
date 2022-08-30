@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Catalogs.CatalogBrands;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Admin.EndPoint.Pages.CatalogBrand
 {
+    [Authorize(Roles = "Administrator,Maneger")]
     public class CreateModel : PageModel
     {
         private readonly ICatalogBrandCrudService catalogBrandCrudService;

@@ -1,6 +1,7 @@
 ﻿using Application.Users.Dto;
 using Application.Users.Query;
 using Domain.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,8 @@ using System.Threading.Tasks;
 
 namespace Admin.EndPoint.Controllers
 {
+   [Authorize(Roles = "Administrator")]
+
     public class UsersController : Controller
     {
         private readonly IGetUsers getUsers;
@@ -88,6 +91,34 @@ namespace Admin.EndPoint.Controllers
                 bool locked = _userManager.GetLockoutEnabledAsync(user).Result;
                 var result = _userManager.SetLockoutEnabledAsync(user, !locked).Result;
                 return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        [Route("users/ResetPassword/{id}")]
+        public IActionResult ResetPassword(string id)
+        {
+            var user = _userManager.FindByIdAsync(id).Result;
+            if (user != null)
+            {
+                ResetPasswordDto dto = new ResetPasswordDto
+                {
+                    Id = user.Id,
+                    FullName = user.FullName
+                };
+                return View(dto);
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult ResetPassword(ResetPasswordDto dto)
+        {
+            var user = _userManager.FindByIdAsync(dto.Id).Result;
+            user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, dto.Password);
+            var result = _userManager.UpdateAsync(user).Result;
+            if (result.Succeeded != true)
+            {
+                return View();
             }
             return RedirectToAction("Index");
         }

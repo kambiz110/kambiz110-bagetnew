@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Admin.EndPoint.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator,Maneger")]
     public class DiscountController : Controller
     {
         private readonly IGetDescountesForAdmin getDescountes;

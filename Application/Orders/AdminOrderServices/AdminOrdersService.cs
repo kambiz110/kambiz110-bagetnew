@@ -47,6 +47,7 @@ namespace Application.Orders.AdminOrderServices
                     Amount=payment.Amount,
                     OrderId=payment.Order.Id,
                     Date=payment.Order.ZamanSabt,
+                    OrderStatus=payment.Order.OrderStatus,
                     OrederItems=payment.Order.OrderItems.Select(o=> new OrederItemsForOrderDto {
                     Id=o.Id,
                     CatalogItemid=o.CatalogItemId,

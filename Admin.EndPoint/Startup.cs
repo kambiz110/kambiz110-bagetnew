@@ -30,6 +30,7 @@ using FluentValidation;
 using Infrastructure.ExternalApi.ImageServer;
 using Infrastructure.IdentityConfigs;
 using Infrastructure.MappingProfile;
+using Infrastructure.SMS;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -95,7 +96,7 @@ namespace Admin.EndPoint
             services.AddTransient<IUploadFile, UploadFile>();
             services.AddTransient<IAdminOrdersService, AdminOrdersService>();
             services.AddTransient<IAddPostalProductService, AddPostalProductService>();
-
+            services.AddTransient<ISmsServices, SmsServices>();
 
             #region connection String SqlServer
             services.AddScoped<IDataBaseContext, DataBaseContext>();
@@ -150,7 +151,7 @@ namespace Admin.EndPoint
          
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }

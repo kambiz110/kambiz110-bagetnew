@@ -16,12 +16,14 @@ using Application.Orders.CustomerOrdersServices;
 using Application.Payments;
 using Application.ProductListPageService;
 using Application.Users;
+using Application.Users.Command;
 using Application.Visitors.SaveVisitorInfo;
 using Application.Visitors.VisitorOnline;
 using Domain.Users;
 using EndPoint.Site.Useful.Ultimite;
 using Infrastructure.IdentityConfigs;
 using Infrastructure.MappingProfile;
+using Infrastructure.SMS;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -110,6 +112,8 @@ namespace WebSite.EndPoint
             services.AddTransient<IRenderCategoriesMenuService, RenderCategoriesMenuService>();
             services.AddTransient<IRightSildMultiEntityFilter, RightSildMultiEntityFilter>();
             services.AddTransient<IGetCategoreTypeHeaderSearchKey, GetCategoreTypeHeaderSearchKey>();
+            services.AddTransient<ILoginWithSmsCodeServices, LoginWithSmsCodeServices>();
+            services.AddTransient<ISmsServices, SmsServices>();
             services.AddScoped<SaveVisitorFilter>();
 
             services.AddSignalR();

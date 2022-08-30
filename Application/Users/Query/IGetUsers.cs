@@ -34,7 +34,7 @@ namespace Application.Users.Query
             var query = _identityDatabase.Users.AsNoTracking().AsQueryable();
             if (!String.IsNullOrEmpty(search))
             {
-                query = query.Where(p => p.FullName.Contains(search.Trim())|| p.UserName.Contains(search.Trim()));
+                query = query.Where(p => p.FullName.Contains(search.Trim())|| p.UserName.Contains(search.Trim()) || p.PhoneNumber.Contains(search.Trim()));
             }
             if (query != null && query.Any())
             {

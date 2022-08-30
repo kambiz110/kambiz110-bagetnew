@@ -1,5 +1,8 @@
 ﻿using Application.BasketsService;
+using Application.Dtos;
+using Application.Users.Command;
 using Domain.Users;
+using Infrastructure.SMS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,13 +22,19 @@ namespace WebSite.EndPoint.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IBasketService basketService;
+        private readonly ILoginWithSmsCodeServices loginWithSmsCode;
+        private readonly ISmsServices smsServices;
 
         public AccountController(UserManager<User> userManager,
-            SignInManager<User> signInManager, IBasketService basketService)
+            SignInManager<User> signInManager, IBasketService basketService
+            , ILoginWithSmsCodeServices loginWithSmsCode
+            , ISmsServices smsServices)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             this.basketService = basketService;
+            this.loginWithSmsCode = loginWithSmsCode;
+            this.smsServices = smsServices;
         }
 
         public IActionResult Register()
@@ -141,6 +150,57 @@ namespace WebSite.EndPoint.Controllers
                 basketService.TransferBasket(anonymousId, userId);
                 Response.Cookies.Delete(cookieName);
             }
+        }
+
+
+        /// <summary>
+        /// دریافت شماره تلفن همراه و ارسال پیامک تایید
+        /// </summary>
+        /// <param name="PhoneNumber"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> LoginViaSms(string PhoneNumber)
+        {
+            var IsUser = loginWithSmsCode.FindUserWithPhonenumber(PhoneNumber);
+            if (IsUser.IsSuccess)
+            {
+                var smsCode = loginWithSmsCode.GetCode(PhoneNumber);
+                //smsCode پیامک کنید به همین شماره
+               await smsServices.verificationCodeWithPatern(IsUser.Data.FullName , PhoneNumber);
+                return RedirectToAction("ConfirmPhoneNumber", "Account" , new { PhoneNumber= "PhoneNumber", SmsCode= "smsCode" });
+            }
+            ViewBag.error = "شماره تلفن نامعتبر است!!!";
+            return View();
+        }
+        [HttpGet]
+        public IActionResult LoginViaSms()
+        {
+            ViewBag.error = "";
+            return View();
+        }
+        /// <summary>
+        /// تایید شماره موبایل و کد دریافتی کاربر
+        /// </summary>
+        /// <param name="PhoneNumber"></param>
+        /// <param name="SmsCode"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult ConfirmPhoneNumber(string PhoneNumber, string SmsCode)
+        {
+            var loginResult = loginWithSmsCode.LoginWithSmsCode(PhoneNumber, SmsCode);
+            if (loginResult.IsSuccess == false)
+            {
+                return RedirectToAction("LoginViaSms", "Account");
+            }
+            var user = _userManager.FindByIdAsync(loginResult.Data).Result;
+            if (user!=null)
+            {
+                var resultlogin = _signInManager.SignInAsync(user, true);
+                var addClaimes = _userManager.AddClaimAsync(user, new Claim("FullName", user.FullName)).Result;
+                TransferBasketForuser(user.Id);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

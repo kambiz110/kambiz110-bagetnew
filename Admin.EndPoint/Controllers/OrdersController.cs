@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Admin.EndPoint.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator,Maneger")]
     public class OrdersController : Controller
     {
         private readonly IAdminOrdersService adminOrdersService;
@@ -29,7 +29,7 @@ namespace Admin.EndPoint.Controllers
         [Route("Orders/OrderDetails/{PaymentId}")]
         public IActionResult OrderDetails(Guid PaymentId)
         {
-            var model = adminOrdersService.GetAdminOrderDitales( PaymentId);
+            var model = adminOrdersService.GetAdminOrderDitales(PaymentId);
             return View(model);
         }
     [HttpPost]

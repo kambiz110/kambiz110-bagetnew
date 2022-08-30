@@ -20,12 +20,18 @@ namespace Admin.EndPoint.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IGeneritTokenUser tokenUser;
+        private readonly ISmsServices smsServices;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager , IGeneritTokenUser tokenUser)
+        public AccountController(UserManager<User> userManager, 
+            SignInManager<User> signInManager ,
+            IGeneritTokenUser tokenUser ,
+            ISmsServices smsServices
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             this.tokenUser = tokenUser;
+            this.smsServices = smsServices;
         }
 
         public IActionResult Login(string returnUrl = "/")
@@ -94,11 +100,19 @@ namespace Admin.EndPoint.Controllers
             _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+        public IActionResult AccessDenied(string message)
+        {
+            if (!String.IsNullOrEmpty(message))
+            {
+                ViewBag.message = message;
+            }
+            return View();
+        }
         public JsonResult testsms()
         {
-            SmsServices sendSms = new SmsServices();
-        //    sendSms.verificationCodeWithPatern("test", "09055510734");
-            sendSms.singleUserSendSMS("ورود به حساب کاربری ادمین موفق !",new string[] { "09055510734" });
+          
+            smsServices.verificationCodeWithPatern("test", "09055510734");
+            //smsServices.singleUserSendSMS("ورود به حساب کاربری ادمین موفق !",new string[] { "09055510734" });
             return Json("test sms");
         }
     }

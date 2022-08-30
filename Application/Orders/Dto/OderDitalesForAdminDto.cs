@@ -17,6 +17,7 @@ namespace Application.Orders.Dto
         public Address Address { get;  set; }
         public DateTime Date { get; set; }
 
+        public OrderStatus OrderStatus { get; set; }
         public List<OrederItemsForOrderDto> OrederItems { get; set; }
     }
     public class OrederItemsForOrderDto

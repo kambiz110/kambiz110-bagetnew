@@ -72,16 +72,16 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-6">
-                      
-                            <label> اهمیت قرار گیری در صفحه</label>
-                            <select type="number" asp-for="model.Importance" class="form-control">
-                                <option value="1">عادی</option>
-                                <option value="2">صفحه اصلی</option>
-                                <option value="3">ویژه</option>
-                            </select>
-                            <span asp-validation-for="model.Importance" class="text-danger"></span>
 
-                       
+                        <label> اهمیت قرار گیری در صفحه</label>
+                        <select type="number" asp-for="model.Importance" class="form-control">
+                            <option value="1">عادی</option>
+                            <option value="2">صفحه اصلی</option>
+                            <option value="3">ویژه</option>
+                        </select>
+                        <span asp-validation-for="model.Importance" class="text-danger"></span>
+
+
                     </div>
                 </div>
                 <div class="row">
@@ -176,8 +176,8 @@
 </div>
 @section Styles{
 
-    <link href="~/MdPersianDateTimePicker/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
     <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
+    <link href="~/lib/MD_BootstrapPersianDateTimePicker-master-bs5/src/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
     @*<link href="~/lib/select2/css/select2-bootstrap4.css" rel="stylesheet" />*@
 }
 
@@ -185,7 +185,8 @@
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 
     <script src="~/lib/select2/js/select2.js"></script>
-    <script src="~/MdPersianDateTimePicker/jquery.md.bootstrap.datetimepicker.js"></script>
+
+    <script src="~/lib/MD_BootstrapPersianDateTimePicker-master-bs5/src/jquery.md.bootstrap.datetimepicker.js"></script>
 
     <script>
         $('.basic-single').select2({

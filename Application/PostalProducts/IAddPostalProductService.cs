@@ -23,7 +23,7 @@ namespace Application.PostalProducts
             this.context = context;
             _mapper = mapper;
         }
-        public async Task addPostal(AddPostalProductDto dto)
+        public async Task addPostal(AddPostalProductDto dto )
         {
             if (dto.Id>0)
             {

@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Admin.EndPoint.Pages.CatalogItems
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator,Maneger")]
     public class CreateModel : PageModel
     {
         private readonly IAddNewCatalogItemService addNewCatalogItemService;
