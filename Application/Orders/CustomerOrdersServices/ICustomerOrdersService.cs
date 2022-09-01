@@ -62,7 +62,8 @@ namespace Application.Orders.CustomerOrdersServices
                     OrderStatus = p.OrderStatus,
                     PaymentStatus = p.PaymentStatus,
                     Price = p.TotalPrice(),
-                    PaymentId=context.Payments.FirstOrDefault(m=>m.OrderId==p.Id)?.Id
+                    PaymentId=context.Payments.FirstOrDefault(m=>m.OrderId==p.Id)?.Id,
+                    FollowKey=p.FollowKey
 
                 }).ToList();
             return result;
@@ -75,6 +76,7 @@ namespace Application.Orders.CustomerOrdersServices
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public int Price { get; set; }
+        public string FollowKey { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
     }

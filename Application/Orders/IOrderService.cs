@@ -69,13 +69,23 @@ namespace Application.Orders
             var userAddress = context.UserAddresses.SingleOrDefault(p => p.Id == UserAddressId);
             var address = mapper.Map<Address>(userAddress);
             //ایجاد سفارش محصول
+           
             var order = new Order(basket.BuyerId, address, orderItems, paymentMethod,basket.AppliedDiscount);
-            context.Orders.Add(order);
-            //حذف سبد خردید
-           context.Baskets.Remove(basket);
-            context.SaveChanges();
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var rand = new string(Enumerable.Repeat(chars, 6)
+                 .Select(s => s[random.Next(s.Length)]).ToArray());
 
-            if(basket.AppliedDiscount != null)
+
+            context.Orders.Add(order);
+          
+            //حذف سبد خردید
+            context.Baskets.Remove(basket);
+            context.SaveChanges();
+            order.FollowKey = $"YCSH-{rand}-{order.Id}";
+            context.Orders.Update(order);
+            context.SaveChanges();
+            if (basket.AppliedDiscount != null)
             {
                 discountHistoryService.InsertDiscountUsageHistory(basket.Id, order.Id);
             }

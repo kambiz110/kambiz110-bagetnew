@@ -111,7 +111,7 @@ namespace Admin.EndPoint.Controllers
         public JsonResult testsms()
         {
           
-            smsServices.verificationCodeWithPatern("test", "09055510734");
+            smsServices.verificationCodeWithPatern("الهام حیدری عزیزم", "09924044207");
             //smsServices.singleUserSendSMS("ورود به حساب کاربری ادمین موفق !",new string[] { "09055510734" });
             return Json("test sms");
         }

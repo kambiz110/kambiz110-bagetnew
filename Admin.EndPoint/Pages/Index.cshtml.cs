@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Admin.EndPoint.Pages
 {
-    //[Authorize]
+    [Authorize(Roles = "Administrator,Maneger")]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;

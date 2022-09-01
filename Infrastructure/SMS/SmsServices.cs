@@ -49,7 +49,7 @@ namespace Infrastructure.SMS
         {
             string UserName = "09108496094";
             string Password = "karen@1397";
-            string verificationCode = "1221";
+            string verificationCode = "1285";
 
             int PatternCodeID = 1225;
             string[] PatternValues = new string[] { name, verificationCode };
@@ -60,7 +60,7 @@ namespace Infrastructure.SMS
 
             if (result.Status == AmootSMS.Status.Success)
             {
-                var test = "موفق";
+                var rr = "موفق";
             }
         }
 

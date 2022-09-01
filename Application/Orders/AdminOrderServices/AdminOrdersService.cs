@@ -22,13 +22,15 @@ namespace Application.Orders.AdminOrderServices
     public class AdminOrdersService : IAdminOrdersService
     {
 
+        private readonly IIdentityDatabaseContext identityDatabase;
         private readonly IDataBaseContext context;
         private readonly IMapper mapper;
 
-        public AdminOrdersService(IDataBaseContext context,IMapper mapper)
+        public AdminOrdersService(IDataBaseContext context, IMapper mapper, IIdentityDatabaseContext identityDatabase)
         {
             this.context = context;
             this.mapper = mapper;
+            this.identityDatabase = identityDatabase;
         }
 
         public OderDitalesForAdminDto GetAdminOrderDitales(Guid PaymentId)
@@ -38,13 +40,15 @@ namespace Application.Orders.AdminOrderServices
                  .Include(p => p.Order).ThenInclude(p => p.PostProduct)
              
                  .FirstOrDefault();
-            if (payment!=null)
+            var user = identityDatabase.Users.FirstOrDefault(p=>p.Id== payment.Order.UserId);
+            if (payment!=null && user!=null)
             {
                 var model = new OderDitalesForAdminDto
                 {
                     postalProductDto=payment.Order.PostProduct!=null?mapper.Map<AddPostalProductDto>(payment.Order.PostProduct):new AddPostalProductDto { },
                     Address =payment.Order.Address,
                     Amount=payment.Amount,
+                    userePhoneNumber=user.PhoneNumber,
                     OrderId=payment.Order.Id,
                     Date=payment.Order.ZamanSabt,
                     OrderStatus=payment.Order.OrderStatus,

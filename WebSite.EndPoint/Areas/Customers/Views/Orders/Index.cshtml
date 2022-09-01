@@ -108,9 +108,9 @@
                                 <tbody>
                                     @foreach (var item in WaitingForPayment)
                                     {
-                                        var rand = new Random().Next(1111, 9999);
+
                                         <tr>
-                                            <td class="order-code">YCSH-@rand-@item.Id</td>
+                                            <td class="order-code">@item.FollowKey</td>
                                             <td> @item.Date.ToPersianDateStrFarsi()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
                                             <td>در انتظار پرداخت</td>
@@ -163,9 +163,9 @@
                                 <tbody>
                                     @foreach (var item in Processing)
                                     {
-                                        var rand = new Random().Next(1111, 9999);
+
                                         <tr>
-                                            <td class="order-code">YCSH-@rand-@item.Id</td>
+                                            <td class="order-code">@item.FollowKey</td>
                                             <td> @item.Date.ToPersianDateStrFarsi()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
                                             <td>
@@ -193,7 +193,7 @@
                                                     switch (item.OrderStatus)
                                                     {
                                                         case Domain.Order.OrderStatus.Processing:
-                                                          
+
                                                             <a href="/Customers/orders/ChangeOrederStat/@item.Id/5" class="btn btn-outline-danger">لغو کردن<i class="fa fa-trash"></i></a>
                                                             break;
                                                         case Domain.Order.OrderStatus.RequestReturned:
@@ -247,9 +247,9 @@
                                 <tbody>
                                     @foreach (var item in Delivered)
                                     {
-                                        var rand = new Random().Next(1111, 9999);
+
                                         <tr>
-                                            <td class="order-code">YCSH-@rand-@item.Id</td>
+                                            <td class="order-code">@item.FollowKey</td>
                                             <td> @item.Date.ToPersianDateStrFarsi()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
                                             <td>تحویل داده شد</td>
@@ -295,12 +295,14 @@
                                 <tbody>
                                     @foreach (var item in Returned)
                                     {
-                                        var rand = new Random().Next(1111, 9999);
+
                                         <tr>
-                                            <td class="order-code">YCSH-@rand-@item.Id</td>
+                                            <td class="order-code">@item.FollowKey</td>
                                             <td> @item.Date.ToPersianDateStrFarsi()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
-                                            <td>مرجوعی</td>
+                                            <td>
+                                                <span>مرجوع شده</span>
+                                            </td>
                                             <td class="order-detail-link">
                                                 <i class='fas fa-redo' style='font-size:36px'></i>
                                             </td>
@@ -343,12 +345,14 @@
                                 <tbody>
                                     @foreach (var item in Cancelled)
                                     {
-                                        var rand = new Random().Next(1111, 9999);
+
                                         <tr>
-                                            <td class="order-code">YCSH-@rand-@item.Id</td>
+                                            <td class="order-code">@item.FollowKey</td>
                                             <td> @item.Date.ToPersianDateStrFarsi()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
-                                            <td>لغو شده</td>
+                                            <td>
+                                                <span>لغو شده</span>
+                                            </td>
                                             <td class="order-detail-link">
                                                 <i class="fa fa-close" style="font-size:48px;color:red"></i>
                                             </td>

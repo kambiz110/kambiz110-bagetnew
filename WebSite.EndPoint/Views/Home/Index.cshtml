@@ -13,9 +13,56 @@
 </cache>
 
 
-@(await Component.InvokeAsync("GetCatalogTypeHomePage", new { sortIndex=0,  count=9 }))
+
+
+
+
+
+
+<div class="section_title mb-35">
+    <h2><span>برترین  </span>مدل ها</h2>
+
+</div>
+<div class="col-12 mb-4">
+    <div class="brand_container owl-carousel ">
+        <div class="brand_list">
+            <div class="single_brand">
+                <a href="/Product/index?CatalogCarId=7"><img src="/NewThem/assets/img/car/1.jpg" alt=""></a>
+            </div>
+        </div>
+        <div class="brand_list">
+            <div class="single_brand">
+                <a href="/Product/index?CatalogCarId=1"><img src="/NewThem/assets/img/car/2.jpg" alt=""></a>
+            </div>
+        </div>
+        <div class="brand_list">
+            <div class="single_brand">
+                <a href="/Product/index?CatalogCarId=3"><img src="/NewThem/assets/img/car/3.jpg" alt=""></a>
+            </div>
+        </div>
+
+        <div class="brand_list">
+            <div class="single_brand">
+                <a href="/Product/index?CatalogCarId=6"><img src="/NewThem/assets/img/car/4.jpg" alt=""></a>
+            </div>
+        </div>
+        <div class="brand_list">
+            <div class="single_brand">
+                <a href="/Product/index?CatalogCarId=4"><img src="/NewThem/assets/img/car/5.jpg" alt=""></a>
+            </div>
+        </div>
+        <div class="brand_list">
+            <div class="single_brand">
+                <a href="/Product/index?CatalogCarId=2"><img src="/NewThem/assets/img/car/6.jpg" alt=""></a>
+            </div>
+        </div>
+
+
+    </div>
+</div>
 @(await Component.InvokeAsync("GetCatalogByDiscountHomePage"))
-@(await Component.InvokeAsync("BannerStyleTwo", new { position = 1,  count =2}))
+@(await Component.InvokeAsync("GetCatalogTypeHomePage", new { sortIndex=0,  count=9 }))
 @(await Component.InvokeAsync("GetMainProductes"))
-@(await Component.InvokeAsync("BanerStyleTree", new { position = 2,  count =3}))
+@(await Component.InvokeAsync("BannerStyleTwo", new { position = 1,  count =2}))
 @(await Component.InvokeAsync("GetCatalogeByTypeHomePage", new { sortIndex=0,  count=9 }))
+@(await Component.InvokeAsync("BanerStyleTree", new { position = 2,  count =3}))

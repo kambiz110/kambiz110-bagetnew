@@ -18,7 +18,7 @@ namespace Domain.Order
         public string UserId { get; private set; }
         public DateTime OrderDate { get; private set; } = DateTime.Now;
         public Address Address { get; private set; }
-
+        public string FollowKey { get; set; }
         public PaymentMethod PaymentMethod { get; private set; }
         public PaymentStatus PaymentStatus { get; private set; }
         public OrderStatus OrderStatus { get; private set; }
@@ -96,10 +96,16 @@ namespace Domain.Order
         {
             OrderStatus = OrderStatus.Cancelled;
         }
+        /// <summary>
+        /// درخواست مرجوعی سفارش
+        /// </summary>
         public void OrderRequestReturned()
         {
             OrderStatus = OrderStatus.RequestReturned;
         }
+        /// <summary>
+        /// درخواست لغو سفارش
+        /// </summary>
         public void OrderRequestCancelled()
         {
             OrderStatus = OrderStatus.RequestCancelled;

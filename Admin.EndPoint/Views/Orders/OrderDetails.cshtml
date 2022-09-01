@@ -23,11 +23,16 @@
                     <div class="text-center user-info">
 
                         <p class="">@Model.Address.ReciverName</p>
-                    </div>
+</div>
                     <div class="user-info-list">
 
                         <div class="">
                             <ul class="contacts-block list-unstyled">
+                                <li class="contacts-block__item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                    @Model.userePhoneNumber <span>( کاربر سایت)</span>
+
+                                </li>
                                 <li class="contacts-block__item">
                                     <i style="font-size:15px" class="fa">&#xf155;</i>     @Model.Amount.ToString("n0") تومان(با هزینه پست)
 
@@ -43,7 +48,7 @@
 
                                 <li class="contacts-block__item">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                    @Model.Address.PhoneNumber
+                                    @Model.Address.PhoneNumber <span>(تحویل گیرنده)</span>
                                 </li>
                                 @if ((int)Model.OrderStatus == 0)
                                 {
@@ -93,7 +98,7 @@
                     <table id="default-ordering" class="table table-hover" style="width:100%">
                         <thead>
                             <tr>
-                                <th>شماره سفارش</th>
+                                <th>شماره کالا</th>
                                 <th>نام محصول</th>
                                 <th>مبلغ </th>
                                 <th> تعداد</th>
@@ -106,7 +111,7 @@
                                 foreach (var item in Model.OrederItems)
                                 {
                                     <tr>
-                                        <td>YCSH-@item.CatalogItemid</td>
+                                        <td>@item.CatalogItemid</td>
                                         <td> @item.ProductName</td>
                                         <td>@item.UnitPrice.ToString("n0") تومان</td>
                                         <td>
@@ -243,7 +248,7 @@
                 "sInfo": "صفحه _PAGE_ از _PAGES_",
                 "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
                 "sSearchPlaceholder": "جستجو کنید...",
-                "sLengthMenu": "نتایج :  _MENU_",
+                "sLengthMenu": "تعداد نمایش نتایج در صفحه :  _MENU_",
             },
             "order": [[3, "desc"]],
             "stripeClasses": [],

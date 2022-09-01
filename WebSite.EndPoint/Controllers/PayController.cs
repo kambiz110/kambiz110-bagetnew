@@ -55,22 +55,22 @@ namespace WebSite.EndPoint.Controllers
             }
             string callbackUrl = Url.Action(nameof(Verify), "pay", new { payment.Id}, protocol: Request.Scheme);
             //برای تست خطوط زیر کامنت شده است
-            //var resultZarinpalRequest = await _payment.Request(new DtoRequest()
-            //{
-            //    Amount = payment.Amount,
-            //    CallbackUrl = callbackUrl,
-            //    Description = payment.Description,
-            //    Email = payment.Email,
-            //    MerchantId = merchendId,
-            //    Mobile = payment.PhoneNumber,
-            //}, Payment.Mode.zarinpal
-            //    );
-            return RedirectToAction("Verify", "pay", new { Id=new Guid().ToString(), Authority = "test_Authority" ,paymentId= PaymentId.ToString()});
-           // return Redirect($"https://zarinpal.com/pg/StartPay/{resultZarinpalRequest.Authority}");
+            var resultZarinpalRequest = await _payment.Request(new DtoRequest()
+            {
+                Amount = payment.Amount,
+                CallbackUrl = callbackUrl,
+                Description = payment.Description,
+                Email = payment.Email,
+                MerchantId = merchendId,
+                Mobile = payment.PhoneNumber,
+            }, Payment.Mode.zarinpal
+                );
+            // return RedirectToAction("Verify", "pay", new { Id=new Guid().ToString(), Authority = "test_Authority" ,paymentId= PaymentId.ToString()});
+            return Redirect($"https://zarinpal.com/pg/StartPay/{resultZarinpalRequest.Authority}");
         }
 
 
-        public IActionResult Verify(Guid Id, string Authority ,string PaymentId)
+        public IActionResult Verify(Guid Id, string Authority /*,string PaymentId*/)
         {
             string Status = HttpContext.Request.Query["Status"];
             
@@ -128,7 +128,7 @@ namespace WebSite.EndPoint.Controllers
 
             }
             TempData["message"] = "پرداخت شما ناموفق بوده است .";
-            TempData["paymentId"] = PaymentId;
+            TempData["paymentId"] = Id;
             return RedirectToAction("checkout", "basket", new { payResult = false  });
         }
         [HttpGet]

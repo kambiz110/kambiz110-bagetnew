@@ -121,6 +121,8 @@ namespace WebSite.EndPoint.Controllers
         [HttpPost]
         public IActionResult ShippingPayment(int Address, PaymentMethod PaymentMethod)
         {
+            //قرار دان پیش فرض نحوه پرداخت روی آنلاین
+            PaymentMethod = PaymentMethod.OnlinePaymnt;
             string userId = ClaimUtility.GetUserId(User);
             var basket = basketService.GetBasketForUser(userId);
             //ایجاد سفارش بر اساس سبد خرید کاربر
