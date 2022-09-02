@@ -9,11 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Domain.Users;
+using Application.Dtos;
 
 namespace Application.Users.Token
 {
     public interface IGeneritTokenUser {
-        bool creatToken(string userId);
+        ResultDto<string> creatToken(string userId);
     }
    public class GeneritTokenUser: IGeneritTokenUser
     {
@@ -23,9 +24,9 @@ namespace Application.Users.Token
         {
             context = _context;
         }
-        public bool creatToken(string userId)
+        public ResultDto<string> creatToken(string userId)
         {
-            var user = context.Users.Include(p=>p.UserTokens).FirstOrDefault(p => p.Id == userId);
+            var user = context.Users.AsNoTracking().Include(p=>p.UserTokens).FirstOrDefault(p => p.Id == userId);
             if (user!=null)
             {
 
@@ -36,10 +37,18 @@ namespace Application.Users.Token
                     user.UserTokens = ut;
                 }
                 user.UserTokens.Value = token;
+                context.UserTokens.Update(user.UserTokens);
                 var result = context.SaveChanges();
-                return result>0?true: false;
+                return new ResultDto<string>
+                {
+                    IsSuccess = true,
+                    Data = token
+                };
             }
-            return false;
+            return new ResultDto<string> { 
+            IsSuccess=false,
+            Data=""
+            };
         }
 
         private string generateJwtToken(string userId)

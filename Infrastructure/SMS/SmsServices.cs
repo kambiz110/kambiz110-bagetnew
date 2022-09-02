@@ -9,7 +9,7 @@ namespace Infrastructure.SMS
     public interface ISmsServices
     {
         public Task singleUserSendSMS(string message, string[] phonNumber);
-        public Task verificationCodeWithPatern(string name, string Mobile);
+        public Task verificationCodeWithPatern(string name, string Mobile ,string smsCode);
     }
     public class SmsServices : ISmsServices
     {
@@ -45,23 +45,20 @@ namespace Infrastructure.SMS
 
 
         }
-        public async Task verificationCodeWithPatern(string name, string Mobile)
+        public async Task verificationCodeWithPatern(string name, string Mobile, string smsCode)
         {
             string UserName = "09108496094";
             string Password = "karen@1397";
-            string verificationCode = "1285";
+            string verificationCode = smsCode;
 
             int PatternCodeID = 1225;
             string[] PatternValues = new string[] { name, verificationCode };
             var client = new AmootSMS.AmootSMSWebService2SoapClient(
                     AmootSMS.AmootSMSWebService2SoapClient.EndpointConfiguration.AmootSMSWebService2Soap12,
                    "https://portal.amootsms.com/webservice2.asmx");
-            AmootSMS.SendResult result = await client.SendWithPatternAsync(UserName, Password, Mobile, PatternCodeID, PatternValues);
+          /*  AmootSMS.SendResult result =*/ await client.SendWithPatternAsync(UserName, Password, Mobile, PatternCodeID, PatternValues);
 
-            if (result.Status == AmootSMS.Status.Success)
-            {
-                var rr = "موفق";
-            }
+       
         }
 
 

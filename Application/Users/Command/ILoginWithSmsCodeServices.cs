@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Application.Interfaces.Contexts;
 using Domain.Users;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Application.Users.Command
    public interface ILoginWithSmsCodeServices
     {
         string GetCode(string PhoneNumber);
-        ResultDto<string> LoginWithSmsCode(string phoneNumber, string Code);
+        ResultDto<User> LoginWithSmsCode(string phoneNumber, string Code, string token, string tokencreator);
         ResultDto<User> FindUserWithPhonenumber(string phoneNumber);
     }
    public class LoginWithSmsCodeServices : ILoginWithSmsCodeServices
@@ -28,7 +29,7 @@ namespace Application.Users.Command
 
         public ResultDto<User> FindUserWithPhonenumber(string phoneNumber)
         {
-            var user = identityDatabase.Users.SingleOrDefault(p => p.PhoneNumber.Equals(phoneNumber));
+            var user = identityDatabase.Users.AsNoTracking().Where(p => p.PhoneNumber.Equals(phoneNumber)).FirstOrDefault();
             return new ResultDto<User>
             {
                 IsSuccess = user!=null? true:false,
@@ -54,14 +55,14 @@ namespace Application.Users.Command
             return code;
         }
 
-        public ResultDto<string> LoginWithSmsCode(string phoneNumber, string Code)
+        public ResultDto<User> LoginWithSmsCode(string phoneNumber, string Code, string token, string tokencreator)
         {
-            var smsCode = _context.SmsCodes.Where(p => p.PhoneNumber == phoneNumber).OrderByDescending(p => p.Id)
+            var smsCode = _context.SmsCodes.AsNoTracking().Where(p => p.PhoneNumber == phoneNumber).OrderByDescending(p => p.Id)
             .FirstOrDefault();
-
-            if (smsCode == null || smsCode.Code != Code)
+            var tokenUser = identityDatabase.UserTokens.AsNoTracking().Where(p=>p.UserId==tokencreator).FirstOrDefault();
+            if (smsCode == null || tokenUser==null)
             {
-                return new ResultDto<string>
+                return new ResultDto<User>
                 {
                     IsSuccess = false,
                     Message = "کد وارد شده صحیح نیست!",
@@ -70,9 +71,20 @@ namespace Application.Users.Command
             }
             else
             {
+                if ( smsCode.Code != Code || tokenUser.Value!= token)
+                {
+                    smsCode.RequestCount++;
+                    _context.SaveChanges();
+                    return new ResultDto<User>
+                    {
+                        IsSuccess = false,
+                        Message = "کد وارد شده صحیح نیست!",
+
+                    };
+                }
                 if (smsCode.Used == true || smsCode.RequestCount > 3)
                 {
-                    return new ResultDto<string>
+                    return new ResultDto<User>
                     {
                         IsSuccess = false,
                         Message = "کد وارد شده صحیح نیست!",
@@ -85,23 +97,23 @@ namespace Application.Users.Command
 
                 smsCode.Used = true;
                 _context.SaveChanges();
-                var user = identityDatabase.Users.SingleOrDefault(p => p.PhoneNumber.Equals(phoneNumber));
+                var user = identityDatabase.Users.AsNoTracking().Where(p => p.PhoneNumber.Equals(phoneNumber)).FirstOrDefault();
                 if (user != null)
                 {
-                    return new ResultDto<string>
+                    return new ResultDto<User>
                     {
                         IsSuccess = true,
-                        Data = user.Id,
+                        Data = user,
                     };
                 }
                 else
                 {
                   
-                    return new ResultDto<string>
+                    return new ResultDto<User>
                     {
-                        Data = user.Id,
-                        IsSuccess = true,
-                        Message = "موفق"
+                      
+                        IsSuccess = false,
+                        Message = "ناموفق کاربر یافت نشد!!!"
                     };
                 }
 

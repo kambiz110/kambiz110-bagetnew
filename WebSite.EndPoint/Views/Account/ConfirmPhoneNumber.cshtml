@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "ConfirmPhoneNumber";
+
+}
+
+
+@{
+    ViewData["Title"] = "اعتبار سنجی پیامکی";
+
+}
+
+<form asp-action="ConfirmPhoneNumber" asp-controller="account" method="post">
+    @if (ViewBag.Errors != null)
+    {
+        <div class=" alert alert-danger">
+            <ul>
+                @foreach (var item in ViewBag.Errors)
+                {
+                    <li>@item</li>
+
+                }
+            </ul>
+        </div>
+
+    }
+    <div class="form-element-row">
+        <label for="phone-number" class="label-element">رمز پیامکی دریافتی</label>
+        <div class="form-element-with-icon">
+            <input type="hidden" value="@ViewBag.tokencreator" name="tokencreator">
+            <input type="hidden" value="@ViewBag.token" name="token">
+            <input type="hidden"  value="@ViewBag.PhoneNumber" name="PhoneNumber">
+            <input type="text" class="input-element" id="SmsCode" name="SmsCode">
+            <i class="fad fa-mobile-alt"></i>
+        </div>
+    </div>
+    <div class="form-element-row text-left">
+        <button class="btn-element btn-success-element">
+            <i class="fad fa-sync"></i>
+            اعتبارسنجی کد پیامکی یک بار مصرف
+        </button>
+    </div>
+
+</form>
+<div class="auth-form-footer">
+    <span>کاربر جدید هستید؟</span>
+    <a href="~/account/register" class="link--with-border-bottom">ثبت نام در فروشگاه </a>
+</div>
+

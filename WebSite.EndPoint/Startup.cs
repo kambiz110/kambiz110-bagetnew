@@ -17,6 +17,7 @@ using Application.Payments;
 using Application.ProductListPageService;
 using Application.Users;
 using Application.Users.Command;
+using Application.Users.Token;
 using Application.Visitors.SaveVisitorInfo;
 using Application.Visitors.VisitorOnline;
 using Domain.Users;
@@ -114,6 +115,7 @@ namespace WebSite.EndPoint
             services.AddTransient<IGetCategoreTypeHeaderSearchKey, GetCategoreTypeHeaderSearchKey>();
             services.AddTransient<ILoginWithSmsCodeServices, LoginWithSmsCodeServices>();
             services.AddTransient<ISmsServices, SmsServices>();
+            services.AddTransient<IGeneritTokenUser, GeneritTokenUser>();
             services.AddScoped<SaveVisitorFilter>();
 
             services.AddSignalR();

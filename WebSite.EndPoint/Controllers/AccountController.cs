@@ -1,6 +1,7 @@
 ﻿using Application.BasketsService;
 using Application.Dtos;
 using Application.Users.Command;
+using Application.Users.Token;
 using Domain.Users;
 using Infrastructure.SMS;
 using Microsoft.AspNetCore.Identity;
@@ -16,7 +17,7 @@ using WebSite.EndPoint.Utilities.Filters;
 
 namespace WebSite.EndPoint.Controllers
 {
-  //  [ServiceFilter(typeof(SaveVisitorFilter))]
+    //  [ServiceFilter(typeof(SaveVisitorFilter))]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -24,17 +25,18 @@ namespace WebSite.EndPoint.Controllers
         private readonly IBasketService basketService;
         private readonly ILoginWithSmsCodeServices loginWithSmsCode;
         private readonly ISmsServices smsServices;
-
+        private readonly IGeneritTokenUser tokenUser;
         public AccountController(UserManager<User> userManager,
             SignInManager<User> signInManager, IBasketService basketService
             , ILoginWithSmsCodeServices loginWithSmsCode
-            , ISmsServices smsServices)
+            , ISmsServices smsServices, IGeneritTokenUser tokenUser)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             this.basketService = basketService;
             this.loginWithSmsCode = loginWithSmsCode;
             this.smsServices = smsServices;
+            this.tokenUser = tokenUser;
         }
 
         public IActionResult Register()
@@ -78,7 +80,7 @@ namespace WebSite.EndPoint.Controllers
 
 
             var errorList2 = query2;
-            
+
             ViewBag.Errors = errorList2;
 
 
@@ -152,7 +154,12 @@ namespace WebSite.EndPoint.Controllers
             }
         }
 
-
+        [HttpGet]
+        public IActionResult LoginViaSms()
+        {
+            ViewBag.error = "";
+            return View();
+        }
         /// <summary>
         /// دریافت شماره تلفن همراه و ارسال پیامک تایید
         /// </summary>
@@ -161,21 +168,34 @@ namespace WebSite.EndPoint.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginViaSms(string PhoneNumber)
         {
+            if (String.IsNullOrEmpty(PhoneNumber))
+            {
+                ViewBag.Errors = "شماره تلفن را وارد  ننموده اید!!!";
+                return View();
+            }
             var IsUser = loginWithSmsCode.FindUserWithPhonenumber(PhoneNumber);
             if (IsUser.IsSuccess)
             {
                 var smsCode = loginWithSmsCode.GetCode(PhoneNumber);
                 //smsCode پیامک کنید به همین شماره
-               await smsServices.verificationCodeWithPatern(IsUser.Data.FullName , PhoneNumber);
-                return RedirectToAction("ConfirmPhoneNumber", "Account" , new { PhoneNumber= "PhoneNumber", SmsCode= "smsCode" });
+                await smsServices.verificationCodeWithPatern(IsUser.Data.FullName, PhoneNumber, smsCode);
+                var token = tokenUser.creatToken(IsUser.Data.Id);
+                TempData["token"] = token.Data;
+                TempData["tokencreator"] = IsUser.Data.Id;
+                return RedirectToAction("ConfirmPhoneNumber", "Account", new { PhoneNumber = PhoneNumber });
             }
-            ViewBag.error = "شماره تلفن نامعتبر است!!!";
+            ViewBag.Errors = "شماره تلفن نامعتبر است و یا  شما ثبت نام ننموده اید!!!";
             return View();
         }
+
         [HttpGet]
-        public IActionResult LoginViaSms()
+        public IActionResult ConfirmPhoneNumber(string PhoneNumber)
         {
-            ViewBag.error = "";
+
+            string token = TempData["token"].ToString();
+            ViewBag.tokencreator = TempData["tokencreator"].ToString();
+            ViewBag.token = token;
+            ViewBag.PhoneNumber = PhoneNumber;
             return View();
         }
         /// <summary>
@@ -185,22 +205,24 @@ namespace WebSite.EndPoint.Controllers
         /// <param name="SmsCode"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult ConfirmPhoneNumber(string PhoneNumber, string SmsCode)
+        public async Task<ActionResult> ConfirmPhoneNumber(string PhoneNumber, string SmsCode, string token, string tokencreator)
         {
-            var loginResult = loginWithSmsCode.LoginWithSmsCode(PhoneNumber, SmsCode);
+
+            await _signInManager.SignOutAsync();
+            var loginResult = loginWithSmsCode.LoginWithSmsCode(PhoneNumber, SmsCode, token, tokencreator);
             if (loginResult.IsSuccess == false)
             {
                 return RedirectToAction("LoginViaSms", "Account");
-            }
-            var user = _userManager.FindByIdAsync(loginResult.Data).Result;
-            if (user!=null)
-            {
-                var resultlogin = _signInManager.SignInAsync(user, true);
-                var addClaimes = _userManager.AddClaimAsync(user, new Claim("FullName", user.FullName)).Result;
-                TransferBasketForuser(user.Id);
-            }
 
+
+            }
+            var user =  _userManager.FindByIdAsync(loginResult.Data.Id).Result;
+            var addClaimes = _userManager.AddClaimAsync(user, new Claim("FullName", loginResult.Data.FullName)).Result;
+            await _signInManager.SignInAsync(loginResult.Data, true);
+            TransferBasketForuser(loginResult.Data.Id);
             return RedirectToAction("Index", "Home");
+
         }
+
     }
 }

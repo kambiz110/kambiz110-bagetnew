@@ -1,8 +1,39 @@
 ﻿
 @{
-    ViewData["Title"] = "LoginViaSms";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "ورود با رمز یکبار مصرف پیامکی";
+
 }
 
-<h1>LoginViaSms</h1>
+<form asp-action="LoginViaSms" asp-controller="account" method="post">
+    @if (ViewBag.Errors != null)
+    {
+        <div class=" alert alert-danger">
+            <ul>
+            
+                    <li>@ViewBag.Errors</li>
+
+             
+            </ul>
+        </div>
+
+    }
+    <div class="form-element-row">
+        <label for="phone-number" class="label-element">شماره موبایل</label>
+        <div class="form-element-with-icon">
+            <input type="text" class="input-element" id="PhoneNumber" name="PhoneNumber">
+            <i class="fad fa-mobile-alt"></i>
+        </div>
+    </div>
+    <div class="form-element-row text-left">
+        <button class="btn-element btn-success-element">
+            <i class="fad fa-sync"></i>
+            ارسال کد پیامکی یک بار مصرف
+        </button>
+    </div>
+
+</form>
+<div class="auth-form-footer">
+    <span>کاربر جدید هستید؟</span>
+    <a href="~/account/register" class="link--with-border-bottom">ثبت نام در فروشگاه </a>
+</div>
 
