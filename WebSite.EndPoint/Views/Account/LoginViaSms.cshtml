@@ -1,39 +1,94 @@
 ﻿
 @{
     ViewData["Title"] = "ورود با رمز یکبار مصرف پیامکی";
-
+    Layout = null;
 }
 
-<form asp-action="LoginViaSms" asp-controller="account" method="post">
-    @if (ViewBag.Errors != null)
-    {
-        <div class=" alert alert-danger">
-            <ul>
-            
-                    <li>@ViewBag.Errors</li>
 
-             
-            </ul>
-        </div>
 
-    }
-    <div class="form-element-row">
-        <label for="phone-number" class="label-element">شماره موبایل</label>
-        <div class="form-element-with-icon">
-            <input type="text" class="input-element" id="PhoneNumber" name="PhoneNumber">
-            <i class="fad fa-mobile-alt"></i>
-        </div>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="~/lib/Login_page/Fonts/fontawesome-free-6.1.1-web/css/all.css">
+    <link rel="stylesheet" href="~/lib/Login_page/Css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="~/lib/Login_page/Css/style.css" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body id="index">
+    <div class="container">
+        <!--        Top-header          -->
+        <header>
+            <div class="row">
+                <h1 class="my-header-text d-block mb-0 mt-5 "> ورود با تلفن همراه</h1>
+                <span class="d-flex">
+                    <ul class="map">
+                        <li>اعضاء</li>
+                        <li>/ ورود با تلفن همراه</li>
+                    </ul>
+                </span>
+            </div>
+        </header>
+        <main>
+            <!--        Right-Panel          -->
+            <div class="row row-cols-1  ">
+                <div class="cols col-lg-6 align-self-center">
+                    <div class="content ">
+                        <h3 class="d-block ">ورود با تلفن همراه</h3>
+                        <span class="d-block myText">برای ادامه لطفا تلفن همراه خود را وارد کنید.</span>
+                        <form asp-action="LoginViaSms" asp-controller="account" method="post" id="myForm">
+                            @if (ViewBag.Errors != null)
+                            {
+                                <div class=" alert alert-danger">
+                                    <ul>
+
+                                        <li>@ViewBag.Errors</li>
+
+
+                                    </ul>
+                                </div>
+
+                            }
+                            <div class="row">
+                                <div class="col-2 flex-grow-1">
+                                    <label class="tel" for="number">تلفن همراه</label>
+                                </div>
+                                <div class="col-6 flex-grow-1 p-0">
+                                    <input class="form-control" type="text" name="PhoneNumber" id="number" dir="ltr">
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <button type="submit" id="mySubmit" class="btn btn-success mt-3 myBTN">
+                                    <i class="fa-solid fa-right-left float-start fonta"></i>
+                                    ادامه
+                                </button>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <span class="alert alert-danger mt-2 myAlert">
+                                لطفا شماره تماس را به درستی وارد کنید!!
+                            </span>
+                        </div>
+                    </div>
+                    <div class="auth-form-footer mt-2">
+                        <span>کاربر جدید هستید؟</span>
+                        <a href="~/account/register" class="link--with-border-bottom">ثبت نام در فروشگاه </a>
+                    </div>
+                </div>
+                <!--        Left-Panel          -->
+                <div class="col-lg-6 cols mt-5 mt-lg-0">
+                    <img class="img-right" src="~/lib/Login_page/Images/undraw_mobile_login_re_9ntv.svg" alt="">
+                </div>
+            </div>
+        </main>
     </div>
-    <div class="form-element-row text-left">
-        <button class="btn-element btn-success-element">
-            <i class="fad fa-sync"></i>
-            ارسال کد پیامکی یک بار مصرف
-        </button>
-    </div>
+ 
 
-</form>
-<div class="auth-form-footer">
-    <span>کاربر جدید هستید؟</span>
-    <a href="~/account/register" class="link--with-border-bottom">ثبت نام در فروشگاه </a>
-</div>
+    <script src="~/lib/Login_page/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/Login_page/Scripts/Script.js"></script>
+</body>
 
+</html>

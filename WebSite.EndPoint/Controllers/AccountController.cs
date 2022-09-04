@@ -58,30 +58,36 @@ namespace WebSite.EndPoint.Controllers
                 ViewBag.Errors = errorList;
                 return View(model);
             }
+            _signInManager.SignOutAsync();
             User newUser = new User()
-            {
+            {Id=Guid.NewGuid().ToString(),
                 Email = model.Email,
                 UserName = model.Email,
                 FullName = model.FullName,
                 PhoneNumber = model.PhoneNumber,
             };
 
+            bool IsEmailAlreadyRegistered = _userManager.Users.Any(item => item.Email == model.Email || item.PhoneNumber == model.PhoneNumber);
+            if (IsEmailAlreadyRegistered)
+            {
+                ViewBag.Errors = new List<string>{ "کاربر با مشخصات ایمیل و یا شماره تلفن وارد شده تکراری می باشد"};
+                return View(model);
+            }
             var result = _userManager.CreateAsync(newUser, model.Password).Result;
             if (result.Succeeded)
             {
 
                 var user = _userManager.FindByNameAsync(newUser.Email).Result;
+                var LoginResult = _signInManager.PasswordSignInAsync(user, model.Password
+               , true, true).Result;
+                var addClaimes = _userManager.AddClaimAsync(user, new Claim("FullName", user.FullName)).Result;
                 TransferBasketForuser(user.Id);
                 _signInManager.SignInAsync(user, true).Wait();
-                return RedirectToAction(nameof(Profile));
+                return RedirectToAction(nameof(Index) , "Address" ,new { area = "Customers" });
             }
             var query2 = result.Errors.Select(p => p.Description).ToList();
 
-
-
-            var errorList2 = query2;
-
-            ViewBag.Errors = errorList2;
+            ViewBag.Errors = query2;
 
 
             return View(model);
@@ -191,9 +197,14 @@ namespace WebSite.EndPoint.Controllers
         [HttpGet]
         public IActionResult ConfirmPhoneNumber(string PhoneNumber)
         {
-
+            
+            string tokencreator = TempData["tokencreator"].ToString();
             string token = TempData["token"].ToString();
-            ViewBag.tokencreator = TempData["tokencreator"].ToString();
+            if (String.IsNullOrEmpty(tokencreator) || String.IsNullOrEmpty(token))
+            {
+                RedirectToAction("index","home");
+            }
+            ViewBag.tokencreator = tokencreator;
             ViewBag.token = token;
             ViewBag.PhoneNumber = PhoneNumber;
             return View();
@@ -216,7 +227,7 @@ namespace WebSite.EndPoint.Controllers
 
 
             }
-            var user =  _userManager.FindByIdAsync(loginResult.Data.Id).Result;
+            var user = _userManager.FindByIdAsync(loginResult.Data.Id).Result;
             var addClaimes = _userManager.AddClaimAsync(user, new Claim("FullName", loginResult.Data.FullName)).Result;
             await _signInManager.SignInAsync(loginResult.Data, true);
             TransferBasketForuser(loginResult.Data.Id);

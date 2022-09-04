@@ -1,49 +1,129 @@
 ﻿
-@{
-    ViewData["Title"] = "ConfirmPhoneNumber";
-
-}
-
 
 @{
+    Layout = null;
     ViewData["Title"] = "اعتبار سنجی پیامکی";
 
 }
 
-<form asp-action="ConfirmPhoneNumber" asp-controller="account" method="post">
-    @if (ViewBag.Errors != null)
-    {
-        <div class=" alert alert-danger">
-            <ul>
-                @foreach (var item in ViewBag.Errors)
-                {
-                    <li>@item</li>
 
-                }
-            </ul>
-        </div>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 
-    }
-    <div class="form-element-row">
-        <label for="phone-number" class="label-element">رمز پیامکی دریافتی</label>
-        <div class="form-element-with-icon">
-            <input type="hidden" value="@ViewBag.tokencreator" name="tokencreator">
-            <input type="hidden" value="@ViewBag.token" name="token">
-            <input type="hidden"  value="@ViewBag.PhoneNumber" name="PhoneNumber">
-            <input type="text" class="input-element" id="SmsCode" name="SmsCode">
-            <i class="fad fa-mobile-alt"></i>
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="~/lib/Login_page/Css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="~/lib/Login_page/Css/style.css" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/lib/Login_page/Fonts/fontawesome-free-6.1.1-web/css/all.css">
+
+</head>
+
+<body id="phone">
+    <div class="container">
+        <!--        Top-header          -->
+        <header>
+            <div class="row">
+                <h1 class="my-header-text d-block mb-0 mt-5 "> ورود با تلفن همراه</h1>
+                <span class="d-flex">
+                    <ul class="map">
+                        <li>اعضاء</li>
+                        <li>/ ورود با تلفن همراه</li>
+                    </ul>
+                </span>
+            </div>
+        </header>
+        <!-- Main Body -->
+        <main>
+            <div class="container">
+                <!--        Right-Panel          -->
+                <div class="row row-cols-1  ">
+                    <div class="cols col-lg-6 align-self-center">
+                        <div class="content">
+                            <div class="row mb-4">
+                                <div class="col-8 p-0">
+                                    <h3 class="aa">ورود با تلفن همراه</h3>
+                                </div>
+                                <div class="col-4 flex-grow-1 changenumber p-0">
+                                    <a asp-action="LoginViaSms" asp-controller="account"  id="changenum" class="btn btn-warning"  role="button">
+                                        تغییر
+                                        شماره
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <p class="txt p-0">
+                                    برای ادامه کد ارسال شده به شماره تلفن <strong>@ViewBag.PhoneNumber</strong> را وارد کنید.
+                                </p>
+                            </div>
+                            <div class="row mt-2">
+                                <span class="alert alert-success">
+                                    کد تایید با موفقیت ارسال شد.
+                                </span>
+                                <span class="alert alert-danger mistake">
+                                    خمطا های زیر رخ داده است :
+                                </span>
+                            </div>
+                            <div class="row justify-content-between mt-3">
+                                <form asp-action="ConfirmPhoneNumber" asp-controller="account" method="post">
+                                    <input type="hidden" value="@ViewBag.tokencreator" name="tokencreator">
+                                    <input type="hidden" value="@ViewBag.token" name="token">
+                                    <input type="hidden" value="@ViewBag.PhoneNumber" name="PhoneNumber">
+
+                                    <label for="ok" class="okcode"> کد تایید</label>
+                                    <input class="form-control  " type="text" name="SmsCode" id="ok">
+                                    <div class="clear"></div>
+                                    <div class="row mt-3">
+                                        <div class="col-6">
+                                            <button type="submit" class="btn btn-success myBTN2 float-end">
+                                                <i class="fa-solid fa-forward-step float-start fonta"></i>
+                                                ادامه
+                                            </button>
+                                        </div>
+                                        <div class="col-6">
+
+                                            <a asp-action="LoginViaSms" asp-controller="account" id="send-again" class="btn btn-primary disabled" 
+                                               role="button">
+                                                <i class="fa-solid fa-arrow-rotate-right float-start fonta"></i>
+                                                &nbsp; ارسال
+                                                مجدد
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!-- timer -->
+                                <div class="row " id="timer">
+                                    <div id="countdown">
+                                        <div id="countdown-number"></div>
+                                        <svg>
+                                            <circle r="18" cx="20" cy="20"></circle>
+                                        </svg>
+                                    </div>
+                                    <div class="remainingTime mt-1 ">
+                                        زمان باقی مانده تا ارسال مجدد
+                                    </div>
+                                </div>
+                                <!-- end-timer -->
+                            </div>
+                        </div>
+                        <div class="auth-form-footer mt-2">
+                            <span>کاربر جدید هستید؟</span>
+                            <a href="~/account/register" class="link--with-border-bottom">ثبت نام در فروشگاه </a>
+                        </div>
+                    </div>
+                    <!--        Left-Panel          -->
+                    <div class="col-lg-6 d-none d-lg-flex cols mt-5 mt-lg-0">
+                        <img class="img-right" src="~/lib/Login_page/Images/undraw_two_factor_authentication_namy.svg" alt="">
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-    <div class="form-element-row text-left">
-        <button class="btn-element btn-success-element">
-            <i class="fad fa-sync"></i>
-            اعتبارسنجی کد پیامکی یک بار مصرف
-        </button>
-    </div>
 
-</form>
-<div class="auth-form-footer">
-    <span>کاربر جدید هستید؟</span>
-    <a href="~/account/register" class="link--with-border-bottom">ثبت نام در فروشگاه </a>
-</div>
 
+    <script src="~/lib/Login_page/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/Login_page/Scripts/Script.js"></script>
+</body>
+
+</html>

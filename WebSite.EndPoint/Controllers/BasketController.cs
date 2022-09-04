@@ -78,7 +78,7 @@ namespace WebSite.EndPoint.Controllers
         public IActionResult RemoveItemFromBasket(int ItemId)
         {
             basketService.RemoveItemFromBasket(ItemId);
-            return RedirectToAction(nameof(Index));
+            return Json(true);
         }
         /// <summary>
         /// تعیین تعداد محصول یک آیتم در سبد خرید

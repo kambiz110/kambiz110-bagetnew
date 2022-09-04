@@ -2,7 +2,7 @@
 @model BasketDto
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "سبد محصولات";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!--shopping cart area start -->
@@ -33,14 +33,12 @@
 
                                                 <td class="product_remove">
 
-                                                    <form method="post" asp-action="RemoveItemFromBasket">
-                                                        <input name="ItemId" type="hidden" value="@item.Id" />
-
-                                                        <button type="submit" class="item-remove-btn mr-3">
-                                                            <i class="fa fa-trash-o"></i>
-                                                            حذف
-                                                        </button>
-                                                    </form>
+                           
+                                                        <a href="#" class="item-remove-btn mr-3" onclick="RemoveItemBasket(@item.Id,event)">
+                                                            <i class="fa fa-trash-o" style='font-size:37px;color:red'></i>
+                                                            
+                                                        </a>
+                                              
 
                                                 </td>
                                                 <td class="product_thumb">
@@ -327,6 +325,16 @@
             $.ajax({
                 type: "POST",
                 url: "/basket/setquantity?basketItemId=" + itemId + "&&quantity=" + quantity,
+                success: function () {
+                    location.reload();
+                }
+            })
+        }
+        function RemoveItemBasket(itemId) {
+         
+            $.ajax({
+                type: "POST",
+                url: "/basket/RemoveItemFromBasket?ItemId=" + itemId ,
                 success: function () {
                     location.reload();
                 }
