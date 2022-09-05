@@ -69,7 +69,7 @@ namespace WebSite.EndPoint.Controllers
         }
 
         /// <summary>
-        /// حذف محصول از سبد خرید
+        /// حذف محصول از صفحه سبد خرید
         /// </summary>
         /// <param name="ItemId"></param>
         /// <returns></returns>
@@ -78,7 +78,21 @@ namespace WebSite.EndPoint.Controllers
         public IActionResult RemoveItemFromBasket(int ItemId)
         {
             basketService.RemoveItemFromBasket(ItemId);
-            return Json(true);
+           
+          return Json(true);
+        }
+        /// <summary>
+        /// حذف محصول از  هدر سایت سبد خرید
+        /// </summary>
+        /// <param name="ItemId"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult RemoveItemFromHeaderBasket(int ItemId)
+        {
+            basketService.RemoveItemFromBasket(ItemId);
+            return Redirect(Request.Headers["Referer"].ToString());
+            //  return Json(true);
         }
         /// <summary>
         /// تعیین تعداد محصول یک آیتم در سبد خرید
