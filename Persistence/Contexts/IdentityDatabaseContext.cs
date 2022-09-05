@@ -16,6 +16,7 @@ namespace Persistence.Contexts
         {
 
         }
+        public DbSet<Message> Messages { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<IdentityUser<string>>().ToTable("Users", "identity");

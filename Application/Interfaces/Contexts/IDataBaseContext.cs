@@ -2,6 +2,7 @@
 using Domain.Baskets;
 using Domain.Catalogs;
 using Domain.Discounts;
+using Domain.Nazarats;
 using Domain.Order;
 using Domain.Payments;
 using Domain.Postals;
@@ -28,22 +29,22 @@ namespace Application.Interfaces.Contexts
         DbSet<CatalogItem> CatalogItems { get; set; }
         DbSet<Basket> Baskets { get; set; }
         DbSet<BasketItem> BasketItems { get; set; }
-
         DbSet<UserAddress> UserAddresses { get; set; }
-
         DbSet<CatalogTypeImage> CatalogTypeImages { get; set; }
         DbSet<Order> Orders { get; set; }
         DbSet<OrderItem> OrderItems { get; set; }
-
         DbSet<Payment> Payments { get; set; }
         DbSet<Discount> Discount { get; set; }
-
         DbSet<DiscountUsageHistory> DiscountUsageHistories { get; set; }
         DbSet<CatalogItemFavourite> CatalogItemFavourites { get; set; }
         DbSet<Banner> Banners { get; set; }
         DbSet<Storeroom> Storerooms { get; set; }
         DbSet<PostProduct> PostProducts { get; set; }
         DbSet<SmsCode> SmsCodes { get; set; }
+        DbSet<Nazarat> Nazarats { get; set; }
+        DbSet<Returned> Returneds { get; set; }
+        DbSet<ReturnedProduct> ReturnedProducts { get; set; }
+        DbSet<ReturneOrderItem> ReturneOrderItems { get; set; }
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);

@@ -4,6 +4,7 @@ using Domain.Banners;
 using Domain.Baskets;
 using Domain.Catalogs;
 using Domain.Discounts;
+using Domain.Nazarats;
 using Domain.Order;
 using Domain.Payments;
 using Domain.Postals;
@@ -35,10 +36,7 @@ namespace Persistence.Contexts
         public DbSet<CatalogItem> CatalogItems { get; set; }
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<BasketItem> BasketItems { get; set; }
-
-
         public DbSet<UserAddress> UserAddresses { get; set; }
-
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Payment> Payments { get; set; }
@@ -50,6 +48,10 @@ namespace Persistence.Contexts
         public DbSet<Storeroom>  Storerooms { get; set; }
         public DbSet<PostProduct> PostProducts { get; set; }
         public DbSet<SmsCode> SmsCodes { get; set; }
+        public DbSet<Nazarat> Nazarats { get; set; }
+        public DbSet<Returned> Returneds { get; set; }
+        public DbSet<ReturnedProduct> ReturnedProducts { get; set; }
+        public DbSet<ReturneOrderItem> ReturneOrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

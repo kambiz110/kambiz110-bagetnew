@@ -13,6 +13,7 @@ namespace Application.Interfaces.Contexts
         DbSet<Role> Roles { get; set; }
         DbSet<User> Users { get; set; }
         DbSet<UserTokens> UserTokens { get; set; }
+        DbSet<Message> Messages { get; set; }
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);
 
