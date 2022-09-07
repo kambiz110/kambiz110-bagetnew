@@ -112,9 +112,7 @@
                                                     case Domain.Order.OrderStatus.Cancelled:
                                                         message = "لغو شد";
                                                         break;
-                                                    case Domain.Order.OrderStatus.RequestCancelled:
-                                                        message = "درخواست لغو";
-                                                        break;
+                                             
                                                     case Domain.Order.OrderStatus.PostOfficalDelivered:
                                                         message = "تحویل مامور پست گردید";
                                                         break;
@@ -124,12 +122,7 @@
                                                     case Domain.Order.OrderStatus.Returned:
                                                         message = "مرجوع شده";
                                                         break;
-                                                    case Domain.Order.OrderStatus.PendingPaymentCancelled:
-                                                        message = "در انتظار بازگشت وجه لغو شده";
-                                                        break;
-                                                    case Domain.Order.OrderStatus.PendingPaymentReturned:
-                                                        message = "در انتظار بازگشت وجه مرجوع شده";
-                                                        break;
+                                         
 
                                                 }
                                                 <span>@message</span>

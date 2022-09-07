@@ -33,6 +33,7 @@ namespace Domain.Order
         public PostProduct PostProduct { get; private set; }
         public ReturnPaymentInvoice ReturnPaymentInvoice { get; private set; }
         public DateTime ZamanSabt { get; set; } = DateTime.Now;
+        public DateTime? ZamanDelivered { get; set; }
 
 
         public Order(string userId, Address address,
@@ -71,6 +72,7 @@ namespace Domain.Order
         /// </summary>
         public void OrderDelivered()
         {
+            ZamanDelivered = DateTime.Now;
             OrderStatus = OrderStatus.Delivered;
         }
 
@@ -80,6 +82,14 @@ namespace Domain.Order
         public void OrderReturned()
         {
             OrderStatus = OrderStatus.Returned;
+        }
+        /// <summary>
+        /// سفر
+        /// سفارش لغو شد
+        /// </summary>
+        public void OrderCancelled()
+        {
+            OrderStatus = OrderStatus.Cancelled;
         }
 
         /// <summary>
@@ -92,10 +102,10 @@ namespace Domain.Order
         /// <summary>
         /// لغو سفارش
         /// </summary>
-        public void OrderCancelled()
-        {
-            OrderStatus = OrderStatus.Cancelled;
-        }
+        //public void OrderCancelled()
+        //{
+        //    OrderStatus = OrderStatus.Cancelled;
+        //}
         /// <summary>
         /// درخواست مرجوعی سفارش
         /// </summary>
@@ -106,10 +116,10 @@ namespace Domain.Order
         /// <summary>
         /// درخواست لغو سفارش
         /// </summary>
-        public void OrderRequestCancelled()
-        {
-            OrderStatus = OrderStatus.RequestCancelled;
-        }
+        //public void OrderRequestCancelled()
+        //{
+        //    OrderStatus = OrderStatus.RequestCancelled;
+        //}
         public void OrderPostOfficalDelivered()
         {
             OrderStatus = OrderStatus.PostOfficalDelivered;
@@ -164,6 +174,7 @@ namespace Domain.Order
         public string PictureUri { get; private set; }
         public int UnitPrice { get; private set; }
         public int Units { get; private set; }
+        public OrderItemStatus OrderItemStatus { get; private set; }
         public OrderItem(int catalogItemId, string productName, string pictureUri, int unitPrice, int units)
         {
             CatalogItemId = catalogItemId;
@@ -173,7 +184,13 @@ namespace Domain.Order
             Units = units;
         }
 
-
+        /// <summary>
+        /// ثبت مرجوعی کالا
+        /// </summary>
+        public void OrderItemReturned()
+        {
+            OrderItemStatus = OrderItemStatus.Returned;
+        }
         //ef core
         public OrderItem()
         {
@@ -199,8 +216,17 @@ namespace Domain.Order
         }
     }
 
-
-
+    public enum OrderItemStatus
+    {
+        /// <summary>
+        /// خریداری شده
+        /// </summary>
+        Selered = 0,
+        /// <summary>
+        /// مرجوع شده
+        /// </summary>
+        Returned = 1,
+    }
     public enum PaymentMethod
     {
         /// <summary>
@@ -245,38 +271,17 @@ namespace Domain.Order
         /// </summary>
         Returned = 2,
         /// <summary>
-        /// لغو شد
-        /// </summary>
-        Cancelled = 3,
-        /// <summary>
         ///درخواست مرجوعی
         /// </summary>
-        RequestReturned = 4,
+        RequestReturned = 3,
         /// <summary>
-        ///درخواست لغو 
+        /// در حال پردازش
         /// </summary>
-        RequestCancelled = 5,
-
+        Cancelled = 4,
         /// <summary>
         ///تحویل مامور پست گردید 
         /// </summary>
-        PostOfficalDelivered= 6,
-        /// <summary>
-        ///در انتظار بازگشت وجه لغو شده  
-        /// </summary>
-        PendingPaymentCancelled = 7,
-        /// <summary>
-        ///اتمام بازگشت وجه لغو شده
-        /// </summary>
-        IsDonePaymentCancelled = 8,
-        /// <summary>
-        ///در انتظار بازگشت وجه مرجوعی
-        /// </summary>
-        PendingPaymentReturned = 9,
-        /// <summary>
-        ///اتمام بازگشت وجه مرجوعی
-        /// </summary>
-        IsDonePaymentReturned = 10,
+        PostOfficalDelivered = 5,
     }
 
 }

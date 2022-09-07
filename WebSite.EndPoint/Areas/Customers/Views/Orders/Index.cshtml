@@ -9,7 +9,7 @@
 
     var WaitingForPayment = Model.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.WaitingForPayment && p.Date > DateTime.Now.AddDays(-7)).ToList();
     var Paid = Model.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.Paid).ToList();
-    var Processing = Model.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.Paid && (p.OrderStatus == Domain.Order.OrderStatus.Processing || p.OrderStatus == Domain.Order.OrderStatus.RequestReturned || p.OrderStatus == Domain.Order.OrderStatus.RequestCancelled)).ToList();
+    var Processing = Model.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.Paid && (p.OrderStatus == Domain.Order.OrderStatus.Processing || p.OrderStatus == Domain.Order.OrderStatus.RequestReturned )).ToList();
     var Delivered = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Delivered).ToList();
     var Returned = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Returned).ToList();
     var Cancelled = Model.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Cancelled).ToList();
@@ -179,9 +179,7 @@
                                                         case Domain.Order.OrderStatus.RequestReturned:
                                                             message = "در حال بررسی درخواست مرجوعی";
                                                             break;
-                                                        case Domain.Order.OrderStatus.RequestCancelled:
-                                                            message = "در حال بررسی درخواست لغو";
-                                                            break;
+                                                     
 
                                                     }
                                                     <span>@message</span>
@@ -199,9 +197,7 @@
                                                         case Domain.Order.OrderStatus.RequestReturned:
                                                             <i class="fa fa-undo font-weight-bold" style="font-size:24px;color:darkgoldenrod"></i>
                                                             break;
-                                                        case Domain.Order.OrderStatus.RequestCancelled:
-                                                            <i class="fa fa-trash" style="font-size:24px;color:red"></i>
-                                                            break;
+                                                
 
                                                     }
 

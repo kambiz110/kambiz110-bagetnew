@@ -30,7 +30,10 @@
                             <ul class="contacts-block list-unstyled">
 
                                 <li class="contacts-block__item">
-                                    <i style="font-size:15px" class="fa">&#xf155;</i>     @Model.Amount.ToString("n0") تومان(با هزینه پست)
+                                    @*<i style="font-size:15px" class="fa">&#xf155;</i>*@
+                                    <i class='fa fa-dollar-sign' style='font-size: 15px; color: powderblue;border-color:darkslategray;'></i>
+                                  
+                                    @Model.Amount.ToString("n0") تومان(بدون محاسبه هزینه پست)
 
                                 </li>
                                 <li class="contacts-block__item">
@@ -46,36 +49,22 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                                     @Model.Address.PhoneNumber <span>(تحویل گیرنده)</span>
                                 </li>
-                                @if ((int)Model.OrderStatus == 0)
-                                {
-                                    <li class="contacts-block__item">
 
-                                        <a href="#" id="showformpostal" class="btn btn-primary">
-                                            ارسال محصول مشتری<i style="font-size:19px; color:white" class="fab fa-codepen"></i>
 
-                                        </a>
-                                        <button type="submit" class="btn btn-primary" id="sendBtn">
-                                            ثبت و ذخیره
 
-                                        </button>
-                                    </li>
-                                }
-                             
-                                    <li class="contacts-block__item">
-
-                                        <a href="#" id="showformpostal" class="btn btn-outline-primary">
-                                            مرجوعی محصول <i style="font-size:19px; color:white" class="fab fa-codepen"></i>
-
-                                        </a>
-                                        <button type="submit" class="btn btn-outline-primary" id="sendBtn">
-                                            ثبت و ذخیره
-
-                                        </button>
-                                    </li>
-                             
 
 
                             </ul>
+                            @if ((int)Model.OrderStatus == 1)
+                            {
+                                <form asp-area="Customers" asp-controller="Orders" asp-action="ReturnedOrederItem" method="post" class="col-12 text-center">
+                                    <button type="submit" class="btn btn-primary mb-1" id="showformpostal">
+                                        مرجوع کردن
+                                    </button>
+                                </form>
+
+                            }
+
                         </div>
 
                     </div>
@@ -108,7 +97,7 @@
                                 {
                                     <tr>
                                         <td>
-                                            <input name="orderItem[]" type="checkbox" class="checkthis" value="@item.CatalogItemid" data-username="@item.Id" />
+                                            <input name="orderItem[]" type="checkbox" class="checkthis" value="@item.Id" data-username="@item.Id" />
                                         </td>
 
                                         <td> @item.ProductName</td>
@@ -133,65 +122,7 @@
 
 
 
-                <div class="work-section">
-                    <form asp-controller="Orders" asp-action="OrderPostals" method="post" id="postalform">
-                        <input name="Id" type="hidden" value="@Model.postalProductDto.Id" />
-                        <input name="OrderId" value="@Model.OrderId" type="hidden" />
-                        @if ((int)Model.OrderStatus == 4)
-                        {
-                            <input name="PostalType" value="0" type="hidden" />
-                        }
-                        @if ((int)Model.OrderStatus == 0)
-                        {
-                            <input name="PostalType" value="1" type="hidden" />
-                        }
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-">
-                                        <label for="postalProductDto.PostalCompane">نام شرکت تحویل گیرنده بسته</label>
-                                        <select class="form-control mb-4" asp-for="postalProductDto.PostalCompane" asp-items="Html.GetEnumSelectList<PostalCompany>()">
-                                            <option selected="selected" value="">لطفا انتخاب نمائید</option>
-                                        </select>
-                                        @*<input type="text" class="form-control mb-4" name="Title" value="@Model.postalProductDto.Title">*@
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>تاریخ تحویل  بسته با مامور پست</label>
-                                    <div class="input-group">
 
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text cursor-pointer" id="date5"><i class='fas fa-calendar-alt' style='font-size:24px;color:forestgreen'></i></span>
-                                        </div>
-                                        <input id="InsertDate" name="InsertDate" type="hidden" />
-                                        <input type="text" id="StartDateFake" value="@Model.postalProductDto.InsertDate" class="form-control" aria-label="date5" aria-describedby="date5" placeholder="زمان تحویل ... " />
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="degree3">نام کارمند تحویل گیرنده پست</label>
-                                        <input type="text" class="form-control mb-4" id="degree3" name="PostOfficeName" value="@Model.postalProductDto.PostOfficeName">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="degree4">شماره ثبتی اینترنتی پست</label>
-                                        <input type="text" class="form-control mb-4" id="degree4" name="TrackingNumber" value="@Model.postalProductDto.TrackingNumber">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                    </form>
-                </div>
             </div>
         </div>
 
@@ -199,39 +130,77 @@
 </div>
 
 @section Styles{
-   <!-- BEGIN PAGE LEVEL STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="~/lib/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="~/lib/table/datatable/datatables.css">
     <link rel="stylesheet" type="text/css" href="~/lib/table/datatable/dt-global_style.css">
     <!-- END PAGE LEVEL STYLES -->
     <link href="~/lib/users/user-profile.css" rel="stylesheet" type="text/css">
 }
 @section Scripts{
+    <script src="~/lib/Sweetalert2/sweetalert2.min.js"></script>
     <script src="~/lib/table/datatable/datatables.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
 
-   <script>
+    <script>
         $(document).ready(function () {
             $('#showformpostal').click(function (e) {
                 e.preventDefault();
                 var numberOfChecked = $('input:checkbox:checked');
-               
+                var data = new FormData();
                 var searchIDs = $("#default-ordering input:checkbox:checked").map(function () {
-                    return $(this).val();
+                 return $(this).val();
                 }).get(); // <----
-               
-                console.log("publish_form click", searchIDs);
+                var orederId = @(Model.OrderId);
+                var orderItemsIds = searchIDs;
+                data.append("orederId", orederId);
+                //console.log("publish_form click", orderItemsIds );
+  
                 var test = TestnumberOfChecked(numberOfChecked);
                 if (test) {
-                    $('div .table-responsive').hide();
+                    for (var i = 0; i < searchIDs.length; i++) {
+                        data.append('orderItemsIds[' +i+']', searchIDs[i]);
+                    }
 
-                    $('#showformpostal').hide();
-                    $('#sendBtn').show();
-                    $('#postalform').show();
+                    var ajaxRequest = $.ajax({
+                        type: "POST",
+                        url: "/Customers/Orders/ReturnedOrederItem",
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'موفق!',
+                                    'کالا با موفقیت مرجوع شد',
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    window.location.href = "/Customers/orders/index";
+                                });
+                            }
+                            else {
+                                swal.fire(
+                                    'هشدار!',
+                                    "دیتا ثبت نشد",
+                                    'warning'
+                                );
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert(xhr.status);
+                            alert(thrownError);
+                        }
+                    });
+
+                    ajaxRequest.done(function (xhr, textStatus) {
+                        // Do other operation
+                    });
+              
                 }
-             
+
             })
-            $('#sendBtn').hide();
-            $('#postalform').hide();
+
             $("#sendBtn").click(function (e) {
                 e.preventDefault();
                 console.log("click");
@@ -256,26 +225,26 @@
 
 
 
-       function TestnumberOfChecked(numberOfChecked) {
-           if (numberOfChecked.length === 0 || numberOfChecked.length > 1) {
-             
-               var errorMessage = "لطفاً! حداقل یک  مورد  را انتخاب نمایید.";
-               var alertPanelContent =
-                   `<div class="alert alert-warning alert-dismissible">
-                                                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                                                            ${errorMessage}
-                                                                        </div>`;
-               $("#alertPanel").html(alertPanelContent);
-               $("#alertPanel").slideDown("fast");
-               window.setTimeout(function () {
-                   $("#alertPanel").slideUp(500);
-               }, 3000);
-               return false;
-           }
-           else {
-               return true;
-           }
-       }
+        function TestnumberOfChecked(numberOfChecked) {
+            if (numberOfChecked.length === 0) {
+
+                var errorMessage = "لطفاً! حداقل یک  مورد  را انتخاب نمایید.";
+                var alertPanelContent =
+                    `<div class="alert alert-warning alert-dismissible">
+                                                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                                                ${errorMessage}
+                                                                            </div>`;
+                $("#alertPanel").html(alertPanelContent);
+                $("#alertPanel").slideDown("fast");
+                window.setTimeout(function () {
+                    $("#alertPanel").slideUp(500);
+                }, 3000);
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
     </script>
 }
 

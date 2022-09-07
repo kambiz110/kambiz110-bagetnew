@@ -9,6 +9,7 @@ namespace Domain.Order
    public class ReturneOrderItem
     {
         public int Id { get; set; }
+        public int ReturnedId { get; set; }
         public OrderItem OrderItem { get; set; }
         public int OrderItemId { get; set; }
         public DateTime InsertTime { get; set; } = DateTime.Now;

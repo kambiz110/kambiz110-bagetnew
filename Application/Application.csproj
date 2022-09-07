@@ -20,6 +20,8 @@
 
   <ItemGroup>
     <Folder Include="Catalogs\CatalogCompany\Query\" />
+    <Folder Include="Returneds\Dto\" />
+    <Folder Include="Returneds\Query\" />
     <Folder Include="Storerooms\Query\" />
   </ItemGroup>
 

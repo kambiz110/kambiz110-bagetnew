@@ -27,10 +27,6 @@ namespace Application.Orders.CustomerOrdersServices
         private readonly IMapper mapper;
 
 
-        public CustomerOrdersService(IDataBaseContext context)
-        {
-            this.context = context;
-        }
 
         public CustomerOrdersService(IIdentityDatabaseContext identityDatabase, IDataBaseContext context, IMapper mapper)
         {
@@ -50,7 +46,7 @@ namespace Application.Orders.CustomerOrdersServices
                         order.OrderRequestReturned();
                         break;
                     case 5:
-                        order.OrderRequestCancelled();
+                        order.OrderReturned();
                         break;
                     default:
                         break;
@@ -64,7 +60,7 @@ namespace Application.Orders.CustomerOrdersServices
         public OderDitalesForCustomerDto GetCustomerOrderDitales(Guid PaymentId)
         {
             var payment = context.Payments.Where(p => p.Id == PaymentId)
-          .Include(p => p.Order).ThenInclude(p => p.OrderItems)
+          .Include(p => p.Order).ThenInclude(p => p.OrderItems.Where(p => p.OrderItemStatus == 0))
           .Include(p => p.Order).ThenInclude(p => p.PostProduct)
 
           .FirstOrDefault();
@@ -75,7 +71,7 @@ namespace Application.Orders.CustomerOrdersServices
                 {
                     postalProductDto = payment.Order.PostProduct != null ? mapper.Map<AddPostalProductDto>(payment.Order.PostProduct) : new AddPostalProductDto { },
                     Address = payment.Order.Address,
-                    Amount = payment.Amount,
+                    Amount = payment.Order.OrderItems.Sum(o => o.UnitPrice * o.Units),
                     OrderId = payment.Order.Id,
                     Date = payment.Order.ZamanSabt,
                     OrderStatus = payment.Order.OrderStatus,
@@ -99,9 +95,10 @@ namespace Application.Orders.CustomerOrdersServices
         {
  
             var orders = context.Orders.Where(p => p.UserId == userId)
-                .Include(p => p.OrderItems)
+                .Include(p => p.OrderItems.Where(p=>p.OrderItemStatus==0))
                 
-                .OrderByDescending(p => p.Id).ToList();
+                .OrderByDescending(p => p.Id).ToList()
+                .Where(p => p.OrderItems != null && p.OrderItems.Any());
             var result = orders
                 .Select(p => new MyOrderDto
                 {
@@ -109,7 +106,7 @@ namespace Application.Orders.CustomerOrdersServices
                     Date = p.ZamanSabt,
                     OrderStatus = p.OrderStatus,
                     PaymentStatus = p.PaymentStatus,
-                    Price = p.TotalPrice(),
+                    Price = p.OrderItems.Sum(o=>o.UnitPrice*o.Units),
                     PaymentId=context.Payments.FirstOrDefault(m=>m.OrderId==p.Id)?.Id,
                     FollowKey=p.FollowKey
 
