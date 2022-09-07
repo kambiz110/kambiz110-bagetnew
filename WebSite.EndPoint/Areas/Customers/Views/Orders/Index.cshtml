@@ -254,7 +254,8 @@
                                             <td>@item.Price.ToString("n0") تومان</td>
                                             <td>تحویل داده شد</td>
                                             <td>
-                                                <a href="/Customers/orders/ChangeOrederStat/@item.Id/4" class="btn btn-outline-primary">مرجوع کردن<i class="fa fa-redo"></i></a>
+                                                <a href="/Customers/Orders/OrderDetails/@item.PaymentId" class="btn btn-outline-primary">مشاهده</a>
+                                                @*<a href="/Customers/orders/ChangeOrederStat/@item.Id/4" class="btn btn-outline-primary">مرجوع کردن<i class="fa fa-redo"></i></a>*@
                                             </td>
                                         </tr>
                                     }

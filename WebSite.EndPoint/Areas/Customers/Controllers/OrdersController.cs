@@ -36,5 +36,11 @@ namespace WebSite.EndPoint.Areas.Customers.Controllers
            await customerOrdersService.chengeOrederStatuse(orderId, status, user.Id);
             return RedirectToAction("Index");
         }
+        [Route("Customers/Orders/OrderDetails/{PaymentId}")]
+        public IActionResult OrderDetails(Guid PaymentId)
+        {
+           var model = customerOrdersService.GetCustomerOrderDitales(PaymentId);
+            return View(model);
+        }
     }
 }

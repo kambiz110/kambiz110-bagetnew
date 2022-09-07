@@ -78,17 +78,17 @@
                                     </a>
                                 </li>
                                 @*<li>
-            <a href="#">
-                <i class="far fa-clock"></i>
-                بازدیدهای اخیر
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="far fa-user-cog"></i>
-                اطلاعات حساب
-            </a>
-        </li>*@
+                                        <a href="#">
+                                            <i class="far fa-clock"></i>
+                                            بازدیدهای اخیر
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="far fa-user-cog"></i>
+                                            اطلاعات حساب
+                                        </a>
+                                    </li>*@
                                 <li>
                                     <a href="/Account/LogOut">
                                         <i class="far fa-sign-in-alt"></i>
@@ -152,3 +152,7 @@
         </div>*@
 </div>
 
+@section Scripts {
+    @RenderSection("Styles", required: false)
+    @RenderSection("Scripts", required: false)
+}

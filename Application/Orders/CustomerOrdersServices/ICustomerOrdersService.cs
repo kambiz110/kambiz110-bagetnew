@@ -1,4 +1,7 @@
 ﻿using Application.Interfaces.Contexts;
+using Application.Orders.Dto;
+using Application.PostalProducts.Dto;
+using AutoMapper;
 using Domain.Order;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,16 +16,27 @@ namespace Application.Orders.CustomerOrdersServices
     {
         List<MyOrderDto> GetMyOrder(string userId);
         Task chengeOrederStatuse(int orderId , int status, string userId);
+
+        OderDitalesForCustomerDto GetCustomerOrderDitales(Guid PaymentId);
     }
 
     public class CustomerOrdersService : ICustomerOrdersService
     {
-
+        private readonly IIdentityDatabaseContext identityDatabase;
         private readonly IDataBaseContext context;
+        private readonly IMapper mapper;
+
 
         public CustomerOrdersService(IDataBaseContext context)
         {
             this.context = context;
+        }
+
+        public CustomerOrdersService(IIdentityDatabaseContext identityDatabase, IDataBaseContext context, IMapper mapper)
+        {
+            this.identityDatabase = identityDatabase;
+            this.context = context;
+            this.mapper = mapper;
         }
 
         public async Task chengeOrederStatuse(int orderId, int status, string userId)
@@ -45,6 +59,40 @@ namespace Application.Orders.CustomerOrdersServices
                
             }
           
+        }
+
+        public OderDitalesForCustomerDto GetCustomerOrderDitales(Guid PaymentId)
+        {
+            var payment = context.Payments.Where(p => p.Id == PaymentId)
+          .Include(p => p.Order).ThenInclude(p => p.OrderItems)
+          .Include(p => p.Order).ThenInclude(p => p.PostProduct)
+
+          .FirstOrDefault();
+            var user = identityDatabase.Users.FirstOrDefault(p => p.Id == payment.Order.UserId);
+            if (payment != null && user != null)
+            {
+                var model = new OderDitalesForCustomerDto
+                {
+                    postalProductDto = payment.Order.PostProduct != null ? mapper.Map<AddPostalProductDto>(payment.Order.PostProduct) : new AddPostalProductDto { },
+                    Address = payment.Order.Address,
+                    Amount = payment.Amount,
+                    OrderId = payment.Order.Id,
+                    Date = payment.Order.ZamanSabt,
+                    OrderStatus = payment.Order.OrderStatus,
+                    OrederItems = payment.Order.OrderItems.Select(o => new OrederItemsForOrderDto
+                    {
+                        Id = o.Id,
+                        CatalogItemid = o.CatalogItemId,
+                        ProductName = o.ProductName,
+                        UnitPrice = o.UnitPrice,
+                        Units = o.Units
+
+                    }).ToList(),
+                    PaymentId = PaymentId
+                };
+                return model;
+            }
+            return null;
         }
 
         public List<MyOrderDto> GetMyOrder(string userId)
