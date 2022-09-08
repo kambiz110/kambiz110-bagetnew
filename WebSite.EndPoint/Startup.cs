@@ -16,6 +16,7 @@ using Application.Orders.CustomerOrdersServices;
 using Application.Payments;
 using Application.ProductListPageService;
 using Application.Returneds.Command;
+using Application.Returneds.Query;
 using Application.Users;
 using Application.Users.Command;
 using Application.Users.Token;
@@ -118,6 +119,7 @@ namespace WebSite.EndPoint
             services.AddTransient<ISmsServices, SmsServices>();
             services.AddTransient<IGeneritTokenUser, GeneritTokenUser>();
             services.AddTransient<IReturnedOrderItemService, ReturnedOrderItemService>();
+            services.AddTransient<IReturnedForCustomerService, ReturnedForCustomerService>();
             services.AddScoped<SaveVisitorFilter>();
 
             services.AddSignalR();

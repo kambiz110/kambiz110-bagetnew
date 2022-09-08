@@ -79,10 +79,10 @@ namespace Domain.Order
         /// <summary>
         /// ثبت مرجوعی کالا
         /// </summary>
-        public void OrderReturned()
-        {
-            OrderStatus = OrderStatus.Returned;
-        }
+        //public void OrderReturned()
+        //{
+        //    OrderStatus = OrderStatus.Returned;
+        //}
         /// <summary>
         /// سفر
         /// سفارش لغو شد
@@ -109,10 +109,10 @@ namespace Domain.Order
         /// <summary>
         /// درخواست مرجوعی سفارش
         /// </summary>
-        public void OrderRequestReturned()
-        {
-            OrderStatus = OrderStatus.RequestReturned;
-        }
+        //public void OrderRequestReturned()
+        //{
+        //    OrderStatus = OrderStatus.RequestReturned;
+        //}
         /// <summary>
         /// درخواست لغو سفارش
         /// </summary>
@@ -267,21 +267,13 @@ namespace Domain.Order
         /// </summary>
         Delivered = 1,
         /// <summary>
-        /// مرجوعی
+        ///تحویل مامور پست گردید 
         /// </summary>
-        Returned = 2,
-        /// <summary>
-        ///درخواست مرجوعی
-        /// </summary>
-        RequestReturned = 3,
+        PostOfficalDelivered = 2,
         /// <summary>
         /// در حال پردازش
         /// </summary>
-        Cancelled = 4,
-        /// <summary>
-        ///تحویل مامور پست گردید 
-        /// </summary>
-        PostOfficalDelivered = 5,
+        Cancelled = 3,
     }
 
 }

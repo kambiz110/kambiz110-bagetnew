@@ -106,23 +106,23 @@
                                                     case Domain.Order.OrderStatus.Processing:
                                                         message = " درخواست ارسال";
                                                         break;
-                                                    case Domain.Order.OrderStatus.RequestReturned:
-                                                        message = " درخواست مرجوعی";
-                                                        break;
+                                                    //case Domain.Order.OrderStatus.RequestReturned:
+                                                    //    message = " درخواست مرجوعی";
+                                                    //    break;
                                                     case Domain.Order.OrderStatus.Cancelled:
                                                         message = "لغو شد";
                                                         break;
-                                             
+
                                                     case Domain.Order.OrderStatus.PostOfficalDelivered:
                                                         message = "تحویل مامور پست گردید";
                                                         break;
                                                     case Domain.Order.OrderStatus.Delivered:
                                                         message = "تحویل داده شد";
                                                         break;
-                                                    case Domain.Order.OrderStatus.Returned:
-                                                        message = "مرجوع شده";
-                                                        break;
-                                         
+                                                        //case Domain.Order.OrderStatus.Returned:
+                                                        //    message = "مرجوع شده";
+                                                        //    break;
+
 
                                                 }
                                                 <span>@message</span>

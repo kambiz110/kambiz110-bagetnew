@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Application.Orders.CustomerOrdersServices;
 using Application.Returneds.Command;
+using Application.Returneds.Query;
 using Domain.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebSite.EndPoint.Utilities;
 
 namespace WebSite.EndPoint.Areas.Customers.Controllers
 {
@@ -19,13 +21,17 @@ namespace WebSite.EndPoint.Areas.Customers.Controllers
         private readonly ICustomerOrdersService customerOrdersService;
         private readonly UserManager<User> userManager;
         private readonly IReturnedOrderItemService returnedOrder;
+        private readonly IReturnedForCustomerService returnedForCustomer;
 
         public OrdersController(ICustomerOrdersService customerOrdersService
-            , UserManager<User> userManager, IReturnedOrderItemService returnedOrder)
+            , UserManager<User> userManager
+            , IReturnedOrderItemService returnedOrder
+            , IReturnedForCustomerService returnedForCustomer)
         {
             this.customerOrdersService = customerOrdersService;
             this.userManager = userManager;
             this.returnedOrder = returnedOrder;
+            this.returnedForCustomer = returnedForCustomer;
         }
         public IActionResult Index()
         {
@@ -46,16 +52,23 @@ namespace WebSite.EndPoint.Areas.Customers.Controllers
             var model = customerOrdersService.GetCustomerOrderDitales(PaymentId);
             return View(model);
         }
+        [Route("Customers/Orders/ReturneDetails/{returnedId}")]
+        public IActionResult ReturneDetails(int returnedId)
+        {
+            string userId = ClaimUtility.GetUserId(User);
+            var model = returnedForCustomer.GetCustomerOrderDitales(returnedId , userId);
+            return View(model);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ReturnedOrederItem(int[] orderItemsIds, int orederId)
+        public IActionResult ReturnedOrederItem(int[] orderItemsIds, int orederId)
         {
             if (!ModelState.IsValid)
             {
                 return new JsonResult(new ResultDto { IsSuccess = false, Message = "false" });
             }
-            var user = await userManager.GetUserAsync(User);
-            var result = returnedOrder.ReturnedOrderItem(orderItemsIds, orederId);
+            string userId = ClaimUtility.GetUserId(User);
+            var result = returnedOrder.ReturnedOrderItem(orderItemsIds, orederId, userId);
             return new JsonResult(result);
         }
     }

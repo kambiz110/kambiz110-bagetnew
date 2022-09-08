@@ -12,7 +12,7 @@ namespace Application.Returneds.Command
 {
     public interface IReturnedOrderItemService
     {
-        ResultDto ReturnedOrderItem(int[] orderItemsIds, int orederId);
+        ResultDto ReturnedOrderItem(int[] orderItemsIds, int orederId , string userId);
 
     }
     public class ReturnedOrderItemService : IReturnedOrderItemService
@@ -24,7 +24,7 @@ namespace Application.Returneds.Command
             this.context = context;
         }
 
-        public ResultDto ReturnedOrderItem(int[] orderItemsIds, int orederId)
+        public ResultDto ReturnedOrderItem(int[] orderItemsIds, int orederId, string userId)
         {
             var order = context.Orders.Where(p => p.Id == orederId /*&& p.ZamanDelivered!=null && p.ZamanDelivered>DateTime.Now.AddDays(-5)*/)
                         .Include(p => p.OrderItems.Where(p => orderItemsIds.Contains(p.Id)))
@@ -34,6 +34,7 @@ namespace Application.Returneds.Command
             {
                 Returned returned = new Returned
                 {
+                    UserId= userId,
                     OrderId = orederId,
                 };
                 context.Returneds.Add(returned);

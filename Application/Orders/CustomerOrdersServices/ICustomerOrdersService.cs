@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.Contexts;
 using Application.Orders.Dto;
 using Application.PostalProducts.Dto;
+using Application.Returneds.Dto;
 using AutoMapper;
 using Domain.Order;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +15,8 @@ namespace Application.Orders.CustomerOrdersServices
 {
     public interface ICustomerOrdersService
     {
-        List<MyOrderDto> GetMyOrder(string userId);
-        Task chengeOrederStatuse(int orderId , int status, string userId);
+        GetMyTaskeInOrderDto GetMyOrder(string userId);
+        Task chengeOrederStatuse(int orderId, int status, string userId);
 
         OderDitalesForCustomerDto GetCustomerOrderDitales(Guid PaymentId);
     }
@@ -37,24 +38,24 @@ namespace Application.Orders.CustomerOrdersServices
 
         public async Task chengeOrederStatuse(int orderId, int status, string userId)
         {
-            var order = context.Orders.Where(p => p.UserId == userId &&p.Id==orderId).FirstOrDefault();
-            if (order!=null)
+            var order = context.Orders.Where(p => p.UserId == userId && p.Id == orderId).FirstOrDefault();
+            if (order != null)
             {
                 switch (status)
                 {
-                    case 4:
-                        order.OrderRequestReturned();
+                    case 3:
+                        order.OrderCancelled();
                         break;
-                    case 5:
-                        order.OrderReturned();
+                    case 4:
+                        order.OrderPostOfficalDelivered();
                         break;
                     default:
                         break;
                 }
-               await context.SaveChangesAsync();
-               
+                await context.SaveChangesAsync();
+
             }
-          
+
         }
 
         public OderDitalesForCustomerDto GetCustomerOrderDitales(Guid PaymentId)
@@ -91,30 +92,53 @@ namespace Application.Orders.CustomerOrdersServices
             return null;
         }
 
-        public List<MyOrderDto> GetMyOrder(string userId)
+        public GetMyTaskeInOrderDto GetMyOrder(string userId)
         {
- 
+            var model = new GetMyTaskeInOrderDto();
             var orders = context.Orders.Where(p => p.UserId == userId)
-                .Include(p => p.OrderItems.Where(p=>p.OrderItemStatus==0))
-                
+                .Include(p => p.OrderItems.Where(p => p.OrderItemStatus == 0))
+
                 .OrderByDescending(p => p.Id).ToList()
                 .Where(p => p.OrderItems != null && p.OrderItems.Any());
-            var result = orders
+            var resultorders = orders
                 .Select(p => new MyOrderDto
                 {
                     Id = p.Id,
                     Date = p.ZamanSabt,
                     OrderStatus = p.OrderStatus,
                     PaymentStatus = p.PaymentStatus,
-                    Price = p.OrderItems.Sum(o=>o.UnitPrice*o.Units),
-                    PaymentId=context.Payments.FirstOrDefault(m=>m.OrderId==p.Id)?.Id,
-                    FollowKey=p.FollowKey
+                    Price = p.OrderItems.Sum(o => o.UnitPrice * o.Units),
+                    PaymentId = context.Payments.FirstOrDefault(m => m.OrderId == p.Id)?.Id,
+                    FollowKey = p.FollowKey
 
                 }).ToList();
-            return result;
+
+
+            var returneds = context.Returneds.Where(p => p.UserId == userId)
+      .Include(p => p.ReturneOrderItems).ThenInclude(p => p.OrderItem)
+      .OrderByDescending(p => p.Id)
+      .Select(p => new MyReturnedDto
+      {
+          Date = p.InsertTime,
+          OrderId = p.OrderId,
+          Price = p.ReturneOrderItems.Select(o => new
+          {
+              pricc = o.OrderItem.UnitPrice * o.OrderItem.Units
+          }).FirstOrDefault().pricc,
+          ReturnedId = p.Id,
+          ReturnedStatus = p.ReturnedStatus,
+      })
+      .ToList();
+            model.GetMyReturneds = returneds;
+            model.GetMyOrders = resultorders;
+            return model;
         }
     }
-
+    public class GetMyTaskeInOrderDto
+    {
+        public List<MyOrderDto> GetMyOrders { get; set; }
+        public List<MyReturnedDto> GetMyReturneds { get; set; }
+    }
     public class MyOrderDto
     {
         public Guid? PaymentId { get; set; }

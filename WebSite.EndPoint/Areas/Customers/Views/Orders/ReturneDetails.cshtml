@@ -1,6 +1,6 @@
 ﻿@using WebSite.EndPoint.Utilities
-@model Application.Orders.Dto.OderDitalesForCustomerDto
-@using Application.PostalProducts.Dto
+@model Application.Returneds.Dto.GetReturnedForCustomerDto
+
 
 
 @{
@@ -56,18 +56,10 @@
 
 
                             </ul>
-                            @if ((int)Model.OrderStatus == 1)
-                            {
-                                <form asp-area="Customers" asp-controller="Orders" asp-action="ReturnedOrederItem" method="post" class="col-12 text-center">
-                                    <button type="submit" class="btn btn-primary mb-1" id="showformpostal">
-                                        مرجوع کردن
-                                    </button>
-                                </form>
-
-                            }
+                       
 
                         </div>
-                       
+
                     </div>
 
                 </div>
@@ -84,14 +76,9 @@
                     <table id="default-ordering" class="table table-hover" style="width:100%">
                         <thead>
                             <tr>
-                                @if ((int)Model.OrderStatus == 1)
-                                {
-                                    <th> انتخاب</th>
-                                }
-                                else
-                                {
+                              
                                     <th> ردیف</th>
-                                }
+                                
 
                                 <th>نام محصول</th>
                                 <th>مبلغ </th>
@@ -104,29 +91,21 @@
                             {
                                 foreach (var item in Model.OrederItems)
                                 {
-                            <tr>
-                                @if ((int)Model.OrderStatus == 1)
-                                {
-                                    <td>
-                                        <input name="orderItem[]" type="checkbox" class="checkthis" value="@item.Id" data-username="@item.Id" />
-                                    </td>
+                                    <tr>
+                                     
+                                            <td>
+                                                @counter
+                                            </td>
+                                   
 
-                                }
-                                else
-                                {
-                                    <td>
-                                        @counter
-                                    </td>
-                                }
+                                        <td> @item.ProductName</td>
+                                        <td>@item.UnitPrice.ToString("n0") تومان</td>
+                                        <td>
+                                            @item.Units
+                                        </td>
+                                        @{ counter++;}
 
-                                <td> @item.ProductName</td>
-                                <td>@item.UnitPrice.ToString("n0") تومان</td>
-                                <td>
-                                    @item.Units
-                                </td>
-                                @{ counter++;}
-
-                            </tr>
+                                    </tr>
                                 }
                             }
                             else
@@ -150,83 +129,18 @@
 
 @section Styles{
     <!-- BEGIN PAGE LEVEL STYLES -->
-    <link href="~/lib/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+
     <link rel="stylesheet" type="text/css" href="~/lib/table/datatable/datatables.css">
     <link rel="stylesheet" type="text/css" href="~/lib/table/datatable/dt-global_style.css">
     <!-- END PAGE LEVEL STYLES -->
     <link href="~/lib/users/user-profile.css" rel="stylesheet" type="text/css">
 }
 @section Scripts{
-    <script src="~/lib/Sweetalert2/sweetalert2.min.js"></script>
+
     <script src="~/lib/table/datatable/datatables.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $('#showformpostal').click(function (e) {
-                e.preventDefault();
-                var numberOfChecked = $('input:checkbox:checked');
-                var data = new FormData();
-                var searchIDs = $("#default-ordering input:checkbox:checked").map(function () {
-                 return $(this).val();
-                }).get(); // <----
-                var orederId = @(Model.OrderId);
-                var orderItemsIds = searchIDs;
-                data.append("orederId", orederId);
-                //console.log("publish_form click", orderItemsIds );
-  
-                var test = TestnumberOfChecked(numberOfChecked);
-                if (test) {
-                    for (var i = 0; i < searchIDs.length; i++) {
-                        data.append('orderItemsIds[' +i+']', searchIDs[i]);
-                    }
-
-                    var ajaxRequest = $.ajax({
-                        type: "POST",
-                        url: "/Customers/Orders/ReturnedOrederItem",
-                        contentType: false,
-                        processData: false,
-                        data: data,
-                        headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
-                        success: function (data) {
-                            if (data.isSuccess == true) {
-                                swal.fire(
-                                    'موفق!',
-                                    'کالا با موفقیت مرجوع شد',
-                                    'success'
-                                ).then(function (isConfirm) {
-                                    window.location.href = "/Customers/orders/index";
-                                });
-                            }
-                            else {
-                                swal.fire(
-                                    'هشدار!',
-                                    "دیتا ثبت نشد",
-                                    'warning'
-                                );
-                            }
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            alert(xhr.status);
-                            alert(thrownError);
-                        }
-                    });
-
-                    ajaxRequest.done(function (xhr, textStatus) {
-                        // Do other operation
-                    });
-              
-                }
-
-            })
-
-            $("#sendBtn").click(function (e) {
-                e.preventDefault();
-                console.log("click");
-                $("#postalform").submit(); // Submit the form
-            });
-        });
-
         $('#default-ordering').DataTable({
             "oLanguage": {
                 "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
@@ -237,33 +151,12 @@
             },
             "order": [[3, "desc"]],
             "stripeClasses": [],
-            "lengthMenu": [7, 10, 20, 50],
-            "pageLength": 7,
+            "lengthMenu": [5, 10, 20, 50],
+            "pageLength": 5,
             drawCallback: function () { $('.dataTables_paginate > .pagination').addClass(' pagination-style-13 pagination-bordered mb-5'); }
         });
-
-
-
-        function TestnumberOfChecked(numberOfChecked) {
-            if (numberOfChecked.length === 0) {
-
-                var errorMessage = "لطفاً! حداقل یک  مورد  را انتخاب نمایید.";
-                var alertPanelContent =
-                    `<div class="alert alert-warning alert-dismissible">
-                                                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                                                                ${errorMessage}
-                                                                            </div>`;
-                $("#alertPanel").html(alertPanelContent);
-                $("#alertPanel").slideDown("fast");
-                window.setTimeout(function () {
-                    $("#alertPanel").slideUp(500);
-                }, 3000);
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
     </script>
 }
+
+
 
