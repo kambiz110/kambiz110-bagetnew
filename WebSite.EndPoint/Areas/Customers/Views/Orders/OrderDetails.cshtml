@@ -1,8 +1,5 @@
 ﻿@using WebSite.EndPoint.Utilities
 @model Application.Orders.Dto.OderDitalesForCustomerDto
-@using Application.PostalProducts.Dto
-
-
 @{
     ViewData["Title"] = "جزئیات سفارش";
     Layout = "~/Views/Shared/_LayoutCustomerPanel.cshtml";
@@ -67,7 +64,7 @@
                             }
 
                         </div>
-                       
+
                     </div>
 
                 </div>
@@ -104,29 +101,29 @@
                             {
                                 foreach (var item in Model.OrederItems)
                                 {
-                            <tr>
-                                @if ((int)Model.OrderStatus == 1)
-                                {
-                                    <td>
-                                        <input name="orderItem[]" type="checkbox" class="checkthis" value="@item.Id" data-username="@item.Id" />
-                                    </td>
+                                    <tr>
+                                        @if ((int)Model.OrderStatus == 1)
+                                        {
+                                            <td>
+                                                <input name="orderItem[]" type="checkbox" class="checkthis" value="@item.Id" data-username="@item.Id" />
+                                            </td>
 
-                                }
-                                else
-                                {
-                                    <td>
-                                        @counter
-                                    </td>
-                                }
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                @counter
+                                            </td>
+                                        }
 
-                                <td> @item.ProductName</td>
-                                <td>@item.UnitPrice.ToString("n0") تومان</td>
-                                <td>
-                                    @item.Units
-                                </td>
-                                @{ counter++;}
+                                        <td> @item.ProductName</td>
+                                        <td>@item.UnitPrice.ToString("n0") تومان</td>
+                                        <td>
+                                            @item.Units
+                                        </td>
+                                        @{ counter++;}
 
-                            </tr>
+                                    </tr>
                                 }
                             }
                             else
@@ -138,7 +135,13 @@
 
                     </table>
                 </div>
-
+                @if ((int)Model.OrderStatus == 1)
+                {
+                    <div class="alert alert-danger p-1 m-1">
+                        <strong>هشدار!</strong> در صورتی که قصد مرجوعی محصول را دارید ، نباید اصالت کالا تغییر و یا کالا دریافتی آسیب دیده باشد
+                        ؛ بدیهی است کارشناسان این فروشگاه سلامت کالا را بررسی و در صورت هر گونه تخلف عملیات بازگشت وجه صورت نخواهد گرفت!!!
+                    </div>
+                }
 
 
 
@@ -157,10 +160,11 @@
     <link href="~/lib/users/user-profile.css" rel="stylesheet" type="text/css">
 }
 @section Scripts{
-    <script src="~/lib/Sweetalert2/sweetalert2.min.js"></script>
+
     <script src="~/lib/table/datatable/datatables.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-
+    <script src="~/lib/Sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/lib/bootprompt/bootprompt.js"></script>
     <script>
         $(document).ready(function () {
             $('#showformpostal').click(function (e) {
@@ -171,51 +175,71 @@
                  return $(this).val();
                 }).get(); // <----
                 var orederId = @(Model.OrderId);
-                var orderItemsIds = searchIDs;
+
                 data.append("orederId", orederId);
-                //console.log("publish_form click", orderItemsIds );
-  
+
+
                 var test = TestnumberOfChecked(numberOfChecked);
                 if (test) {
                     for (var i = 0; i < searchIDs.length; i++) {
                         data.append('orderItemsIds[' +i+']', searchIDs[i]);
                     }
-
-                    var ajaxRequest = $.ajax({
-                        type: "POST",
-                        url: "/Customers/Orders/ReturnedOrederItem",
-                        contentType: false,
-                        processData: false,
-                        data: data,
-                        headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
-                        success: function (data) {
-                            if (data.isSuccess == true) {
-                                swal.fire(
-                                    'موفق!',
-                                    'کالا با موفقیت مرجوع شد',
-                                    'success'
-                                ).then(function (isConfirm) {
-                                    window.location.href = "/Customers/orders/index";
+        
+                    bootprompt.confirm({
+                        title: "مرجوعی کالا",
+                        message: "آیا از مرجوع کردن محصول انتخابی اطمینان دارید؟؟؟",
+                        buttons: {
+                            cancel: {
+                                label: "<i class='fa fa-times'></i> لغو",
+                            },
+                            confirm: {
+                                label: "<i class='fa fa-check'></i> تایید",
+                            },
+                        },
+                        callback: (result) => {
+                            if (result == true) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/Customers/Orders/ReturnedOrederItem",
+                                    contentType: false,
+                                    processData: false,
+                                    data: data,
+                                    headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                                    success: function (data) {
+                                        if (data.isSuccess == true) {
+                                            swal.fire(
+                                                'موفق!',
+                                                'کالا با موفقیت مرجوع شد',
+                                                'success'
+                                            ).then(function (isConfirm) {
+                                                window.location.href = "/Customers/orders/index";
+                                            });
+                                        }
+                                        else {
+                                            swal.fire(
+                                                'هشدار!',
+                                                "دیتا ثبت نشد",
+                                                'warning'
+                                            );
+                                        }
+                                    },
+                                    error: function (xhr, ajaxOptions, thrownError) {
+                                        alert(xhr.status);
+                                        alert(thrownError);
+                                    }
                                 });
                             }
                             else {
                                 swal.fire(
-                                    'هشدار!',
-                                    "دیتا ثبت نشد",
+                                    'تشکر',
+                                    'درخواست لغو گردید',
                                     'warning'
-                                );
+                                )
+
                             }
                         },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            alert(xhr.status);
-                            alert(thrownError);
-                        }
                     });
 
-                    ajaxRequest.done(function (xhr, textStatus) {
-                        // Do other operation
-                    });
-              
                 }
 
             })
