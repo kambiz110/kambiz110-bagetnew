@@ -13,6 +13,7 @@ namespace Domain.Order
         public Order Order { get; set; }
         public int OrderId { get; set; }
         public string UserId { get; set; }
+        public PostProduct PostProduct { get; set; }
         public ReturnedStatus ReturnedStatus { get; set; }
         public ICollection<ReturneOrderItem> ReturneOrderItems { get; set; }
         public DateTime InsertTime { get; set; } = DateTime.Now;

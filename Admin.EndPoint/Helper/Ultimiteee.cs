@@ -58,6 +58,24 @@ namespace Admin.EndPoint.Helper
 
             return dtFarsi;
         }
+        public static string ToPersianDateStrFarsiFull(this DateTime dtt)
+        {
+            if (dtt == null)
+            {
+                return "";
+            }
+            PersianCalendar pc = new PersianCalendar();
+            int year = pc.GetYear(dtt);
+            int month = pc.GetMonth(dtt);
+            int day = pc.GetDayOfMonth(dtt);
+            int hour = pc.GetHour(dtt);
+            int min = pc.GetMinute(dtt);
+            string FarsiMonth = FarsiMonthLtr[month].ToString();
+            var dtFarsi = String.Format(" {0} {1} {2} ساعت {3} : {4}", day, FarsiMonth, year, min, hour);
+
+
+            return dtFarsi;
+        }
         public static DateTime ToPersianDateRtl(this DateTime dt)
         {
             PersianCalendar pc = new PersianCalendar();

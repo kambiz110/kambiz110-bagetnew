@@ -21,6 +21,7 @@ using Application.Discounts.EditDiscountServices;
 using Application.Interfaces.Contexts;
 using Application.Orders.AdminOrderServices;
 using Application.PostalProducts;
+using Application.Returneds.Query;
 using Application.Storerooms.Command;
 using Application.Users.Query;
 using Application.Users.Token;
@@ -97,6 +98,7 @@ namespace Admin.EndPoint
             services.AddTransient<IAdminOrdersService, AdminOrdersService>();
             services.AddTransient<IAddPostalProductService, AddPostalProductService>();
             services.AddTransient<ISmsServices, SmsServices>();
+            services.AddTransient<IReturnedForAdminService, ReturnedForAdminService>();
 
             #region connection String SqlServer
             services.AddScoped<IDataBaseContext, DataBaseContext>();

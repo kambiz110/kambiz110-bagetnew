@@ -36,7 +36,7 @@ namespace Application.Orders.AdminOrderServices
         public OderDitalesForAdminDto GetAdminOrderDitales(Guid PaymentId)
         {
             var payment = context.Payments.Where(p => p.Id == PaymentId)
-                 .Include(p => p.Order).ThenInclude(p => p.OrderItems)
+                 .Include(p => p.Order).ThenInclude(p => p.OrderItems.Where(p => (int)p.OrderItemStatus == 0))
                  .Include(p => p.Order).ThenInclude(p => p.PostProduct)
              
                  .FirstOrDefault();
@@ -47,7 +47,7 @@ namespace Application.Orders.AdminOrderServices
                 {
                     postalProductDto=payment.Order.PostProduct!=null?mapper.Map<AddPostalProductDto>(payment.Order.PostProduct):new AddPostalProductDto { },
                     Address =payment.Order.Address,
-                    Amount=payment.Amount,
+                    Amount= payment.Order.OrderItems.Sum(o => o.UnitPrice * o.Units),
                     userePhoneNumber=user.PhoneNumber,
                     OrderId=payment.Order.Id,
                     Date=payment.Order.ZamanSabt,
@@ -72,7 +72,7 @@ namespace Application.Orders.AdminOrderServices
 
 
             var orders = context.Orders.Where(p=>((int)p.OrderStatus)== orderStatus)
-                .Include(p => p.OrderItems)
+                .Include(p => p.OrderItems.Where(p=>(int)p.OrderItemStatus==0))
                 .OrderByDescending(p => p.Id).AsQueryable();
             if (!String.IsNullOrEmpty(searchkey))
             {
@@ -87,7 +87,8 @@ namespace Application.Orders.AdminOrderServices
                     Date = p.ZamanSabt,
                     OrderStatus = p.OrderStatus,
                     PaymentStatus = p.PaymentStatus,
-                    Price = p.TotalPrice(),
+                    Price = p.OrderItems.Sum(o => o.UnitPrice * o.Units),
+                    countOrderItems=p.OrderItems.Count(),
                     PaymentId=context.Payments.FirstOrDefault(m=>m.OrderId==p.Id)?.Id
 
                 }).ToList();

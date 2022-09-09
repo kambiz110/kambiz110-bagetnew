@@ -123,8 +123,9 @@ namespace Application.Orders.CustomerOrdersServices
           OrderId = p.OrderId,
           Price = p.ReturneOrderItems.Select(o => new
           {
-              pricc = o.OrderItem.UnitPrice * o.OrderItem.Units
+              pricc = o.OrderItem.UnitPrice * o.OrderItem.Units,
           }).FirstOrDefault().pricc,
+          countOrderItems = p.ReturneOrderItems.Count(),
           ReturnedId = p.Id,
           ReturnedStatus = p.ReturnedStatus,
       })
@@ -144,6 +145,8 @@ namespace Application.Orders.CustomerOrdersServices
         public Guid? PaymentId { get; set; }
         public int Id { get; set; }
         public DateTime Date { get; set; }
+        public int countOrderItems { get; set; } = 0;
+
         public int Price { get; set; }
         public string FollowKey { get; set; }
         public OrderStatus OrderStatus { get; set; }

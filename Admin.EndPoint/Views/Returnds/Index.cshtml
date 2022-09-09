@@ -1,7 +1,7 @@
-﻿@model IEnumerable<Application.Orders.CustomerOrdersServices.MyOrderDto>
+﻿@model IEnumerable<Application.Returneds.Dto.MyReturnedDto>
 @using Admin.EndPoint.Helper
 @{
-    ViewData["Title"] = "شفارشات";
+    ViewData["Title"] = "درخواست های مرجوعی";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -41,34 +41,34 @@
                 </li>
                 @*  <li class="nav-item">
 
-                <a href="/Orders/Index?orderStatus=2" class="btn btn-default btn-change-state w3-blue m-1" data-action="Access" data-controller="Quiz" data-area="Admin">
-                    مرجوع شده <i class="nav-icon fas fa-shield-alt"></i>
-                </a>
+                            <a href="/Orders/Index?orderStatus=2" class="btn btn-default btn-change-state w3-blue m-1" data-action="Access" data-controller="Quiz" data-area="Admin">
+                                مرجوع شده <i class="nav-icon fas fa-shield-alt"></i>
+                            </a>
 
-            </li>
+                        </li>
 
-            <li class="nav-item active">
+                        <li class="nav-item active">
 
-                <a href="/Orders/Index?orderStatus=3" class="btn btn-default btn-change-state w3-deep-orange m-1" data-action="Result" data-controller="Quiz" data-area="Admin">
-                    لغو شده <i class="fas fa-chalkboard-teacher"></i>
-                </a>
+                            <a href="/Orders/Index?orderStatus=3" class="btn btn-default btn-change-state w3-deep-orange m-1" data-action="Result" data-controller="Quiz" data-area="Admin">
+                                لغو شده <i class="fas fa-chalkboard-teacher"></i>
+                            </a>
 
-            </li>
+                        </li>
 
-        <li class="nav-item active">
+                    <li class="nav-item active">
 
-            <a href="/Orders/Index?orderStatus=9" class="btn btn-default btn-change-state w3-deep-orange m-1" data-action="Result" data-controller="Quiz" data-area="Admin">
-                در انتظار بازگشت وجه مرجوعی<i class="fas fa-credit-card"></i>
-            </a>
+                        <a href="/Orders/Index?orderStatus=9" class="btn btn-default btn-change-state w3-deep-orange m-1" data-action="Result" data-controller="Quiz" data-area="Admin">
+                            در انتظار بازگشت وجه مرجوعی<i class="fas fa-credit-card"></i>
+                        </a>
 
-        </li>
-                <li class="nav-item active">
+                    </li>
+                            <li class="nav-item active">
 
-                    <a href="/Orders/Index?orderStatus=7" class="btn btn-default btn-change-state w3-deep-orange m-1" data-action="Result" data-controller="Quiz" data-area="Admin">
-                        در انتظار بازگشت وجه لغو شده<i class="fas fa-credit-card"></i>
-                    </a>
+                                <a href="/Orders/Index?orderStatus=7" class="btn btn-default btn-change-state w3-deep-orange m-1" data-action="Result" data-controller="Quiz" data-area="Admin">
+                                    در انتظار بازگشت وجه لغو شده<i class="fas fa-credit-card"></i>
+                                </a>
 
-                </li>*@
+                            </li>*@
 
             </ul>
         </nav>
@@ -96,29 +96,29 @@
                                 foreach (var item in Model)
                                 {
                             <tr>
-                                <td>YCSH-@item.Id</td>
+                                <td>YCSH-@item.ReturnedId</td>
                                 <td> @item.Date.ToPersianDateStrFarsiFull()</td>
                                 <td>@item.countOrderItems</td>
                                 <td>@item.Price.ToString("n0") تومان</td>
                                 <td>
                                     @{
                                         var message = "";
-                                        switch (item.OrderStatus)
+                                        switch (item.ReturnedStatus)
                                         {
-                                            case Domain.Order.OrderStatus.Processing:
+                                            case Domain.Order.ReturnedStatus.Processing:
                                                 message = " درخواست ارسال";
                                                 break;
                                             //case Domain.Order.OrderStatus.RequestReturned:
                                             //    message = " درخواست مرجوعی";
                                             //    break;
-                                            case Domain.Order.OrderStatus.Cancelled:
+                                            case Domain.Order.ReturnedStatus.Cancelled:
                                                 message = "لغو شد";
                                                 break;
 
-                                            case Domain.Order.OrderStatus.PostOfficalDelivered:
+                                            case Domain.Order.ReturnedStatus.PostOfficalDelivered:
                                                 message = "تحویل مامور پست گردید";
                                                 break;
-                                            case Domain.Order.OrderStatus.Delivered:
+                                            case Domain.Order.ReturnedStatus.Returned:
                                                 message = "تحویل داده شد";
                                                 break;
                                                 //case Domain.Order.OrderStatus.Returned:
@@ -132,7 +132,7 @@
                                 </td>
 
                                 <td class="text-center">
-                                    <a href="/Orders/OrderDetails/@item.PaymentId" class="btn btn-primary">مشاهده</a>
+                                    <a href="/Returnds/ReturndDetails/@item.ReturnedId" class="btn btn-primary">مشاهده</a>
                                 </td>
                             </tr>
                                 }
@@ -187,3 +187,5 @@
         });
     </script>
 }
+
+
