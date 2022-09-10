@@ -52,6 +52,7 @@ namespace Persistence.Contexts
         public DbSet<Returned> Returneds { get; set; }
         public DbSet<ReturnedProduct> ReturnedProducts { get; set; }
         public DbSet<ReturneOrderItem> ReturneOrderItems { get; set; }
+        public DbSet<ReturnPaymentInvoice> ReturnPaymentInvoices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

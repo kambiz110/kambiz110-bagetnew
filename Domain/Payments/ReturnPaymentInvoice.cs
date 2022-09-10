@@ -12,11 +12,15 @@ namespace Domain.Payments
         public int Amount { get; private set; }
         public DateTime DatePay { get;  set; }
         public string FollowKey { get; set; }
+        public string BankOriginNumber { get; set; }
         public string BankOrigin { get; set; }
         public string BankDestination { get; set; }
-        public Order.Order Order { get;  set; }
-        public int OrderId { get;  set; }
+        public string BankDestinationNumber { get; set; }
+        public Order.Returned Returned { get;  set; }
+        public int ReturnedId { get;  set; }
         public ReturnPaymentStatus PaymentStatus { get;  set; }
+        public DateTime InsertTime { get; set; } = DateTime.Now;
+
     }
     public enum ReturnPaymentStatus
     {

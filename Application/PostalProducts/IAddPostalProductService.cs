@@ -41,7 +41,7 @@ namespace Application.PostalProducts
             var postamodel = _mapper.Map<ReturnedProduct>(dto);
             context.ReturnedProducts.Add(postamodel);
             var returned = context.Returneds.FirstOrDefault(p => p.Id == dto.ReturnedId);
-          returned.ReturnedStatus=Domain.Order.ReturnedStatus.PostOfficalDelivered;
+            returned.ReturnedStatus=Domain.Order.ReturnedStatus.PostOfficalDelivered;
             await context.SaveChangesAsync();
         }
     }

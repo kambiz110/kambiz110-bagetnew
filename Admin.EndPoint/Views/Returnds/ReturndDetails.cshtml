@@ -64,8 +64,21 @@
                                         </button>
                                     </li>
                                 }
-                    
 
+                                @if ((int)Model.ReturnedStatus == 1)
+                                {
+                                    <li class="contacts-block__item">
+
+                                        <a href="#" id="showformpostal" class="btn btn-primary">
+                                            بازگشت وجه مشتری <i style="font-size:19px; color:white" class="fab fa-codepen"></i>
+
+                                        </a>
+                                        <button type="submit" class="btn btn-primary" id="sendBtn">
+                                            ثبت و ذخیره
+
+                                        </button>
+                                    </li>
+                                }
 
                             </ul>
                         </div>
@@ -128,63 +141,136 @@
                 </div>
 
 
+                @if ((int)Model.ReturnedStatus == 0)
+                {
+                    <div class="work-section">
+                        <form asp-controller="Returnds" asp-action="ReturndPostals" method="post" id="postalform">
+                            <input name="Id" type="hidden" value="@Model.postalProductDto.Id" />
+                            <input name="ReturnedId" value="@Model.ReturnedId" type="hidden" />
+                            <input name="PostalStatus" value="1" type="hidden" />
 
-       
-                <div class="work-section">
-                    <form asp-controller="Returnds" asp-action="ReturndPostals" method="post" id="postalform">
-                        <input name="Id" type="hidden" value="@Model.postalProductDto.Id" />
-                        <input name="ReturnedId" value="@Model.ReturnedId" type="hidden" />
-                        <input name="PostalStatus" value="1" type="hidden" />
-                    
                             <input name="PostalType" value="0" type="hidden" />
-                   
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-">
-                                        <label for="postalProductDto.PostalCompane">نام شرکت تحویل گیرنده بسته</label>
-                                        <select class="form-control mb-4" asp-for="postalProductDto.PostalCompane" asp-items="Html.GetEnumSelectList<PostalCompany>()">
-                                            <option selected="selected" value="">لطفا انتخاب نمائید</option>
-                                        </select>
-                                        @*<input type="text" class="form-control mb-4" name="Title" value="@Model.postalProductDto.Title">*@
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>تاریخ تحویل  بسته با مامور پست</label>
-                                    <div class="input-group">
 
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text cursor-pointer" id="date5"><i class='fas fa-calendar-alt' style='font-size:24px;color:forestgreen'></i></span>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-">
+                                            <label for="postalProductDto.PostalCompane">نام شرکت تحویل گیرنده بسته</label>
+                                            <select class="form-control mb-4" asp-for="postalProductDto.PostalCompane" asp-items="Html.GetEnumSelectList<PostalCompany>()">
+                                                <option selected="selected" value="">لطفا انتخاب نمائید</option>
+                                            </select>
+                                            @*<input type="text" class="form-control mb-4" name="Title" value="@Model.postalProductDto.Title">*@
                                         </div>
-                                        <input id="InsertDate" name="InsertDate" type="hidden" />
-                                        <input type="text" id="StartDateFake" value="@Model.postalProductDto.InsertDate" class="form-control" aria-label="date5" aria-describedby="date5" placeholder="زمان تحویل ... " />
-
                                     </div>
+                                    <div class="col-md-6">
+                                        <label>تاریخ تحویل  بسته با مامور پست</label>
+                                        <div class="input-group">
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="degree3">نام کارمند تحویل گیرنده پست</label>
-                                        <input type="text" class="form-control mb-4" id="degree3" name="PostOfficeName" value="@Model.postalProductDto.PostOfficeName">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="degree4">شماره پیگیری ثبت شده شرکت پست</label>
-                                        <input type="text" class="form-control mb-4" id="degree4" name="TrackingNumber" value="@Model.postalProductDto.TrackingNumber">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text cursor-pointer" id="date5"><i class='fas fa-calendar-alt' style='font-size:24px;color:forestgreen'></i></span>
+                                            </div>
+                                            <input id="InsertDate" name="InsertDate" type="hidden" />
+                                            <input type="text" id="StartDateFake" value="@Model.postalProductDto.InsertDate" class="form-control" aria-label="date5" aria-describedby="date5" placeholder="زمان تحویل ... " />
+
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="degree3">نام کارمند تحویل گیرنده پست</label>
+                                            <input type="text" class="form-control mb-4" id="degree3" name="PostOfficeName" value="@Model.postalProductDto.PostOfficeName">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="degree4">شماره پیگیری ثبت شده شرکت پست</label>
+                                            <input type="text" class="form-control mb-4" id="degree4" name="TrackingNumber" value="@Model.postalProductDto.TrackingNumber">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
 
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                }
+                @if ((int)Model.ReturnedStatus == 1)
+                {
+                    <div class="work-section">
+                        <form asp-controller="Returnds" asp-action="ReturnPayment" method="post" id="postalform">
+                            <input name="Amount" type="hidden" value="@Model.Amount" />
+                            <input name="ReturnedId" value="@Model.ReturnedId" type="hidden" />
+                            <input name="PostalStatus" value="1" type="hidden" />
+
+                            <input name="PostalType" value="0" type="hidden" />
+
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="degree1">شماره پیگیری بانکی</label>
+                                            <input type="text" class="form-control mb-4" id="degree1" name="FollowKey">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>تاریخ واریز وجه</label>
+                                        <div class="input-group">
+
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text cursor-pointer" id="date4"><i class='fas fa-calendar-alt' style='font-size:24px;color:forestgreen'></i></span>
+                                            </div>
+                                            <input id="DatePay" name="DatePay" type="hidden" />
+                                            <input type="text" id="DatePayFake" value="@Model.postalProductDto.InsertDate" class="form-control" aria-label="date4" aria-describedby="date4" placeholder="زمان واریز وجه ... " />
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="degree3">نام بانک مبدا</label>
+                                            <input type="text" class="form-control mb-4" id="degree3" name="BankOrigin">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="degree4">نام بانک مقصد (مشتری)</label>
+                                            <input type="text" class="form-control mb-4" id="degree4" name="BankDestination">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="degree5">شماره بانک مبدا</label>
+                                            <input type="text" class="form-control mb-4" id="degree5" name="BankOriginNumber" >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="degree6">شماره بانک مقصد </label>
+                                            <input type="text" class="form-control mb-4" id="degree6" name="BankDestinationNumber" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </form>
+                    </div>
+                }
+
             </div>
         </div>
 
@@ -217,6 +303,8 @@
                 $('#sendBtn').show();
                 $('#postalform').show();
             })
+
+
             $('#sendBtn').hide();
             $('#postalform').hide();
             $("#sendBtn").click(function (e) {
@@ -247,6 +335,14 @@
             targetTextSelector: '#StartDateFake',
             targetDateSelector: '#InsertDate',
             groupId: 'date5',
+            fromDate: true,
+            enableTimePicker: true,
+            modalMode: true
+        });
+        $('#date4').MdPersianDateTimePicker({
+            targetTextSelector: '#DatePayFake',
+            targetDateSelector: '#DatePay',
+            groupId: 'date4',
             fromDate: true,
             enableTimePicker: true,
             modalMode: true

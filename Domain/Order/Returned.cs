@@ -1,4 +1,5 @@
-﻿using Domain.Postals;
+﻿using Domain.Payments;
+using Domain.Postals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Domain.Order
         public Order Order { get; set; }
         public int OrderId { get; set; }
         public string UserId { get; set; }
+        public ReturnPaymentInvoice ReturnPaymentInvoice { get; set; }
         public PostProduct PostProduct { get; set; }
         public ReturnedStatus ReturnedStatus { get; set; }
         public ICollection<ReturneOrderItem> ReturneOrderItems { get; set; }
@@ -37,5 +39,9 @@ namespace Domain.Order
         /// در حال پردازش
         /// </summary>
         Cancelled = 3,
+        /// <summary>
+        /// محصول سالم بود و مبلغ به مشتری بازگشت شد 
+        /// </summary>
+        ReturnPaymentInvoice = 4,
     }
 }

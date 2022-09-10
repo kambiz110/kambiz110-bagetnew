@@ -1,6 +1,8 @@
 ﻿using Application.PostalProducts;
 using Application.PostalProducts.Dto;
 using Application.Returneds.Query;
+using Application.ReturnPaymentInvoice.Commend;
+using Application.ReturnPaymentInvoice.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,11 +17,15 @@ namespace Admin.EndPoint.Controllers
     {
         private readonly IReturnedForAdminService returnedForAdmin;
         private readonly IAddPostalProductService addPostalProduct;
+        private readonly IAddReturnPaymentInvoice returnPaymentInvoice;
 
-        public ReturndsController(IReturnedForAdminService returnedForAdmin, IAddPostalProductService addPostalProduct)
+        public ReturndsController(IReturnedForAdminService returnedForAdmin, 
+            IAddPostalProductService addPostalProduct,
+            IAddReturnPaymentInvoice returnPaymentInvoice)
         {
             this.returnedForAdmin = returnedForAdmin;
             this.addPostalProduct = addPostalProduct;
+            this.returnPaymentInvoice = returnPaymentInvoice;
         }
         public IActionResult Index(int returnStatus = 0)
         {
@@ -36,6 +42,12 @@ namespace Admin.EndPoint.Controllers
         public async Task<IActionResult> ReturndPostals(AddReturnedPostalProductDto dto)
         {
              await addPostalProduct.ReturnedPostal(dto);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> ReturnPayment(AddReturnPaymentInvoiceDto dto)
+        {
+             await returnPaymentInvoice.addDataToDb(dto);
             return RedirectToAction("Index");
         }
     }

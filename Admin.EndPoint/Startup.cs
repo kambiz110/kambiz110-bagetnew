@@ -22,6 +22,7 @@ using Application.Interfaces.Contexts;
 using Application.Orders.AdminOrderServices;
 using Application.PostalProducts;
 using Application.Returneds.Query;
+using Application.ReturnPaymentInvoice.Commend;
 using Application.Storerooms.Command;
 using Application.Users.Query;
 using Application.Users.Token;
@@ -99,6 +100,7 @@ namespace Admin.EndPoint
             services.AddTransient<IAddPostalProductService, AddPostalProductService>();
             services.AddTransient<ISmsServices, SmsServices>();
             services.AddTransient<IReturnedForAdminService, ReturnedForAdminService>();
+            services.AddTransient<IAddReturnPaymentInvoice, AddReturnPaymentInvoice>();
 
             #region connection String SqlServer
             services.AddScoped<IDataBaseContext, DataBaseContext>();

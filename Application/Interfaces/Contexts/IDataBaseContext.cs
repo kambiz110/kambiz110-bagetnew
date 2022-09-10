@@ -45,6 +45,7 @@ namespace Application.Interfaces.Contexts
         DbSet<Returned> Returneds { get; set; }
         DbSet<ReturnedProduct> ReturnedProducts { get; set; }
         DbSet<ReturneOrderItem> ReturneOrderItems { get; set; }
+        DbSet<Domain.Payments.ReturnPaymentInvoice> ReturnPaymentInvoices { get; set; }
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);

@@ -36,6 +36,10 @@ namespace Domain.Order
         /// محصول تعویض شده دریافت شد 
         /// </summary>
         ReplacedDelivered = 3,
+        /// <summary>
+        /// محصول سالم بود و مبلغ به مشتری بازگشت شد 
+        /// </summary>
+        ReturnPaymentInvoice = 4,
 
     }
 }
