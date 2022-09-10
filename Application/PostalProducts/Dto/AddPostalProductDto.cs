@@ -18,6 +18,17 @@ namespace Application.PostalProducts.Dto
         public string PostOfficeName { get; set; }
         public DateTime? InsertDate { get; set; }
     }
+    public class AddReturnedPostalProductDto
+    {
+        public int Id { get; set; }
+        public string TrackingNumber { get; set; }
+        public PostalType PostalType { get; set; }
+        public PostalStatus PostalStatus { get; set; }
+        public PostalCompany PostalCompane { get; set; }
+        public int ReturnedId { get; set; }
+        public string PostOfficeName { get; set; }
+        public DateTime? InsertDate { get; set; }
+    }
     public enum PostalCompany
     {
         /// <summary>

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Admin.EndPoint.Helper
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -241,7 +242,7 @@
 
 
                     <li class="menu">
-                        <a href="#dashboard" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+                        <a href="#dashboard" data-toggle="collapse" aria-expanded="@Html.TrueAriaExpandedClass("CategoreItems")" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                                 <span>داشبورد</span>
@@ -250,7 +251,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
                             </div>
                         </a>
-                        <ul class="collapse submenu list-unstyled" id="dashboard" data-parent="#accordionExample">
+                        <ul class="collapse submenu list-unstyled"  id="dashboard" data-parent="#accordionExample">
                             <li>
                                 <a href="/CategoreItems/Index"> محصول ها </a>
                             </li>
@@ -277,8 +278,8 @@
                     </li>
 
 
-                    <li class="menu">
-                        <a href="#users" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <li class="menu ">
+                        <a href="#users" data-toggle="collapse" aria-expanded="@Html.TrueAriaExpandedClass("Users")" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                                 <span>کاربران</span>
@@ -296,8 +297,8 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="menu">
-                        <a href="#orders" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <li class="menu ">
+                        <a href="#orders" data-toggle="collapse" aria-expanded="@Html.TrueAriaExpandedClass("Orders" ,"Returnds")" class="dropdown-toggle">
                             <div class="">
                                 <i style='font-size:24px' class='fas'>&#xf217;</i>
                                 <span>سفارشات</span>
@@ -307,10 +308,10 @@
                             </div>
                         </a>
                         <ul class="collapse submenu recent-submenu list-unstyled" id="orders" data-parent="#accordionExample">
-                            <li>
-                                <a href="/orders/index"> سفارش های کاربران </a>
+                            <li class="nav-link @Html.ActiveClass("Orders" ,"Index")">
+                                <a href="/Orders/index"> سفارش های کاربران </a>
                             </li>
-                            <li>
+                            <li class="nav-link @Html.ActiveClass("Returnds" ,"Index")">
                                 <a href="/Returnds/index"> مرجوعی های کاربران </a>
                             </li>
                         </ul>

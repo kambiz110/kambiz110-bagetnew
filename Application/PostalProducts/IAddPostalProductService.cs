@@ -13,6 +13,7 @@ namespace Application.PostalProducts
   public  interface IAddPostalProductService
     {
         Task addPostal(AddPostalProductDto dto);
+        Task ReturnedPostal(AddReturnedPostalProductDto dto);
     }
     public class AddPostalProductService : IAddPostalProductService
     {
@@ -25,27 +26,23 @@ namespace Application.PostalProducts
         }
         public async Task addPostal(AddPostalProductDto dto )
         {
-            if (dto.Id>0)
-            {
-                var postal = context.PostProducts.FirstOrDefault(p=>p.Id==dto.Id);
-                if (postal!=null)
-                {
-                    _mapper.Map(dto, postal);
-                    context.PostProducts.Update(postal);
-                    var order = context.Orders.FirstOrDefault(p => p.Id == dto.OrderId);
-                    order.OrderPostOfficalDelivered();
-                    await   context.SaveChangesAsync();
-                }
-            }
-            else
-            {
+        
               var postamodel=  _mapper.Map<PostProduct>(dto);
                 context.PostProducts.Add(postamodel);
                 var order = context.Orders.FirstOrDefault(p => p.Id == dto.OrderId);
                 order.OrderPostOfficalDelivered();
                 await context.SaveChangesAsync();
 
-            }
+           
+        }
+
+        public async Task ReturnedPostal(AddReturnedPostalProductDto dto)
+        {
+            var postamodel = _mapper.Map<ReturnedProduct>(dto);
+            context.ReturnedProducts.Add(postamodel);
+            var returned = context.Returneds.FirstOrDefault(p => p.Id == dto.ReturnedId);
+          returned.ReturnedStatus=Domain.Order.ReturnedStatus.PostOfficalDelivered;
+            await context.SaveChangesAsync();
         }
     }
 }

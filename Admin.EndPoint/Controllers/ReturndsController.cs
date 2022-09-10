@@ -1,4 +1,6 @@
-﻿using Application.Returneds.Query;
+﻿using Application.PostalProducts;
+using Application.PostalProducts.Dto;
+using Application.Returneds.Query;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,10 +14,12 @@ namespace Admin.EndPoint.Controllers
     public class ReturndsController : Controller
     {
         private readonly IReturnedForAdminService returnedForAdmin;
+        private readonly IAddPostalProductService addPostalProduct;
 
-        public ReturndsController(IReturnedForAdminService returnedForAdmin)
+        public ReturndsController(IReturnedForAdminService returnedForAdmin, IAddPostalProductService addPostalProduct)
         {
             this.returnedForAdmin = returnedForAdmin;
+            this.addPostalProduct = addPostalProduct;
         }
         public IActionResult Index(int orderStatus = 0)
         {
@@ -27,6 +31,12 @@ namespace Admin.EndPoint.Controllers
         {
             var model = returnedForAdmin.GetAdminOrderDitales(returnedId);
             return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ReturndPostals(AddReturnedPostalProductDto dto)
+        {
+             await addPostalProduct.ReturnedPostal(dto);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -64,20 +64,7 @@
                                         </button>
                                     </li>
                                 }
-                                @if ((int)Model.OrderStatus == 4)
-                                {
-                                    <li class="contacts-block__item">
-
-                                        <a href="#" id="showformpostal" class="btn btn-primary">
-                                            مرجوعی محصول <i style="font-size:19px; color:white" class="fab fa-codepen"></i>
-
-                                        </a>
-                                        <button type="submit" class="btn btn-primary" id="sendBtn">
-                                            ثبت و ذخیره
-
-                                        </button>
-                                    </li>
-                                }
+                            
 
 
                             </ul>
@@ -146,6 +133,7 @@
                     <form asp-controller="Orders" asp-action="OrderPostals" method="post" id="postalform">
                         <input name="Id" type="hidden" value="@Model.postalProductDto.Id" />
                         <input name="OrderId" value="@Model.OrderId" type="hidden" />
+                        <input name="PostalStatus" value="1" type="hidden" />
                         @if ((int)Model.OrderStatus == 4)
                         {
                             <input name="PostalType" value="0" type="hidden" />
@@ -190,7 +178,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="degree4">شماره ثبتی اینترنتی پست</label>
+                                        <label for="degree4">شماره پیگیری ثبت شده شرکت پست</label>
                                         <input type="text" class="form-control mb-4" id="degree4" name="TrackingNumber" value="@Model.postalProductDto.TrackingNumber">
                                     </div>
                                 </div>

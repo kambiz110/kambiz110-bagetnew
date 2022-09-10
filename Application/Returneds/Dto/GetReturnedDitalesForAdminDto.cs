@@ -20,7 +20,7 @@ namespace Application.Returneds.Dto
         public DateTime Date { get; set; }
         public DateTime? PostDate { get; set; }
         public DateTime? RecivePostDate { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public ReturnedStatus ReturnedStatus { get; set; }
         public List<OrederItemsForOrderDto> OrederItems { get; set; }
     }
 }

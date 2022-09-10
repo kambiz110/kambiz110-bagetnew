@@ -17,6 +17,7 @@ namespace Infrastructure.MappingProfile
         public PostalProductMappingProfile()
         {
             CreateMap<AddPostalProductDto, PostProduct>().ReverseMap(); 
+            CreateMap<AddReturnedPostalProductDto, ReturnedProduct>().ReverseMap(); 
 
         }
     }

@@ -52,7 +52,7 @@ namespace Application.Returneds.Query
                     Date = returned.InsertTime,
                     RecivePostDate = returned.PostProduct?.ReciveDate,
                     PostDate =returned.PostProduct?.InsertDate,
-                    OrderStatus = returned.Order.OrderStatus,
+                    ReturnedStatus = returned.ReturnedStatus,
                     OrederItems = returned.Order.OrderItems.Select(o => new OrederItemsForOrderDto
                     {
                         Id = o.Id,
