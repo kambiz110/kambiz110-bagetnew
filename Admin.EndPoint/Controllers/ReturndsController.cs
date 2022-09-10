@@ -21,9 +21,9 @@ namespace Admin.EndPoint.Controllers
             this.returnedForAdmin = returnedForAdmin;
             this.addPostalProduct = addPostalProduct;
         }
-        public IActionResult Index(int orderStatus = 0)
+        public IActionResult Index(int returnStatus = 0)
         {
-            var model = returnedForAdmin.GetMyReturneds(orderStatus);
+            var model = returnedForAdmin.GetMyReturneds(returnStatus);
             return View(model);
         }
         [Route("Returnds/ReturndDetails/{returnedId}")]
