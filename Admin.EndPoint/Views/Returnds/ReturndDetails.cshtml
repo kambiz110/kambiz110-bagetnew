@@ -203,9 +203,9 @@
                 {
                     <div class="work-section">
                         <form asp-controller="Returnds" asp-action="ReturnPayment" method="post" id="postalform">
-                            <input name="Amount" type="hidden" value="@Model.Amount" />
-                            <input name="ReturnedId" value="@Model.ReturnedId" type="hidden" />
-                            <input name="PostalStatus" value="1" type="hidden" />
+                            <input name="Amount" id="Amount" type="hidden" value="@Model.Amount" />
+                            <input name="ReturnedId" id="ReturnedId" value="@Model.ReturnedId" type="hidden" />
+                            <input name="PostalStatus" id="PostalStatus" value="1" type="hidden" />
 
                             <input name="PostalType" value="0" type="hidden" />
 
@@ -236,8 +236,9 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="degree3">نام بانک مبدا</label>
-                                            <input type="text" class="form-control mb-4" id="degree3" name="BankOrigin">
+                                            <label for="degree5">شماره بانک مبدا</label>
+
+                                            <select class="form-control basic-single" id="degree5" name="BankOriginNumber" asp-items="(IEnumerable<SelectListItem>)@ViewData["BankOrigins"]"></select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -250,16 +251,11 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="degree5">شماره بانک مبدا</label>
-                                            <input type="text" class="form-control mb-4" id="degree5" name="BankOriginNumber" >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
+
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="degree6">شماره بانک مقصد </label>
-                                            <input type="text" class="form-control mb-4" id="degree6" name="BankDestinationNumber" >
+                                            <input type="text" class="form-control mb-4" id="degree6" name="BankDestinationNumber">
                                         </div>
                                     </div>
                                 </div>
@@ -280,6 +276,7 @@
 @section Styles{
     <link href="~/lib/MD_BootstrapPersianDateTimePicker-master-bs5/dist/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
 
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
 
     <!-- BEGIN PAGE LEVEL STYLES -->
     <link rel="stylesheet" type="text/css" href="~/Theme/plugins/table/datatable/datatables.css">
@@ -290,6 +287,8 @@
 @section Scripts{
     <script src="~/Theme/plugins/table/datatable/datatables.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="~/lib/bootprompt/bootprompt.js"></script>
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
 
     <script src="~/lib/MD_BootstrapPersianDateTimePicker-master-bs5/dist/jquery.md.bootstrap.datetimepicker.js"></script>
 
@@ -310,7 +309,80 @@
             $("#sendBtn").click(function (e) {
                 e.preventDefault();
                 console.log("click");
-                $("#postalform").submit(); // Submit the form
+                // $("#postalform").submit();
+
+               
+                bootprompt.confirm({
+                    title: "مرجوعی کالا",
+                    message: "آیا از اطلاعات وارد شده اطمینان دارید؟؟؟",
+                    buttons: {
+                        cancel: {
+                            label: "<i class='fa fa-times'></i> لغو",
+                        },
+                        confirm: {
+                            label: "<i class='fa fa-check'></i> تایید",
+                        },
+                    },
+                    callback: (result) => {
+                        if (result == true) {
+                            var data = new FormData();
+                            var ammont = $("#Amount").val();
+                            data.append("BankDestination", $("#degree4").val());
+                            data.append("BankDestinationNumber", $("#degree6").val());
+                            data.append("BankOriginNumber", $("#degree5 option:selected").val());
+                            data.append("DatePay", $("#DatePay").val());
+                            data.append("FollowKey", $("#degree1").val());
+
+                            data.append("Amount", ammont);
+
+                            data.append("ReturnedId", $("#ReturnedId").val());
+                            data.append("PostalStatus", $("#PostalStatus").val());
+                     
+         
+                            console.log("data: ", data);
+                            console.log("ammont: ", ammont);
+                           
+                            $.ajax({
+                                type: "POST",
+                                url: "/Returnds/ReturnPayment",
+                                contentType: false,
+                                processData: false,
+                                data: data,
+                                headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                                success: function (data) {
+                                    if (data.isSuccess == true) {
+                                        swal.fire(
+                                            'موفق!',
+                                            'کالا با موفقیت مرجوع شد',
+                                            'success'
+                                        ).then(function (isConfirm) {
+                                            window.location.href = "/Customers/orders/index";
+                                        });
+                                    }
+                                    else {
+                                        swal.fire(
+                                            'هشدار!',
+                                            "دیتا ثبت نشد",
+                                            'warning'
+                                        );
+                                    }
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    alert(xhr.status);
+                                    alert(thrownError);
+                                }
+                            });
+                        }
+                        else {
+                            swal.fire(
+                                'تشکر',
+                                'درخواست لغو گردید',
+                                'warning'
+                            )
+
+                        }
+                    },
+                });
             });
         });
 
