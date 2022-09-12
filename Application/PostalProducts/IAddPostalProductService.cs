@@ -13,7 +13,8 @@ namespace Application.PostalProducts
   public  interface IAddPostalProductService
     {
         Task addPostal(AddPostalProductDto dto);
-        Task ReturnedPostal(AddReturnedPostalProductDto dto);
+        void ReturnedPostal(AddReturnedPostalProductDto dto);
+        void ReturnedPostalToShop(int ReturnedId);
     }
     public class AddPostalProductService : IAddPostalProductService
     {
@@ -36,13 +37,20 @@ namespace Application.PostalProducts
            
         }
 
-        public async Task ReturnedPostal(AddReturnedPostalProductDto dto)
+        public void ReturnedPostal(AddReturnedPostalProductDto dto)
         {
             var postamodel = _mapper.Map<ReturnedProduct>(dto);
             context.ReturnedProducts.Add(postamodel);
             var returned = context.Returneds.FirstOrDefault(p => p.Id == dto.ReturnedId);
             returned.ReturnedStatus=Domain.Order.ReturnedStatus.PostOfficalDelivered;
-            await context.SaveChangesAsync();
+             context.SaveChangesAsync();
+        }
+
+        public void ReturnedPostalToShop(int ReturnedId)
+        {
+            var returned = context.Returneds.FirstOrDefault(p => p.Id == ReturnedId);
+            returned.ReturnedStatus = Domain.Order.ReturnedStatus.Returned;
+            context.SaveChangesAsync();
         }
     }
 }

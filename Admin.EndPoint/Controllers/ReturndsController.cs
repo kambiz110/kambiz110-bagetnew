@@ -54,13 +54,28 @@ namespace Admin.EndPoint.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> ReturndPostals(AddReturnedPostalProductDto dto)
+        public IActionResult ReturnedPostToShop(int ReturnedId)
         {
-             await addPostalProduct.ReturnedPostal(dto);
-            return RedirectToAction("Index");
+          
+            return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });
         }
         [HttpPost]
-        public async Task<IActionResult> ReturnPayment(AddReturnPaymentInvoiceDto dto)
+        public IActionResult ReturndPostals(AddReturnedPostalProductDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                var query = from state in ModelState.Values
+                            from error in state.Errors
+                            select error.ErrorMessage;
+
+                var errorList = query.ToList();
+                return new JsonResult(new ResultDto { IsSuccess = false, Message = "false" });
+            }
+            addPostalProduct.ReturnedPostal(dto);
+            return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });
+        }
+        [HttpPost]
+        public  IActionResult ReturnPayment(AddReturnPaymentInvoiceDto dto)
         {
             ModelState.Remove("BankOrigin");
             if (!ModelState.IsValid)
@@ -70,7 +85,6 @@ namespace Admin.EndPoint.Controllers
                             select error.ErrorMessage;
 
                 var errorList = query.ToList();
-                TempData["error"] = errorList;
                 var referer = HttpContext.Request.Headers["Referer"].ToString();
                 return new JsonResult(new ResultDto { IsSuccess = false, Message = "false" });
             }
@@ -80,8 +94,8 @@ namespace Admin.EndPoint.Controllers
             var jsonData = System.IO.File.ReadAllText(fullPath);
             var item = JsonConvert.DeserializeObject<List<BankDitel>>(jsonData);
             dto.BankOrigin = item.Where(p => p.BankOriginNumber == dto.BankOriginNumber).FirstOrDefault().BankOrigin;
-            await returnPaymentInvoice.addDataToDb(dto);
-            return new JsonResult(new ResultDto { IsSuccess = true, Message = "موفق" });
+             returnPaymentInvoice.addDataToDb(dto);
+            return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });
         }
     }
 }

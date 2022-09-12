@@ -58,7 +58,7 @@
                                             مرجوعی محصول <i style="font-size:19px; color:white" class="fab fa-codepen"></i>
 
                                         </a>
-                                        <button type="submit" class="btn btn-primary" id="sendBtn">
+                                        <button type="submit" class="btn btn-primary" id="sendBtnReturnPost">
                                             ثبت و ذخیره
 
                                         </button>
@@ -75,6 +75,16 @@
                                         </a>
                                         <button type="submit" class="btn btn-primary" id="sendBtn">
                                             ثبت و ذخیره
+
+                                        </button>
+                                    </li>
+                                }
+                                @if ((int)Model.ReturnedStatus == 2)
+                                {
+                                    <li class="contacts-block__item">
+
+                                        <button type="submit" class="btn btn-primary" id="ReturnedPostShop">
+                                            کالا به فروشگاه مرجوع شد
 
                                         </button>
                                     </li>
@@ -147,16 +157,16 @@
                         <form asp-controller="Returnds" asp-action="ReturndPostals" method="post" id="postalform">
                             <input name="Id" type="hidden" value="@Model.postalProductDto.Id" />
                             <input name="ReturnedId" value="@Model.ReturnedId" type="hidden" />
-                            <input name="PostalStatus" value="1" type="hidden" />
+                            <input name="PostalStatus" id="PostalStatus" value="1" type="hidden" />
 
-                            <input name="PostalType" value="0" type="hidden" />
+                            <input id="PostalType" name="PostalType" value="0" type="hidden" />
 
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-">
                                             <label for="postalProductDto.PostalCompane">نام شرکت تحویل گیرنده بسته</label>
-                                            <select class="form-control mb-4" asp-for="postalProductDto.PostalCompane" asp-items="Html.GetEnumSelectList<PostalCompany>()">
+                                            <select class="form-control mb-4" id="PostalCompane" name="PostalCompane" asp-items="Html.GetEnumSelectList<PostalCompany>()">
                                                 <option selected="selected" value="">لطفا انتخاب نمائید</option>
                                             </select>
                                             @*<input type="text" class="form-control mb-4" name="Title" value="@Model.postalProductDto.Title">*@
@@ -266,7 +276,31 @@
                         </form>
                     </div>
                 }
-
+                @if ((int)Model.ReturnedStatus == 2)
+                {
+                    <div class="widget-content widget-content-area" id="widget-circle-basic">
+                        <div id="circle-basic">
+                            <h3>خانه</h3>
+                            <section>
+                                <p>آیا کالا تحویل شده است؟!</p>
+                                <div class="col-lg-3 col-md-3 col-sm-4 col-6">
+                                    <label class="switch s-icons s-outline  s-outline-primary  mb-4 mr-2">
+                                        <input type="checkbox" checked="">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </section>
+                            <h3>درباره</h3>
+                            <section>
+                                <p>اثرات انتقال شگفت انگیز.</p>
+                            </section>
+                            <h3>تنظیمات</h3>
+                            <section>
+                                <p>دکمه های بعدی و قبلی به شما کمک می کند تا از طریق محتوای خود حرکت کنید.</p>
+                            </section>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
 
@@ -283,15 +317,18 @@
     <link rel="stylesheet" type="text/css" href="~/Theme/plugins/table/datatable/dt-global_style.css">
     <!-- END PAGE LEVEL STYLES -->
     <link href="~/Theme/assets/css/users/user-profile.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/Theme/plugins/jquery-step/jquery.steps.css">
+
 }
 @section Scripts{
     <script src="~/Theme/plugins/table/datatable/datatables.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="~/lib/bootprompt/bootprompt.js"></script>
     <script src="~/Sweetalert2/sweetalert2.min.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="~/Theme/assets/css/forms/switches.css">
     <script src="~/lib/MD_BootstrapPersianDateTimePicker-master-bs5/dist/jquery.md.bootstrap.datetimepicker.js"></script>
-
+    <script src="~/Theme/plugins/jquery-step/jquery.steps.min.js"></script>
+    <script src="~/Theme/plugins/jquery-step/custom-jquery.steps.js"></script>
     <script>
         $(document).ready(function () {
             $('#showformpostal').click(function (e) {
@@ -301,19 +338,102 @@
                 $('#showformpostal').hide();
                 $('#sendBtn').show();
                 $('#postalform').show();
+                $('#sendBtnReturnPost').show();
             })
 
-
+            $("#steps-basic").steps({
+                cssClass: 'pill wizard'
+            });
+            $('#widget-circle-basic').hide();
+            $('#sendBtnReturnPost').hide();
             $('#sendBtn').hide();
             $('#postalform').hide();
+            $("#sendBtnReturnPost").click(function (e) {
+                e.preventDefault();
+                console.log("click sendBtnReturnPost");
+                // $("#postalform").submit();
+
+
+                bootprompt.confirm({
+                    title: "مرجوعی کالا",
+                    message: "آیا از اطلاعات وارد شده اطمینان دارید؟؟؟",
+                    buttons: {
+                        cancel: {
+                            label: "<i class='fa fa-times'></i> لغو",
+                        },
+                        confirm: {
+                            label: "<i class='fa fa-check'></i> تایید",
+                        },
+                    },
+                    callback: (result3) => {
+                        if (result3 == true) {
+                            var data = new FormData();
+
+                            data.append("TrackingNumber", $("#degree4").val());
+                            data.append("PostOfficeName", $("#degree3").val());
+                            data.append("PostalCompane", $("#PostalCompane option:selected").val());
+                            data.append("InsertDate", $("#InsertDate").val());
+                            data.append("PostalStatus", $("#PostalStatus").val());
+
+                            data.append("PostalType", $("#PostalType").val());
+
+                            data.append("Id", @(Model.postalProductDto.Id));
+                            data.append("ReturnedId", @(Model.ReturnedId));
+
+
+                            console.log("data: ", data);
+
+
+                            $.ajax({
+                                type: "POST",
+                                url: "/Returnds/ReturndPostals",
+                                contentType: false,
+                                processData: false,
+                                data: data,
+                                headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                                success: function (data) {
+                                    if (data.isSuccess == true) {
+                                        swal.fire(
+                                            'موفق!',
+                                            'مرجوعی کالا با موفقیت ثبت شد',
+                                            'success'
+                                        ).then(function (isConfirm) {
+                                            window.location.href = "/Returnds/index";
+                                        });
+                                    }
+                                    else {
+                                        swal.fire(
+                                            'هشدار!',
+                                            "اطلاعات کامل و درست وارد نمائید دیتا ثبت نشد",
+                                            'warning'
+                                        );
+                                    }
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    alert(xhr.status);
+                                    alert(thrownError);
+                                }
+                            });
+                        }
+                        else {
+                            swal.fire(
+                                'تشکر',
+                                'درخواست لغو گردید',
+                                'warning'
+                            )
+
+                        }
+                    },
+                });
+            });
             $("#sendBtn").click(function (e) {
                 e.preventDefault();
                 console.log("click");
                 // $("#postalform").submit();
 
-               
+
                 bootprompt.confirm({
-                    title: "مرجوعی کالا",
+                    title: "بازگشت وجه مرجوعی",
                     message: "آیا از اطلاعات وارد شده اطمینان دارید؟؟؟",
                     buttons: {
                         cancel: {
@@ -337,11 +457,11 @@
 
                             data.append("ReturnedId", $("#ReturnedId").val());
                             data.append("PostalStatus", $("#PostalStatus").val());
-                     
-         
+
+
                             console.log("data: ", data);
                             console.log("ammont: ", ammont);
-                           
+
                             $.ajax({
                                 type: "POST",
                                 url: "/Returnds/ReturnPayment",
@@ -353,16 +473,80 @@
                                     if (data.isSuccess == true) {
                                         swal.fire(
                                             'موفق!',
-                                            'کالا با موفقیت مرجوع شد',
+                                            'بازگشت وجه با موفقیت ثبت شد',
                                             'success'
                                         ).then(function (isConfirm) {
-                                            window.location.href = "/Customers/orders/index";
+                                            window.location.href = "/Returnds/index";
                                         });
                                     }
                                     else {
                                         swal.fire(
                                             'هشدار!',
-                                            "دیتا ثبت نشد",
+                                            "اطلاعات کامل و درست وارد نمائید دیتا ثبت نشد",
+                                            'warning'
+                                        );
+                                    }
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    alert(xhr.status);
+                                    alert(thrownError);
+                                }
+                            });
+                        }
+                        else {
+                            swal.fire(
+                                'تشکر',
+                                'درخواست لغو گردید',
+                                'warning'
+                            )
+
+                        }
+                    },
+                });
+            });
+            $("#ReturnedPostShop").click(function (e) {
+                $('#widget-circle-basic').show();
+                e.preventDefault();
+                console.log("click");
+                // $("#postalform").submit();
+
+
+                bootprompt.confirm({
+                    title: "مرجوعی کالا به فروشگاه",
+                    message: "آیا از انتخاب خود اطمینان دارید؟؟؟",
+                    buttons: {
+                        cancel: {
+                            label: "<i class='fa fa-times'></i> لغو",
+                        },
+                        confirm: {
+                            label: "<i class='fa fa-check'></i> تایید",
+                        },
+                    },
+                    callback: (result) => {
+                        if (result == true) {
+                            var data = new FormData();
+                             data.append("ReturnedId", @(Model.ReturnedId));
+                            $.ajax({
+                                type: "POST",
+                                url: "/Returnds/ReturnedPostToShop",
+                                contentType: false,
+                                processData: false,
+                                data: data,
+                                headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                                success: function (data) {
+                                    if (data.isSuccess == true) {
+                                        swal.fire(
+                                            'موفق!',
+                                            'تحویل کالا در فروشگاه با موفقیت ثبت شد',
+                                            'success'
+                                        ).then(function (isConfirm) {
+                                            window.location.href = "/Returnds/index";
+                                        });
+                                    }
+                                    else {
+                                        swal.fire(
+                                            'هشدار!',
+                                            "اطلاعات کامل و درست وارد نمائید دیتا ثبت نشد",
                                             'warning'
                                         );
                                     }

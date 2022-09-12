@@ -12,7 +12,7 @@ namespace Application.ReturnPaymentInvoice.Commend
 {
    public interface IAddReturnPaymentInvoice
     {
-        Task addDataToDb(AddReturnPaymentInvoiceDto dto);
+        void addDataToDb(AddReturnPaymentInvoiceDto dto);
     }
    public class AddReturnPaymentInvoice : IAddReturnPaymentInvoice
     {
@@ -24,14 +24,14 @@ namespace Application.ReturnPaymentInvoice.Commend
             _mapper = mapper;
         }
 
-        public async Task addDataToDb(AddReturnPaymentInvoiceDto dto)
+        public  void addDataToDb(AddReturnPaymentInvoiceDto dto)
         {
             var paymentInvoice = _mapper.Map<Domain.Payments.ReturnPaymentInvoice>(dto);
             context.ReturnPaymentInvoices.Add(paymentInvoice);
             var returned = context.Returneds.FirstOrDefault(p => p.Id == dto.ReturnedId);
             returned.ReturnedStatus = Domain.Order.ReturnedStatus.ReturnPaymentInvoice;
 
-            await context.SaveChangesAsync();
+             context.SaveChangesAsync();
         }
     }
 }
