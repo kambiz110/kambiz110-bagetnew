@@ -108,10 +108,23 @@
                     <table id="default-ordering" class="table table-hover" style="width:100%">
                         <thead>
                             <tr>
-                                <th>شماره کالا</th>
-                                <th>نام محصول</th>
-                                <th>مبلغ </th>
-                                <th> تعداد</th>
+                                @if ((int)Model.ReturnedStatus == 2)
+                                {
+                                    <th>شماره کالا</th>
+                                    <th>نام محصول</th>
+                                    <th>مبلغ </th>
+                                    <th> تعداد</th>
+                                    <th> وضعیت مرجوعی</th>
+                                }
+                                else
+                                {
+                                    <th>شماره کالا</th>
+                                    <th>نام محصول</th>
+                                    <th>مبلغ </th>
+                                    <th> تعداد</th>
+                                }
+
+
                             </tr>
                         </thead>
                         <tbody>
@@ -120,16 +133,39 @@
                             {
                                 foreach (var item in Model.OrederItems)
                                 {
-                                    <tr>
-                                        <td>@item.Id</td>
-                                        <td> @item.ProductName</td>
-                                        <td>@item.UnitPrice.ToString("n0") تومان</td>
-                                        <td>
-                                            @item.Units
-                                        </td>
+                            <tr>
 
 
-                                    </tr>
+                                @if ((int)Model.ReturnedStatus == 2)
+                                {
+                                    <td>@item.Id</td>
+                                    <td> @item.ProductName</td>
+                                    <td>@item.UnitPrice.ToString("n0") تومان</td>
+                                    <td>
+                                        @item.Units
+                                    </td>
+                                    <td>
+
+                                        <select name="ReturneOrderItemStatus" class="ReturneOrderItemStatus">
+                                            <option value="1">سالم دریافت شد</option>
+                                            <option value="2">محصول صده دیده دریافت شد</option>
+                                            <option value="3">محصول تعویض شده دریافت شد</option>
+                                            <option value="4">محصول سالم بود</option>
+
+                                        </select>
+
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>@item.Id</td>
+                                    <td> @item.ProductName</td>
+                                    <td>@item.UnitPrice.ToString("n0") تومان</td>
+                                    <td>
+                                        @item.Units
+                                    </td>
+                                }
+                            </tr>
                                 }
                             }
                             else
@@ -138,15 +174,7 @@
                             }
 
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>شماره سفارش</th>
-                                <th>نام محصول</th>
-                                <th>مبلغ </th>
-                                <th> تعداد</th>
-
-                            </tr>
-                        </tfoot>
+                 
                     </table>
                 </div>
 
@@ -276,31 +304,7 @@
                         </form>
                     </div>
                 }
-                @if ((int)Model.ReturnedStatus == 2)
-                {
-                    <div class="widget-content widget-content-area" id="widget-circle-basic">
-                        <div id="circle-basic">
-                            <h3>خانه</h3>
-                            <section>
-                                <p>آیا کالا تحویل شده است؟!</p>
-                                <div class="col-lg-3 col-md-3 col-sm-4 col-6">
-                                    <label class="switch s-icons s-outline  s-outline-primary  mb-4 mr-2">
-                                        <input type="checkbox" checked="">
-                                        <span class="slider round"></span>
-                                    </label>
-                                </div>
-                            </section>
-                            <h3>درباره</h3>
-                            <section>
-                                <p>اثرات انتقال شگفت انگیز.</p>
-                            </section>
-                            <h3>تنظیمات</h3>
-                            <section>
-                                <p>دکمه های بعدی و قبلی به شما کمک می کند تا از طریق محتوای خود حرکت کنید.</p>
-                            </section>
-                        </div>
-                    </div>
-                }
+         
             </div>
         </div>
 
@@ -348,6 +352,7 @@
             $('#sendBtnReturnPost').hide();
             $('#sendBtn').hide();
             $('#postalform').hide();
+            //مرجوعی کالا به فروشگاه
             $("#sendBtnReturnPost").click(function (e) {
                 e.preventDefault();
                 console.log("click sendBtnReturnPost");
@@ -426,6 +431,7 @@
                     },
                 });
             });
+            //بازگشت وجه مرجوعی
             $("#sendBtn").click(function (e) {
                 e.preventDefault();
                 console.log("click");
@@ -504,13 +510,27 @@
                     },
                 });
             });
+            //دریافت محصول مرجوعی محصول به فروشگاه
             $("#ReturnedPostShop").click(function (e) {
                 $('#widget-circle-basic').show();
                 e.preventDefault();
                 console.log("click");
                 // $("#postalform").submit();
 
-
+                //دریافت ویژگی های محصول از جدول
+                var dataFeaturesViewModel = $('#default-ordering tr:gt(0)').map(function () {
+                    return {
+                        Id: $(this.cells[0]).text(),
+                        ReturneOrderItemStatus: $(this.cells[4]).find('option:selected').val(),
+                    };
+                }).get();
+                var data = new FormData();
+                $.each(dataFeaturesViewModel, function (i, val) {
+                    data.append('OrderItemsReturnedDtos[' + i + '].Id', val.Id);
+                    data.append('OrderItemsReturnedDtos[' + i + '].ReturneOrderItemStatus', val.ReturneOrderItemStatus);
+                });
+                console.log("dataFeaturesViewModel :", dataFeaturesViewModel);
+                console.log("data 111 :", data);
                 bootprompt.confirm({
                     title: "مرجوعی کالا به فروشگاه",
                     message: "آیا از انتخاب خود اطمینان دارید؟؟؟",
@@ -524,7 +544,7 @@
                     },
                     callback: (result) => {
                         if (result == true) {
-                            var data = new FormData();
+                           
                              data.append("ReturnedId", @(Model.ReturnedId));
                             $.ajax({
                                 type: "POST",

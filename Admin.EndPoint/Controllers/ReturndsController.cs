@@ -54,7 +54,7 @@ namespace Admin.EndPoint.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult ReturnedPostToShop(int ReturnedId)
+        public IActionResult ReturnedPostToShop(ResiveOrderItemsReturnedDto data)
         {
           
             return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });

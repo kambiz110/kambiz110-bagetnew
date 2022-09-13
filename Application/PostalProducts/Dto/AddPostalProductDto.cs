@@ -29,6 +29,18 @@ namespace Application.PostalProducts.Dto
         public string PostOfficeName { get; set; }
         public DateTime? InsertDate { get; set; }
     }
+    
+    public class ResiveOrderItemsReturnedDto
+    {
+         public int ReturnedId { get; set; }
+        public List<OrderItemsReturnedDto> OrderItemsReturnedDtos { get; set; }
+    }
+    public class OrderItemsReturnedDto {
+      public int Id { get; set; }
+        public int ReturneOrderItemStatus { get; set; }
+        
+                   
+    }
     public enum PostalCompany
     {
         /// <summary>
