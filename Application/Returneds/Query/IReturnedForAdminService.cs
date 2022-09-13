@@ -3,6 +3,7 @@ using Application.Orders.Dto;
 using Application.PostalProducts.Dto;
 using Application.Returneds.Dto;
 using AutoMapper;
+using Domain.Order;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,11 @@ namespace Application.Returneds.Query
 {
     public interface IReturnedForAdminService
     {
+        /// <summary>
+        /// مشخص نمودن وضعیت محصول مرجوعی به فروشگاه
+        /// </summary>
+        /// <param name="dto"></param>
+       void StatusResiveReturnedToShop(ResiveOrderItemsReturnedDto dto);
         List<MyReturnedDto> GetMyReturneds(int status);
         GetReturnedDitalesForAdminDto GetAdminOrderDitales(int returnedId);
     }
@@ -35,7 +41,7 @@ namespace Application.Returneds.Query
             var returned = context.Returneds.Where(p => p.Id == returnedId)
                  .Include(p => p.ReturneOrderItems).ThenInclude(p => p.OrderItem)
                  .Include(p => p.PostProduct)
-                   .Include(p => p.Order).ThenInclude(p=>p.OrderItems)
+                   .Include(p => p.Order).ThenInclude(p=>p.OrderItems.Where(p=>(int)p.OrderItemStatus==1))
                 .FirstOrDefault();
             if (returned!=null)
             {
@@ -53,7 +59,7 @@ namespace Application.Returneds.Query
                     RecivePostDate = returned.PostProduct?.ReciveDate,
                     PostDate =returned.PostProduct?.InsertDate,
                     ReturnedStatus = returned.ReturnedStatus,
-                    OrederItems = returned.Order.OrderItems.Select(o => new OrederItemsForOrderDto
+                    OrederItems = returned.Order.OrderItems.Where(p => (int)p.OrderItemStatus == 1).Select(o => new OrederItemsForOrderDto
                     {
                         Id = o.Id,
                         CatalogItemid = o.CatalogItemId,
@@ -73,7 +79,8 @@ namespace Application.Returneds.Query
         {
             var returneds = context.Returneds.Where(p => (int)p.ReturnedStatus == status)
                 .Include(p => p.ReturneOrderItems).ThenInclude(p => p.OrderItem)
-                .OrderByDescending(p => p.Id)
+                .OrderByDescending(p => p.Id).ToList();
+                var result = returneds
                 .Select(p => new MyReturnedDto
                 {
                     Date = p.InsertTime,
@@ -87,7 +94,24 @@ namespace Application.Returneds.Query
                     ReturnedStatus = p.ReturnedStatus,
                 })
                 .ToList();
-            return returneds;
+            return result;
+        }
+
+        public void StatusResiveReturnedToShop(ResiveOrderItemsReturnedDto dto)
+        {
+            var returned = context.Returneds.Where(p => p.Id == dto.ReturnedId)
+                .Include(p => p.ReturneOrderItems).FirstOrDefault();
+            returned.ReturnedStatus = ReturnedStatus.Returned;
+            foreach (var item in dto.OrderItemsReturnedDtos)
+            {
+             var returneOrderItem =   returned.ReturneOrderItems.Where(p => p.ReturnedId == dto.ReturnedId && p.OrderItemId == item.Id).FirstOrDefault();
+                if (returneOrderItem!=null)
+                {
+                    returneOrderItem.ItemStatus = (ReturneOrderItemStatus)item.ReturneOrderItemStatus;
+                }
+            }
+            context.SaveChanges();
+     
         }
     }
 }
