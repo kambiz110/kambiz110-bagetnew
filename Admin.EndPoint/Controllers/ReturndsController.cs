@@ -75,7 +75,7 @@ namespace Admin.EndPoint.Controllers
             return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });
         }
         [HttpPost]
-        public  IActionResult ReturnPayment(AddReturnPaymentInvoiceDto dto)
+        public IActionResult ReturnPayment(AddReturnPaymentInvoiceDto dto)
         {
             ModelState.Remove("BankOrigin");
             if (!ModelState.IsValid)
@@ -88,13 +88,19 @@ namespace Admin.EndPoint.Controllers
                 var referer = HttpContext.Request.Headers["Referer"].ToString();
                 return new JsonResult(new ResultDto { IsSuccess = false, Message = "false" });
             }
-            
+
             var rootPath = _hostingEnvironment.ContentRootPath;
             var fullPath = Path.Combine(rootPath, "wwwroot/Files/BankDate/UserBankData.json");
             var jsonData = System.IO.File.ReadAllText(fullPath);
             var item = JsonConvert.DeserializeObject<List<BankDitel>>(jsonData);
             dto.BankOrigin = item.Where(p => p.BankOriginNumber == dto.BankOriginNumber).FirstOrDefault().BankOrigin;
-             returnPaymentInvoice.addDataToDb(dto);
+            returnPaymentInvoice.addDataToDb(dto);
+            return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });
+        }
+        [HttpPost]
+        public IActionResult canseleReturnProductes(canseleReturnProductesDto data)
+        {
+            returnedForAdmin.CanseleReturnProductes(data);
             return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });
         }
     }

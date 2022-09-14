@@ -40,6 +40,10 @@ namespace Domain.Order
         /// محصول سالم بود و مبلغ به مشتری بازگشت شد 
         /// </summary>
         ReturnPaymentInvoice = 4,
+        /// <summary>
+        /// تحویل پست گردید 
+        /// </summary>
+        PostGivedOrderItem =5,
 
     }
 }

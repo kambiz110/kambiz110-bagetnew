@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.ReturnPaymentInvoice.Dto
 {
-   public class AddReturnPaymentInvoiceDto
+    public class AddReturnPaymentInvoiceDto
     {
-        public int Amount { get;  set; }
+        public int Amount { get; set; }
         [Display(Name = "تاریخ و زمان واریز")]
         [Required(ErrorMessage = " {0}  را وارد نمائید ")]
         public DateTime DatePay { get; set; }
@@ -29,5 +29,9 @@ namespace Application.ReturnPaymentInvoice.Dto
         public string UserName { get; set; }
         public string BankOrigin { get; set; }
         public string BankOriginNumber { get; set; }
+    }
+    public class canseleReturnProductesDto
+    {
+        public int ReturnedId { get; set; }
     }
 }

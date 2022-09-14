@@ -54,8 +54,12 @@
                                 {
                                     <li class="contacts-block__item">
 
-                                        <a href="#" id="showformpostal" class="btn btn-primary">
-                                            مرجوعی محصول <i style="font-size:19px; color:white" class="fab fa-codepen"></i>
+                                        <a href="#" id="showformpostal" class="btn btn-primary col-11">
+                                            مرجوعی محصول <i style="font-size:10px; color:white" class="fab fa-codepen"></i>
+
+                                        </a>
+                                        <a href="#" id="canseleReturnProductes"  class="btn btn-warning col-11 mt-1">
+                                           لغو مرجوعی <i style="font-size:10px; color:white" class="fas fa-undo"></i>
 
                                         </a>
                                         <button type="submit" class="btn btn-primary" id="sendBtnReturnPost">
@@ -84,7 +88,7 @@
                                     <li class="contacts-block__item">
 
                                         <button type="submit" class="btn btn-primary" id="ReturnedPostShop">
-                                            کالا به فروشگاه مرجوع شد
+                                            تحویل، و تعیین وضعیت کالاهای مرجوعی  
 
                                         </button>
                                     </li>
@@ -114,6 +118,7 @@
                                     <th>نام محصول</th>
                                     <th>مبلغ </th>
                                     <th> تعداد</th>
+                                    <th> وضعیت</th>
                                     <th> وضعیت مرجوعی</th>
                                 }
                                 else
@@ -122,6 +127,8 @@
                                     <th>نام محصول</th>
                                     <th>مبلغ </th>
                                     <th> تعداد</th>
+                                    <th> وضعیت</th>
+
                                 }
 
 
@@ -145,12 +152,43 @@
                                         @item.Units
                                     </td>
                                     <td>
+                                        @{
+                                            var messageReturnedStatus1 = "";
+                                            switch ((int)item.ItemStatus)
+                                            {
+                                                case 0:
+                                                    messageReturnedStatus1 = "در انتظار تحویل محصول به پست";
+                                                    break;
+                                                case 1:
+                                                    messageReturnedStatus1 = "سالم دریافت شد";
+                                                    break;
+                                                case 2:
+                                                    messageReturnedStatus1 = "محصول صده دیده دریافت شد";
+
+                                                    break;
+                                                case 3:
+                                                    messageReturnedStatus1 = "محصول تعویض شده دریافت شد";
+
+                                                    break;
+                                                case 4:
+                                                    messageReturnedStatus1 = "محصول سالم بود و مبلغ به مشتری بازگشت شد";
+
+                                                    break;
+                                                case 5:
+                                                    messageReturnedStatus1 = "تحویل مامور پست شده";
+
+                                                    break;
+                                            }
+                                            <span>@messageReturnedStatus1</span>
+                                        }
+                                    </td>
+                                    <td>
 
                                         <select name="ReturneOrderItemStatus" class="ReturneOrderItemStatus">
                                             <option value="1">سالم دریافت شد</option>
                                             <option value="2">محصول صده دیده دریافت شد</option>
                                             <option value="3">محصول تعویض شده دریافت شد</option>
-                                            <option value="4">محصول سالم بود</option>
+
 
                                         </select>
 
@@ -164,6 +202,35 @@
                                     <td>
                                         @item.Units
                                     </td>
+
+                                    <td>
+                                        @{
+                                            var messageReturnedStatus = "";
+                                            switch ((int)item.ItemStatus)
+                                            {
+                                                case 0:
+                                                    messageReturnedStatus = "در انتظار تحویل محصول به پست";
+                                                    break;
+                                                case 1:
+                                                    messageReturnedStatus = "سالم دریافت شد";
+                                                    break;
+                                                case 2:
+                                                    messageReturnedStatus = "محصول صده دیده دریافت شد";
+
+                                                    break;
+                                                case 3:
+                                                    messageReturnedStatus = "محصول تعویض شده دریافت شد";
+
+                                                    break;
+                                                case 4:
+                                                    messageReturnedStatus = "محصول سالم بود و مبلغ به مشتری بازگشت شد";
+
+                                                    break;
+                                            }
+                                            <span>@messageReturnedStatus</span>
+                                        }
+                                    </td>
+
                                 }
                             </tr>
                                 }
@@ -174,7 +241,7 @@
                             }
 
                         </tbody>
-                 
+
                     </table>
                 </div>
 
@@ -304,7 +371,7 @@
                         </form>
                     </div>
                 }
-         
+
             </div>
         </div>
 
@@ -339,6 +406,7 @@
                 e.preventDefault();
                 $('div .table-responsive').hide();
 
+                $('#canseleReturnProductes').hide();
                 $('#showformpostal').hide();
                 $('#sendBtn').show();
                 $('#postalform').show();
@@ -521,7 +589,7 @@
                 var dataFeaturesViewModel = $('#default-ordering tr:gt(0)').map(function () {
                     return {
                         Id: $(this.cells[0]).text(),
-                        ReturneOrderItemStatus: $(this.cells[4]).find('option:selected').val(),
+                        ReturneOrderItemStatus: $(this.cells[5]).find('option:selected').val(),
                     };
                 }).get();
                 var data = new FormData();
@@ -544,7 +612,7 @@
                     },
                     callback: (result) => {
                         if (result == true) {
-                           
+
                              data.append("ReturnedId", @(Model.ReturnedId));
                             $.ajax({
                                 type: "POST",
@@ -567,6 +635,67 @@
                                         swal.fire(
                                             'هشدار!',
                                             "اطلاعات کامل و درست وارد نمائید دیتا ثبت نشد",
+                                            'warning'
+                                        );
+                                    }
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    alert(xhr.status);
+                                    alert(thrownError);
+                                }
+                            });
+                        }
+                        else {
+                            swal.fire(
+                                'تشکر',
+                                'درخواست لغو گردید',
+                                'warning'
+                            )
+
+                        }
+                    },
+                });
+            });
+
+            $("#canseleReturnProductes").click(function (e) {
+                e.preventDefault()
+                var data = new FormData();
+                data.append("ReturnedId", @(Model.ReturnedId));
+                  bootprompt.confirm({
+                    title: "لغو مرجوعی",
+                    message: "آیا با مشتری صحبت کرده اید؟ و از انتخاب خود اطمینان دارید؟؟؟",
+                    buttons: {
+                        cancel: {
+                            label: "<i class='fa fa-times'></i> لغو",
+                        },
+                        confirm: {
+                            label: "<i class='fa fa-check'></i> تایید",
+                        },
+                    },
+                    callback: (result) => {
+                        if (result == true) {
+
+                            data.append("retuenId", @(Model.ReturnedId));
+                            $.ajax({
+                                type: "POST",
+                                url: "/Returnds/canseleReturnProductes",
+                                contentType: false,
+                                processData: false,
+                                data: data,
+                                success: function (data) {
+                                    if (data.isSuccess == true) {
+                                        swal.fire(
+                                            'موفق!',
+                                            ' با موفقیت  مرجوعی لغو شد',
+                                            'success'
+                                        ).then(function (isConfirm) {
+                                            window.location.href = "/Returnds/index";
+                                        });
+                                    }
+                                    else {
+                                        swal.fire(
+                                            'هشدار!',
+                                            "اطلاعات کامل و درست نبود و دیتا ثبت نشد",
                                             'warning'
                                         );
                                     }

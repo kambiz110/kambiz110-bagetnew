@@ -40,7 +40,7 @@ namespace Domain.Order
         /// </summary>
         Cancelled = 3,
         /// <summary>
-        /// محصول سالم بود و مبلغ به مشتری بازگشت شد 
+        ///  مبلغ به مشتری بازگشت شد 
         /// </summary>
         ReturnPaymentInvoice = 4,
     }

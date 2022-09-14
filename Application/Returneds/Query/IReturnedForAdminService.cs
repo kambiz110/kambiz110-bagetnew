@@ -2,6 +2,7 @@
 using Application.Orders.Dto;
 using Application.PostalProducts.Dto;
 using Application.Returneds.Dto;
+using Application.ReturnPaymentInvoice.Dto;
 using AutoMapper;
 using Domain.Order;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace Application.Returneds.Query
        void StatusResiveReturnedToShop(ResiveOrderItemsReturnedDto dto);
         List<MyReturnedDto> GetMyReturneds(int status);
         GetReturnedDitalesForAdminDto GetAdminOrderDitales(int returnedId);
+       void CanseleReturnProductes (canseleReturnProductesDto data);
     }
     public class ReturnedForAdminService : IReturnedForAdminService
     {
@@ -34,6 +36,20 @@ namespace Application.Returneds.Query
             this.identityDatabase = identityDatabase;
             this.context = context;
             this.mapper = mapper;
+        }
+
+        public void CanseleReturnProductes(canseleReturnProductesDto data)
+        {
+            var returned = context.Returneds.Where(p => p.Id == data.ReturnedId)
+        .Include(p => p.ReturneOrderItems).FirstOrDefault();
+            returned.ReturnedStatus = ReturnedStatus.Returned;
+            var orderItems = context.OrderItems.Where(p => returned.ReturneOrderItems.Select(p => p.OrderItemId).Contains(p.Id)).ToList();
+            context.Returneds.Remove(returned);
+            for (int i = 0; i < orderItems.Count(); i++)
+            {
+            orderItems.ElementAt(i).OrderItemSelered();
+            }
+            context.SaveChanges();
         }
 
         public GetReturnedDitalesForAdminDto GetAdminOrderDitales(int returnedId)
@@ -65,7 +81,9 @@ namespace Application.Returneds.Query
                         CatalogItemid = o.CatalogItemId,
                         ProductName = o.ProductName,
                         UnitPrice = o.UnitPrice,
-                        Units = o.Units
+                        Units = o.Units,
+                  
+                      ItemStatus=returned.ReturneOrderItems.FirstOrDefault(p=>p.OrderItemId==o.Id).ItemStatus
 
                     }).ToList()
                    

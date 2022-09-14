@@ -191,6 +191,13 @@ namespace Domain.Order
         {
             OrderItemStatus = OrderItemStatus.Returned;
         }
+        /// <summary>
+        /// ثبت مرجوعی کالا
+        /// </summary>
+        public void OrderItemSelered()
+        {
+            OrderItemStatus = OrderItemStatus.Selered;
+        }
         //ef core
         public OrderItem()
         {

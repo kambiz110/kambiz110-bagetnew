@@ -1,4 +1,5 @@
-﻿using Application.Users.Dto;
+﻿using Application.Orders.CustomerOrdersServices;
+using Application.Users.Dto;
 using Application.Users.Query;
 using Domain.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -19,11 +20,13 @@ namespace Admin.EndPoint.Controllers
         private readonly IGetUsers getUsers;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
-        public UsersController(IGetUsers getUsers, UserManager<User> userManager, RoleManager<Role> roleManager)
+        private readonly ICustomerOrdersService customerOrdersService;
+        public UsersController(IGetUsers getUsers, UserManager<User> userManager, RoleManager<Role> roleManager, ICustomerOrdersService customerOrdersService)
         {
             this.getUsers = getUsers;
             _userManager = userManager;
             _roleManager = roleManager;
+            this.customerOrdersService = customerOrdersService;
         }
         public IActionResult Index(int pageIndex = 1, int pageSize = 10, string q = "", string search = "")
         {
@@ -107,6 +110,22 @@ namespace Admin.EndPoint.Controllers
                     FullName = user.FullName
                 };
                 return View(dto);
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        [Route("users/historyBuy/{id}")]
+        public IActionResult HistoryBuy(string id)
+        {
+            var user = _userManager.FindByIdAsync(id).Result;
+            if (user != null)
+            {
+                ViewBag.PhoneNumber = user.PhoneNumber;
+                ViewBag.username = user.FullName;
+            
+
+                var orders = customerOrdersService.GetMyOrder(user.Id);
+                return View(orders);
             }
             return RedirectToAction("Index");
         }

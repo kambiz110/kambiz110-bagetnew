@@ -1,9 +1,9 @@
 ﻿@using Application.Orders.CustomerOrdersServices;
-@using WebSite.EndPoint.Utilities
+@using Admin.EndPoint.Helper
 @model GetMyTaskeInOrderDto;
 @{
-    ViewData["Title"] = "سفارشات من";
-    Layout = "~/Views/Shared/_LayoutCustomerPanel.cshtml";
+    ViewData["Title"] = @ViewBag.username;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
 
 
@@ -11,29 +11,40 @@
     var Paid = Model.GetMyOrders.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.Paid).ToList();
     var Processing = Model.GetMyOrders.Where(p => p.PaymentStatus == Domain.Order.PaymentStatus.Paid && (p.OrderStatus == Domain.Order.OrderStatus.Processing || p.OrderStatus == Domain.Order.OrderStatus.PostOfficalDelivered)).ToList();
     var Delivered = Model.GetMyOrders.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Delivered).ToList();
-   var Returned = Model.GetMyReturneds;
+    var Returned = Model.GetMyReturneds;
     var Cancelled = Model.GetMyOrders.Where(p => p.OrderStatus == Domain.Order.OrderStatus.Cancelled).ToList();
 
 }
 
 
-<style>
-    .empty-box .message p {
-        color: #766969 !important;
-    }
-
-    .empty-box .icon i {
-        color: #766969 !important;
-    }
-
-    .table-responsive table thead {
-        background: #766969 !important;
-    }
-</style>
-
-
 
 <section class="shadow-around p-3">
+    <div class="widget-content widget-content-area col-xl-4 col-lg-6 col-md-5 col-sm-12" style="background-color: transparent !important; ">
+    
+        <div class="user-info-list">
+
+            <div class="">
+                <ul class="contacts-block list-unstyled">
+                    <li class="contacts-block__item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        @ViewBag.PhoneNumber <span>( کاربر سایت)</span>
+
+                    </li>
+
+                    <li class="contacts-block__item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <span>نام کاربر : </span>@ViewBag.username</p>
+
+                    </li>
+
+
+
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
     <div class="d-none d-sm-block">
         <ul class="nav nav-tabs" id="orders-tab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -102,7 +113,7 @@
                                         <th>تاریخ ثبت سفارش</th>
                                         <th>مبلغ کل</th>
                                         <th> وضعیت</th>
-                                        <th>عملیات پرداخت</th>
+                                        <th>عملیات </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -111,16 +122,12 @@
 
                                         <tr>
                                             <td class="order-code">@item.FollowKey</td>
-                                            <td> @item.Date.ToPersianDateStrFarsi()</td>
+                                            <td> @item.Date.ToPersianDateStrFarsiFull()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
                                             <td>در انتظار پرداخت</td>
                                             <td class="">
-                                                <a class="mr-2" asp-area="" asp-controller="Pay" asp-action="Index" asp-route-PaymentId="@item.PaymentId">
-                                                    <i class="fad fa-redo" style="font-size:23px;color:lawngreen"></i>
-                                                </a>
-                                                <a class="mr-2" href="/pay/CancelPay/@item.PaymentId">
-                                                    <i class="fa fa-close" style="font-size:29px;color:red"></i>
-                                                </a>
+
+                                                <a href="/Orders/OrderDetails/@item.PaymentId" class="btn btn-outline-primary">مشاهده</a>
                                             </td>
                                         </tr>
                                     }
@@ -164,49 +171,49 @@
                                     @foreach (var item in Processing)
                                     {
 
-                                    <tr>
-                                        <td class="order-code">@item.FollowKey</td>
-                                        <td> @item.Date.ToPersianDateStrFarsi()</td>
-                                        <td>@item.Price.ToString("n0") تومان</td>
-                                        <td>
-                                            @{
-                                                var message = "";
-                                                switch (item.OrderStatus)
-                                                {
-                                                    case Domain.Order.OrderStatus.Processing:
-                                                        message = " در حال پردازش";
-                                                        break;
-                                                
-                                                    case Domain.Order.OrderStatus.PostOfficalDelivered:
-                                                        message = "مرسوله تحویل مامور پست گردیده";
-                                                        break;
+                                        <tr>
+                                            <td class="order-code">@item.FollowKey</td>
+                                            <td> @item.Date.ToPersianDateStrFarsiFull()</td>
+                                            <td>@item.Price.ToString("n0") تومان</td>
+                                            <td>
+                                                @{
+                                                    var message = "";
+                                                    switch (item.OrderStatus)
+                                                    {
+                                                        case Domain.Order.OrderStatus.Processing:
+                                                            message = " در حال پردازش";
+                                                            break;
 
+                                                        case Domain.Order.OrderStatus.PostOfficalDelivered:
+                                                            message = "مرسوله تحویل مامور پست گردیده";
+                                                            break;
+
+                                                    }
+                                                    <span>@message</span>
                                                 }
-                                                <span>@message</span>
-                                            }
-                                        </td>
-                                        <td class="">
-                                            @*@{
+                                            </td>
+                                            <td class="">
+                                                @*@{
 
-                switch (item.OrderStatus)
-                {
-                    case Domain.Order.OrderStatus.Processing:
+                                                        switch (item.OrderStatus)
+                                                        {
+                                                            case Domain.Order.OrderStatus.Processing:
 
-                        <a href="/Customers/orders/ChangeOrederStat/@item.Id/5" class="btn btn-outline-danger">لغو کردن<i class="fa fa-trash"></i></a>
-                        break;
-                    case Domain.Order.OrderStatus.RequestReturned:
-                        <i class="fa fa-undo font-weight-bold" style="font-size:24px;color:darkgoldenrod"></i>
-                        break;
+                                                                <a href="/orders/ChangeOrederStat/@item.Id/5" class="btn btn-outline-danger">لغو کردن<i class="fa fa-trash"></i></a>
+                                                                break;
+                                                            case Domain.Order.OrderStatus.RequestReturned:
+                                                                <i class="fa fa-undo font-weight-bold" style="font-size:24px;color:darkgoldenrod"></i>
+                                                                break;
 
 
-                }
+                                                        }
 
-            }*@
-                                
-                                            <a href="/Customers/Orders/OrderDetails/@item.PaymentId" class="btn btn-outline-primary">مشاهده</a>
-                                      
-                                        </td>
-                                    </tr>
+                                                    }*@
+
+                                                <a href="/Orders/OrderDetails/@item.PaymentId" class="btn btn-outline-primary">مشاهده</a>
+
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -248,11 +255,11 @@
 
                                         <tr>
                                             <td class="order-code">@item.FollowKey</td>
-                                            <td> @item.Date.ToPersianDateStrFarsi()</td>
+                                            <td> @item.Date.ToPersianDateStrFarsiFull()</td>
                                             <td>@item.Price.ToString("n0") تومان</td>
                                             <td>تحویل داده شد</td>
                                             <td>
-                                                <a href="/Customers/Orders/OrderDetails/@item.PaymentId" class="btn btn-outline-primary">مشاهده</a>
+                                                <a href="/Orders/OrderDetails/@item.PaymentId" class="btn btn-outline-primary">مشاهده</a>
                                             </td>
                                         </tr>
                                     }
@@ -274,7 +281,7 @@
                 </div>
             </section>
         </div>
-       <div class="tab-pane fade" id="returned" role="tabpanel" aria-labelledby="returned-tab">
+        <div class="tab-pane fade" id="returned" role="tabpanel" aria-labelledby="returned-tab">
             <section class="table--order shadow-around mt-4">
                 <div class="table-responsive">
                     @{
@@ -283,7 +290,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                      
+
                                         <th>تاریخ ثبت سفارش</th>
                                         <th>مبلغ کل</th>
                                         <th> وضعیت</th>
@@ -294,43 +301,43 @@
                                     @foreach (var item in Returned)
                                     {
 
-                                    <tr>
-                                      
-                                        <td> @item.Date.ToPersianDateStrFarsi()</td>
-                                        <td>@item.Price.ToString("n0") تومان</td>
-                                        <td>
-                                            @{
-                                                var messageReturnedStatus1 = "";
-                                                switch ((int)item.ReturnedStatus)
-                                                {
-                                                    case 0:
-                                                        messageReturnedStatus1 = "در حال پردازش درخواست";
-                                                        break;
-                                                    case 1:
-                                                        messageReturnedStatus1 = "تحویل فروشگاه داده شد";
-                                                        break;
-                                                    case 2:
-                                                        messageReturnedStatus1 = "تحویل مامور پست گردید";
+                                        <tr>
 
-                                                        break;
-                                                    case 3:
-                                                        messageReturnedStatus1 = "مرجوعی با توافق با مشتری کنسل شد";
+                                            <td> @item.Date.ToPersianDateStrFarsiFull()</td>
+                                            <td>@item.Price.ToString("n0") تومان</td>
+                                            <td>
+                                                @{
+                                                    var messageReturnedStatus1 = "";
+                                                    switch ((int)item.ReturnedStatus)
+                                                    {
+                                                        case 0:
+                                                            messageReturnedStatus1 = "در حال پردازش درخواست";
+                                                            break;
+                                                        case 1:
+                                                            messageReturnedStatus1 = "تحویل فروشگاه داده شد";
+                                                            break;
+                                                        case 2:
+                                                            messageReturnedStatus1 = "تحویل مامور پست گردید";
 
-                                                        break;
-                                                    case 4:
-                                                        messageReturnedStatus1 = "محصول سالم بود و مبلغ به مشتری بازگشت شد";
+                                                            break;
+                                                        case 3:
+                                                            messageReturnedStatus1 = "مرجوعی با توافق با مشتری کنسل شد";
 
-                                                        break;
-                                                   
+                                                            break;
+                                                        case 4:
+                                                            messageReturnedStatus1 = "محصول سالم بود و مبلغ به مشتری بازگشت شد";
+
+                                                            break;
+
+                                                    }
+                                                    <span>@messageReturnedStatus1</span>
                                                 }
-                                                <span>@messageReturnedStatus1</span>
-                                            }
-                                   
-                                        </td>
-                                        <td>
-                                            <a href="/Customers/Orders/ReturneDetails/@item.ReturnedId" class="btn btn-outline-primary">مشاهده</a>
-                                        </td>
-                                    </tr>
+
+                                            </td>
+                                            <td>
+                                                <a href="/Returnds/ReturndDetails/@item.ReturnedId" class="btn btn-outline-primary">مشاهده</a>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -370,17 +377,17 @@
                                     @foreach (var item in Cancelled)
                                     {
 
-                                    <tr>
-                                        <td class="order-code">@item.FollowKey</td>
-                                        <td> @item.Date.ToPersianDateStrFarsi()</td>
-                                        <td>@item.Price.ToString("n0") تومان</td>
-                                        <td>
-                                            <span>لغو شده</span>
-                                        </td>
-                                        <td>
-                                            <a href="/Customers/Orders/OrderDetails/@item.PaymentId" class="btn btn-outline-primary">مشاهده</a>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td class="order-code">@item.FollowKey</td>
+                                            <td> @item.Date.ToPersianDateStrFarsiFull()</td>
+                                            <td>@item.Price.ToString("n0") تومان</td>
+                                            <td>
+                                                <span>لغو شده</span>
+                                            </td>
+                                            <td>
+                                                <a href="/Orders/OrderDetails/@item.PaymentId" class="btn btn-outline-primary">مشاهده</a>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -402,3 +409,4 @@
         </div>
     </div>
 </section>
+

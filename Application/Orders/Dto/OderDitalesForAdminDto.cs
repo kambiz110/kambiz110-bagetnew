@@ -28,6 +28,7 @@ namespace Application.Orders.Dto
             public string ProductName { get; set; }
             public int UnitPrice { get; set; }
             public int Units { get; set; }
+        public ReturneOrderItemStatus ItemStatus { get; set; }
 
     }
 }

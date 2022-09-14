@@ -20,6 +20,7 @@ using Application.Discounts.AddNewDiscountServices;
 using Application.Discounts.EditDiscountServices;
 using Application.Interfaces.Contexts;
 using Application.Orders.AdminOrderServices;
+using Application.Orders.CustomerOrdersServices;
 using Application.PostalProducts;
 using Application.Returneds.Query;
 using Application.ReturnPaymentInvoice.Commend;
@@ -101,6 +102,7 @@ namespace Admin.EndPoint
             services.AddTransient<ISmsServices, SmsServices>();
             services.AddTransient<IReturnedForAdminService, ReturnedForAdminService>();
             services.AddTransient<IAddReturnPaymentInvoice, AddReturnPaymentInvoice>();
+            services.AddTransient<ICustomerOrdersService, CustomerOrdersService>();
 
             #region connection String SqlServer
             services.AddScoped<IDataBaseContext, DataBaseContext>();
