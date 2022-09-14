@@ -37,7 +37,15 @@ namespace Application.Returneds.Command
                     UserId= userId,
                     OrderId = orederId,
                 };
+                Random random = new Random();
+                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                var rand = new string(Enumerable.Repeat(chars, 6)
+                     .Select(s => s[random.Next(s.Length)]).ToArray());
                 context.Returneds.Add(returned);
+                context.SaveChanges();
+                context.SaveChanges();
+                order.FollowKey = $"RYCSH-{rand}-{returned.Id}";
+                context.Returneds.Update(returned);
                 context.SaveChanges();
                 foreach (var item in order.OrderItems)
                 {

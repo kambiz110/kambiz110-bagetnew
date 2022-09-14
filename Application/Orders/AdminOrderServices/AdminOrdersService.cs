@@ -16,6 +16,7 @@ namespace Application.Orders.AdminOrderServices
     public interface IAdminOrdersService
     {
         OderDitalesForAdminDto GetAdminOrderDitales(Guid PaymentId);
+        //OderDitalesForAdminDto GetAdminOrderDitalesForPrint(Guid PaymentId);
         List<MyOrderDto> GetShopAdminOrder(string searchkey,int orderStatus);
     }
 
@@ -47,8 +48,10 @@ namespace Application.Orders.AdminOrderServices
                 {
                     postalProductDto=payment.Order.PostProduct!=null?mapper.Map<AddPostalProductDto>(payment.Order.PostProduct):new AddPostalProductDto { },
                     Address =payment.Order.Address,
-                    Amount= payment.Order.OrderItems.Sum(o => o.UnitPrice * o.Units),
+                    Amount= payment.Order.TotalPriceWithPostalDelivery(),
                     userePhoneNumber=user.PhoneNumber,
+                    usereFullname=user.FullName,
+                    FollowKey=payment.Order.FollowKey,
                     OrderId=payment.Order.Id,
                     Date=payment.Order.ZamanSabt,
                     OrderStatus=payment.Order.OrderStatus,

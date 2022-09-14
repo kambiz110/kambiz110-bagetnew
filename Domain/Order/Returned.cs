@@ -13,6 +13,7 @@ namespace Domain.Order
         public int Id { get; set; }
         public Order Order { get; set; }
         public int OrderId { get; set; }
+        public string FollowKey { get; set; }
         public string UserId { get; set; }
         public ReturnPaymentInvoice ReturnPaymentInvoice { get; set; }
         public PostProduct PostProduct { get; set; }

@@ -13,6 +13,8 @@ namespace Application.Orders.Dto
         public Guid PaymentId { get; set; }
         public int Amount { get; set; }
         public int OrderId { get; set; }
+        public string FollowKey { get; set; }
+        public string usereFullname  { get; set; }
         public string userePhoneNumber  { get; set; }
         public AddPostalProductDto postalProductDto { get;  set; }
         public Address Address { get;  set; }

@@ -82,7 +82,7 @@ namespace Application.Orders
             //حذف سبد خردید
             context.Baskets.Remove(basket);
             context.SaveChanges();
-            order.FollowKey = $"YCSH-{rand}-{order.Id}";
+            order.FollowKey = $"OYCSH-{rand}-{order.Id}";
             context.Orders.Update(order);
             context.SaveChanges();
             if (basket.AppliedDiscount != null)

@@ -16,12 +16,12 @@ namespace Admin.EndPoint.Controllers
         private readonly IAdminOrdersService adminOrdersService;
         private readonly IAddPostalProductService addPostalProduct;
 
-        public OrdersController(IAdminOrdersService adminOrdersService , IAddPostalProductService addPostalProduct)
+        public OrdersController(IAdminOrdersService adminOrdersService, IAddPostalProductService addPostalProduct)
         {
             this.adminOrdersService = adminOrdersService;
             this.addPostalProduct = addPostalProduct;
         }
-        public IActionResult Index(string searchkey="", int orderStatus=0)
+        public IActionResult Index(string searchkey = "", int orderStatus = 0)
         {
             var model = adminOrdersService.GetShopAdminOrder(searchkey, orderStatus);
             return View(model);
@@ -32,11 +32,18 @@ namespace Admin.EndPoint.Controllers
             var model = adminOrdersService.GetAdminOrderDitales(PaymentId);
             return View(model);
         }
-    [HttpPost]
-        public async Task<IActionResult>  OrderPostals(AddPostalProductDto dto)
+        [HttpPost]
+        public async Task<IActionResult> OrderPostals(AddPostalProductDto dto)
         {
             await addPostalProduct.addPostal(dto);
             return RedirectToAction("Index");
+        }
+        [Route("Orders/InvoiceOrder/{PaymentId}")]
+        [HttpGet]
+        public IActionResult InvoiceOrder(Guid PaymentId)
+        {
+            var model = adminOrdersService.GetAdminOrderDitales(PaymentId);
+            return View(model);
         }
     }
 }

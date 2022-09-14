@@ -82,6 +82,7 @@ namespace WebSite.EndPoint.Controllers
                 {
                     return NotFound();
                 }
+                TempData["paymentId"] = Id;
                 //برای چک کردن جعلی نبودن درخواست که فعلا از طرف زرین پال دارای مشکل است
                 //var verification = _payment.Verification(new DtoVerification
                 //{
@@ -128,7 +129,7 @@ namespace WebSite.EndPoint.Controllers
 
             }
             TempData["message"] = "پرداخت شما ناموفق بوده است .";
-            TempData["paymentId"] = Id;
+     
             return RedirectToAction("checkout", "basket", new { payResult = false  });
         }
         [HttpGet]
