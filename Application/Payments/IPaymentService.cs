@@ -148,6 +148,8 @@ namespace Application.Payments
         {
             var payment = context.Payments
        .Include(p => p.Order)
+       .ThenInclude(p=>p.OrderItems
+       .Where(o => o.OrderItemStatus == OrderItemStatus.Selered))
        .SingleOrDefault(p => p.Id == Id);
 
             if (payment == null)
@@ -155,7 +157,15 @@ namespace Application.Payments
 
             payment.Order.PaymentDone();
             payment.PaymentIsDone(Authority, RefId);
-
+            //کم کردن موجودی اجناس خریداری شده
+            var catalogItem = context.CatalogItems
+                .Where(p => payment.Order.OrderItems
+                .Select(o => o.CatalogItemId).Contains(p.Id))
+                .ToList();
+            for (int i = 0; i < catalogItem.Count(); i++)
+            {
+                catalogItem.ElementAt(i).AvailableStock -= payment.Order.OrderItems.Where(p=>p.CatalogItemId== catalogItem.ElementAt(i).Id).FirstOrDefault().Units;
+            }
             context.SaveChanges();
             return true;
         }

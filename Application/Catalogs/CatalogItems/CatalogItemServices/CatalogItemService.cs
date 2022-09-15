@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Application.Catalogs.CatalohItems.CatalogItemServices
 {
@@ -80,6 +81,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
                 .AsQueryable();
             if (dto!=null)
             {
+                data = data.Where(p => p.IsActive == dto.IsActive).AsQueryable();
                 if (dto.CatalogBrandId>0)
                 {
                     data = data.Where(p => p.CatalogBrandId == dto.CatalogBrandId).AsQueryable();
@@ -188,6 +190,13 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
       
             context.CatalogItemFavourites.Remove(catalogItemFavourites);
             context.SaveChanges();
+        }
+
+        public async Task ChangeAvailableItem(int id)
+        {
+            var catalogItem = context.CatalogItems.Where(p => p.Id == id).FirstOrDefault();
+            catalogItem.IsActive = !catalogItem.IsActive;
+          await  context.SaveChangesAsync();
         }
     }
 }

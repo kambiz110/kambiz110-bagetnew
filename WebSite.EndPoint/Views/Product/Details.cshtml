@@ -150,23 +150,34 @@
                                 </ul>
                             </div>
                             <div class="price_box">
-                                @if (Model.OldPrice != null)
+                                @if (Model.IsActive)
                                 {
-                                    <span class="old_price">@Model.OldPrice?.ToString("n0") تومان</span>
+                                    if (Model.OldPrice != null)
+                                    {
+                                        <span class="old_price">@Model.OldPrice?.ToString("n0") تومان</span>
+                                    }
+                                    <span class="current_price">@Model.Price.ToString("n0") تومان</span>
                                 }
-                                <span class="current_price">@Model.Price.ToString("n0") تومان</span>
+                                else
+                                {
+                                    <span class="current_price">0 تومان   <span class="text-danger">کالا ناموجود</span></span>
+                                }
+
                             </div>
                             <div class="product_desc">
                                 <p>@Html.Raw(Model.Description)  </p>
                             </div>
+                            @if (Model.IsActive)
+                            {
+                                <form asp-action="Index" asp-controller="Basket" method="post" class="product_variant quantity">
+                                    <label>تعداد</label>
+                                    <input type="hidden" value="@Model.Id" name="CatalogitemId" />
+                                    <input min="1" max="100" value="1" type="number" name="quantity">
+                                    <button class="button" type="submit">افزودن به سبد خرید</button>
 
-                            <form asp-action="Index" asp-controller="Basket" method="post" class="product_variant quantity">
-                                <label>تعداد</label>
-                                <input type="hidden" value="@Model.Id" name="CatalogitemId" />
-                                <input min="1" max="100" value="1" type="number" name="quantity">
-                                <button class="button" type="submit">افزودن به سبد خرید</button>
+                                </form>
+                            }
 
-                            </form>
 
                             <div class=" product_d_action">
                                 <ul>

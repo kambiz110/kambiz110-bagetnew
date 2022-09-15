@@ -91,6 +91,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
                 CompanyName = catalogitem.CatalogCompany.Name,
                 TypeName = catalogitem.CatalogType.Type,
                 BrrndName = catalogitem.CatalogBrand.Brand,
+                IsActive=catalogitem.IsActive,
             };
 
 
@@ -114,6 +115,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
         public string CarName { get; set; }
         public string BrrndName { get; set; }
         public string CompanyName { get; set; }
+        public bool IsActive { get; set; }
         public IEnumerable<IGrouping<string, PDPFeaturesDto>> Features { get; set; }
         public List<SimilarCatalogItemDto> SimilarCatalogs { get; set; }
 

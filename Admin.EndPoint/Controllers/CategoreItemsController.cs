@@ -163,10 +163,10 @@ namespace Admin.EndPoint.Controllers
            
             return new JsonResult(null);
         }
-        public IActionResult NotAvailableItem(int id)
+        public async Task<IActionResult> ChangeAvailableItem(int id)
         {
-           
-            return new JsonResult(null);
+           await catalogItemService.ChangeAvailableItem(id);
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult GetProduct(int id)
         {

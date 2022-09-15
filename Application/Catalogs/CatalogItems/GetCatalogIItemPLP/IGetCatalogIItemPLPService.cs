@@ -3,6 +3,7 @@ using Application.Dtos;
 using Application.Interfaces.Contexts;
 using Common;
 using Common.Useful;
+using Domain.Order;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
         public PaginatedItemsDto<CatalogPLPDto> Execute(CatlogPLPRequestDto request)
         {
             int rowCount = 0;
-            var query = context.CatalogItems.AsNoTracking()
+            var query = context.CatalogItems.Where(p => p.IsActive == true).AsNoTracking()
                 .Include(p => p.Discounts).AsNoTracking()
                 .Include(p => p.CatalogItemImages)
                 .Include(p => p.CatalogBrand)
@@ -82,8 +83,10 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
             }
             if (request.IndexSortType == 2 /*SortType.Bestselling*/)
             {
-                query = query.Include(p => p.OrderItems)
-                    .OrderByDescending(p => p.OrderItems.Count());
+                query = query.Include(p => p.OrderItems
+                .Where(o => o.OrderItemStatus == OrderItemStatus.Selered)
+                .Select(p=>p.OrderItemStatus))
+                .OrderByDescending(p => p.OrderItems.Count());
             }
 
             if (request.IndexSortType == 3 /*SortType.MostPopular*/)

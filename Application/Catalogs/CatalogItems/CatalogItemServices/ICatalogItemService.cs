@@ -11,6 +11,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
 {
     public interface ICatalogItemService
     {
+        Task ChangeAvailableItem(int id);
         List<CarDto> GetCares();
         CatalogItemListItemDto GetCatalogItem(int id);
         List<CompanyDto> GetCompanes();
@@ -66,6 +67,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
         public int AvailableStock { get; set; }
         public int RestockThreshold { get; set; }
         public int MaxStockThreshold { get; set; }
+        public bool IsActive { get; set; }
     }
     public class SearchInCategoreItemsDto
     {
@@ -73,6 +75,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
         public int CatalogBrandId { get; set; }
         public int CatologCarId { get; set; }
         public int CatalogCompanyId { get; set; }
+        public bool IsActive { get; set; }
         public string q { get; set; } = "";
     }
 }

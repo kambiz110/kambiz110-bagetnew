@@ -39,7 +39,7 @@ namespace Application.Discounts
             var data = context.Discount.AsNoTracking()
                 .Where(p => p.Importance == 3 && p.UsePercentage==true)
                  .OrderByDescending(p => p.DiscountPercentage)
-                 .Include(p => p.CatalogItems.Take(5))
+                 .Include(p => p.CatalogItems.Where(p=>p.IsActive==true).Take(5))
                 .Include(p => p.CatalogItems).ThenInclude(p => p.CatalogItemImages)
                 .Include(p => p.CatalogItems).ThenInclude(p => p.CatologCar)
                 .Include(p => p.CatalogItems).ThenInclude(p => p.CatalogBrand)
@@ -70,9 +70,9 @@ namespace Application.Discounts
             var data = context.Discount.AsNoTracking()
                 .Where(p => p.Importance == 2 && p.UsePercentage==true)
                  .OrderByDescending(p => p.DiscountPercentage)
-                .Include(p => p.CatalogItems).ThenInclude(p => p.CatalogItemImages)
-                .Include(p => p.CatalogItems).ThenInclude(p => p.CatologCar)
-                .Include(p => p.CatalogItems).ThenInclude(p => p.CatalogBrand)
+                .Include(p => p.CatalogItems.Where(p => p.IsActive == true)).ThenInclude(p => p.CatalogItemImages)
+                .Include(p => p.CatalogItems.Where(p => p.IsActive == true)).ThenInclude(p => p.CatologCar)
+                .Include(p => p.CatalogItems.Where(p => p.IsActive == true)).ThenInclude(p => p.CatalogBrand)
             .AsQueryable();
             var result = mapper.ProjectTo<GetDiscountInHomePageViewModel>(data).FirstOrDefault();
             var catlogcount = result.catalogItems.Count();

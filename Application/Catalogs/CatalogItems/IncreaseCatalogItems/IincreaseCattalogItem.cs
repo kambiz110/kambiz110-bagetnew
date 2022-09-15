@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.Catalogs.CatalogItems.IncreaseCatalogItems
 {
+    /// <summary>
+    /// افزایش موجودی در انبار
+    /// </summary>
    public interface IincreaseCattalogItem
     {
         bool addStock(int id, int count);

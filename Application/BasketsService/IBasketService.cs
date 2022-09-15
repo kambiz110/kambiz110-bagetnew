@@ -48,7 +48,7 @@ namespace Application.BasketsService
             if (basket == null)
                 throw new Exception("");
 
-            var catalog = context.CatalogItems.AsNoTracking().Where(p=>p.Id==catalogItemId).Include(p=>p.Discounts).FirstOrDefault();
+            var catalog = context.CatalogItems.AsNoTracking().Where(p=>p.Id== catalogItemId && p.IsActive == true).Include(p=>p.Discounts).FirstOrDefault();
             basket.AddItem(catalogItemId, quantity, catalog.Price);
 
             context.SaveChanges();

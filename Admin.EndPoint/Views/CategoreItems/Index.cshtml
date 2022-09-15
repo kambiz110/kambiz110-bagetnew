@@ -48,7 +48,12 @@
                             <select class="form-control basic-single" id="CatalogTypeId" name="CatalogTypeId" asp-for="@productes.CatalogTypeId" asp-items="(IEnumerable<SelectListItem>)@ViewData["Categories"] ">
                                 <option value="0"> انتخاب دسته بندی</option>
                             </select>
+                            <select name="IsActive" class="form-control basic-single">
+                                <option > انتخاب وضعیت</option>
+                                <option value="1">موجود</option>
+                                <option value="0">ناموجود</option>
 
+                            </select>
                             <input type="text" name="q" class="form-control float-right" placeholder="جستجو">
 
                             <button type="submit" class="btn btn-primary">جستجو</button>
@@ -94,6 +99,7 @@
                                                         <th class="sorting_asc">موجودی </th>
                                                         <th class="sorting_asc"> حداقل انبار </th>
                                                         <th class="sorting_asc"> حداکثر انبار </th>
+                                                        <th class="sorting_asc"> وضعیت</th>
                                                         <th class="sorting_asc"> عملیات</th>
                                                     </tr>
                                                 </thead>
@@ -111,6 +117,20 @@
                                                             <td>@item.RestockThreshold</td>
                                                             <td>@item.MaxStockThreshold</td>
                                                             <td>
+                                                              
+
+                                                                @{
+                                                                    if (item.IsActive)
+                                                                    {
+                                                                        <span>موجود</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span style="color:red;">نا موجود</span>
+                                                                    }
+                                                                }
+                                                            </td>
+                                                            <td>
 
                                                                 @*<a asp-action="EditCatalogItem" asp-controller="CategoreItems" asp-route-id="@item.Id" class="btn btn-warning ml-1 mr-1">ویرایش</a>
                                                                     <a class="btn btn-danger">حذف</a>
@@ -124,7 +144,9 @@
                                                                         <a class="dropdown-item" asp-action="EditCatalogItem" asp-controller="CategoreItems" asp-route-id="@item.Id">ویرایش</a>
                                                                         <a class="dropdown-item" asp-action="AddCatalogItemToStoreroom" asp-controller="CategoreItems" asp-route-id="@item.Id" data-toggle="modal" data-target="#exampleModal" onclick="return sendDataToModal(event ,@(item.Id))"> افزایش موجودی</a>
                                                                         <a class="dropdown-item" asp-action="HistorieCatalogItemToStoreroom" asp-controller="CategoreItems" asp-route-id="@item.Id">سوابق انبار</a>
-                                                                        <a class="dropdown-item" asp-action="NotAvailableItem" asp-controller="CategoreItems" asp-route-id="@item.Id"> ناموجود کردن</a>
+                                                                        <a class="dropdown-item" asp-action="ChangeAvailableItem" asp-controller="CategoreItems" asp-route-id="@item.Id">
+                                                                            @(item.IsActive? " ناموجود کردن" : " موجود کردن")
+                                                                        </a>
 
                                                                     </div>
                                                                 </div>
@@ -283,7 +305,7 @@
             $.post('/CategoreItems/AddCatalogItemToStoreroom', { id: $('#hidden_id').val(), count: $('#catalogItemCount').val() }, function (response) {
                 swal.fire(
                     response,
-                     "",
+                    "",
                     'success'
                 );
                 $('#exampleModal').modal('toggle');
@@ -294,7 +316,7 @@
 
         function myFunction(myObject) {
             w3.displayObject("id01", myObject);
-           
+
         }
         function sendDataToModal(e, a) {
             w3.getHttpObject("/CategoreItems/GetProduct/" + a, myFunction);
