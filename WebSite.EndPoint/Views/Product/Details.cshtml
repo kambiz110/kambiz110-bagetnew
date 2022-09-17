@@ -1,5 +1,7 @@
 ﻿@using Application.Catalogs.CatalogItems.GetCatalogItemPDP;
 @model CatalogItemPDPDto;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, DNTCaptcha.Core
 
 @{
     ViewData["Title"] = Model.Name;
@@ -67,7 +69,37 @@ seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.Fe
     </div>
 </div>
 <!--breadcrumbs area end-->
+<div id="alertPanel">
 
+    @if (TempData["errorcomment"] != null)
+    {
+        var errors = TempData["errorcomment"] as IEnumerable<string>;
+        @if (errors != null)
+        {
+
+            <div class=" alert alert-danger">
+                <span class="h4">برای ثبت نظر خود باید فیلد های ذکر شده زیر را تکمیل کنید.</span><br />
+                <ul>
+                    @foreach (var item in errors)
+                    {
+                        <li class="h5">@item</li>
+
+                    }
+                </ul>
+            </div>
+
+
+        }
+
+
+    }
+    @if (TempData["Successcomment"] != null)
+    {
+        <div class=" alert alert-success">
+            <span class="h4"> @TempData["Successcomment"].ToString() </span>
+        </div>
+    }
+</div>
 <div class="product_page_bg">
     <div class="container">
         <!--product details start-->
@@ -218,7 +250,7 @@ seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.Fe
                                     <a data-bs-toggle="tab" href="#sheet" role="tab" aria-controls="sheet" aria-selected="false">مشخصات</a>
                                 </li>
                                 <li>
-                                    <a data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false"> نظرات (1)</a>
+                                    <a data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false"> نظرات </a>
                                 </li>
                             </ul>
                         </div>
@@ -281,6 +313,7 @@ seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.Fe
                                         </div>
 
                                     </div>
+                                    @(await Component.InvokeAsync("GetComment", new { postId = Model.Id }))
                                     <div class="comment_title">
                                         <h2>افزودن نظر</h2>
                                         <p> آدرس ایمیل شما منتشر نخواهد شد. فیلدهای الزامی علامت گذاری شده اند </p>
@@ -288,31 +321,84 @@ seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.Fe
                                     <div class="product_rating mb-10">
                                         <h3>امتیاز شما</h3>
                                         <ul>
-                                            <li><i class="fa fa-star" aria-hidden = "true"  style="font-size:34px"  id="st1"></i></li>
-                                            <li><i class="fa fa-star" aria-hidden = "true"  style="font-size:34px"  id="st2"></i></li>
-                                            <li><i class="fa fa-star" aria-hidden = "true" style="font-size:34px"  id="st3"></i></li>
-                                            <li><i class="fa fa-star" aria-hidden = "true" style="font-size:34px"  id="st4"></i></li>
-                                            <li><i class="fa fa-star" aria-hidden = "true" style="font-size:34px"  id="st5"></i></li>
+                                            <li><i class="fa fa-star" aria-hidden="true" style="font-size:34px" id="st1"></i></li>
+                                            <li><i class="fa fa-star" aria-hidden="true" style="font-size:34px" id="st2"></i></li>
+                                            <li><i class="fa fa-star" aria-hidden="true" style="font-size:34px" id="st3"></i></li>
+                                            <li><i class="fa fa-star" aria-hidden="true" style="font-size:34px" id="st4"></i></li>
+                                            <li><i class="fa fa-star" aria-hidden="true" style="font-size:34px" id="st5"></i></li>
                                         </ul>
                                     </div>
                                     <div class="product_review_form">
-                                        <form action="#">
+                                        <form id="FormPostComment" role="form" asp-action="AddComment" method="post">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="ParentId" value="" />
+                                            <input type="hidden" name="PostId" value="@Model.Id" />
+
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <label for="review_comment">نظر شما </label>
-                                                    <textarea name="comment" id="review_comment"></textarea>
+                                                    <label for="Message">نظر شما </label>
+                                                    <textarea name="Message" id="Message"></textarea>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6">
-                                                    <label for="author">نام</label>
-                                                    <input id="author" type="text">
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
 
-                                                </div>
+
+                                                    var username = User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value.ToString();
+
+                                                    <div class="col-lg-6 col-md-6">
+                                                        <label for="author">نام</label>
+                                                        <input name="Name" id="Name" value="@username" type="text">
+
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="form-group">
+                                                        <input class="form-control required-field" name="Name" id="Name" placeholder="نام" type="text" required>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6">
+                                                        <label for="author">نام</label>
+                                                        <input name="Name" id="Name" placeholder="نام" type="text">
+
+                                                    </div>
+                                                }
+
+
+
+
+
                                                 <div class="col-lg-6 col-md-6">
                                                     <label for="email">ایمیل</label>
                                                     <input id="email" type="text">
                                                 </div>
                                             </div>
-                                            <button type="submit">ارسال</button>
+                                            <div class="col-lg-6 col-md-6 mt-2">
+                                                <div class="form-group">
+                                                    <label>عبارت را محاسبه و وارد نمائید</label>
+                                                    <dnt-captcha asp-captcha-generator-max="999"
+                                                                 class="input-group"
+                                                                 asp-captcha-generator-min="110"
+                                                                 asp-captcha-generator-language="Persian"
+                                                                 asp-captcha-generator-display-mode="NumberToWord"
+                                                                 asp-use-relative-urls="true"
+                                                                 asp-validation-error-message="عبارت را محاسبه و وارد نمائید"
+                                                                 asp-font-name="Tahoma"
+                                                                 asp-font-size="16"
+                                                                 asp-fore-color="#333333"
+                                                                 asp-back-color="#F7F9B8"
+                                                                 asp-text-box-class="form-control"
+                                                                 asp-text-box-template="<div class='ml-auto'>{0}</div>"
+                                                                 asp-validation-message-class="text-danger"
+                                                                 asp-refresh-button-class="fas fa-redo btn-sm d-none"
+                                                                 asp-use-noise="false"
+                                                                 asp-dir="rtl" />
+                                                </div>
+                                            </div>
+
+                                            @*<button type="submit">ارسال</button>*@
+                                            <div class="clearfix">
+                                                <button class="comments-btn btn btn-primary" type="submit">ارسال دیدگاه</button>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -465,6 +551,27 @@ seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.Fe
 {
     <link rel="stylesheet" href="~/Theme/assets/css/plugins/swiper.min.css">
     <script src="~/Theme/assets/js/plugins/swiper.min.js"></script>
+    <script>
+        const myTimeout = setTimeout(myGreeting, 5000);
+
+        function myGreeting() {
+            $("#alertPanel").fadeOut(3000);
+        }
+
+        function setParentId(parentid) {
+            $("#FormPostComment input[name*='ParentId']").val(parentid);
+            $("#message").focus();
+        }
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("button").click(function () {
+                $(this).next().fadeToggle(1000);
+                $(this).find('>:first-child').toggleClass('fa-plus-circle fa-minus-circle')
+            });
+        });
+    </script>
     <script>
         $(document).ready(function () {
             $("#st1").click(function () {

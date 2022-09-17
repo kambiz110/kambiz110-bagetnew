@@ -21,6 +21,7 @@ namespace Infrastructure.MappingProfile
                 cfg.AddProfile(new PostalProductMappingProfile());
                 cfg.AddProfile(new ReturnPaymentInvoiceProfile());
                 cfg.AddProfile(new TicketMappingProfile());
+                cfg.AddProfile(new CommentMapperProfile());
             });
         }
     }

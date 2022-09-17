@@ -1,4 +1,5 @@
 ﻿using Domain.Attributes;
+using Domain.Comments;
 using Domain.Discounts;
 using Domain.Order;
 using System.Collections.Generic;
@@ -111,6 +112,7 @@ namespace Domain.Catalogs
         public ICollection<Discount> Discounts { get; set; }
         public ICollection<CatalogItemFavourite> CatalogItemFavourites { get; set; }
         public ICollection<OrderItem>  OrderItems { get; set; }
+        public ICollection<Comment> Comments { get; set; }
 
         /// <summary>
         /// دریافت قیمت

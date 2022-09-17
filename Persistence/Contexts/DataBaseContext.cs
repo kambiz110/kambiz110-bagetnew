@@ -3,6 +3,7 @@ using Domain.Attributes;
 using Domain.Banners;
 using Domain.Baskets;
 using Domain.Catalogs;
+using Domain.Comments;
 using Domain.Discounts;
 using Domain.Nazarats;
 using Domain.Order;
@@ -55,6 +56,7 @@ namespace Persistence.Contexts
         public DbSet<ReturnedProduct> ReturnedProducts { get; set; }
         public DbSet<ReturneOrderItem> ReturneOrderItems { get; set; }
         public DbSet<ReturnPaymentInvoice> ReturnPaymentInvoices { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

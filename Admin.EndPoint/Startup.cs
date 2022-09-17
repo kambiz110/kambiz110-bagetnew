@@ -15,6 +15,8 @@ using Application.Catalogs.CatalogTypeImages;
 using Application.Catalogs.CatalogTypes;
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
+using Application.Comments.Command;
+using Application.Comments.Query;
 using Application.Discounts;
 using Application.Discounts.AddNewDiscountServices;
 using Application.Discounts.EditDiscountServices;
@@ -108,6 +110,9 @@ namespace Admin.EndPoint
             services.AddTransient<IAdminGetTickets, AdminGetTickets>();
             services.AddTransient<IGetAnswerDitels, GetAnswerDitels>();
             services.AddTransient<IAddAnswerInTicket, AddAnswerInTicket>();
+            services.AddTransient<IGetCommentForAdmin, GetCommentForAdmin>();
+            services.AddTransient<IEditStatusCommentService, EditStatusCommentService>();
+            services.AddTransient<IAnswerCommentAdmin, AnswerCommentAdmin>();
 
             #region connection String SqlServer
             services.AddScoped<IDataBaseContext, DataBaseContext>();

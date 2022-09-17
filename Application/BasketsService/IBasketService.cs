@@ -233,8 +233,28 @@ namespace Application.BasketsService
             {
                 int total = Items.Sum(p => p.UnitPrice * p.Quantity);
                 total -= DiscountAmount;
-                total+=total=60000;
-                return total;
+                var postmony = 60000;
+                if (total < 400000)
+                {
+                    postmony = 60000;
+                }
+                else if (total > 400000 && total < 600000)
+                {
+                    postmony = 50000;
+                }
+                else if (total > 600000 && total < 800000)
+                {
+                    postmony = 40000;
+                }
+                else if (total > 800000 && total < 1000000)
+                {
+                    postmony = 25000;
+                }
+                else if (total > 1000000)
+                {
+                    postmony = 0;
+                }
+                return total+ postmony;
             }
             return 0;
         }

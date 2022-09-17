@@ -8,6 +8,8 @@ using Application.Catalogs.CatalogTypes;
 using Application.Catalogs.CatalogTypes.Query;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Catalogs.GetMenuItem;
+using Application.Comments.Command;
+using Application.Comments.Query;
 using Application.Discounts;
 using Application.HomePageService;
 using Application.Interfaces.Contexts;
@@ -128,6 +130,8 @@ namespace WebSite.EndPoint
             services.AddTransient<IReturnedForCustomerService, ReturnedForCustomerService>();
             services.AddTransient<IAddTicketService, AddTicketService>();
             services.AddTransient<ICustomerGetTickets, CustomerGetTickets>();
+            services.AddTransient<IAddCommentService, AddCommentService>();
+            services.AddTransient<IGetCommentForView, GetCommentForView>();
             services.AddScoped<SaveVisitorFilter>();
 
             services.AddSignalR();

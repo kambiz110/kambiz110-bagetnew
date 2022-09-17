@@ -141,15 +141,23 @@ namespace Domain.Order
                 totalPrice -= AppliedDiscount.GetDiscountAmount(totalPrice);
             }
             var postmony =60000;
-            if (totalPrice<400000)
+            if (totalPrice < 400000)
             {
                 postmony = 60000;
             }
-            else if(totalPrice>500000 && totalPrice<751000)
+            else if (totalPrice > 400000 && totalPrice < 600000)
+            {
+                postmony = 50000;
+            }
+            else if (totalPrice > 600000 && totalPrice < 800000)
             {
                 postmony = 40000;
             }
-            else if(totalPrice>1000000)
+            else if (totalPrice > 800000 && totalPrice < 1000000)
+            {
+                postmony = 25000;
+            }
+            else if (totalPrice > 1000000)
             {
                 postmony = 0;
             }
