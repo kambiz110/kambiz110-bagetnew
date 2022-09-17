@@ -1,0 +1,75 @@
+﻿@addTagHelper *, DNTCaptcha.Core
+@model Application.Tickets.Dto.AddTicketDto
+@{
+    ViewData["Title"] = "ثبت درخواست";
+    Layout = "~/Views/Shared/_LayoutCustomerPanel.cshtml";
+}
+
+<div class="text-center">
+    <div class="col-lg-6 col-md-12">
+        <div class="contact_message form">
+            <h3>درخواست خود را به ما بگویید</h3>
+            <form id="contact-form" method="POST" asp-action="AddTicket">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @if (ViewBag.Errors != null)
+                {
+                    <div class=" alert alert-danger">
+                        <ul>
+                            @foreach (var item in ViewBag.Errors)
+                            {
+                                <li>@item</li>
+
+                            }
+                        </ul>
+                    </div>
+
+                }
+                <input value="@ViewBag.userId" name="UserId" type="hidden" />
+                <p>
+                    <label> شماره تلفن همراه شما (اجباری)</label>
+                    <input asp-for="PhoneNumber" placeholder="شماره تماس *" type="text">
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </p>
+
+                <p>
+                    <label>  موضوع</label>
+                    <input asp-for="Title" placeholder="موضوع *" type="text">
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </p>
+                <div class="contact_textarea">
+                    <label>  پیغام شما</label>
+                    <textarea asp-for="Comment" placeholder="پیغام *" class="form-control2"></textarea>
+                    <span asp-validation-for="Comment" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>عبارت را محاسبه و وارد نمائید</label>
+                    <dnt-captcha asp-captcha-generator-max="999"
+                                 class="input-group"
+                                 asp-captcha-generator-min="110"
+                                 asp-captcha-generator-language="Persian"
+                                 asp-captcha-generator-display-mode="NumberToWord"
+                                 asp-use-relative-urls="true"
+                                 asp-validation-error-message="عبارت را محاسبه و وارد نمائید"
+                                 asp-font-name="Tahoma"
+                                 asp-font-size="16"
+                                 asp-fore-color="#333333"
+                                 asp-back-color="#F7F9B8"
+                                 asp-text-box-class="form-control"
+                                 asp-text-box-template="<div class='ml-auto'>{0}</div>"
+                                 asp-validation-message-class="text-danger"
+                                 asp-refresh-button-class="fas fa-redo btn-sm d-none"
+                                 asp-use-noise="false"
+                                 asp-dir="rtl" />
+                </div>
+                <button type="submit"> ارسال</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+@section Scripts{ 
+    @*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
+}
+

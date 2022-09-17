@@ -8,6 +8,7 @@ using Domain.Nazarats;
 using Domain.Order;
 using Domain.Payments;
 using Domain.Postals;
+using Domain.Tickets;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityConfigurations;
@@ -49,6 +50,7 @@ namespace Persistence.Contexts
         public DbSet<PostProduct> PostProducts { get; set; }
         public DbSet<SmsCode> SmsCodes { get; set; }
         public DbSet<Nazarat> Nazarats { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Returned> Returneds { get; set; }
         public DbSet<ReturnedProduct> ReturnedProducts { get; set; }
         public DbSet<ReturneOrderItem> ReturneOrderItems { get; set; }

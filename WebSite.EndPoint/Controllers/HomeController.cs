@@ -27,8 +27,9 @@ namespace WebSite.EndPoint.Controllers
 
         public IActionResult Index()
         {
-            var data = homePageService.GetData();
-            return View(data);
+            //var data = homePageService.GetData();
+            //return View(data);
+            return View();
         }
 
       

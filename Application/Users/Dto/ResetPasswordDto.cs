@@ -17,5 +17,11 @@ namespace Application.Users.Dto
         [Display(Name = "رمز عبور جدید")]
         [Required(ErrorMessage = " {0}  را وارد نمائید ")]
         public string Password { get; set; }
+
+        [Required(ErrorMessage = "تکرار پسورد را وارد نمایید")]
+        [DataType(DataType.Password)]
+        [Compare(nameof(Password), ErrorMessage = "پسورد و تکرار آن باید برابر باشد")]
+        [Display(Name = "تکرار پسورد")]
+        public string RePassword { get; set; }
     }
 }

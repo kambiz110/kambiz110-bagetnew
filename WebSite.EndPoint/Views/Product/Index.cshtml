@@ -60,7 +60,7 @@
                     <div class="">
 
                         <form id="form_select_option_sorttype" action="/product/index" method="get">
-                            <select name="IndexSortType" id="sorttype_select_option">
+                            <select name="SortType" id="sorttype_select_option">
                                 <option selected value="0">  مرتب سازی بر اساس...</option>
                                 <option value="1">  پربازدیدترین</option>
                                 <option value="2">   پرفروش‌ ترین</option>
@@ -117,15 +117,7 @@
                                                         @item.Name
                                                     </a>
                                                 </h4>
-                                                @*<div class="product_rating">
-                                                    <ul>
-                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                    </ul>
-                                                </div>*@
+                                            
                                                 <div class="price_box">
                                                     @if (item.OldPrice != null && item.OldPrice != item.Price)
                                                     {

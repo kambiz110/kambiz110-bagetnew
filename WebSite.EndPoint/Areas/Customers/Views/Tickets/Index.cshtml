@@ -1,0 +1,194 @@
+﻿@using Application.Dtos;
+@using Application.Tickets.Dto;
+@model PaginatedItemsDto<GetTicketsInCustomersDto>
+@using WebSite.EndPoint.Utilities
+@{
+    ViewData["Title"] = "تیکت پشتیبانی";
+    Layout = "~/Views/Shared/_LayoutCustomerPanel.cshtml";
+}
+
+<div class="faq_content_area">
+    <div class="row">
+        <div class="col-12">
+            <div class="faq_content_wrapper">
+                <h4> کاربر محترم شما می توانید سوال ها و در خواست های خودر را با درج تیکت از ما پیگیری نمایید.</h4>
+                <a href="/customers/Tickets/AddTicket" class="form-control btn btn-success col-md-4 col-lg-4 col-sm-10">ثبت تیکت</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Accordion area-->
+<div class="accordion_area">
+    <div class="row">
+        <div class="col-12">
+            <div id="accordion" class="card__accordion">
+                @{
+                    if (Model != null && Model.Data != null && Model.Data.Count() > 0)
+                    {
+                        var counterr = 1;
+                        var ISshow = "";
+                        var collapsed = "";
+                        bool show = false;
+                        for (int i = 0; i < @Model.Data.Count(); i++)
+                        {
+                            if (counterr > 1)
+                            {
+                                show = false;
+                                ISshow = "";
+                                collapsed = "collapsed";
+                            }
+                            else
+                            {
+                                show = true;
+                                ISshow = "show";
+                                collapsed = "";
+                            }
+                            counterr++;
+                            var item = Model.Data.ElementAt(i);
+                            <div class="card card_dipult">
+                                <div class="card-header card_accor" id="heading_@i">
+                                    <button class="btn btn-link @collapsed" data-bs-toggle="collapse" data-bs-target="#collapse_@i"
+                                            aria-expanded="@show" aria-controls="collapse_@i">
+                                      <span>موضوع تیکت :</span>  @item.Title
+
+                                        <i class="fa fa-plus"></i>
+                                        <i class="fa fa-minus"></i>
+
+                                    </button>
+
+                                </div>
+
+                                <div id="collapse_@i" class="collapse @ISshow" aria-labelledby="heading_@i"
+                                     data-parent="#accordion">
+                                    <div class="card-body">
+                                        <div class="comments_box">
+                                            <div class="comment_list">
+                                                <div class="comment_thumb">
+
+                                                    <img src="~/users/default-user.png" width="50" height="50" alt="">
+                                                </div>
+                                                <div class="comment_content">
+                                                    <div class="comment_meta">
+                                                        <h5><a href="#"> شما</a></h5>
+                                                        <span>@item.AtInserted.ToPersianDateStrFarsiFull()</span>
+                                                    </div>
+                                                    <p>@item.Comment </p>
+                                                    <div class="comment_reply">
+                                                        <a href="#">سوال</a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="comment_list list_two">
+                                                @if (!String.IsNullOrEmpty(item.Answer))
+                                                {
+                                                    <div class="comment_thumb">
+                                                        <img src="~/users/admin.png" width="50" height="50" alt="">
+
+                                                    </div>
+                                                    <div class="comment_content">
+                                                        <div class="comment_meta">
+                                                            <h5><a href="#">کارشناس سایت</a></h5>
+                                                            <span>@item.AtAnswerDate.ToPersianDateStrFarsiFull()</span>
+                                                        </div>
+                                                        <p>@Html.Raw(item.Answer) </p>                                                    <div class="comment_reply">
+                                                            <a href="#">جواب</a>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <p>در انتظار پاسخ دهی کارشناس سایت</p>
+                                                }
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--Accordion area end-->
+<!--shop pagimnation start-->
+@{
+
+    if (Model != null && Model.Data != null && Model.Data.Count() > 0)
+    {
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        <div class="shop_toolbar t_bottom mt-1">
+            <div class="pagination">
+                <ul>
+
+                    <li class="@prevDisabled">
+
+                        @if (Model.HasPreviousPage)
+                        {
+
+                            <a href="/Customers/Tickets/Index?pageIndex=@(Model.PageIndex-1)">
+                                قبلی
+                            </a>
+
+                        }
+                        else
+                        {
+                            <a href="#">
+                                قبلی
+                            </a>
+                        }
+                    </li>
+
+                    @foreach (var item in Model.Pager.Pages)
+                    {
+                        var current = "";
+                        if (Model.PageIndex == item) { current = "current"; }
+                        else { current = ""; }
+
+                        <li class="@(current)">
+                            <a href="/Customers/Tickets/Index?pageIndex=@(item)"> @item</a>
+                        </li>
+
+                    }
+                <li class="next @nextDisabled">
+                    @if (Model.HasNextPage)
+                    {
+
+                        <a href="/Customers/Tickets/Index?pageIndex=@(Model.PageIndex+ 1)"
+                           class="">
+                            بعدی
+                        </a>
+
+                    }
+                    else
+                    {
+                        <a href="#"
+                           class="">
+                            بعدی
+                        </a>
+                    }
+
+                </li>
+
+
+
+                </ul>
+            </div>
+        </div>
+    }
+
+}
+
+<!--shop pagimnation end-->
+<!--shop wrapper end-->

@@ -76,47 +76,45 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
                 query = query.Where(p => p.AvailableStock > 0);
             }
 
-            if (request.IndexSortType == 1 /*SortType.MostVisited*/)
+            if ((int)request.SortType == 1 /*SortType.MostVisited*/)
             {
                 query = query
                     .OrderByDescending(p => p.VisitCount);
             }
-            if (request.IndexSortType == 2 /*SortType.Bestselling*/)
+            if ((int)request.SortType == 2 /*SortType.Bestselling*/)
             {
-                query = query.Include(p => p.OrderItems
-                .Where(o => o.OrderItemStatus == OrderItemStatus.Selered)
-                .Select(p=>p.OrderItemStatus))
-                .OrderByDescending(p => p.OrderItems.Count());
+                query = query
+                  .OrderByDescending(p => p.Selered);
             }
 
-            if (request.IndexSortType == 3 /*SortType.MostPopular*/)
+            if ((int)request.SortType == 3 /*SortType.MostPopular*/)
             {
                 query = query.Include(p => p.CatalogItemFavourites)
                     .OrderByDescending(p => p.CatalogItemFavourites.Count());
             }
 
 
-            if (request.IndexSortType == 4 /*SortType.newes*/)
+            if ((int)request.SortType == 4 /*SortType.newes*/)
             {
                 query = query
                     .OrderByDescending(p => p.Id);
             }
 
-            if (request.IndexSortType == 5 /*SortType.cheapest*/)
+            if ((int)request.SortType == 5 /*SortType.cheapest*/)
             {
                 query = query
                     .Include(p => p.Discounts)
                     .OrderBy(p => p.Price);
             }
 
-            if (request.IndexSortType == 6 /*SortType.mostExpensive*/)
+            if ((int)request.SortType == 6 /*SortType.mostExpensive*/)
             {
                 query = query
                     .Include(p => p.Discounts)
                     .OrderByDescending(p => p.Price);
             }
 
-            if (request.IndexSortType == 7/*SortType.mostDescounted*/)
+            if ((int)request.SortType == 7/*SortType.mostDescounted*/)
             {
                 query = query
                     .Include(p => p.Discounts)

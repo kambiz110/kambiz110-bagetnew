@@ -17,11 +17,14 @@ using Application.Payments;
 using Application.ProductListPageService;
 using Application.Returneds.Command;
 using Application.Returneds.Query;
+using Application.Tickets.Command;
+using Application.Tickets.Query;
 using Application.Users;
 using Application.Users.Command;
 using Application.Users.Token;
 using Application.Visitors.SaveVisitorInfo;
 using Application.Visitors.VisitorOnline;
+using DNTCaptcha.Core;
 using Domain.Users;
 using EndPoint.Site.Useful.Ultimite;
 using Infrastructure.IdentityConfigs;
@@ -70,7 +73,10 @@ namespace WebSite.EndPoint
                 );
             });
 
-
+            services.AddDNTCaptcha(options =>
+        options.UseCookieStorageProvider()
+       .ShowThousandsSeparators(true)
+        );
 
             #region  Connection String
             services.AddTransient<IDataBaseContext, DataBaseContext>();
@@ -120,6 +126,8 @@ namespace WebSite.EndPoint
             services.AddTransient<IGeneritTokenUser, GeneritTokenUser>();
             services.AddTransient<IReturnedOrderItemService, ReturnedOrderItemService>();
             services.AddTransient<IReturnedForCustomerService, ReturnedForCustomerService>();
+            services.AddTransient<IAddTicketService, AddTicketService>();
+            services.AddTransient<ICustomerGetTickets, CustomerGetTickets>();
             services.AddScoped<SaveVisitorFilter>();
 
             services.AddSignalR();

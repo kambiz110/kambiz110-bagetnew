@@ -132,6 +132,10 @@ namespace Admin.EndPoint.Controllers
         [HttpPost]
         public IActionResult ResetPassword(ResetPasswordDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(dto);
+            }
             var user = _userManager.FindByIdAsync(dto.Id).Result;
             user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, dto.Password);
             var result = _userManager.UpdateAsync(user).Result;

@@ -6,6 +6,7 @@ using Domain.Nazarats;
 using Domain.Order;
 using Domain.Payments;
 using Domain.Postals;
+using Domain.Tickets;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -42,6 +43,7 @@ namespace Application.Interfaces.Contexts
         DbSet<PostProduct> PostProducts { get; set; }
         DbSet<SmsCode> SmsCodes { get; set; }
         DbSet<Nazarat> Nazarats { get; set; }
+        DbSet<Ticket> Tickets { get; set; }
         DbSet<Returned> Returneds { get; set; }
         DbSet<ReturnedProduct> ReturnedProducts { get; set; }
         DbSet<ReturneOrderItem> ReturneOrderItems { get; set; }

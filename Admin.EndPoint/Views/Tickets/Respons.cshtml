@@ -1,0 +1,67 @@
+﻿@model Application.Tickets.Dto.AddAnswerDto
+@{
+    ViewData["Title"] = "پاسخ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-9 col-sm-12">
+        <form asp-action="Respons">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden" />
+            <input asp-for="FullName" type="hidden" />
+            <input asp-for="Comment" type="hidden" />
+            <input asp-for="PhoneNumber" type="hidden" />
+            <input asp-for="Title" type="hidden" />
+            <input name="AnswerUserId" value="@ViewBag.AnsweruserId" type="hidden" />
+            <div class="w3-card-4 w3-light-blue w3-round-large" style="text-align:right !important">
+                <div class="w3-container w3-xxlarge">
+                    <span class="">سوال کاربر @Model.FullName </span>| <span> با شماره تماس : @Model.PhoneNumber</span>
+
+                    <div class="w3-panel w3-rightbar">
+                        <p>
+                            <i class="fa fa-quote-right w3-xxlarge"></i><br>
+                            <i class="w3-serif w3-xlarge">
+                                @(Model.Comment)
+                            </i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="w3-card-4 w3-light-gray w3-round-large mt-4" style="text-align:right !important">
+                <div class="w3-container">
+                    <label asp-for="Answer" class="control-label w3-xxlarge"></label>
+                    <textarea asp-for="Answer" class="form-control"></textarea>
+                    <span asp-validation-for="Answer" class="text-danger"></span>
+
+
+                </div>
+            </div>
+
+            <div class="form-group mt-4 col-6 w3-round-xxlarge" style="text-align:center !important">
+
+                <button type="submit" style="font-size:24px" class="w3-button w3-teal w3-xlarge w3-round-xxlarge">ذخیره <i class="fa fa-save mr-2"></i></button>
+                <a asp-action="Index" class="w3-button w3-lime w3-xlarge w3-round-xxlarge mr-2"> <span>بازگشت</span><i class="fa fa-reply mr-2" style="font-size:20px;color:red"></i></a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Styles{
+    <link href="~/lib/trumbowyg-2_25_1/ui/trumbowyg.css" rel="stylesheet" />
+    <link href="~/lib/W3/W3.CSS" rel="stylesheet" />
+}
+@section Scripts{
+    <script src="~/lib/W3/w3.js"></script>
+    <script src="~/lib/trumbowyg-2_25_1/trumbowyg.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Answer').trumbowyg();
+        });
+
+    </script>
+
+}
+

@@ -1,0 +1,275 @@
+﻿@using Application.Tickets.Dto;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model GetTicketAdminWithPager
+@addTagHelper *, LazZiya.TagHelpers
+@using Admin.EndPoint.Helper
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "تیکت ها";
+}
+
+<h1>تیکت کاربران </h1>
+<div class="layout-px-spacing">
+    <div class="row">
+        <nav class="navbar-expand-sm col-sm-12 col-md-5 col-lg-5">
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <form id="edit_form" asp-action="Edit">
+                        <button type="submit" class="btn btn-default btn-change-state" data-action="Edit">
+                            ویرایش و پاسخ <i class="nav-icon fa fa-edit"></i>
+                        </button>
+                    </form>
+                </li>
+
+
+                <li class="nav-item">
+                    <form id="edit_form" asp-action="Respons">
+                        <button type="submit" class="btn btn-default btn-change-state" data-action="Respons">
+                            پاسخ <i class="nav-icon fa fa-reply"></i>
+                        </button>
+                    </form>
+                </li>
+
+                <li class="nav-item">
+                    <form id="publish_form" asp-action="index">
+                        <button type="submit" class="btn btn-default btn-change-state" data-action="index" data-stat="false">
+                            بی پاسخ ها <i class="nav-icon fa fa-times-circle"></i>
+                        </button>
+                    </form>
+                </li>
+
+
+                <li class="nav-item">
+                    <form id="unpublish_form" asp-action="index">
+                        <button type="submit" class="btn btn-default btn-change-state" data-action="index" data-stat="true">
+                            جواب داده شده <i class="nav-icon fa fa fa-check"></i>
+                        </button>
+                    </form>
+                </li>
+
+
+
+            </ul>
+        </nav>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="row">
+                <form asp-action="Index" method="get">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control float-right" placeholder="جستجو">
+               
+
+                        @foreach (var queryString in Context.Request.Query.Where(p => p.Key == "stat").ToList())
+                        {
+                            foreach (var item in queryString.Value)
+                            {
+                                <input type="hidden" name="@queryString.Key" value="@item" />
+                            }
+                        }
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">جستجو</button>
+                    </div>
+                </form>
+
+
+
+
+                <form asp-action="Index" method="post" class="ml-1">
+                    <div class="input-group">
+                        <button type="submit" name="search" value="clear" class="btn btn-danger p-1" style="height:47px !important">
+                            پاک کن
+                        </button>
+                    </div>
+
+                </form>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div id="alertPanel"></div>
+
+    @{
+
+        if (Model != null)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            انتخاب
+                        </th>
+
+                        <th>
+                            عنوان
+                        </th>
+                        <th>
+                            شماره تماس
+                        </th>
+                        <th>
+                            نام کاربر
+                        </th>
+                        <th>
+                            تاریخ ثبت
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+
+                        if (Model.Tickets != null)
+                        {
+                            @foreach (var item in Model.Tickets)
+                            {
+                                <tr>
+                                    <td>
+                                        <input name="posts[]" type="checkbox" class="checkthis" value="@item.Id" />
+                                    </td>
+                                    <td>
+                                        <span class="ttttooltip" data-toggle="tooltip" data-placement="top" title="@item.Comment">@item.Title</span>
+                                    </td>
+
+                                    <td>
+
+                                        @item.PhoneNumber
+                                    </td>
+                                    <td>
+
+                                        @item.FullName
+                                    </td>
+                                    <td>
+
+                                        @item.AtInserted.ToPersianDateStrFarsiFull()
+                                    </td>
+
+
+
+
+                                </tr>
+                            }
+                        }
+                    }
+
+                </tbody>
+            </table>
+            <div class="card-footer">
+                @{
+                    if (Model != null && Model.PagerDto != null)
+                    {
+                        <paging page-no="@Model.PagerDto.PageNo"
+                                page-size="@Model.PagerDto.PageSize"
+                                total-records="@Model.PagerDto.TotalRecords"
+                                show-prev-next="true"
+                                show-total-pages="true"
+                                show-total-records="true"
+                                show-page-size-nav="true"
+                                show-first-numbered-page="true"
+                                show-last-numbered-page="true"
+                                query-string-key-page-no="PageNo"
+                                query-string-key-page-size="PageSize"
+                                query-string-value="@@(Request.QueryString.Value)"
+                                text-total-pages="صفحه"
+                                text-total-records="رکورد"
+                                text-first="&laquo;"
+                                text-last="&raquo;"
+                                text-previous="&lsaquo;"
+                                text-next="&rsaquo;"
+                                sr-text-first="اولین"
+                                sr-text-last="آخرین"
+                                sr-text-previous="قبلی"
+                                sr-text-next="بعدی"
+                                gap-size="2">
+                        </paging>
+                    }
+                }
+
+            </div>
+        }
+        else
+        {
+            <div class="col-12 text-center">
+                <div class="col-4 text-warning rounded bg-light h1"> NO TICKET</div>
+            </div>
+
+        }
+    }
+
+</div>
+
+
+
+@section Scripts{
+
+
+    <script>
+        $('.ttttooltip').tooltip({ boundary: 'window' })
+        $(document).on("click", "button[data-action]", function (e) {
+            e.preventDefault();
+            var stat = $(this).data("stat");
+            var linkk = $(this).data("action");
+            if (stat != null) {
+                var qs = getUrlVars();
+                var firstItem = qs[Object.keys(qs)[1]];
+     
+                if (qs != null && qs.length>0) {
+                    window.location.href = '/Tickets/' + linkk + '?stat=' + stat + '&q=' + firstItem;
+                } else {
+                    window.location.href = '/Tickets/' + linkk + '?stat=' + stat;
+                }
+               
+            
+            }
+            else {
+                var numberOfChecked = $('input:checkbox:checked');
+                var test = TestnumberOfChecked(numberOfChecked);
+                if (test) {
+
+                    //   console.log("val    : ", numberOfChecked.val());
+                  //  window.location.href = '/Tickets/' + linkk + '/' + numberOfChecked.val();
+
+                }
+            }
+
+
+        });
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+        function TestnumberOfChecked(numberOfChecked) {
+            if (numberOfChecked.length === 0 || numberOfChecked.length > 1) {
+                console.log("publish_form click", numberOfChecked);
+                var errorMessage = "لطفاً! یک تیکت را انتخاب نمایید.";
+                var alertPanelContent =
+                    `<div class="alert alert-warning alert-dismissible">
+                                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                                    ${errorMessage}
+                                                                </div>`;
+                $("#alertPanel").html(alertPanelContent);
+                $("#alertPanel").slideDown("fast");
+                window.setTimeout(function () {
+                    $("#alertPanel").slideUp(500);
+                }, 3000);
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
+    </script>
+}
+
+

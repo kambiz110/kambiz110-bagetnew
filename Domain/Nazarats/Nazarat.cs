@@ -16,7 +16,6 @@ namespace Domain.Nazarats
         public string Name { get; set; }
         public string Comment { get; set; }
         public bool IsActive { get; set; } = false;
-        public int Category { get; set; }
         public string Ip { get; set; }
         public DateTime AtInserted { get; set; }
         public DateTime? Removed { get; set; }

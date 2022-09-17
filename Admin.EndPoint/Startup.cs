@@ -25,6 +25,8 @@ using Application.PostalProducts;
 using Application.Returneds.Query;
 using Application.ReturnPaymentInvoice.Commend;
 using Application.Storerooms.Command;
+using Application.Tickets.Command;
+using Application.Tickets.Query;
 using Application.Users.Query;
 using Application.Users.Token;
 using Application.Visitors.GetTodayReport;
@@ -103,6 +105,9 @@ namespace Admin.EndPoint
             services.AddTransient<IReturnedForAdminService, ReturnedForAdminService>();
             services.AddTransient<IAddReturnPaymentInvoice, AddReturnPaymentInvoice>();
             services.AddTransient<ICustomerOrdersService, CustomerOrdersService>();
+            services.AddTransient<IAdminGetTickets, AdminGetTickets>();
+            services.AddTransient<IGetAnswerDitels, GetAnswerDitels>();
+            services.AddTransient<IAddAnswerInTicket, AddAnswerInTicket>();
 
             #region connection String SqlServer
             services.AddScoped<IDataBaseContext, DataBaseContext>();

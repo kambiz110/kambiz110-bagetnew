@@ -164,7 +164,10 @@ namespace Application.Payments
                 .ToList();
             for (int i = 0; i < catalogItem.Count(); i++)
             {
-                catalogItem.ElementAt(i).AvailableStock -= payment.Order.OrderItems.Where(p=>p.CatalogItemId== catalogItem.ElementAt(i).Id).FirstOrDefault().Units;
+                var Selered = payment.Order.OrderItems.Where(p => p.CatalogItemId == catalogItem.ElementAt(i).Id).FirstOrDefault().Units;
+                catalogItem.ElementAt(i).AvailableStock -= Selered;
+                catalogItem.ElementAt(i).Selered += Selered;
+
             }
             context.SaveChanges();
             return true;

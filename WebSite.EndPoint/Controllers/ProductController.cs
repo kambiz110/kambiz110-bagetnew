@@ -24,20 +24,6 @@ namespace WebSite.EndPoint.Controllers
         }
         public IActionResult Index(CatlogPLPRequestDto catlogPLPRequestDto)
         {
-            //if (catlogPLPRequestDto.pageIndex == 1)
-            //{
-            //    if (true)
-            //    {
-
-            //    }
-            //    //HttpContext.Session.Remove("CatlogPLP");
-            //}
-            //SessionHelper.SetObjectAsJson(HttpContext.Session, "CatlogPLP", catlogPLPRequestDto);
-
-            //CatlogPLPRequestDto CatlogPLP = SessionHelper.GetObjectFromJson<CatlogPLPRequestDto>(HttpContext.Session, "productes");
-
-            //ViewBag.IndexSortType = catlogPLPRequestDto.IndexSortType.ToString();
-            //var showResolvedFailures = HttpContext.Request.Query["CatalogTypeId"].ToList() ;
             var data = getCatalogIItemPLPService.Execute(catlogPLPRequestDto);
             return View(data);
         }
