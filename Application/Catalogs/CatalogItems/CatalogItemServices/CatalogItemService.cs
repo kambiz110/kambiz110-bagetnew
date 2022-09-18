@@ -81,7 +81,15 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
                 .AsQueryable();
             if (dto!=null)
             {
-                data = data.Where(p => p.IsActive == dto.IsActive).AsQueryable();
+              
+                if (dto.IsActive==false)
+                {
+                    data = data.Where(p => p.AvailableStock<=0 || p.IsActive==false).AsQueryable();
+                }
+                if(dto.IsActive)
+                {
+                    data = data.Where(p => p.IsActive == dto.IsActive).AsQueryable();
+                }
                 if (dto.CatalogBrandId>0)
                 {
                     data = data.Where(p => p.CatalogBrandId == dto.CatalogBrandId).AsQueryable();

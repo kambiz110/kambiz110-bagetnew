@@ -18,6 +18,8 @@ namespace Application.Orders.AdminOrderServices
         OderDitalesForAdminDto GetAdminOrderDitales(Guid PaymentId);
         //OderDitalesForAdminDto GetAdminOrderDitalesForPrint(Guid PaymentId);
         List<MyOrderDto> GetShopAdminOrder(string searchkey,int orderStatus);
+
+        Task chengeOrederStatuse(int orderId, int status);
     }
 
     public class AdminOrdersService : IAdminOrdersService
@@ -32,6 +34,31 @@ namespace Application.Orders.AdminOrderServices
             this.context = context;
             this.mapper = mapper;
             this.identityDatabase = identityDatabase;
+        }
+
+        public async Task chengeOrederStatuse(int orderId, int status)
+        {
+            var order = context.Orders.Where(p => p.Id == orderId).FirstOrDefault();
+            if (order != null)
+            {
+                switch (status)
+                {
+                    case 2:
+                        order.OrderDelivered();
+                        break;
+                    case 3:
+                        order.OrderCancelled();
+                        break;
+                    case 4:
+                        order.OrderPostOfficalDelivered();
+                        break;
+                    default:
+                        break;
+                }
+                await context.SaveChangesAsync();
+
+            }
+
         }
 
         public OderDitalesForAdminDto GetAdminOrderDitales(Guid PaymentId)

@@ -214,14 +214,16 @@
             var stat = $(this).data("stat");
             var linkk = $(this).data("action");
             if (stat != null) {
-                var qs = getUrlVars();
-                var firstItem = qs[Object.keys(qs)[1]];
+                window.location.href = '/Tickets/' + linkk + '?stat=' + stat;
+                //var qs = getUrlVars();
+                //var firstItem = qs[Object.keys(qs)[1]];
      
-                if (qs != null && qs.length>0) {
-                    window.location.href = '/Tickets/' + linkk + '?stat=' + stat + '&q=' + firstItem;
-                } else {
-                    window.location.href = '/Tickets/' + linkk + '?stat=' + stat;
-                }
+                //if (qs != null && qs.length > 0 && typeof firstItem !== "undefined") {
+                  
+                //    window.location.href = '/Tickets/' + linkk + '?stat=' + stat + '&q=' + firstItem;
+                //} else {
+                //    window.location.href = '/Tickets/' + linkk + '?stat=' + stat;
+                //}
                
             
             }

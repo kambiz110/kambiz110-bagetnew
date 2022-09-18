@@ -1,4 +1,5 @@
-﻿using Application.Orders.AdminOrderServices;
+﻿using Application.Dtos;
+using Application.Orders.AdminOrderServices;
 using Application.PostalProducts;
 using Application.PostalProducts.Dto;
 using Microsoft.AspNetCore.Authorization;
@@ -44,6 +45,12 @@ namespace Admin.EndPoint.Controllers
         {
             var model = adminOrdersService.GetAdminOrderDitales(PaymentId);
             return View(model);
+        }
+        [HttpGet]
+        public IActionResult DeliveredProductToCustomer(int OrderId)
+        {
+            adminOrdersService.chengeOrederStatuse(OrderId ,2);
+            return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });
         }
     }
 }

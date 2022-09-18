@@ -16,7 +16,7 @@ namespace Domain.Order
         public string FollowKey { get; set; }
         public string UserId { get; set; }
         public ReturnPaymentInvoice ReturnPaymentInvoice { get; set; }
-        public PostProduct PostProduct { get; set; }
+        public ReturnedProduct ReturnedProduct { get; set; }
         public ReturnedStatus ReturnedStatus { get; set; }
         public ICollection<ReturneOrderItem> ReturneOrderItems { get; set; }
         public DateTime InsertTime { get; set; } = DateTime.Now;

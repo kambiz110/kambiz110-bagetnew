@@ -56,7 +56,7 @@ namespace Application.Returneds.Query
         {
             var returned = context.Returneds.Where(p => p.Id == returnedId)
                  .Include(p => p.ReturneOrderItems).ThenInclude(p => p.OrderItem)
-                 .Include(p => p.PostProduct)
+                 .Include(p => p.ReturnedProduct)
                    .Include(p => p.Order).ThenInclude(p=>p.OrderItems.Where(p=>(int)p.OrderItemStatus==1))
                 .FirstOrDefault();
             if (returned!=null)
@@ -67,13 +67,13 @@ namespace Application.Returneds.Query
                 {
                     ReturnedId=returned.Id,
                     userePhoneNumber=user.PhoneNumber,
-                    postalProductDto = returned.Order.PostProduct != null ? mapper.Map<AddPostalProductDto>(returned.Order.PostProduct) : new AddPostalProductDto { },
+                    postalProductDto = returned.ReturnedProduct != null ? mapper.Map<AddReturnedPostalProductDto>(returned.ReturnedProduct) : new AddReturnedPostalProductDto { },
                     Address = returned.Order.Address,
                     Amount = returned.Order.OrderItems.Sum(o => o.UnitPrice * o.Units),
                     OrderId = returned.Order.Id,
                     Date = returned.InsertTime,
-                    RecivePostDate = returned.PostProduct?.ReciveDate,
-                    PostDate =returned.PostProduct?.InsertDate,
+                    RecivePostDate = returned.ReturnedProduct?.ReciveDate,
+                    PostDate =returned.ReturnedProduct?.InsertDate,
                     ReturnedStatus = returned.ReturnedStatus,
                     OrederItems = returned.Order.OrderItems.Where(p => (int)p.OrderItemStatus == 1).Select(o => new OrederItemsForOrderDto
                     {

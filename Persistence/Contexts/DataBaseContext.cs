@@ -97,6 +97,10 @@ namespace Persistence.Contexts
             builder.Entity<PostProduct>()
     .HasOne(a => a.Order)
     .WithOne(b => b.PostProduct);
+            
+            builder.Entity<ReturnedProduct>()
+    .HasOne(a => a.Returned)
+    .WithOne(b => b.ReturnedProduct);
 
 
             builder.ApplyConfiguration(new CatalogBrandEntityTypeConfiguration());

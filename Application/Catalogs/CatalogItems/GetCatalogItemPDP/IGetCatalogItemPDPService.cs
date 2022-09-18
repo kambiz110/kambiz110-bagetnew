@@ -42,6 +42,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogItemPDP
                 return null;
             }
             catalogitem.VisitCount += 1;
+            catalogitem.LastVisitDate =DateTime.Now;
             context.SaveChanges();
 
             var feature = catalogitem.CatalogItemFeatures

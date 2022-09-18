@@ -56,6 +56,15 @@ namespace Application.PostalProducts.Dto
         /// </summary>
         post_ir = 3,
 
+        /// <summary>
+        ///  اسنپ باکس
+        /// </summary>
+        Snap_Box = 4,
+        /// <summary>
+        ///  اسنپ بار
+        /// </summary>
+        Snap_Bar = 5,
+
 
     }
 }

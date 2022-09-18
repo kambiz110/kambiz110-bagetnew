@@ -15,7 +15,7 @@ namespace Application.Returneds.Dto
         public int Amount { get; set; }
         public int OrderId { get; set; }
         public string userePhoneNumber { get; set; }
-        public AddPostalProductDto postalProductDto { get; set; }
+        public AddReturnedPostalProductDto postalProductDto { get; set; }
         public Address Address { get; set; }
         public DateTime Date { get; set; }
         public DateTime? PostDate { get; set; }

@@ -13,7 +13,43 @@
 
         <!-- Content -->
         <div class="col-xl-4 col-lg-6 col-md-5 col-sm-12 layout-top-spacing">
+            @if (Model.postalProductDto != null && Model.postalProductDto.Id > 0)
+            {
+                <div class=" alert alert-success">
+                    محصول در تاریخ
+                    <span>@Model.postalProductDto.InsertDate.ToPersianDateStrFarsi()</span>
+                    توسط شرکت
+                    @{
+                        var ReturnedPostOffice = "";
+                        switch ((int)Model.postalProductDto.PostalCompane)
+                        {
+                            case 1:
+                                ReturnedPostOffice = "الوپیک";
+                                break;
+                            case 2:
+                                ReturnedPostOffice = "تیپاکس";
+                                break;
+                            case 3:
+                                ReturnedPostOffice = "پست ایران";
 
+                                break;
+
+                            case 4:
+                                ReturnedPostOffice = "اسنپ باکس";
+
+                                break;
+                            case 5:
+                                ReturnedPostOffice = "اسنپ بار";
+
+                                break;
+                        }
+                        <span>@ReturnedPostOffice</span>
+                    }
+                    باشماره پیگیری
+                    <span>@Model.postalProductDto.TrackingNumber</span>
+                    ارسال شده است
+                </div>
+            }
             <div class="user-profile layout-spacing">
                 <div class="widget-content widget-content-area">
                     <div class="d-flex justify-content-between">
@@ -58,8 +94,8 @@
                                             مرجوعی محصول <i style="font-size:10px; color:white" class="fab fa-codepen"></i>
 
                                         </a>
-                                        <a href="#" id="canseleReturnProductes"  class="btn btn-warning col-11 mt-1">
-                                           لغو مرجوعی <i style="font-size:10px; color:white" class="fas fa-undo"></i>
+                                        <a href="#" id="canseleReturnProductes" class="btn btn-warning col-11 mt-1">
+                                            لغو مرجوعی <i style="font-size:10px; color:white" class="fas fa-undo"></i>
 
                                         </a>
                                         <button type="submit" class="btn btn-primary" id="sendBtnReturnPost">
@@ -88,7 +124,7 @@
                                     <li class="contacts-block__item">
 
                                         <button type="submit" class="btn btn-primary" id="ReturnedPostShop">
-                                            تحویل، و تعیین وضعیت کالاهای مرجوعی  
+                                            تحویل، و تعیین وضعیت کالاهای مرجوعی
 
                                         </button>
                                     </li>
@@ -107,6 +143,7 @@
         </div>
 
         <div class="col-xl-8 col-lg-6 col-md-7 col-sm-12 layout-top-spacing">
+           
             <div class="widget-content widget-content-area br-6">
                 <div class="table-responsive mb-4 mt-4">
                     <table id="default-ordering" class="table table-hover" style="width:100%">
@@ -140,99 +177,99 @@
                             {
                                 foreach (var item in Model.OrederItems)
                                 {
-                            <tr>
+                                    <tr>
 
 
-                                @if ((int)Model.ReturnedStatus == 2)
-                                {
-                                    <td>@item.Id</td>
-                                    <td> @item.ProductName</td>
-                                    <td>@item.UnitPrice.ToString("n0") تومان</td>
-                                    <td>
-                                        @item.Units
-                                    </td>
-                                    <td>
-                                        @{
-                                            var messageReturnedStatus1 = "";
-                                            switch ((int)item.ItemStatus)
-                                            {
-                                                case 0:
-                                                    messageReturnedStatus1 = "در انتظار تحویل محصول به پست";
-                                                    break;
-                                                case 1:
-                                                    messageReturnedStatus1 = "سالم دریافت شد";
-                                                    break;
-                                                case 2:
-                                                    messageReturnedStatus1 = "محصول صده دیده دریافت شد";
+                                        @if ((int)Model.ReturnedStatus == 2)
+                                        {
+                                            <td>@item.Id</td>
+                                            <td> @item.ProductName</td>
+                                            <td>@item.UnitPrice.ToString("n0") تومان</td>
+                                            <td>
+                                                @item.Units
+                                            </td>
+                                            <td>
+                                                @{
+                                                    var messageReturnedStatus1 = "";
+                                                    switch ((int)item.ItemStatus)
+                                                    {
+                                                        case 0:
+                                                            messageReturnedStatus1 = "در انتظار تحویل محصول به پست";
+                                                            break;
+                                                        case 1:
+                                                            messageReturnedStatus1 = "سالم دریافت شد";
+                                                            break;
+                                                        case 2:
+                                                            messageReturnedStatus1 = "محصول صده دیده دریافت شد";
 
-                                                    break;
-                                                case 3:
-                                                    messageReturnedStatus1 = "محصول تعویض شده دریافت شد";
+                                                            break;
+                                                        case 3:
+                                                            messageReturnedStatus1 = "محصول تعویض شده دریافت شد";
 
-                                                    break;
-                                                case 4:
-                                                    messageReturnedStatus1 = "محصول سالم بود و مبلغ به مشتری بازگشت شد";
+                                                            break;
+                                                        case 4:
+                                                            messageReturnedStatus1 = "محصول سالم بود و مبلغ به مشتری بازگشت شد";
 
-                                                    break;
-                                                case 5:
-                                                    messageReturnedStatus1 = "تحویل مامور پست شده";
+                                                            break;
+                                                        case 5:
+                                                            messageReturnedStatus1 = "تحویل مامور پست شده";
 
-                                                    break;
-                                            }
-                                            <span>@messageReturnedStatus1</span>
+                                                            break;
+                                                    }
+                                                    <span>@messageReturnedStatus1</span>
+                                                }
+                                            </td>
+                                            <td>
+
+                                                <select name="ReturneOrderItemStatus" class="ReturneOrderItemStatus">
+                                                    <option value="1">سالم دریافت شد</option>
+                                                    <option value="2">محصول صده دیده دریافت شد</option>
+                                                    <option value="3">محصول تعویض شده دریافت شد</option>
+
+
+                                                </select>
+
+                                            </td>
                                         }
-                                    </td>
-                                    <td>
+                                        else
+                                        {
+                                            <td>@item.Id</td>
+                                            <td> @item.ProductName</td>
+                                            <td>@item.UnitPrice.ToString("n0") تومان</td>
+                                            <td>
+                                                @item.Units
+                                            </td>
 
-                                        <select name="ReturneOrderItemStatus" class="ReturneOrderItemStatus">
-                                            <option value="1">سالم دریافت شد</option>
-                                            <option value="2">محصول صده دیده دریافت شد</option>
-                                            <option value="3">محصول تعویض شده دریافت شد</option>
+                                            <td>
+                                                @{
+                                                    var messageReturnedStatus = "";
+                                                    switch ((int)item.ItemStatus)
+                                                    {
+                                                        case 0:
+                                                            messageReturnedStatus = "در انتظار تحویل محصول به پست";
+                                                            break;
+                                                        case 1:
+                                                            messageReturnedStatus = "سالم دریافت شد";
+                                                            break;
+                                                        case 2:
+                                                            messageReturnedStatus = "محصول صده دیده دریافت شد";
 
+                                                            break;
+                                                        case 3:
+                                                            messageReturnedStatus = "محصول تعویض شده دریافت شد";
 
-                                        </select>
+                                                            break;
+                                                        case 4:
+                                                            messageReturnedStatus = "محصول سالم بود و مبلغ به مشتری بازگشت شد";
 
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td>@item.Id</td>
-                                    <td> @item.ProductName</td>
-                                    <td>@item.UnitPrice.ToString("n0") تومان</td>
-                                    <td>
-                                        @item.Units
-                                    </td>
+                                                            break;
+                                                    }
+                                                    <span>@messageReturnedStatus</span>
+                                                }
+                                            </td>
 
-                                    <td>
-                                        @{
-                                            var messageReturnedStatus = "";
-                                            switch ((int)item.ItemStatus)
-                                            {
-                                                case 0:
-                                                    messageReturnedStatus = "در انتظار تحویل محصول به پست";
-                                                    break;
-                                                case 1:
-                                                    messageReturnedStatus = "سالم دریافت شد";
-                                                    break;
-                                                case 2:
-                                                    messageReturnedStatus = "محصول صده دیده دریافت شد";
-
-                                                    break;
-                                                case 3:
-                                                    messageReturnedStatus = "محصول تعویض شده دریافت شد";
-
-                                                    break;
-                                                case 4:
-                                                    messageReturnedStatus = "محصول سالم بود و مبلغ به مشتری بازگشت شد";
-
-                                                    break;
-                                            }
-                                            <span>@messageReturnedStatus</span>
                                         }
-                                    </td>
-
-                                }
-                            </tr>
+                                    </tr>
                                 }
                             }
                             else
@@ -375,7 +412,7 @@
             </div>
         </div>
 
-    </div>
+        </div>
 </div>
 
 @section Styles{
@@ -388,7 +425,6 @@
     <link rel="stylesheet" type="text/css" href="~/Theme/plugins/table/datatable/dt-global_style.css">
     <!-- END PAGE LEVEL STYLES -->
     <link href="~/Theme/assets/css/users/user-profile.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="~/Theme/plugins/jquery-step/jquery.steps.css">
 
 }
 @section Scripts{
@@ -396,10 +432,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="~/lib/bootprompt/bootprompt.js"></script>
     <script src="~/Sweetalert2/sweetalert2.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="~/Theme/assets/css/forms/switches.css">
     <script src="~/lib/MD_BootstrapPersianDateTimePicker-master-bs5/dist/jquery.md.bootstrap.datetimepicker.js"></script>
-    <script src="~/Theme/plugins/jquery-step/jquery.steps.min.js"></script>
-    <script src="~/Theme/plugins/jquery-step/custom-jquery.steps.js"></script>
+
     <script>
         $(document).ready(function () {
             $('#showformpostal').click(function (e) {

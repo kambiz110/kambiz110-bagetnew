@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Contexts;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220918143018_editreturn_post06_26")]
+    partial class editreturn_post06_26
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,7 +94,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 12, 39, 914, DateTimeKind.Local).AddTicks(8964));
+                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 0, 17, 307, DateTimeKind.Local).AddTicks(6659));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -128,7 +130,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 12, 39, 923, DateTimeKind.Local).AddTicks(8783));
+                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 0, 17, 318, DateTimeKind.Local).AddTicks(1878));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -171,7 +173,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 12, 39, 924, DateTimeKind.Local).AddTicks(3365));
+                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 0, 17, 318, DateTimeKind.Local).AddTicks(8497));
 
                     b.Property<bool>("IsDakely")
                         .HasColumnType("bit");
@@ -205,7 +207,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 12, 39, 924, DateTimeKind.Local).AddTicks(6832));
+                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 0, 17, 319, DateTimeKind.Local).AddTicks(4276));
 
                     b.Property<bool>("IsDakely")
                         .HasColumnType("bit");
@@ -266,7 +268,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 12, 39, 925, DateTimeKind.Local).AddTicks(2402));
+                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 0, 17, 320, DateTimeKind.Local).AddTicks(6114));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -350,7 +352,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 12, 39, 926, DateTimeKind.Local).AddTicks(1977));
+                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 0, 17, 322, DateTimeKind.Local).AddTicks(3064));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -389,7 +391,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 12, 39, 926, DateTimeKind.Local).AddTicks(5055));
+                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 0, 17, 322, DateTimeKind.Local).AddTicks(9210));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -445,7 +447,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 12, 39, 926, DateTimeKind.Local).AddTicks(8825));
+                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 0, 17, 323, DateTimeKind.Local).AddTicks(5192));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -507,7 +509,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 12, 39, 927, DateTimeKind.Local).AddTicks(3562));
+                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 0, 17, 324, DateTimeKind.Local).AddTicks(3270));
 
                     b.Property<bool>("IsDakely")
                         .HasColumnType("bit");
@@ -640,7 +642,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 12, 39, 927, DateTimeKind.Local).AddTicks(8151));
+                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 0, 17, 325, DateTimeKind.Local).AddTicks(1049));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -763,7 +765,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 12, 39, 928, DateTimeKind.Local).AddTicks(6042));
+                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 0, 17, 326, DateTimeKind.Local).AddTicks(4413));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -822,7 +824,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 12, 39, 929, DateTimeKind.Local).AddTicks(5414));
+                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 0, 17, 328, DateTimeKind.Local).AddTicks(766));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -943,7 +945,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 12, 39, 930, DateTimeKind.Local).AddTicks(166));
+                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 0, 17, 328, DateTimeKind.Local).AddTicks(8276));
 
                     b.Property<bool>("IsPay")
                         .HasColumnType("bit");
@@ -1182,7 +1184,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 12, 39, 930, DateTimeKind.Local).AddTicks(3702));
+                        .HasDefaultValue(new DateTime(2022, 9, 18, 19, 0, 17, 329, DateTimeKind.Local).AddTicks(4045));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()

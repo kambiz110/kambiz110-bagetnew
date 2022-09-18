@@ -43,8 +43,8 @@ namespace Application.Returneds.Command
                      .Select(s => s[random.Next(s.Length)]).ToArray());
                 context.Returneds.Add(returned);
                 context.SaveChanges();
-                context.SaveChanges();
-                order.FollowKey = $"RYCSH-{rand}-{returned.Id}";
+
+                returned.FollowKey = $"RYCSH-{rand}-{returned.Id}";
                 context.Returneds.Update(returned);
                 context.SaveChanges();
                 foreach (var item in order.OrderItems)

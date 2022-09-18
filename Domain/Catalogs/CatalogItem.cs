@@ -2,6 +2,7 @@
 using Domain.Comments;
 using Domain.Discounts;
 using Domain.Order;
+using System;
 using System.Collections.Generic;
 
 namespace Domain.Catalogs
@@ -107,6 +108,8 @@ namespace Domain.Catalogs
         public int RestockThreshold { get; set; }
         public int MaxStockThreshold { get; set; }
         public int VisitCount { get; set; } = 0;
+        public DateTime? LastVisitDate { get; set; } 
+        public DateTime? LastSeleredDate { get; set; } 
         public ICollection<CatalogItemFeature> CatalogItemFeatures { get; set; }
         public ICollection<CatalogItemImage> CatalogItemImages { get; set; }
         public ICollection<Discount> Discounts { get; set; }

@@ -165,8 +165,17 @@ namespace Application.Payments
             for (int i = 0; i < catalogItem.Count(); i++)
             {
                 var Selered = payment.Order.OrderItems.Where(p => p.CatalogItemId == catalogItem.ElementAt(i).Id).FirstOrDefault().Units;
-                catalogItem.ElementAt(i).AvailableStock -= Selered;
+                if (catalogItem.ElementAt(i).AvailableStock- Selered<0)
+                {
+                    catalogItem.ElementAt(i).AvailableStock =0;
+                }
+                else
+                {
+                    catalogItem.ElementAt(i).AvailableStock -= Selered;
+                }
+               
                 catalogItem.ElementAt(i).Selered += Selered;
+                catalogItem.ElementAt(i).LastSeleredDate = DateTime.Now;
 
             }
             context.SaveChanges();
