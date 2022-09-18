@@ -37,6 +37,7 @@
     <Folder Include="Connected Services\" />
     <Folder Include="Pages\CatalogFeature\" />
     <Folder Include="Pages\CatologCar\" />
+    <Folder Include="wwwroot\backend\css\" />
   </ItemGroup>
 
   <ItemGroup>

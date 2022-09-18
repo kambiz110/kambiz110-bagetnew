@@ -15,6 +15,7 @@ namespace Application.Comments.Command
    public interface IAddCommentService
     {
         ResultDto<string> Exequte(AddCommentDto dto, string userName);
+
     }
    public class AddCommentService : IAddCommentService
     {
@@ -28,7 +29,7 @@ namespace Application.Comments.Command
             _mapper = mapper;
             this.identityDatabase = identityDatabase;
         }
-
+      
         public ResultDto<string> Exequte(AddCommentDto dto, string userName)
         {
 

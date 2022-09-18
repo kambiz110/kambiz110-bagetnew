@@ -3,7 +3,8 @@
     ViewData["Title"] = "کامنت ها";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 @using Application.Comments.Dto
 @model GetCommentForAdminDto
 @addTagHelper *, LazZiya.TagHelpers
@@ -15,12 +16,12 @@
         TempData["alertClass"] ??= "warning";
         alertClass = "alert-" + TempData["alertClass"];
     }
-
+    var isConfirmComment = HttpContextAccessor.HttpContext.Session.GetString("isConfirmComment");
 }
-@section Stylesheets
+@section Styles
 {
-    <link href="~/backend/plugins/select2/select2.min.css" rel="stylesheet" />
-    <link href="~/lib/SweetAlert/sweetalert2.css" rel="stylesheet" />
+    <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
 }
 <div class="col" id="alertPanel" style="display: @(alertClass != "" ? "" : "none");">
     <div class="alert @alertClass alert-dismissible">
@@ -32,7 +33,7 @@
     </div>
 </div>
 <div class="row">
-    <nav class="navbar navbar-expand-sm submenu-nav">
+    <nav class="navbar-expand-sm">
         <ul class="navbar-nav">
 
             <li class="nav-item">
@@ -65,102 +66,88 @@
         </ul>
     </nav>
 </div>
-<div class="card-body table-responsive p-0">
-    <div class="card">
-        <div class="card-header">
 
-            <div class="row">
-                <div class="col-sm-4 col-xs-6">
-                    <form asp-action="Index" method="get">
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control float-right" placeholder="جستجو">
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-4 col-xs-6">
+                <form asp-action="Index" method="get">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control float-right" placeholder="جستجو">
 
-                            <div class="input-group-append">
-                                <span class="input-group-text"><i class="fa fa-search"></i></span>
-                            </div>
-                            <button type="submit" class="btn btn-primary">جستجو</button>
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fa fa-search"></i></span>
                         </div>
-                    </form>
-                </div>
-                <div class="col-sm-4 col-xs-6">
-                    <div class="form-group form-group-sm">
-                        <form class="form-inline" asp-action="Index" method="post">
-                            <button type="submit" name="search" value="clear" class="btn btn-default">
-                                پاک کن
-                            </button>
-                        </form>
-
+                        <button type="submit" class="btn btn-primary">جستجو</button>
                     </div>
+                </form>
+            </div>
+            <div class="col-sm-4 col-xs-6">
+                <div class="form-group form-group-sm">
+                    <form class="form-inline" asp-action="Index" method="post">
+                        <button type="submit" name="search" value="clear" class="btn btn-default">
+                            پاک کن
+                        </button>
+                    </form>
+
                 </div>
             </div>
-
         </div>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th><input type="checkbox" id="checkall" /></th>
-                    <th>وضعیت</th>
-                    <th>نام</th>
-                    <th>دیدگاه</th>
-                    <th>عنوان پست</th>
-                    <th> پاسخ دیدگاه دیگری</th>
-                    <th>پاسخ</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null && Model.comments != null)
-                {
-                    @foreach (var item in Model.comments)
+        <div class="col-sm-4 col-xs-6 mt-2">
+            <div class="form-group form-group-sm radio-button-group bg-light">
+
+                <form asp-action="Index" method="post">
+                    @if (isConfirmComment != null)
                     {
-                        <tr>
+                        <div class="form-group">
+                            <label class="control-label"> وضعیت تایید سردبیر</label>
+                            <div class="radio-button-group">
+                                <input type="radio" id="confirmPublish0" name="confirmPublish" value="0" @(isConfirmComment == "0" ? "checked" : "")>
+                                <label class="btn btn-danger" for="confirmPublish0">تایید نشده</label>
 
-                            <td>
-                                <input name="ids[]" type="checkbox" class="checkthis" value="@item.Id" />
-                            </td>
-                            <td>
-                                @if (item.Status == 0)
-                                {
-                                    <span><i class="fa fa-times-circle" style="color: red;"></i></span> }
-                                else if (item.Status == 1)
-                                {
-                                    <span><i class="fa fa-check-circle" style="color: green;"></i></span> }
-                                else if (item.Status == 2)
-                                {
-                                    <span><i class="fas fa-archive" style="color: grey;"></i></span> }
-                                else
-                                {
-                                    <span><i class="far fa-trash-alt" style="color: grey;"></i></span>}
+                                <input type="radio" id="confirmPublish1" name="confirmPublish" value="1" @(isConfirmComment == "1" ? "checked" : "")>
+                                <label class="btn btn-success" for="confirmPublish1">تایید شده</label>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <label class="control-label"> وضعیت تایید سردبیر</label>
+                            <div class="radio-button-group">
+                                <input type="radio" id="confirmPublish0" name="confirmPublish" value="0" checked>
+                                <label class="btn btn-danger" for="confirmPublish0">تایید نشده</label>
 
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td>
-                                @item.Message.ToCuteTitleWithCounter(25)
-                            </td>
-                            <td>
-                                @item.Post.Name<span class="badge badge-warning">@item.PostId</span>
-                            </td>
-                            <td>
-                                @item.ParentTitle<span class="badge badge-info">@item.ParentId</span>
-                            </td>
-                            <td name="answer" data-postid="@item.PostId" data-commentid="@item.Id">
-                                <i class="nav-icon fas fa-comments"></i>
-                            </td>
-                        </tr>
-} }
-                else
-                {
+                                <input type="radio" id="confirmPublish1" name="confirmPublish" value="1">
+                                <label class="btn btn-success" for="confirmPublish1">تایید شده</label>
+                            </div>
+                        </div>
+                    }
 
-                    <tr>
-                        <td colspan="8"><span class="badge badge-info">هیچ دیگاهی درج نگردیده است</span></td>
-                    </tr>
-}
-            </tbody>
-        </table>
+
+                    <button type="submit" name="confirmPublishClick" value="click" class="btn btn-outline-info d-inline m-2">
+                        اعمال
+                    </button>
+                </form>
+
+            </div>
+        </div>
     </div>
-
 </div>
+@if (Model != null && Model.comments.Count > 0)
+{
+    await Html.RenderPartialAsync("_PartialComment", Model);
+}
+else
+{
+    <div class="card">
+        <div class="card-body bg-warning">
+            هیچ دیدگاه تایید نشده ای وجود ندارد
+        </div>
+    </div>
+}
+
+
 <!-- /.card-body -->
 <div class="card-footer">
     @{ if (Model != null && Model.PagerDto != null)
@@ -188,76 +175,300 @@
                     sr-text-previous="قبلی"
                     sr-text-next="بعدی"
                     gap-size="2">
-            </paging> } }
+            </paging> }
+    }
 
 </div>
 
-<div id="myModal" class="w3-modal">
-    <div class="w3-modal-content">
-        <header class="w3-container w3-teal" style="align-content:center;text-align:center">
-            <span onclick="document.getElementById('myModal').style.display='none'"
-                  class="w3-button w3-display-topright">&times;</span>
-            <h2>پاسخ نظر کاربران</h2>
-        </header>
-        <form class="form" action="Answer" id="ModalForm">
-            <div class="form-group mt-2 mb-2 ml-2">
-                <input type="hidden" name="postid" />
-                <input type="hidden" name="commentid" />
-                <input type="text" class="form-control" id="answerModal" placeholder="پاسخ را وارد نمائید">
 
+
+<div id="answerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="answerModal">ثبت پاسخ برای دیدگاه کاربران</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <button type="submit" id="btn110" class="btn btn-primary m-2">ثبت</button>
-        </form>
-        <footer class="w3-container w3-teal">
-            <p>لطفا در ثبت پاسخ دقت فرمائید.</p>
-        </footer>
+            <div class="modal-body">
+                <form class="form" action="Answer" id="ModalForm">
+                    <div class="form-group mt-2 mb-2 ml-2">
+                        <input type="hidden" name="postid" />
+                        <input type="hidden" name="commentid" />
+                        <textarea type="text" cols="40" rows="5" class="form-control" id="answerModal" placeholder="پاسخ را وارد نمائید"></textarea>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="submit" id="btnAnswerModal" class="btn btn-primary m-2">ثبت</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
     </div>
 </div>
+<div id="editMessageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editMessageModal">ویرایش دیدگاه کاربران</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" action="Edit" id="editMessageModalForm">
+                    <div class="form-group mt-2 mb-2 ml-2">
+                        <input type="hidden" name="commentid" />
+                        <textarea type="text" cols="40" rows="5" class="form-control" id="messageModal" name="messageModal" placeholder="دیدگاه را وارد نمائید"></textarea>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="submit" id="btnEditMessage" class="btn btn-primary m-2">ثبت</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 @section Scripts{
-    <script src="~/backend/plugins/select2/select2.full.min.js"></script>
-    <script src="~/backend/js/pages/content-list.js"></script>
+    <script src="~/lib/select2/js/select2.js"></script>
     <link href="~/lib/W3/w3.css" rel="stylesheet" />
     <script src="~/lib/W3/w3.js"></script>
-    <script src="~/lib/SweetAlert/sweetalert2.js"></script>
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
     @{ Html.RenderPartial("_AjaxJquery"); }
     <script>
-        $("td[name|='answer']").on('click', function (e) {
-            e.preventDefault();
+        $(document).ready(function () {
+            $('.select2').select2();
 
-            document.getElementById('myModal').style.display = 'block';
+            window.setTimeout(function () {
+                $("#alertPanel").slideUp(500);
+            }, 5000);
+            //search
+            $(document).on("click", "#search_options", function (e) {
+                if ($("#option_panel").is(":hidden")) {
+                    $("#search_options i").css("transform", "rotate(-90deg)");
+                    $("#option_panel").slideDown("slow");
+                } else {
+                    $("#search_options i").css("transform", "rotate(0deg)");
+                    $("#option_panel").slideUp("slow");
+                }
+            });
+            //Edit
+            $(document).on("click", "#btn_edit_post", function (e) {
+                var numberOfChecked = $('.checkthis:checked');
 
-            var postID = $(this).data('postid');
-            var commentID = $(this).data('commentid');
-            $('#ModalForm input[name=postid]').val(postID);
-            $('#ModalForm input[name=commentid]').val(commentID);
+                if (numberOfChecked.length === 0 || numberOfChecked.length > 1) {
+                    var errorMessage = "لطفاً! یک گزینه را جهت ویرایش انتخاب نمایید.";
+                    var alertPanelContent =
+                        `<div class="alert alert-warning alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            ${errorMessage}
+                                        </div>`;
+                    $("#alertPanel").html(alertPanelContent);
+                    $("#alertPanel").slideDown("fast");
+                    window.setTimeout(function () {
+                        $("#alertPanel").slideUp(500);
+                    }, 5000);
+                    return false;
+                }
+                else {
+                    console.log("newUrl :", newUrl);
+                    console.log(" numberOfChecked.val() :", numberOfChecked.val());
+                    var newUrl = $(this).attr("href") + "/" + numberOfChecked.val();
+                    $(this).attr("href", newUrl);
+                }
+            });
+
+            $(document).on("click", ".btn-change-state", function (e) {
+                var checkedCheckBox = $('.checkthis:checked');
+                if (checkedCheckBox.length === 0) {
+                    var errorMessage = "لطفاً! یک گزینه را انتخاب نمایید.";
+                    var alertPanelContent =
+                        `<div class="alert alert-warning alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            ${errorMessage}
+                                        </div>`;
+                    $("#alertPanel").html(alertPanelContent);
+                    $("#alertPanel").slideDown("fast");
+                    window.setTimeout(function () {
+                        $("#alertPanel").slideUp(500);
+                    }, 5000);
+                    return false;
+                }
+                else {
+                    var form = $(this).parent();
+                    checkedCheckBox.each(function (i, v) {
+                        var input = $("<input>").attr({ "type": "hidden", "name": "ids[]" }).val($(this).val());
+                        form.append(input);
+                    });
+                }
+            });
+
+            $(document).on("click", "table #checkall", function (e) {
+                if ($("table #checkall").is(':checked')) {
+                    $("table .checkthis[type=checkbox]").each(function () {
+                        $(this).prop("checked", true);
+                    });
+                } else {
+                    $("table .checkthis[type=checkbox]").each(function () {
+                        $(this).prop("checked", false);
+                    });
+                }
+            });
         });
-        $("#btn110").on('click', function (e) {
-            e.preventDefault();
-            document.getElementById('myModal').style.display = 'none';
-            var answer = $("form #answerModal").val();
-            var postID= $('#ModalForm input[name=postid]').val();
-            var commentID = $('#ModalForm input[name=commentid]').val();
-            Swal.fire({
-                title: `<span class="ml-2 bg-warning p-1 rounded-lg">آیا از مقادیر انتخاب شده خود مطمئن هستید؟</span>`,
-                showDenyButton: true,
-                showCancelButton: false,
-                confirmButtonText: `ارسال`,
-                denyButtonText: `انصراف`,
-            }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    var data = {Answer:answer, Postid:postID, Commentid:commentID};
-                    $.ajax({
-                        url: '@Url.Action("Answer", "Comment")',
-                        contentType: 'application/x-www-form-urlencoded',
-                        data: data,
-                        type: "Post",
-                        success: function (result) {
-                            if (result.isSuccess) {
-                                Swal.fire(result.message, '', 'success')
-                                location.reload();
+
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+            $(document).on("click",
+                ".btn-change-state",
+                function(e) {
+                    var checkedCheckBox = $('.checkthis:checked');
+                    if (checkedCheckBox.length === 0) {
+                        var errorMessage = "لطفاً! یک گزینه را انتخاب نمایید.";
+                        var alertPanelContent =
+                            `<div class="alert alert-warning alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    ${errorMessage}
+                </div>`;
+                        $("#alertPanel").html(alertPanelContent);
+                        $("#alertPanel").slideDown("fast");
+                        window.setTimeout(function() {
+                                $("#alertPanel").slideUp(500);
+                            },
+                            5000);
+                        return false;
+                    } else {
+                        var form = $(this).parent();
+                        checkedCheckBox.each(function(i, v) {
+                            var input = $("<input>").attr({ "type": "hidden", "name": "ids[]" }).val($(this).val());
+                            form.append(input);
+                        });
+                    }
+                });
+        });
+
+        $("button.answer-comment").on('click',
+            function(e) {
+                e.preventDefault();
+                console.log("answer-comment click");
+                // document.getElementById('myModal').style.display = 'block';
+                $("#answerModal").modal("toggle");
+
+                var postID = $(this).data('postid');
+                var commentID = $(this).data('commentid');
+                $('#ModalForm input[name=postid]').val(postID);
+                $('#ModalForm input[name=commentid]').val(commentID);
+            });
+//رویداد کلیک دکمه ثبت در مدال جواب دهی به کامنت کاربر
+        $("#btnAnswerModal").on('click',
+            function(e) {
+                e.preventDefault();
+                $("#answerModal").modal("hide");
+                var answer = $("form #answerModal").val();
+                var postID = $('#ModalForm input[name=postid]').val();
+                var commentID = $('#ModalForm input[name=commentid]').val();
+                var data = { Answer: answer, Postid: postID, Commentid: commentID };
+                        $.ajax({
+                            url: '@Url.Action("Answer", "Comment")',
+                            contentType: 'application/x-www-form-urlencoded',
+                            data: data,
+                            type: "Post",
+                            success: function(result) {
+                                if (result.isSuccess) {
+                                    Swal.fire(result.message, '', 'success')
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: "پاسخ با موفقیت ثبت گردید",
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                    $("form #answerModal").val("");
+                                    $('#ModalForm input[name=postid]').val("");
+                                    $('#ModalForm input[name=commentid]').val("");
+                                    $('#tbl_comment').html(result.data);
+                                } else {
+                                    Swal.fire({
+                                        icon: 'info',
+                                        title: result.message,
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                }
+
+                            },
+                            error: function() {
+
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: 'اطلاعات و مقادیر وارد شده نادرست می باشد دقت فرمائید!!',
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                })
                             }
-                            else {
+                        });
+
+            });
+
+        //رویداد کلیک دکمه ویرایش
+        $(document).on("click",
+            "#btn_edit_post",
+            function(e) {
+                e.preventDefault();
+                var numberOfChecked = $('.checkthis:checked');
+                if (numberOfChecked.length === 0 || numberOfChecked.length > 1) {
+                    var errorMessage = "لطفاً! یک گزینه را جهت ویرایش انتخاب نمایید.";
+                    var alertPanelContent =
+                        `<div class="alert alert-warning alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    ${errorMessage}
+                </div>`;
+                    $("#alertPanel").html(alertPanelContent);
+                    $("#alertPanel").slideDown("fast");
+                    window.setTimeout(function() {
+                            $("#alertPanel").slideUp(500);
+                        },
+                        5000);
+                    return false;
+                } else {
+                    var id_comment = "0";
+                    $('#tbl_comment input:checked').each(function() {
+                        var iiiid = $(this).val();
+                        var checkedCheckBox = $('.checkthis:checked');
+                        id_comment = checkedCheckBox.val();
+                    });
+                    var checkedCheckBox = $('.checkthis:checked');
+                    console.log("FindComment :", checkedCheckBox.val());
+                    $.ajax({
+                        url: '@Url.Action("FindComment", "Comment")',
+                        contentType: 'application/x-www-form-urlencoded',
+                        data: { id: checkedCheckBox.val() },
+                        type: "Post",
+                        success: function(result) {
+                            if (result.isSuccess) {
+                                console.log(result.data);
+                                console.log(result.data);
+                                var massege = result.data.message;
+                                var commentID = result.data.id;
+                                $('#editMessageModal textarea[name=messageModal]').val(massege);
+                                $('#editMessageModal textarea[name=messageModal]').attr("value", massege);
+                                $('#editMessageModal input[name=commentid]').val(commentID);
+                                //$('#messageModal').val(result.data.message);
+                                //$('#editMessageModal input[name=commentid]').val(data.id);
+                                //  alert('success' + "/" + commentID + "/" + massege);
+
+                                $("#editMessageModal").modal("show");
+                            } else {
                                 Swal.fire({
                                     icon: 'info',
                                     title: result.message,
@@ -267,7 +478,7 @@
                             }
 
                         },
-                        error: function () {
+                        error: function() {
 
                             Swal.fire({
                                 icon: 'info',
@@ -277,14 +488,61 @@
                             })
                         }
                     });
-
-                } else if (result.isDenied) {
-                    Swal.fire('عمل  توسط شما لغو گردید', '', 'info')
                 }
-            })
+            });
+//رویداد کلیک دکمه ثبت مدال در ویرایش کامنت کاربر
+        $("#btnEditMessage").on('click',
+            function(e) {
+                e.preventDefault();
+                $("#editMessageModal").modal("toggle");
 
-        });
+                                 console.log("data edit : 2")
+                var message = $('#editMessageModal textarea[name=messageModal]').val();
+                        var postID = $('#editMessageModal input[name=commentid]').val();
+
+                        var data = { Message: message, Id: postID };
+                        console.log("data edit :", data )
+                        $.ajax({
+                            url: '@Url.Action("Edit", "Comment")',
+                            contentType: 'application/x-www-form-urlencoded',
+                            data: data,
+                            type: "Post",
+                            success: function(result) {
+                                if (result.isSuccess) {
+                                       Swal.fire({
+                                        icon: 'success',
+                                        title: "با موفقیت ویرایش شد ",
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+
+                                    $('#editMessageModal input[name=messageModal]').val("");
+                                    $('#editMessageModal input[name=commentid]').val("");
+                           
+                                    setInterval(function () { window.location.reload(); }, 3000);
+
+                                } else {
+                                    Swal.fire({
+                                        icon: 'info',
+                                        title: result.message,
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                }
+
+                            },
+                            error: function() {
+
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: 'اطلاعات و مقادیر وارد شده نادرست می باشد دقت فرمائید!!',
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                })
+                            }
+                        });
+
+            });
     </script>
-
 }
 

@@ -21,7 +21,7 @@ namespace WebSite.EndPoint.Models.ViewComponents.Comment
 
             var result = _getComment.Exequte(postId);
            
-            var viewName = $"~/Views/Shared/Components/Comment/{this.ViewComponentContext.ViewComponentDescriptor.ShortName}.cshtml";
+            var viewName = $"~/Views/Shared/Components/Comment/get110.cshtml";
             return View(viewName, result.Data);
         }
     }

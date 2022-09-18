@@ -80,7 +80,7 @@ namespace WebSite.EndPoint.Controllers
             }
 
             var result = addComment.Exequte(dto, userName);
-            TempData["Successcomment"] = "پیغام با موفقیت ثبت گردید\n پس بررسی و در صورت نداشتن محتوای غیر مجاز پیغام نمایش داده می شود.";
+            TempData["Successcomment"] = "پیغام با موفقیت ثبت گردید\n پس از بررسی و در صورت نداشتن محتوای غیر اخلاقی پیغام نمایش داده می شود.";
             var referer = HttpContext.Request.Headers["Referer"].ToString();
             return Redirect(referer);
         }

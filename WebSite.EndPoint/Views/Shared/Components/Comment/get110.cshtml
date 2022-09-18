@@ -1,0 +1,82 @@
+﻿@using Application.Comments.Dto
+@model IEnumerable<CommentViewModelDto>
+@using WebSite.EndPoint.Utilities
+
+
+
+@functions
+{
+    void RenderCommentRow(long? id)
+    {
+        foreach (var item in Model.Where(p => p.ParentId == id).ToList())
+        {
+
+<div class="comment_thumb">
+    @if (item.ParentId==null)
+    {
+        <img src="/NewThem/assets/img/blog/comment2.jpg" alt="">
+    }
+    else
+    {
+        <img src="/NewThem/assets/img/blog/comment3.png" alt="">
+    }
+
+</div>
+            <div class="comment_content">
+                <div class="comment_meta">
+                    <h5><a href="#">@item.Name</a></h5>
+                    <span>@item.CommentDate.ToPersianDateStrFarsiFull()</span>
+                </div>
+                <p>@item.Message </p>
+                <div class="comment_reply">
+                    @if (item.ParentId == null)
+                    {
+                        <a href="#">نظر</a>
+                    }
+                    else
+                    {
+                        <a href="#">کارشناس فروشگاه</a>
+                    }
+
+                </div>
+            </div>
+
+
+            @if ( Model.Where(p => p.ParentId == id).ToList().Count() > 0)
+            {
+                <div class="comment_list list_two mt-1">
+                    @{RenderCommentRow(item.Id);}
+
+                </div>
+            }
+
+
+
+
+        }
+    }
+
+}
+
+<div class="comments_box">
+    <h3>@Model.Count() نظر	</h3>
+    @if (Model != null)
+    {
+
+        <div class="comment_list">
+            @{RenderCommentRow(null);}
+        </div>
+    }
+    else
+    {
+        <h3 class="block-title"><span>0 دیدگاه</span></h3>
+    }
+</div>
+
+
+
+
+
+
+
+

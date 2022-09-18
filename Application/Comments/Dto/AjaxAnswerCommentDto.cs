@@ -12,5 +12,7 @@ namespace Application.Comments.Dto
         public int Postid { get; set; }
         public int Commentid { get; set; }
         public string Answer { get; set; }
+        public string userName { get; set; }
+        public string IP { get; set; }
     }
 }

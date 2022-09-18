@@ -1,0 +1,98 @@
+﻿@using Application.Comments.Dto
+@model GetCommentForAdminDto
+@using Admin.EndPoint.Helper
+@{
+
+    if (Model != null && Model.comments != null)
+    {
+        @foreach (var item in Model.comments)
+        {
+            var cardClass = (item.Status == 0 ? "danger" : (item.Status == 1 ? "success" : "secondary"));
+
+            <div class="card card-@cardClass card-outline">
+                <div class="card-header">
+                    <input name="ids[]" type="checkbox" class="checkthis"  style="width: 25px; height: 25px; background: #555; border-radius: 3px; " value="@item.Id" /><span class="ml-2">انتخاب</span>
+                    <div class="card-tools">
+                        ID: @item.Id
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <form class="comment-details" asp-action="Edit" method="post">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="post" class="mr-2 col-form-label-sm">عنوان محصول</label>
+                                <label id="post" class="form-control">@item.Post.Name</label>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="replay" class="mr-2 col-form-label-sm">پاسخ به کامنت دیگری است؟</label>
+                                <label id="replay" class="form-control">@(@item.ParentId != null ? @item.ParentTitle.ToCuteTitleWithCounter(25) : "خیر")</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-4">
+                                <input class="form-control" autocomplete="off" value="@item.Name" name="Name" id="Name" type="text" placeholder="نام" readonly="">
+                            </div>
+                            <div class="form-group col-sm-4 comment-btn">
+                                <button class="btn btn-warning btn-edit-comment" type="button">ویرایش</button>
+                                <button class="btn btn-danger edit-cancel" type="button" style="display: none">انصراف</button>
+                                <button class="btn btn-success" type="submit" style="display: none">ذخیره</button>
+                                <button class="btn btn-info answer-comment" type="button" data-postid="@item.PostId" data-commentid="@item.Id">پاسخ</button>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-12">
+                                <textarea class="form-control" id="message" name="Message" required="" readonly="">@item.Message</textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" name="Id" value="@item.Id" />
+                    </form>
+                </div>
+            </div>
+
+            if (false)
+            {
+                <!--<tr class="comment-list">
+                    <td>
+                        <input name="ids[]" type="checkbox" class="checkthis" value="@item.Id" />
+                    </td>
+                    <td>
+                        @if (item.Status == 0)
+                        {
+                            <span><i class="fa fa-times-circle" style="color: red;"></i></span> }
+                        else if (item.Status == 1)
+                        {
+                            <span><i class="fa fa-check-circle" style="color: green;"></i></span> }
+                        else if (item.Status == 2)
+                        {
+                            <span><i class="fas fa-archive" style="color: grey;"></i></span> }
+                        else
+                        {
+                            <span><i class="far fa-trash-alt" style="color: grey;"></i></span>}
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td data-toggle="tooltip" data-placement="top" title="@item.Message">
+                        @item.Message.ToCuteTitleWithCounter(25)
+                    </td>
+                    <td data-toggle="tooltip" data-placement="top" title="@item.Post.Name">
+                        @item.Post.Name.ToCuteTitleWithCounter(45)-->@*<span class="badge badge-warning">@item.PostId</span>*@
+                        <!--</td>
+                        <td data-toggle="tooltip" data-placement="top" title="@item.ParentTitle">
+                            @item.ParentTitle.ToCuteTitleWithCounter(25)-->@*<span class="badge badge-info">@item.ParentId</span>*@
+                            <!--</td>
+                                <td name="answer" data-postid="@item.PostId" data-commentid="@item.Id">
+                                    <i class="nav-icon fas fa-comments"></i>@item.Id
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="p-0" colspan="7">
+
+                                </td>
+                            </tr>-->
+                        }
+                    }
+    }
+}
+

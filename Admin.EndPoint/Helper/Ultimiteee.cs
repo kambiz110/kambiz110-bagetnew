@@ -12,7 +12,7 @@ namespace Admin.EndPoint.Helper
     public static class Ultimiteee
     {
 
-     
+
         public static DateTime ToPersianDate(this DateTime dt)
         {
             PersianCalendar pc = new PersianCalendar();
@@ -138,13 +138,13 @@ namespace Admin.EndPoint.Helper
             int Year = Int32.Parse(sList[2]);
             int Month = Int32.Parse(sList[0]);
             int Day = Int32.Parse(sList[1]);
-          
+
             var result = new DateTime(Year, Month, Day, 12, 0, 0, 0);
             return result;
         }
         public static string[] FarsiMonthLtr = new[] { "", "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند" };
         public static string[] FarsiMonthRtl = new[] { "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند", "" };
-        public static string[] MiladiMonth = new[] { "", "January", "February", "February", "April", "May", "May", "July", "September" , "October", "November", "December", "January" };
+        public static string[] MiladiMonth = new[] { "", "January", "February", "February", "April", "May", "May", "July", "September", "October", "November", "December", "January" };
         //DateTimeFormat.AbbreviatedMonthNames = new[] { "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند", "" };
         //DateTimeFormat.AbbreviatedMonthGenitiveNames = new[] { "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند", "" };
 
@@ -244,13 +244,16 @@ namespace Admin.EndPoint.Helper
 
         public static string ToCuteTitleWithCounter(this string title, int count)
         {
-
-            var lenght = title.Length;
-            if (count < lenght)
+            if (title != null)
             {
-                title = title.Remove(count);
-                title += "...";
+                var lenght = title.Length;
+                if (count < lenght)
+                {
+                    title = title.Remove(count);
+                    title += "...";
+                }
             }
+
 
             return title;
         }

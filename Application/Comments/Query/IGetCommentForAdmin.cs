@@ -15,8 +15,8 @@ namespace Application.Comments.Query
 {
     public interface IGetCommentForAdmin
     {
-        ResultDto<GetCommentForAdminDto> Exequte(int PageSize, int PageNo, string userName);
-        ResultDto<GetCommentForAdminDto> Exequte(int PageSize, int PageNo, string searchKey, string userName);
+        ResultDto<GetCommentForAdminDto> Exequte(int PageSize, int PageNo, string searchKey, string userName, bool confirm);
+
     }
     public class GetCommentForAdmin : IGetCommentForAdmin
     {
@@ -31,10 +31,10 @@ namespace Application.Comments.Query
             this.identityDatabase = identityDatabase;
         }
 
-        public ResultDto<GetCommentForAdminDto> Exequte(int PageSize, int PageNo, string userName)
+        public ResultDto<GetCommentForAdminDto> Exequte(int PageSize, int PageNo, string searchKey, string userName, bool confirm)
         {
             int rowCount = 0;
-            var result = getCommentsWithClaim(userName, "");
+            var result = getCommentsWithClaim(userName, searchKey, confirm);
             if (result != null)
             {
                 var pagingresult = result.ToPaged(PageNo, PageSize, out rowCount).ToList();
@@ -65,42 +65,9 @@ namespace Application.Comments.Query
             };
         }
 
-        public ResultDto<GetCommentForAdminDto> Exequte(int PageSize, int PageNo, string searchKey, string userName)
-        {
-            int rowCount = 0;
+    
 
-            var result = getCommentsWithClaim(userName, searchKey);
-            if (result != null)
-            {
-                var pagingresult = result.ToPaged(PageNo, PageSize, out rowCount).ToList();
-                var modelMaped = _mapper.Map<List<CommentViewModelDto>>(pagingresult);
-                var model = new GetCommentForAdminDto
-                {
-                    PagerDto = new PagerDto
-                    {
-                        PageNo = PageNo,
-                        PageSize = PageSize,
-                        TotalRecords = rowCount
-                    },
-                    comments = modelMaped
-                };
-
-                return new ResultDto<GetCommentForAdminDto>
-                {
-                    Data = model,
-                    IsSuccess = true,
-                    Message = "موفق"
-                };
-            }
-            return new ResultDto<GetCommentForAdminDto>
-            {
-                Data = null,
-                IsSuccess = false,
-                Message = "مقداری یافت نگردید"
-            };
-        }
-
-        private IQueryable<Comment> getCommentsWithClaim(string userName, string searchKey)
+        private IQueryable<Comment> getCommentsWithClaim(string userName, string searchKey, bool confirm)
         {
             var user = identityDatabase.Users
             .Where(p => p.UserName == userName)
@@ -116,6 +83,15 @@ namespace Application.Comments.Query
             if (searchKey.Trim() != "")
             {
                 result = result.Where(p => p.Message.Contains(searchKey));
+            }
+            if (confirm)
+            {
+                result = _context.Comments.Where(p => p.Status == 1)
+                   .OrderByDescending(p => p.CommentDate)
+                          .AsNoTracking()
+                        .Include(p => p.Post)
+                        .Include(p => p.Parent)
+                        .AsQueryable();
             }
             if (result!=null && result.Any())
             {

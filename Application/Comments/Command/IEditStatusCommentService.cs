@@ -1,4 +1,5 @@
-﻿using Application.Dtos;
+﻿using Application.Comments.Dto;
+using Application.Dtos;
 using Application.Interfaces.Contexts;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,8 @@ namespace Application.Comments.Command
 {
     public interface IEditStatusCommentService
     {
-        ResultDto Exequte(long[] ids, int _status, string userPersonCode);
+        ResultDto Exequte(long[] ids, int _status, string userPersonCode, string ip);
+        ResultDto<string> EditComment(EditCommentMessageDto dto);
     }
     public class EditStatusCommentService : IEditStatusCommentService
     {
@@ -22,7 +24,39 @@ namespace Application.Comments.Command
             _context = context;
             this.identityDatabase = identityDatabase;
         }
-        public ResultDto Exequte(long[] ids, int _status, string userPersonCode)
+        public ResultDto<string> EditComment(EditCommentMessageDto dto)
+        {
+            var comment = _context.Comments.FirstOrDefault(p => p.Id == dto.Id);
+            if (comment == null)
+                return new ResultDto<string>
+                {
+                    Data = null,
+                    IsSuccess = false,
+                    Message = "خطا در ارسال اطلاعات!!!"
+                };
+
+           // comment.Name = dto.Name;
+            comment.Message = dto.Message;
+
+            var result = _context.SaveChanges();
+            if (result > 0)
+            {
+                return new ResultDto<string>
+                {
+                    Data = dto.Message,
+                    IsSuccess = true,
+                    Message = "اطلاعات با موفقیت ویرایش شد."
+                };
+            }
+
+            return new ResultDto<string>
+            {
+                Data = null,
+                IsSuccess = false,
+                Message = "ویرایش اطلاعات با خطا مواجه شد!!!"
+            };
+        }
+        public ResultDto Exequte(long[] ids, int _status, string userPersonCode , string ip)
         {
             var user = identityDatabase.Users.FirstOrDefault(p => p.UserName == userPersonCode);
             var commentes = _context.Comments.Where(p => ids.Contains(p.Id) && p.Status != _status).ToList();
