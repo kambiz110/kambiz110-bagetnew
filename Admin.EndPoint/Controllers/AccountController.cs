@@ -76,7 +76,7 @@ namespace Admin.EndPoint.Controllers
                // sendSms.verificationCodeWithPatern(user.FullName,"09055510734");
               //  sendSms.singleUserSendSMS("ورود به حساب کاربری ادمین موفق !",new string[] { "09055510734" });
                 var addClaimes = _userManager.AddClaimAsync(user, new Claim("FullName", user.FullName)).Result;
-                var token = tokenUser.creatToken(user.Id);
+                //var token = tokenUser.creatToken(user.Id);
                 string redirect;
                 if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                 {

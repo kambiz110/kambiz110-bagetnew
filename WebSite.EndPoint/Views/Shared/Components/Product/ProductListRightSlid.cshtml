@@ -13,17 +13,24 @@
     <div class="widget shadow-around">
         <div class="widget-content">
             <div @*class="custom-control custom-switch"*@>
+                <a href="/product/index">
+                    <label class="container-checkbox">
 
+                        نمایش همه کالاها
+
+                        <span class="checkmark"></span>
+                    </label>
+                </a>
                 @{
                     var AvailableStock = Context.Request.Query["AvailableStock"];
                     if (AvailableStock == "true")
                     {
                         @*<input type="checkbox"
-                            name="AvailableStock"
-                            onclick="submit();"
-                            value="false"
-                            checked
-                            class="custom-control-input" id="customSwitch1">*@
+                name="AvailableStock"
+                onclick="submit();"
+                value="false"
+                checked
+                class="custom-control-input" id="customSwitch1">*@
                         <label class="container-checkbox">
                             فقط کالاهای موجود در
                             انبار
@@ -34,8 +41,8 @@
                     else
                     {
                         @*<input type="checkbox" name="AvailableStock"
-                            value="true" class="custom-control-input"
-                            id="customSwitch1" onclick="submit();">*@
+                value="true" class="custom-control-input"
+                id="customSwitch1" onclick="submit();">*@
 
                         <label class="container-checkbox">
                             فقط کالاهای موجود در
@@ -50,12 +57,12 @@
 
 
                 @*@foreach (var queryString in Context.Request.Query.Where(p => p.Key == "brandId" || p.Key == "CatalogTypeId").ToList())
-                    {
-                        foreach (var item in queryString.Value)
-                        {
-                            <input type="hidden" name="@queryString.Key" value="@item" />
-                        }
-                    }*@
+        {
+            foreach (var item in queryString.Value)
+            {
+                <input type="hidden" name="@queryString.Key" value="@item" />
+            }
+        }*@
 
 
 

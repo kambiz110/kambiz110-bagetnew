@@ -5,6 +5,7 @@ using Domain.Baskets;
 using Domain.Catalogs;
 using Domain.Comments;
 using Domain.Discounts;
+using Domain.Logs;
 using Domain.Nazarats;
 using Domain.Order;
 using Domain.Payments;
@@ -57,6 +58,8 @@ namespace Persistence.Contexts
         public DbSet<ReturneOrderItem> ReturneOrderItems { get; set; }
         public DbSet<ReturnPaymentInvoice> ReturnPaymentInvoices { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<MonthLog> MonthLogs { get; set; }
+        public DbSet<DayLog> DayLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

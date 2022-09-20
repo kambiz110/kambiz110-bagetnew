@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 
 namespace Admin.EndPoint.Controllers
 {
-   [Authorize(Roles = "Administrator")]
-
+   
+    [Authorize(Roles = "Administrator,Maneger")]
     public class UsersController : Controller
     {
         private readonly IGetUsers getUsers;
@@ -39,6 +39,7 @@ namespace Admin.EndPoint.Controllers
 
 
         }
+        [Authorize(Roles = "Administrator")]
         public IActionResult AllRoleInUser(string id)
         {
             ViewBag.UserId = id;
@@ -53,6 +54,7 @@ namespace Admin.EndPoint.Controllers
             };
             return View(rolesInUser);
         }
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public IActionResult AddRoleToUser(string userId)
         {
@@ -63,6 +65,7 @@ namespace Admin.EndPoint.Controllers
            ViewData["Roles"] = RolesSelectListItem;
             return View(new AddRoleToUserDto() {Id= userId  , FullName=user.FullName});
         }
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public IActionResult AddRoleToUser([Bind("Id,Role")] AddRoleToUserDto dto)
         {

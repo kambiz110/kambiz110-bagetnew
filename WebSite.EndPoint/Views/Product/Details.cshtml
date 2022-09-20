@@ -334,42 +334,26 @@ seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.Fe
                                             <input type="hidden" name="ParentId" value="" />
                                             <input type="hidden" name="PostId" value="@Model.Id" />
 
-                                            <div class="row">
-                                                <div class="col-12">
+                                            
+                                                <div class="col-12 col-lg-6 col-md-6">
                                                     <label for="Message">نظر شما </label>
                                                     <textarea name="Message" id="Message"></textarea>
                                                 </div>
-                                                @if (User.Identity.IsAuthenticated)
-                                                {
-
-
-                                                    var username = User.FindFirst(System.Security.Claims.ClaimTypes.Name).Value.ToString();
-
-                                                    <div class="col-lg-6 col-md-6">
-                                                        <label for="author">نام</label>
-                                                        <input name="Name" id="Name" value="@username" type="text">
-
-                                                    </div>
-                                                }
-                                                else
-                                                {
+                                     
 
                                                     <div class="col-lg-6 col-md-6">
                                                         <label for="author">نام</label>
                                                         <input name="Name" id="Name" placeholder="نام" type="text">
 
                                                     </div>
-                                                }
+                                                
 
 
 
 
 
-                                                <div class="col-lg-6 col-md-6">
-                                                    <label for="email">ایمیل</label>
-                                                    <input id="email" type="text">
-                                                </div>
-                                            </div>
+
+                                           
                                             <div class="col-lg-6 col-md-6 mt-2">
                                                 <div class="form-group">
                                                     <label>عبارت را محاسبه و وارد نمائید</label>

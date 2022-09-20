@@ -3,6 +3,7 @@ using Domain.Baskets;
 using Domain.Catalogs;
 using Domain.Comments;
 using Domain.Discounts;
+using Domain.Logs;
 using Domain.Nazarats;
 using Domain.Order;
 using Domain.Payments;
@@ -49,6 +50,8 @@ namespace Application.Interfaces.Contexts
         DbSet<ReturnedProduct> ReturnedProducts { get; set; }
         DbSet<ReturneOrderItem> ReturneOrderItems { get; set; }
         DbSet<Comment> Comments { get; set; }
+        DbSet<MonthLog> MonthLogs { get; set; }
+        DbSet<DayLog> DayLogs { get; set; }
         DbSet<Domain.Payments.ReturnPaymentInvoice> ReturnPaymentInvoices { get; set; }
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);

@@ -45,6 +45,7 @@ namespace Application.Orders.AdminOrderServices
                 {
                     case 2:
                         order.OrderDelivered();
+                        order.ZamanDelivered = DateTime.Now;
                         break;
                     case 3:
                         order.OrderCancelled();

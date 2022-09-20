@@ -32,8 +32,13 @@ namespace WebSite.EndPoint.Controllers
             return View();
         }
 
-      
-        public IActionResult Privacy()
+
+        public IActionResult about()
+        {
+            return View();
+        }
+        [Route("Home/Display")]
+        public IActionResult Display()
         {
             return View();
         }

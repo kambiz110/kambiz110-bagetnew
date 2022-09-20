@@ -1,4 +1,5 @@
 ﻿using Application.Users;
+using DNTCaptcha.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -31,6 +32,11 @@ namespace WebSite.EndPoint.Areas.Customers.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateDNTCaptcha(
+            ErrorMessage = "عبارت امنیتی را به درستی وارد نمائید",
+            CaptchaGeneratorLanguage = Language.Persian,
+            CaptchaGeneratorDisplayMode = DisplayMode.NumberToWord)]
         public IActionResult AddNewAddress(AddUserAddressDto address)
         {
             if (!ModelState.IsValid)
@@ -55,6 +61,11 @@ namespace WebSite.EndPoint.Areas.Customers.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateDNTCaptcha(
+            ErrorMessage = "عبارت امنیتی را به درستی وارد نمائید",
+            CaptchaGeneratorLanguage = Language.Persian,
+            CaptchaGeneratorDisplayMode = DisplayMode.NumberToWord)]
         public IActionResult Edit(AddUserAddressDto address)
         {
             string userId = ClaimUtility.GetUserId(User);

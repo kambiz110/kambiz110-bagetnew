@@ -2,6 +2,7 @@
 using Application.Dtos;
 using Application.Users.Command;
 using Application.Users.Token;
+using DNTCaptcha.Core;
 using Domain.Users;
 using Infrastructure.SMS;
 using Microsoft.AspNetCore.Identity;
@@ -45,6 +46,11 @@ namespace WebSite.EndPoint.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateDNTCaptcha(
+            ErrorMessage = "عبارت امنیتی را به درستی وارد نمائید",
+            CaptchaGeneratorLanguage = Language.Persian,
+            CaptchaGeneratorDisplayMode = DisplayMode.NumberToWord)]
         public IActionResult Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
@@ -105,7 +111,11 @@ namespace WebSite.EndPoint.Controllers
                 ReturnUrl = returnUrl,
             });
         }
-
+        [ValidateAntiForgeryToken]
+        [ValidateDNTCaptcha(
+            ErrorMessage = "عبارت امنیتی را به درستی وارد نمائید",
+            CaptchaGeneratorLanguage = Language.Persian,
+            CaptchaGeneratorDisplayMode = DisplayMode.NumberToWord)]
         [HttpPost]
         public IActionResult Login(LoginViewModel model)
         {
@@ -132,7 +142,18 @@ namespace WebSite.EndPoint.Controllers
             {
                 var addClaimes = _userManager.AddClaimAsync(user, new Claim("FullName", user.FullName)).Result;
                 TransferBasketForuser(user.Id);
-                return Redirect(model?.ReturnUrl ?? "/");
+               
+                if (Url.IsLocalUrl(model?.ReturnUrl ?? "/"))
+                {
+                    return Redirect(model?.ReturnUrl ?? "/");
+                }
+                else
+                {
+                   
+                    ModelState.AddModelError(string.Empty, "لطفا از آدرس جعلی استفاده ننمائید !!!");
+                    return View();
+                }
+            
             }
             if (result.RequiresTwoFactor)
             {
@@ -172,6 +193,7 @@ namespace WebSite.EndPoint.Controllers
         /// <param name="PhoneNumber"></param>
         /// <returns></returns>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginViaSms(string PhoneNumber)
         {
             if (String.IsNullOrEmpty(PhoneNumber))
