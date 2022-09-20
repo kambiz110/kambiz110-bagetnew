@@ -137,7 +137,7 @@
                         <div class="row">
                             <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
                                 <fieldset class="form-group">
-                                    <label for="basicInput"> قیمت</label>
+                                    <label for="basicInput"> قیمت (تومان)</label>
                                     <input type="text" asp-for="Data.Price" class="form-control " onkeyup="reformatText(this)" id="currency">
                                     <span asp-validation-for="Data.Price" class="text-danger"></span>
 
@@ -251,18 +251,17 @@
 
     <script src="~/lib/trumbowyg-2_25_1/trumbowyg.js"></script>
 
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    @{await Html.RenderPartialAsync("_AjaxJquery");}
     <script>
-  //currency mask 
+        //currency mask
         function reformatText(input) {
             var value = input.value;
             var number = Number(value.replace(/,/g, ""));
-     
+
             input.value = number.toLocaleString('en-IN');;
-         
+
         }
-     
+
         $('.trumbowyg-texterea').trumbowyg();
 
         $(document).ready(function () {
@@ -400,6 +399,6 @@
 
 
 
-  
+
     </script>
 }

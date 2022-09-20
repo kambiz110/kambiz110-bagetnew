@@ -244,7 +244,7 @@ else
     <link href="~/lib/W3/w3.css" rel="stylesheet" />
     <script src="~/lib/W3/w3.js"></script>
     <script src="~/Sweetalert2/sweetalert2.min.js"></script>
-    @{ Html.RenderPartial("_AjaxJquery"); }
+    @{await Html.RenderPartialAsync("_AjaxJquery");}
     <script>
         $(document).ready(function () {
             $('.select2').select2();
@@ -270,9 +270,9 @@ else
                     var errorMessage = "لطفاً! یک گزینه را جهت ویرایش انتخاب نمایید.";
                     var alertPanelContent =
                         `<div class="alert alert-warning alert-dismissible">
-                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                            ${errorMessage}
-                                        </div>`;
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                ${errorMessage}
+                                            </div>`;
                     $("#alertPanel").html(alertPanelContent);
                     $("#alertPanel").slideDown("fast");
                     window.setTimeout(function () {
@@ -294,9 +294,9 @@ else
                     var errorMessage = "لطفاً! یک گزینه را انتخاب نمایید.";
                     var alertPanelContent =
                         `<div class="alert alert-warning alert-dismissible">
-                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                            ${errorMessage}
-                                        </div>`;
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                ${errorMessage}
+                                            </div>`;
                     $("#alertPanel").html(alertPanelContent);
                     $("#alertPanel").slideDown("fast");
                     window.setTimeout(function () {
@@ -518,7 +518,7 @@ else
 
                                     $('#editMessageModal input[name=messageModal]').val("");
                                     $('#editMessageModal input[name=commentid]').val("");
-                           
+
                                     setInterval(function () { window.location.reload(); }, 3000);
 
                                 } else {

@@ -128,8 +128,8 @@
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-sm-12 mb-1">
                                 <fieldset class="form-group">
-                                    <label for="basicInput"> قیمت</label>
-                                    <input type="number" asp-for="@Model.Price" class="form-control " id="currency">
+                                    <label for="basicInput"> قیمت (تومان)</label>
+                                    <input type="text" asp-for="@Model.Price" class="form-control " onkeyup="reformatText(this)" id="currency">
                                     <span asp-validation-for="@Model.Price" class="text-danger"></span>
 
                                 </fieldset>
@@ -278,16 +278,23 @@
     <script src="~/Sweetalert2/sweetalert2.min.js"></script>
     <script src="~/lib/select2/js/select2.js"></script>
     <script src="~/lib/trumbowyg-2_25_1/trumbowyg.js"></script>
-    <script src="~/Theme/plugins/input-mask/jquery.inputmask.bundle.min.js"></script>
-    <script src="~/Theme/plugins/input-mask/input-mask.js"></script>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @*<script src="~/Theme/plugins/input-mask/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/Theme/plugins/input-mask/input-mask.js"></script>*@
+    @{await Html.RenderPartialAsync("_AjaxJquery");}
     @*<script src="~/Theme/plugins/editors/ckeditor.js"></script>*@
     @*<script src="https://cdn.ckeditor.com/4.13.0/standard-all/ckeditor.js"></script>*@
     <script>
-     
+        //currency mask
+        function reformatText(input) {
+            var value = input.value;
+            var number = Number(value.replace(/,/g, ""));
+
+            input.value = number.toLocaleString('en-IN');;
+
+        }
         $(document).ready(function () {
             $('.trumbowyg-texterea').trumbowyg();
-            $("#currency").inputmask({ mask: "$999,9999,999.99" });
+      /*      $("#currency").inputmask({ mask: "$999,9999,999.99" });*/
 
             $('.basic-single').select2({
                 placeholder: '... انتخاب کنید'
@@ -452,7 +459,7 @@
             data.append("AvailableStock", $("#AvailableStock").val());
             data.append("RestockThreshold", $("#RestockThreshold").val());
             data.append("MaxStockThreshold", $("#MaxStockThreshold").val());
-            data.append("Price", $("#currency").val());
+            data.append("Price", $("#currency").val().replace(/,/g, ""));
             data.append("Description", $('textarea#Description').val());
 
             data.append("CatologCarId", $('#Car').find('option:selected').val());

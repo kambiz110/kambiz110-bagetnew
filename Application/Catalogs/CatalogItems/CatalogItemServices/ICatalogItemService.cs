@@ -75,7 +75,7 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
         public int CatalogBrandId { get; set; }
         public int CatologCarId { get; set; }
         public int CatalogCompanyId { get; set; }
-        public bool IsActive { get; set; }
+        public int IsActive { get; set; }
         public string q { get; set; } = "";
     }
 }

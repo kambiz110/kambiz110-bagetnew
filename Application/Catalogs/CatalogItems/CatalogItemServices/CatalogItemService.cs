@@ -65,6 +65,8 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
             var data = context.CatalogItems
                 .Include(p => p.CatalogType)
                 .Include(p => p.CatalogBrand)
+                .Include(p => p.CatalogCompany)
+                .Include(p => p.CatologCar)
                 .ToPaged(page, pageSize, out rowCount)
                 .OrderByDescending(p => p.Id)
                 //.Select(p => new CatalogItemListItemDto
@@ -82,13 +84,13 @@ namespace Application.Catalogs.CatalohItems.CatalogItemServices
             if (dto!=null)
             {
               
-                if (dto.IsActive==false)
+                if (dto.IsActive==2)
                 {
                     data = data.Where(p => p.AvailableStock<=0 || p.IsActive==false).AsQueryable();
                 }
-                if(dto.IsActive)
+                if(dto.IsActive==1)
                 {
-                    data = data.Where(p => p.IsActive == dto.IsActive).AsQueryable();
+                    data = data.Where(p => p.IsActive == true).AsQueryable();
                 }
                 if (dto.CatalogBrandId>0)
                 {

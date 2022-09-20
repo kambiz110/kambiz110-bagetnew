@@ -75,7 +75,9 @@ namespace Application.Discounts
                 .Include(p => p.CatalogItems.Where(p => p.IsActive == true)).ThenInclude(p => p.CatalogBrand)
             .AsQueryable();
             var result = mapper.ProjectTo<GetDiscountInHomePageViewModel>(data).FirstOrDefault();
-            var catlogcount = result.catalogItems.Count();
+            if (result!=null)
+            {
+          var catlogcount = result.catalogItems.Count();
             var takke = 12;
             if (catlogcount>4 && catlogcount<8)
             {
@@ -87,8 +89,7 @@ namespace Application.Discounts
             }
           
             result.catalogItems = result.catalogItems.Take(takke).ToList();
-            if (result != null)
-            {
+          
                 for (int j = 0; j < result.catalogItems.Count; j++)
                 {
                     result.catalogItems.ElementAt(j).Src = GlobalConstants.serverImageUrl + (result.catalogItems.ElementAt(j).Src);
@@ -100,7 +101,9 @@ namespace Application.Discounts
                  null,
                  result
                  );
+            
             }
+  
             return new BaseDto<GetDiscountInHomePageViewModel>(
               false,
               null,

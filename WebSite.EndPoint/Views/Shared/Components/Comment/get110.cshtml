@@ -59,10 +59,10 @@
 }
 
 <div class="comments_box">
-    <h3>@Model.Count() نظر	</h3>
-    @if (Model != null)
-    {
 
+    @if (Model != null && Model.Count()>0)
+    {
+        <h3>@Model.Count() نظر	</h3>
         <div class="comment_list">
             @{RenderCommentRow(null);}
         </div>
