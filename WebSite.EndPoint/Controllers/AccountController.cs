@@ -206,10 +206,11 @@ namespace WebSite.EndPoint.Controllers
             {
                 var smsCode = loginWithSmsCode.GetCode(PhoneNumber);
                 //smsCode پیامک کنید به همین شماره
-                await smsServices.verificationCodeWithPatern(IsUser.Data.FullName, PhoneNumber, smsCode);
+              
                 var token = tokenUser.creatToken(IsUser.Data.Id);
                 TempData["token"] = token.Data;
                 TempData["tokencreator"] = IsUser.Data.Id;
+                await smsServices.verificationCodeWithPatern(IsUser.Data.FullName, PhoneNumber, smsCode);
                 return RedirectToAction("ConfirmPhoneNumber", "Account", new { PhoneNumber = PhoneNumber });
             }
             ViewBag.Errors = "شماره تلفن نامعتبر است و یا  شما ثبت نام ننموده اید!!!";

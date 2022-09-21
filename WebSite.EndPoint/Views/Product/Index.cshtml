@@ -18,7 +18,7 @@
         counter++;
     }
     QueryStringLink = string.Join("&", linkText);
-    var test = "";
+
 
 }
 
@@ -26,15 +26,7 @@
 <!--shop  area start-->
 <div class="shop_area shop_reverse">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-12">
-                <!--sidebar widget start-->
-                <aside class="sidebar_widget">
-                    @(await Component.InvokeAsync("ProductListRightSlid"))
-
-                </aside>
-                <!--sidebar widget end-->
-            </div>
+        <div class="row" style="direction:rtl !important;">
             <div class="col-lg-9 col-md-12">
                 <!--shop banner area start-->
                 <div class="shop_banner_area mb-30">
@@ -117,7 +109,7 @@
                                                         @item.Name
                                                     </a>
                                                 </h4>
-                                            
+
                                                 <div class="price_box">
                                                     @if (item.OldPrice != null && item.OldPrice != item.Price)
                                                     {
@@ -153,7 +145,7 @@
                                                 </div>
                                                 <div class="product_desc">
                                                     <p>
-                                                     @Html.Raw(item.Description)   
+                                                        @Html.Raw(item.Description)
                                                     </p>
                                                 </div>
                                             </div>
@@ -185,7 +177,7 @@
                             </div>
                         }
                     }
-                
+
 
                 </div>
 
@@ -232,6 +224,35 @@
                 <!--shop pagimnation end-->
                 <!--shop wrapper end-->
             </div>
+            <div class="col-lg-3 col-md-12">
+
+                <div id="accordion" class="d-">
+                    <div class="card">
+                        <div class="card-header d-flex d-md-none" id="headingOne">
+                            <h5 class="mb-0" id="pa">
+                                <button class="btn" id="myAccardon">
+                                    فیلتر های دسته بندی <i class="fa fa-filter" style='font-size:35px;color:red' aria-hidden="true"></i> 
+
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse d-none d-md-flex mb-10" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <aside class="sidebar_widget">
+                                    @(await Component.InvokeAsync("ProductListRightSlid"))
+
+                                </aside>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--sidebar widget start-->
+                <!--sidebar widget end-->
+            </div>
+
+
+
         </div>
     </div>
 </div>
