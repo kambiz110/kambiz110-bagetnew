@@ -34,6 +34,7 @@
   <ItemGroup>
     <Folder Include="Areas\Customers\Data\" />
     <Folder Include="Areas\Customers\Models\" />
+    <Folder Include="Views\Shared\Components\GetMenuCategories\" />
   </ItemGroup>
 
   <ItemGroup>

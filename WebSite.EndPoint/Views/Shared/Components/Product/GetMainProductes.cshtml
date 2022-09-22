@@ -48,7 +48,8 @@
 
                                                             <a class="primary_img"
                                                               href="~/Product/Details/pid-@Model.bestSellers.ElementAt(i).Id/@Model.bestSellers.ElementAt(i).Slug">
-                                                                <img src="@Model.bestSellers.ElementAt(i).Images.FirstOrDefault()" alt="">
+                                                                <img src="@Model.bestSellers.ElementAt(i).Images.FirstOrDefault()" alt="@Model.bestSellers.ElementAt(i).Slug ,@Model.bestSellers.ElementAt(i).TypeName ,@Model.bestSellers.ElementAt(i).BrrndName ,@Model.bestSellers.ElementAt(i).CarName" 
+                                                                      title="@Model.bestSellers.ElementAt(i).Slug  ,@Model.bestSellers.ElementAt(i).CarName">
                                                             </a>
 
                                                             @if (Model.bestSellers.ElementAt(i).DiscountPercentage > 0)
@@ -153,7 +154,8 @@
 
                                                                 <a class="primary_img"
                                                                     href="~/Product/Details/pid-@Model.bestSellers.ElementAt(i+1).Id/@Model.bestSellers.ElementAt(i+1).Slug">
-                                                                    <img src="@Model.bestSellers.ElementAt(i+1).Images.FirstOrDefault()" alt="">
+                                                                    <img src="@Model.bestSellers.ElementAt(i+1).Images.FirstOrDefault()" alt="@Model.bestSellers.ElementAt(i + 1).Slug ,@Model.bestSellers.ElementAt(i + 1).TypeName ,@Model.bestSellers.ElementAt(i + 1).BrrndName ,@Model.bestSellers.ElementAt(i + 1).CarName" 
+                                                                         title="@Model.bestSellers.ElementAt(i+1).Slug  ,@Model.bestSellers.ElementAt(i+1).CarName" >
                                                                 </a>
 
                                                                 @if (Model.bestSellers.ElementAt(i + 1).DiscountPercentage > 0)
@@ -288,7 +290,8 @@
 
                                                             <a class="primary_img"
                                                               href="~/Product/Details/pid-@Model.MostDescountNumber.ElementAt(i).Id/@Model.MostDescountNumber.ElementAt(i).Slug" >
-                                                                <img src="@Model.MostDescountNumber.ElementAt(i).Images.FirstOrDefault()" alt="">
+                                                                <img src="@Model.MostDescountNumber.ElementAt(i).Images.FirstOrDefault()" alt="@Model.MostDescountNumber.ElementAt(i).Slug ,@Model.MostDescountNumber.ElementAt(i).TypeName ,@Model.MostDescountNumber.ElementAt(i).BrrndName ,@Model.MostDescountNumber.ElementAt(i).CarName" 
+                                                                     title="@Model.MostDescountNumber.ElementAt(i).Slug  ,@Model.MostDescountNumber.ElementAt(i).CarName" >
                                                             </a>
 
                                                             @if (Model.MostDescountNumber.ElementAt(i).DiscountPercentage > 0)
@@ -392,7 +395,8 @@
 
                                                                 <a class="primary_img"
                                                                    href="~/Product/Details/pid-@Model.MostDescountNumber.ElementAt(i+1).Id/@Model.MostDescountNumber.ElementAt(i+1).Slug" >
-                                                                    <img src="@Model.MostDescountNumber.ElementAt(i+1).Images.FirstOrDefault()" alt="">
+                                                                    <img src="@Model.MostDescountNumber.ElementAt(i+1).Images.FirstOrDefault()" alt="@Model.MostDescountNumber.ElementAt(i+1).Slug ,@Model.MostDescountNumber.ElementAt(i+1).TypeName ,@Model.MostDescountNumber.ElementAt(i+1).BrrndName ,@Model.MostDescountNumber.ElementAt(i+1).CarName"
+                                                                         title="@Model.MostDescountNumber.ElementAt(i+1).Slug  ,@Model.MostDescountNumber.ElementAt(i+1).CarName" >
                                                                 </a>
 
                                                                 @if (Model.MostDescountNumber.ElementAt(i + 1).DiscountPercentage > 0)
@@ -526,7 +530,8 @@
 
                                                             <a class="primary_img"
                                                                 href="~/Product/Details/pid-@Model.MostPopular.ElementAt(i).Id/@Model.MostPopular.ElementAt(i).Slug">
-                                                                <img src="@Model.MostPopular.ElementAt(i).Images.FirstOrDefault()" alt="">
+                                                                <img src="@Model.MostPopular.ElementAt(i).Images.FirstOrDefault()" alt="@Model.MostPopular.ElementAt(i).Slug ,@Model.MostPopular.ElementAt(i).TypeName ,@Model.MostPopular.ElementAt(i).BrrndName ,@Model.MostPopular.ElementAt(i).CarName" 
+                                                                      title="@Model.MostPopular.ElementAt(i).Slug  ,@Model.MostPopular.ElementAt(i).CarName">
                                                             </a>
 
                                                             @if (Model.MostPopular.ElementAt(i).DiscountPercentage > 0)
@@ -630,7 +635,8 @@
 
                                                                 <a class="primary_img"
                                                                    href="~/Product/Details/pid-@Model.MostPopular.ElementAt(i+1).Id/@Model.MostPopular.ElementAt(i+1).Slug">
-                                                                    <img src="@Model.MostPopular.ElementAt(i+1).Images.FirstOrDefault()" alt="">
+                                                                    <img src="@Model.MostPopular.ElementAt(i+1).Images.FirstOrDefault()" alt="@Model.MostPopular.ElementAt(i+1).Slug ,@Model.MostPopular.ElementAt(i+1).TypeName ,@Model.MostPopular.ElementAt(i+1).BrrndName ,@Model.MostPopular.ElementAt(i+1).CarName"
+                                                                         title="@Model.MostPopular.ElementAt(i+1).Slug  ,@Model.MostPopular.ElementAt(i+1).CarName">
                                                                 </a>
 
                                                                 @if (Model.MostPopular.ElementAt(i + 1).DiscountPercentage > 0)

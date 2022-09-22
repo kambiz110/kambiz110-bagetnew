@@ -12,7 +12,7 @@
     ViewData["Title"] = Model.Slug;
     var ccc = Model.SimilarCatalogs.Count;
     string[] simelerUrl = new string[ccc];
-    string site = "https://CarYadakShop.com";
+    string site = "https://yadakcarshop.com/";
     for (int i = 0; i < ccc; i++)
     {
         simelerUrl[i] = $@"{site}/Product/Details/pid-{Model.SimilarCatalogs.ElementAt(i).Id}/{Model.SimilarCatalogs.ElementAt(i).Slug}";
@@ -22,7 +22,7 @@
     {
         seoInfo.SetCommonInfo(
             pageTitle: Model.Slug,
-            description: Model.Slug + " خرید اینترنتی آنلاین اصلی با ضمانت بازگشت وجه و ارسال سریع به سراسر ایران",
+            description: Model.Slug + " خرید اینترنتی آنلاین کالا لوازم یدکی سایپا زنجانی اصل با ضمانت بازگشت وجه و ارسال سریع به سراسر ایران تماس 09124918349",
             url: $"{site}/Product/Details/pid-{Model.Images}/{Model.Slug}",
             keywordTags: new[] { Model.TypeName, Model.BrrndName, Model.CompanyName, Model.Name, Model.Name }, //optional
             seeAlsoUrls: simelerUrl  //optional
@@ -38,15 +38,15 @@
         );
 
         seoInfo.SetArticleInfo(
-                    authorName: "CarYadakShop.com",
+                    authorName: "yadakcarshop.com",
                     publishDate: DateTimeOffset.Now,
                     modifiedDate: DateTimeOffset.Now,  //optional
-                    authorUrl: "https://CarYadakShop.com/",  //optional
+                    authorUrl: "https://yadakcarshop.com/",  //optional
                     section: "Article Topic"  //optional
                 );
 
 //Add another rss feed. (only for this page) (optional)
-seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.FeedType.Rss);
+seoInfo.AddFeed("Post Comments", "https://yadakcarshop.com/post/comment/rss", SeoTags.FeedType.Rss);
     });
 }
 
@@ -113,7 +113,7 @@ seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.Fe
                             <div id="img-1" class="zoomWrapper single-zoom">
 
                                 <a href="#">
-                                    <img id="zoom1" src="@Model.Images.FirstOrDefault()" data-zoom-image="@Model.Images.FirstOrDefault()" alt="big-1">
+                                    <img id="zoom1" src="@Model.Images.FirstOrDefault()" data-zoom-image="@Model.Images.FirstOrDefault()" alt="@Model.Slug ,@Model.TypeName ,@Model.BrrndName ,@Model.CarName" title="@Model.Slug ,@Model.TypeName ,@Model.BrrndName ,@Model.CarName">
                                 </a>
 
                             </div>
@@ -125,7 +125,7 @@ seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.Fe
 
                                         <li>
                                             <a href="#" class="elevatezoom-gallery active" data-update="" data-image="@Model.Images.ElementAt(d)" data-zoom-image="@Model.Images.ElementAt(d)">
-                                                <img src="@Model.Images.ElementAt(d)" alt="zo-th-1" />
+                                                <img src="@Model.Images.ElementAt(d)"   alt="zo-th-@d @Model.Slug ,@Model.TypeName ,@Model.BrrndName ,@Model.CarName" title="@Model.Slug ,@Model.TypeName ,@Model.BrrndName ,@Model.CarName" />
                                             </a>
 
                                         </li>
@@ -137,7 +137,7 @@ seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.Fe
                         }
                         else
                         {
-                            <img src="@Model.Images.FirstOrDefault()" alt="@Model.Name">
+                            <img src="@Model.Images.FirstOrDefault()"  alt="@Model.Slug ,@Model.TypeName ,@Model.BrrndName ,@Model.CarName" title="@Model.Slug ,@Model.TypeName ,@Model.BrrndName ,@Model.CarName">
                         }
 
                     </div>
@@ -418,7 +418,7 @@ seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.Fe
 
                                                 <a class="primary_img"
                                                    href="~/Product/Details/pid-@Model.SimilarCatalogs.ElementAt(i).Id/@Model.SimilarCatalogs.ElementAt(i).Slug">
-                                                    <img src="@Model.SimilarCatalogs.ElementAt(i).Image" alt="">
+                                                    <img src="@Model.SimilarCatalogs.ElementAt(i).Image" title="@Model.SimilarCatalogs.ElementAt(i).Slug" alt="@Model.SimilarCatalogs.ElementAt(i).Slug">
                                                 </a>
 
                                                 @if (Model.SimilarCatalogs.ElementAt(i).DiscountPercentage > 0)

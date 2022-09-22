@@ -48,7 +48,7 @@ namespace Application.JsonLD
               //  dateModified = post.UpdatedOn.ToString("yyyy-MM-dd"),
                 author = new Author()
                 {
-                    name = "kambiz"//post.c
+                    name = "https://yadakcarshop.com/"//post.c
                 },
                 publisher = new Publisher()
                 {
