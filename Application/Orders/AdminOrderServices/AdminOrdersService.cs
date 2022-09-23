@@ -93,6 +93,10 @@ namespace Application.Orders.AdminOrderServices
                     }).ToList(),
                     PaymentId= PaymentId                   
                 };
+                if ((int)payment.Order.PaymentStatus==1 && payment.Order.OrderStatus==0)
+                {
+                    model.IsEnableSend = true;
+                }
                 return model;
             }
             return null;

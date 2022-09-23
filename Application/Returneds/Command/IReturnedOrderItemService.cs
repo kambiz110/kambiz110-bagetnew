@@ -28,9 +28,12 @@ namespace Application.Returneds.Command
         {
             var order = context.Orders.Where(p => p.Id == orederId /*&& p.ZamanDelivered!=null && p.ZamanDelivered>DateTime.Now.AddDays(-5)*/)
                         .Include(p => p.OrderItems.Where(p => orderItemsIds.Contains(p.Id)))
+                        .Include(p => p.PostProduct)
                         .OrderByDescending(p => p.Id).FirstOrDefault();
 
-            if (order != null && order.OrderItems != null && order.OrderItems.Any())
+            if (order != null && order.OrderItems != null && order.OrderItems.Any()&&
+                (int)order.OrderStatus == 1 && order.PostProduct.InsertDate != DateTime.MinValue
+                    && DateTime.Now.AddDays(-8) < order.PostProduct.InsertDate)
             {
                 Returned returned = new Returned
                 {

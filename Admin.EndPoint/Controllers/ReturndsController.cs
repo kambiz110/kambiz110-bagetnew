@@ -42,7 +42,7 @@ namespace Admin.EndPoint.Controllers
         public IActionResult ReturndDetails(int returnedId)
         {
             var model = returnedForAdmin.GetAdminOrderDitales(returnedId);
-            if ((int)model.ReturnedStatus == 1)
+            if ((int)model.ReturnedStatus == 0)
             {
                 var rootPath = _hostingEnvironment.ContentRootPath;
                 var fullPath = Path.Combine(rootPath, "wwwroot/Files/BankDate/UserBankData.json");

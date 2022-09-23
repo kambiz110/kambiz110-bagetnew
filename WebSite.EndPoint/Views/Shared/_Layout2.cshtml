@@ -2,28 +2,21 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"] | فروشگاه لوازم یدکی خودرو زنجانی</title>
-    <meta name="description" content="@(ViewData["Description"]??"")" />
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>فروشگاه یدکی زنجانی |@ViewData["Title"]</title>
+    <meta name="description" content="لوازم یدکی خودرو زنجانی سایپا تیبا پراید کوییک شاهین تارا ساینا خرید فروش اینترنتی سفارس آنلاین ارسال پستی درب منزل تخفیف ویژه مرجوعی ضمانت کیفیت کالا">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="~/90.ico" />
     @Html.SeoTags()
     <!-- font-awesome -->
     <link rel="stylesheet" href="~/Theme/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/Theme/assets/css/font-awesome.min.css">
-    <!-- Bootstrap 4.5.3 -->
-    @*<link rel="stylesheet" href="~/Theme/assets/bootstrap/css/bootstrap.min.css">*@
-    <!-- CSS Implementing Plugins -->
-    @*<link rel="stylesheet" href="~/Theme/assets/css/plugins/apexcharts.css">
-        <link rel="stylesheet" href="~/Theme/assets/css/plugins/jquery.classycountdown.min.css">
-        <link rel="stylesheet" href="~/Theme/assets/css/plugins/nouislider.min.css">
-        <link rel="stylesheet" href="~/Theme/assets/css/plugins/select2.min.css">
-        <link rel="stylesheet" href="~/Theme/assets/css/plugins/swiper.min.css">*@
-    <!-- CSS Template -->
+
     <link rel="stylesheet" href="~/Theme/assets/css/theme.css">
     <!-- Here goes your custom.css -->
     <link rel="stylesheet" href="~/Theme/assets/css/custom.css">
-    <!-- colors: amber,blue,brown,cyan,default,green,indigo,orange,pink,purple,red,teal,yellow -->
-    @*<link rel="stylesheet" href="~/Theme/assets/css/colors/default.css" id="colorswitch">*@
+
 
     <link href="~/NewThem/assets/css/plugins.css" rel="stylesheet" />
     <link href="~/NewThem/assets/css/style.css" rel="stylesheet" />
@@ -31,13 +24,16 @@
 </head>
 
 <body style="padding-top: 0px !important">
-    @{
-        Html.RenderPartial("_PartialHeader");
-    }
+
+        @{await Html.RenderPartialAsync("_PartialHeader");}
+
+   
+
     @RenderBody()
-    @{
-        Html.RenderPartial("_PartialFooter");
-    }
+
+        @{await Html.RenderPartialAsync("_PartialFooter");}
+
+ 
     @* <div class="page-wrapper">
 
          <!-- Page Header -->

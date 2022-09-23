@@ -53,7 +53,7 @@
 
 
                             </ul>
-                            @if ((int)Model.OrderStatus == 1)
+                            @if (Model.IsEnableReturned)
                             {
                                 <form asp-area="Customers" asp-controller="Orders" asp-action="ReturnedOrederItem" method="post" class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary mb-1" id="showformpostal">

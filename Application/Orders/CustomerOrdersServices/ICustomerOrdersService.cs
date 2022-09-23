@@ -87,6 +87,11 @@ namespace Application.Orders.CustomerOrdersServices
                     }).ToList(),
                     PaymentId = PaymentId
                 };
+                if ((int)model.OrderStatus == 1 &&model.postalProductDto.TrackingNumber!="" && model.postalProductDto.InsertDate!=DateTime.MinValue
+                    && DateTime.Now.AddDays(-8) < model.postalProductDto.InsertDate)
+                {
+                    model.IsEnableReturned = true;
+                }
                 return model;
             }
             return null;
