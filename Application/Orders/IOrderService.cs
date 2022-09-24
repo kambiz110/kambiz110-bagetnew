@@ -87,7 +87,7 @@ namespace Application.Orders
             context.SaveChanges();
             if (basket.AppliedDiscount != null)
             {
-                discountHistoryService.InsertDiscountUsageHistory(basket.Id, order.Id);
+                discountHistoryService.InsertDiscountUsageHistory(basket.AppliedDiscount.Id, order.Id);
             }
             return order.Id;
 

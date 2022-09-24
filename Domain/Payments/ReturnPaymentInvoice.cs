@@ -9,6 +9,7 @@ namespace Domain.Payments
    public class ReturnPaymentInvoice
     {
         public Guid Id { get; set; }
+        public string AdminUserId { get; set; }
         public int Amount { get; private set; }
         public DateTime DatePay { get;  set; }
         public string FollowKey { get; set; }

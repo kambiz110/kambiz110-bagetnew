@@ -145,6 +145,10 @@ namespace WebSite.EndPoint.Controllers
                
                 if (Url.IsLocalUrl(model?.ReturnUrl ?? "/"))
                 {
+                    if (model?.ReturnUrl == "/Basket/ApplyDiscount")
+                    {
+                        return Redirect("/Basket/index");
+                    }
                     return Redirect(model?.ReturnUrl ?? "/");
                 }
                 else

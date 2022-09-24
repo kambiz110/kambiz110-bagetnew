@@ -9,6 +9,7 @@ namespace Domain.Postals
    public class ReturnedProduct
     {
         public int Id { get; set; }
+        public string AdminUserId { get; set; }
         public PostalCompany PostalCompane { get; set; }
         public string TrackingNumber { get; set; }
         public PostalStatus PostalStatus { get; set; }

@@ -89,7 +89,7 @@
                                 </span>
                             </label>
                         </div>
-                        <div class="custom-control custom-radio custom-control-inline mb-3">
+                        <div class="custom-control custom-radio custom-control-inline mb-3 d-none">
                             <input type="radio" id="PaymentOnTheSpot" name="PaymentMethod" value="PaymentOnTheSpot" class="custom-control-input disabled" readonly>
                             <label class="custom-control-label payment-select" for="PaymentOnTheSpot">
                                 <span class="d-flex align-items-center">
@@ -117,7 +117,7 @@
                 @if (Model.Basket.DiscountAmount > 0)
                 {
                     <div class="d-flex justify-content-between px-3 py-2">
-                        <span class="text-muted">تخفیف کالاها</span>
+                        <span class="text-muted">بن تخفیف کالاها</span>
                         <span class="text-danger">
                             @Model.Basket.DiscountAmount.ToString("n0")
                             <span class="text-sm">تومان</span>

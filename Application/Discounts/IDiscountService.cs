@@ -144,7 +144,9 @@ namespace Application.Discounts
             var checkLimit = CheckDiscountLimitations(discount, user);
 
             if (checkLimit.IsSuccess == false)
+            {
                 return checkLimit;
+            }            
             return new BaseDto(true, null);
 
         }

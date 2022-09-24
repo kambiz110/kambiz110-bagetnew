@@ -10,6 +10,7 @@ namespace Domain.Postals
    public class PostProduct
     {
         public int Id { get; set; }
+        public string AdminUserId { get; set; }
         public PostalCompany PostalCompane { get; set; }
         public string TrackingNumber { get; set; }
         public PostalType PostalType { get; set; }

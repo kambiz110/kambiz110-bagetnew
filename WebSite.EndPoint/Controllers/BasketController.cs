@@ -165,7 +165,6 @@ namespace WebSite.EndPoint.Controllers
 
 
 
-        [AllowAnonymous]
         [HttpPost]
         //اعمال تخفیف روی سبد خرید
         public IActionResult ApplyDiscount(string CouponCode,int BasketId)

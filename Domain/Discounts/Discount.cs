@@ -61,7 +61,7 @@ namespace Domain.Discounts
             }
             else
             {
-                result = DiscountAmount;
+                result =  DiscountAmount;
             }
 
             return result;

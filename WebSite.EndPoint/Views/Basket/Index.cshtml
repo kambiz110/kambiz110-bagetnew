@@ -9,7 +9,7 @@
 <div class="cart_page_bg">
     <div class="container">
         <div class="shopping_cart_area">
-            <form action="#">
+            <div action="#">
                 <div class="row">
                     <div class="col-12">
                         <div class="table_desc">
@@ -84,15 +84,20 @@
                 <div class="coupon_area">
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
-                            <form class="coupon_code left" method="post" asp-action="ApplyDiscount">
+                            <form id="ApplyDiscountForm" class="coupon_code left" method="post" asp-controller="Basket" asp-action="ApplyDiscount">
                                 <input type="hidden" value="@Model.Id" name="BasketId" />
                                 <h3>تخفیف</h3>
                                 <div class="coupon_inner">
                                     <p>اگر کد تخفیف خود را دارید وارد کنید.</p>
-                                    <input placeholder="کد تخفیف" type="text">
+                                    <input placeholder="کد تخفیف" type="text" name="CouponCode">
                                     <button type="submit">اعمال تخفیف</button>
                                 </div>
                             </form>
+                            @if (TempData["InvalidMessage"]!=null && !String.IsNullOrEmpty(TempData["InvalidMessage"].ToString()))
+                            {
+                                <div class="alert-danger h3"> @TempData["InvalidMessage"].ToString()</div>
+                            }
+
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="coupon_code right">
@@ -104,24 +109,24 @@
                                     </div>
                                     @if (Model.DiscountAmount > 0)
                                     {
-                                        <div class="d-flex justify-content-between px-3 py-2">
-                                            <span class="text-muted">تخفیف کالاها</span>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="text-muted">تخفیف بن کالا</span>
                                             <span class="text-danger">
                                                 @Model.DiscountAmount.ToString("n0")
                                                 <span class="text-sm">تومان</span>
                                             </span>
                                         </div>
-                                        <div class="d-flex justify-content-between px-3 py-2">
-                                            <a asp-action="RemoveDiscount" asp-route-id="@Model.Id" class="text-danger">
-                                                <i class="fa fa-closed-captioning"></i>
-                                                حذف تخفیف
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <a asp-action="RemoveDiscount" asp-route-id="@Model.Id" class="btn btn-outline-danger">
+                                                <i class="fa fa-trash-o" style='font-size:20px;color:red'></i>
+                                                حذف بن تخفیف
                                             </a>
                                         </div>
                                     }
                                     @if (Model != null && Model.Items.Count() > 0)
                                     {
                                         var postmony = 60000;
-                                        var totalmony = Model.Total();
+                                        var totalmony = Model.TotalWithoutPostDelivery();
                                         if (totalmony < 400000)
                                         {
                                             postmony = 60000;
@@ -172,7 +177,7 @@
                     </div>
                 </div>
                 <!--coupon code area end-->
-            </form>
+            </div>
         </div>
     </div>
 </div>

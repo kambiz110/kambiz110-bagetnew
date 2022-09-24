@@ -37,7 +37,9 @@ namespace Application.Discounts.AddNewDiscountServices
                 RequiresCouponCode = discount.RequiresCouponCode,
                 StartDate = discount.StartDate,
                 UsePercentage = discount.UsePercentage,
-                Importance=discount.Importance
+                Importance=discount.Importance,
+                LimitationTimes=discount.LimitationTimes
+                
             };
 
             if (discount.appliedToCatalogItem != null)
