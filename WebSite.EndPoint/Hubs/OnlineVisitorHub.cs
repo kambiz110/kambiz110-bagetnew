@@ -1,5 +1,4 @@
-﻿using Application.Visitors.VisitorOnline;
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
 using Persistence.Contexts;
 using System;
 using System.Collections.Generic;

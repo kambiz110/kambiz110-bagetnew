@@ -25,7 +25,6 @@ using Application.Users;
 using Application.Users.Command;
 using Application.Users.Token;
 using Application.Visitors.SaveVisitorInfo;
-using Application.Visitors.VisitorOnline;
 using DNTCaptcha.Core;
 using Domain.Users;
 using EndPoint.Site.Useful.Ultimite;
@@ -41,7 +40,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence.Contexts;
-using Persistence.Contexts.MongoContext;
+
 using Persistence.Seeding;
 using System;
 using System.Collections.Generic;
@@ -100,9 +99,8 @@ namespace WebSite.EndPoint
                 option.SlidingExpiration = true;
             });
             #endregion
-            services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
+     
             services.AddTransient<ISaveVisitorInfoService, SaveVisitorInfoService>();
-            services.AddTransient<IIVisitorOnlineService, VisitorOnlineService>();
             services.AddTransient<IGetMenuItemService, GetMenuItemService>();
             services.AddTransient<IGetCatalogIItemPLPService, GetCatalogIItemPLPService>();
             services.AddTransient<IUriComposerService, UriComposerService>();

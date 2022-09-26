@@ -47,7 +47,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence.Contexts;
-using Persistence.Contexts.MongoContext;
 using Persistence.Seeding;
 using System;
 using System.Collections.Generic;
@@ -74,7 +73,6 @@ namespace Admin.EndPoint
             services.AddSession();
             services.AddScoped<ICrudCompanyService, CrudCompanyService>();
             services.AddScoped<IGetTodayReportService, GetTodayReportService>();
-            services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
             services.AddTransient<ICatalogTypeService, CatalogTypeService>();
             services.AddTransient<IAddNewCatalogItemService,  AddNewCatalogItemService>();
             services.AddTransient<ICatalogItemService,  CatalogItemService>();

@@ -10,6 +10,7 @@ using Domain.Payments;
 using Domain.Postals;
 using Domain.Tickets;
 using Domain.Users;
+using Domain.Visitors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -52,6 +53,7 @@ namespace Application.Interfaces.Contexts
         DbSet<Comment> Comments { get; set; }
         DbSet<MonthLog> MonthLogs { get; set; }
         DbSet<DayLog> DayLogs { get; set; }
+        DbSet<Visitor> Visitors { get; set; }
         DbSet<Domain.Payments.ReturnPaymentInvoice> ReturnPaymentInvoices { get; set; }
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);

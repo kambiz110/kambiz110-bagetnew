@@ -8,19 +8,20 @@ namespace Domain.Visitors
 {
     public class Visitor
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+
+        public long Id { get; set; }
         public  string Ip { get; set; }
         public string CurrentLink { get; set; }
         public string ReferrerLink { get; set; }
         public string Method { get; set; }
         public string Protocol { get; set; }
         public string PhysicalPath { get; set; }
-        public VisitorVersion Browser { get; set; }
-        public VisitorVersion OperationSystem { get; set; }
-        public Device Device { get; set; }
-        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+        public string VisitorVersionFamily { get; set; }
+        public string VisitorVersionVersion { get; set; }
+        public string DeviceBrand { get; set; }
+        public string DeviceFamily { get; set; }
+        public string DeviceModel { get; set; }
+        public bool DeviceIsSpider { get; set; }
         public DateTime Time { get; set; }
         public string VisitorId { get; set; }
 

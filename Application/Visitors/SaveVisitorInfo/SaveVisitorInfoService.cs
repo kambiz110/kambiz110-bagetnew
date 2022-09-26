@@ -1,50 +1,42 @@
 ﻿using Application.Interfaces.Contexts;
 using Domain.Visitors;
-using MongoDB.Driver;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Application.Visitors.SaveVisitorInfo
 {
     public class SaveVisitorInfoService : ISaveVisitorInfoService
     {
-        private readonly IMongoDbContext<Visitor> _mongoDbContext;
-        private readonly IMongoCollection<Visitor> _visitorMongoCollection;
+        private readonly IDataBaseContext _dataBaseContext;
 
-        public SaveVisitorInfoService(IMongoDbContext<Visitor> mongoDbContext)
+        public SaveVisitorInfoService(IDataBaseContext dataBaseContext)
         {
-            _mongoDbContext = mongoDbContext;
-            _visitorMongoCollection = _mongoDbContext.GetCollection();
+            _dataBaseContext = dataBaseContext;
         }
+
         public void Execute(RequestSaveVisitorInfoDto request)
         {
-            _visitorMongoCollection.InsertOne(new Visitor
+            var visitor = new Visitor
             {
-                Browser = new VisitorVersion
-                {
-                    Family = request.Browser.Family,
-                    Version = request.Browser.Version,
-                },
                 CurrentLink = request.CurrentLink,
-                Device = new Device
-                {
-                    Brand = request.Device.Brand,
-                    Family = request.Device.Family,
-                    IsSpider = request.Device.IsSpider,
-                    Model = request.Device.Model
-                },
+                DeviceBrand = request.Device.Brand,
+                DeviceFamily = request.Device.Family,
+                DeviceIsSpider = request.Device.IsSpider,
+                DeviceModel = request.Device.Model,
                 Ip = request.Ip,
                 Method = request.Method,
-                OperationSystem = new VisitorVersion
-                {
-                    Family = request.OperationSystem.Family,
-                    Version = request.OperationSystem.Version
-                },
+                VisitorVersionFamily = request.OperationSystem.Family,
+                VisitorVersionVersion = request.OperationSystem.Version,
                 PhysicalPath = request.PhysicalPath,
                 Protocol = request.Protocol,
                 ReferrerLink = request.ReferrerLink,
                 VisitorId = request.VisitorId,
                 Time = DateTime.Now,
-            });
+            };
+            _dataBaseContext.Visitors.Add(visitor);
+            _dataBaseContext.SaveChanges();
         }
     }
 }

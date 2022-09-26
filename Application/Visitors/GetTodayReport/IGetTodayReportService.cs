@@ -47,11 +47,9 @@ namespace Application.Visitors.GetTodayReport
                 .Select(p => new VisitorsDto
                 {
                     Id = p.Id,
-                    Browser = p.Browser.Family,
                     CurrentLink = p.CurrentLink,
                     Ip = p.Ip,
-                    OperationSystem = p.OperationSystem.Family,
-                    IsSpider = p.Device.IsSpider,
+                    IsSpider = p.DeviceIsSpider,
                     ReferrerLink = p.ReferrerLink,
                     Time = p.Time,
                     VisitorId = p.VisitorId
@@ -161,7 +159,7 @@ namespace Application.Visitors.GetTodayReport
 
     public class VisitorsDto
     {
-        public string Id { get; set; }
+        public long Id { get; set; }
         public string Ip { get; set; }
         public string CurrentLink { get; set; }
         public string ReferrerLink { get; set; }

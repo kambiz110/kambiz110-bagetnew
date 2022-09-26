@@ -163,10 +163,8 @@ namespace WebSite.EndPoint.Controllers
             return View(model);
         }
 
-
-
-        [HttpPost]
         //اعمال تخفیف روی سبد خرید
+        [HttpPost]
         public IActionResult ApplyDiscount(string CouponCode,int BasketId)
         {
             var user = userManager.GetUserAsync(User).Result;

@@ -12,6 +12,7 @@ using Domain.Payments;
 using Domain.Postals;
 using Domain.Tickets;
 using Domain.Users;
+using Domain.Visitors;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityConfigurations;
 using Persistence.Seeds;
@@ -60,6 +61,8 @@ namespace Persistence.Contexts
         public DbSet<Comment> Comments { get; set; }
         public DbSet<MonthLog> MonthLogs { get; set; }
         public DbSet<DayLog> DayLogs { get; set; }
+        
+        public DbSet<Visitor> Visitors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

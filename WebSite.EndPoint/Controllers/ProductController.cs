@@ -12,9 +12,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebSite.EndPoint.Helper;
 using WebSite.EndPoint.Utilities;
+using WebSite.EndPoint.Utilities.Filters;
 
 namespace WebSite.EndPoint.Controllers
 {
+    [ServiceFilter(typeof(SaveVisitorFilter))]
     public class ProductController : Controller
     {
         private readonly IGetCatalogIItemPLPService getCatalogIItemPLPService;
