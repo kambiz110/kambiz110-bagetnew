@@ -79,7 +79,7 @@ namespace Admin.EndPoint.Pages.CatalogType
     
             if (result.IsSuccess)
             {
-                _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.addCatalogType, StrKeyTable = result.Data.Id.ToString() });
+                _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.addCatalogType, StrKeyTable = result.Data.Id.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
                 return RedirectToPage("index", new { parentid = CatalogType.ParentCatalogTypeId });
             }

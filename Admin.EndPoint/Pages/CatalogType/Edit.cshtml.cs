@@ -78,7 +78,7 @@ namespace Admin.EndPoint.Pages.CatalogType
             }
             
             var result = catalogTypeService.Edit(model);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editCatalogType, StrKeyTable = result.Data.Id.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editCatalogType, StrKeyTable = result.Data.Id.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
 
             Message = result.Message;

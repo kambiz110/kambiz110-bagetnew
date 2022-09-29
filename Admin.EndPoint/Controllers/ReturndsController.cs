@@ -60,7 +60,7 @@ namespace Admin.EndPoint.Controllers
         public IActionResult ReturnedPostToShop(ResiveOrderItemsReturnedDto data)
         {
             returnedForAdmin.StatusResiveReturnedToShop(data);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.DeliveredReturned, StrKeyTable = data.ReturnedId.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.DeliveredReturned, StrKeyTable = data.ReturnedId.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });
         }
@@ -77,7 +77,7 @@ namespace Admin.EndPoint.Controllers
                 return new JsonResult(new ResultDto { IsSuccess = false, Message = "false" });
             }
             addPostalProduct.ReturnedPostal(dto);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.sendReturned, StrKeyTable = dto.ReturnedId.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.sendReturned, StrKeyTable = dto.ReturnedId.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });
         }
@@ -102,7 +102,7 @@ namespace Admin.EndPoint.Controllers
             var item = JsonConvert.DeserializeObject<List<BankDitel>>(jsonData);
             dto.BankOrigin = item.Where(p => p.BankOriginNumber == dto.BankOriginNumber).FirstOrDefault().BankOrigin;
             returnPaymentInvoice.addDataToDb(dto);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.ReturnPaymentInvoice, StrKeyTable = dto.ReturnedId.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.ReturnPaymentInvoice, StrKeyTable = dto.ReturnedId.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });
         }
@@ -110,7 +110,7 @@ namespace Admin.EndPoint.Controllers
         public IActionResult canseleReturnProductes(canseleReturnProductesDto data)
         {
             returnedForAdmin.CanseleReturnProductes(data);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.CanselReturned, StrKeyTable = data.ReturnedId.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.CanselReturned, StrKeyTable = data.ReturnedId.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });
         }

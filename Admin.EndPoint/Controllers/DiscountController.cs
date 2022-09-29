@@ -44,7 +44,7 @@ namespace Admin.EndPoint.Controllers
             ViewData["Brands2"] = new SelectList(catalogItemService.GetBrand(), "Id", "Brand");
             ViewData["Cars2"] = new SelectList(catalogItemService.GetCares(), "Id", "Name");
             var model = descountForEdit.GetDescount(id);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.addDiscount, StrKeyTable = id.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.addDiscount, StrKeyTable = id.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             return View(model.Data);
         }
@@ -65,7 +65,7 @@ namespace Admin.EndPoint.Controllers
                 ViewData["Brands2"] = new SelectList(catalogItemService.GetBrand(), "Id", "Brand");
                 ViewData["Cars2"] = new SelectList(catalogItemService.GetCares(), "Id", "Name");
 
-                _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editDiscount, StrKeyTable = dto.Id.ToString() });
+                _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editDiscount, StrKeyTable = dto.Id.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
                 var model = descountForEdit.GetDescount(dto.Id);
                 return View(model.Data);
             }

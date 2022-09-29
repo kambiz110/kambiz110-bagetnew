@@ -12,6 +12,7 @@ namespace Domain.Logs
         public string StrKeyTable { get; set; }
         public string userName { get; set; }
         public logEvent userEvent { get; set; }
+        public string Ip { get; set; }
         public DateTime InsertTime { get; set; } = DateTime.Now;
     }
     public enum logEvent

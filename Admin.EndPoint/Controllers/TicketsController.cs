@@ -51,7 +51,7 @@ namespace Admin.EndPoint.Controllers
                 return View(dto);
             }
             addAnswer.addAnswer(dto);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.answerTicket, StrKeyTable = dto.Id.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.answerTicket, StrKeyTable = dto.Id.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             return View(nameof(Index));
         }
@@ -70,7 +70,7 @@ namespace Admin.EndPoint.Controllers
                 return View(dto);
             }
             addAnswer.addAnswer(dto);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editTicket, StrKeyTable = dto.Id.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editTicket, StrKeyTable = dto.Id.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             return View(nameof(Index));
         }

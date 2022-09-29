@@ -78,7 +78,7 @@ namespace Admin.EndPoint.Controllers
             string ip = HttpContext.Request.HttpContext.Connection.RemoteIpAddress.ToString();
             var userid = User.Identity.Name;
             var result = _editStatusCommentService.Exequte(ids, 3, userid, ip);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.deletedComment, StrKeyTable = ids.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.deletedComment, StrKeyTable = ids.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             TempData["Message"] = result.Message;
             TempData["alertClass"] = result.IsSuccess ? "success" : "danger";
@@ -90,7 +90,7 @@ namespace Admin.EndPoint.Controllers
             string ip = HttpContext.Request.HttpContext.Connection.RemoteIpAddress.ToString();
             var userid = User.Identity.Name;
             var result = _editStatusCommentService.Exequte(ids, 1, userid, ip);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.publishComment, StrKeyTable = ids.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.publishComment, StrKeyTable = ids.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             TempData["Message"] = result.Message;
             TempData["alertClass"] = result.IsSuccess ? "success" : "danger";
@@ -102,7 +102,7 @@ namespace Admin.EndPoint.Controllers
             string ip = HttpContext.Request.HttpContext.Connection.RemoteIpAddress.ToString();
             var userid = User.Identity.Name;
             var result = _editStatusCommentService.Exequte(ids, 1, userid, ip);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.publishComment, StrKeyTable = ids.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.publishComment, StrKeyTable = ids.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             TempData["Message"] = result.Message;
             TempData["alertClass"] = result.IsSuccess ? "success" : "danger";
@@ -131,7 +131,7 @@ namespace Admin.EndPoint.Controllers
                 userName = User.Identity.Name;
             }
             var result = _answerComment.Exequte(data, userName, ip);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.answerComment, StrKeyTable = data.Commentid.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.answerComment, StrKeyTable = data.Commentid.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             if (result.IsSuccess)
             {
@@ -155,7 +155,7 @@ namespace Admin.EndPoint.Controllers
         {
             data.userName = User.Identity.Name;
             var result = _editStatusCommentService.EditComment(data);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editComment, StrKeyTable = data.Id.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editComment, StrKeyTable = data.Id.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             TempData["alertClass"] = result.IsSuccess ? "success" : "danger";
             TempData["Message"] = result.Message;

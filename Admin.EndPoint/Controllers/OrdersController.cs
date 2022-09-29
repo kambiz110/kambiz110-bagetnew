@@ -39,7 +39,7 @@ namespace Admin.EndPoint.Controllers
         public async Task<IActionResult> OrderPostals(AddPostalProductDto dto)
         {
             await addPostalProduct.addPostal(dto);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.sendOrder, StrKeyTable = dto.Id.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.sendOrder, StrKeyTable = dto.Id.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             return RedirectToAction("Index");
         }
@@ -54,7 +54,7 @@ namespace Admin.EndPoint.Controllers
         public IActionResult DeliveredProductToCustomer(int OrderId)
         {
             adminOrdersService.chengeOrederStatuse(OrderId ,2);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.DeliveredOrder, StrKeyTable = OrderId.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.DeliveredOrder, StrKeyTable = OrderId.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });
         }

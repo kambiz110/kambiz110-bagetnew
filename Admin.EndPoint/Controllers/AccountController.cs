@@ -78,7 +78,7 @@ namespace Admin.EndPoint.Controllers
                 // SmsServices sendSms = new SmsServices();
                 // sendSms.verificationCodeWithPatern(user.FullName,"09055510734");
                 //  sendSms.singleUserSendSMS("ورود به حساب کاربری ادمین موفق !",new string[] { "09055510734" });
-                _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto {userName=user.UserName ,userEvent=Domain.Logs.logEvent.login , StrKeyTable = user.UserName });
+                _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto {userName=user.UserName ,userEvent=Domain.Logs.logEvent.login , StrKeyTable = user.UserName, Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
                   var addClaimes = _userManager.AddClaimAsync(user, new Claim("FullName", user.FullName)).Result;
                 //var token = tokenUser.creatToken(user.Id);
                 string redirect;
@@ -102,7 +102,7 @@ namespace Admin.EndPoint.Controllers
         public IActionResult LogOut()
         {
             _signInManager.SignOutAsync();
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.logout, StrKeyTable = User.Identity.Name });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.logout, StrKeyTable = User.Identity.Name,Ip= HttpContext.Connection.RemoteIpAddress?.ToString() });
             return RedirectToAction("Index", "Home");
         }
         public IActionResult AccessDenied(string message)

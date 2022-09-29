@@ -137,7 +137,7 @@ namespace Admin.EndPoint.Controllers
             }
             Data.Images = images;
             var resultService = addNewCatalogItemService.Execute(Data);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editProduct ,StrKeyTable=Data.Id.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editProduct ,StrKeyTable=Data.Id.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
             return new JsonResult(resultService);
          
         }

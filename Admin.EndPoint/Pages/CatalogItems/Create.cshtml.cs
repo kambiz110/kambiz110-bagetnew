@@ -91,7 +91,7 @@ namespace Admin.EndPoint.Pages.CatalogItems
           
             Data.Images = images;
             var resultService = addNewCatalogItemService.Execute(Data);
-            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.addProduct, StrKeyTable = Data.Id.ToString() });
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.addProduct, StrKeyTable = Data.Id.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             if (resultService.IsSuccess)
             {
