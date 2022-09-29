@@ -1,4 +1,5 @@
 ﻿using Application.Dtos;
+using Application.Logs.Command;
 using Application.Orders.AdminOrderServices;
 using Application.PostalProducts;
 using Application.PostalProducts.Dto;
@@ -16,11 +17,12 @@ namespace Admin.EndPoint.Controllers
     {
         private readonly IAdminOrdersService adminOrdersService;
         private readonly IAddPostalProductService addPostalProduct;
-
-        public OrdersController(IAdminOrdersService adminOrdersService, IAddPostalProductService addPostalProduct)
+        private readonly IAddUserLog _userLog;
+        public OrdersController(IAdminOrdersService adminOrdersService, IAddPostalProductService addPostalProduct, IAddUserLog userLog)
         {
             this.adminOrdersService = adminOrdersService;
             this.addPostalProduct = addPostalProduct;
+            _userLog = userLog;
         }
         public IActionResult Index(string searchkey = "", int orderStatus = 0)
         {
@@ -37,6 +39,8 @@ namespace Admin.EndPoint.Controllers
         public async Task<IActionResult> OrderPostals(AddPostalProductDto dto)
         {
             await addPostalProduct.addPostal(dto);
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.sendOrder, StrKeyTable = dto.Id.ToString() });
+
             return RedirectToAction("Index");
         }
         [Route("Orders/InvoiceOrder/{PaymentId}")]
@@ -50,6 +54,8 @@ namespace Admin.EndPoint.Controllers
         public IActionResult DeliveredProductToCustomer(int OrderId)
         {
             adminOrdersService.chengeOrederStatuse(OrderId ,2);
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.DeliveredOrder, StrKeyTable = OrderId.ToString() });
+
             return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });
         }
     }

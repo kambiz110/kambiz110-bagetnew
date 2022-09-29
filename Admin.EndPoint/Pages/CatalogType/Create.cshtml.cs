@@ -9,6 +9,7 @@ using Application.Catalogs.CatalogTypeImages;
 using Application.Catalogs.CatalogTypes;
 using Application.Catalogs.CatalogTypes.Dto;
 using Application.Dtos;
+using Application.Logs.Command;
 using Application.Users.Token;
 using AutoMapper;
 using Infrastructure.ExternalApi.ImageServer;
@@ -27,17 +28,19 @@ namespace Admin.EndPoint.Pages.CatalogType
         private readonly IUploadFile imageUploadService;
         private readonly ICRUDCatalogTypeImage cRUDCatalogTypeImage;
         private readonly IGetUserToken getUserToken;
+        private readonly IAddUserLog _userLog;
 
         public CreateModel(ICatalogTypeService catalogTypeService, IMapper mapper,
             IUploadFile imageUploadService
             , ICRUDCatalogTypeImage cRUDCatalogTypeImage
-            , IGetUserToken getUserToken)
+            , IGetUserToken getUserToken, IAddUserLog userLog)
         {
             this.catalogTypeService = catalogTypeService;
             this.mapper = mapper;
             this.imageUploadService = imageUploadService;
             this.cRUDCatalogTypeImage = cRUDCatalogTypeImage;
             this.getUserToken = getUserToken;
+            _userLog = userLog;
         }
 
         [BindProperty]
@@ -76,6 +79,8 @@ namespace Admin.EndPoint.Pages.CatalogType
     
             if (result.IsSuccess)
             {
+                _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.addCatalogType, StrKeyTable = result.Data.Id.ToString() });
+
                 return RedirectToPage("index", new { parentid = CatalogType.ParentCatalogTypeId });
             }
             Message = result.Message;

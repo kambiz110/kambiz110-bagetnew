@@ -9,7 +9,6 @@ namespace Domain.Logs
    public class UserLog
     {
         public long Id { get; set; }
-        public int NumberKeyTable { get; set; }
         public string StrKeyTable { get; set; }
         public string userName { get; set; }
         public logEvent userEvent { get; set; }
@@ -47,7 +46,7 @@ namespace Domain.Logs
         /// </summary>
         ReturnPaymentInvoice = 7,
         /// <summary>
-        ///   محل
+        ///   کنسل کردن مرجوعی مشتری
         /// </summary>
         CanselReturned = 8,
         /// <summary>
@@ -92,6 +91,18 @@ namespace Domain.Logs
         ///  افزودن موجودی به انبار
         /// </summary>
         addStoreroom = 18,
+        /// <summary>
+        ///  دریافت محصول توسط مشتری
+        /// </summary>
+        DeliveredOrder = 19,
+        /// <summary>
+        ///  دریافت محصول در فروشگاه
+        /// </summary>
+        DeliveredReturned = 20,
 
+        /// <summary>
+        ///  جواب تیکت
+        /// </summary>
+        editTicket = 21,
     }
 }

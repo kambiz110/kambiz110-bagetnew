@@ -10,6 +10,7 @@ using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Discounts;
 using Application.Dtos;
+using Application.Logs.Command;
 using Application.Storerooms.Command;
 using Application.Storerooms.Dto;
 using Application.Users.Token;
@@ -38,7 +39,7 @@ namespace Admin.EndPoint.Controllers
         private readonly IGetDescountForEdit descountForEdit;
         private readonly IincreaseCattalogItem iincreaseCattalog;
         private readonly IGetUserToken getUserToken;
-
+        private readonly IAddUserLog _userLog;
         public CategoreItemsController(IGetAdminEditCatalogItem getAdminEditCatalogItem
             , ICatalogItemService catalogItemService
             , IRemoveFeacherService removeFeacherService,
@@ -47,7 +48,7 @@ namespace Admin.EndPoint.Controllers
             , IDeleteImageService deleteImageService,
             IAddStoreroom addStoreroom, IGetDescountForEdit descountForEdit,
             IincreaseCattalogItem iincreaseCattalog,
-            IGetUserToken getUserToken)
+            IGetUserToken getUserToken, IAddUserLog userLog)
         {
             this.getAdminEditCatalogItem = getAdminEditCatalogItem;
             this.catalogItemService = catalogItemService;
@@ -59,6 +60,7 @@ namespace Admin.EndPoint.Controllers
             this.descountForEdit = descountForEdit;
             this.iincreaseCattalog = iincreaseCattalog;
             this.getUserToken = getUserToken;
+            _userLog = userLog;
         }
 
         public IActionResult Index(int pageIndex = 1, int pageSize = 20, string search = "")
@@ -135,6 +137,7 @@ namespace Admin.EndPoint.Controllers
             }
             Data.Images = images;
             var resultService = addNewCatalogItemService.Execute(Data);
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editProduct ,StrKeyTable=Data.Id.ToString() });
             return new JsonResult(resultService);
          
         }

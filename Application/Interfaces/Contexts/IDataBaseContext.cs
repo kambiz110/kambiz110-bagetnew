@@ -53,6 +53,7 @@ namespace Application.Interfaces.Contexts
         DbSet<Comment> Comments { get; set; }
         DbSet<MonthLog> MonthLogs { get; set; }
         DbSet<Visitor> Visitors { get; set; }
+        DbSet<UserLog> UserLogs { get; set; }
         DbSet<Domain.Payments.ReturnPaymentInvoice> ReturnPaymentInvoices { get; set; }
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);

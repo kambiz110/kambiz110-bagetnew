@@ -8,6 +8,7 @@ using Admin.EndPoint.ViewModels.Catalogs;
 using Application.Catalogs.CatalogTypeImages;
 using Application.Catalogs.CatalogTypes;
 using Application.Catalogs.CatalogTypes.Dto;
+using Application.Logs.Command;
 using Application.Users.Token;
 using AutoMapper;
 using Domain.Catalogs;
@@ -27,17 +28,19 @@ namespace Admin.EndPoint.Pages.CatalogType
         private readonly IUploadFile imageUploadService;
         private readonly ICRUDCatalogTypeImage cRUDCatalogTypeImage;
         private readonly IGetUserToken getUserToken;
+        private readonly IAddUserLog _userLog;
 
         public EditModel(ICatalogTypeService catalogTypeService, IMapper mapper,
              IUploadFile imageUploadService,
              ICRUDCatalogTypeImage cRUDCatalogTypeImage
-            , IGetUserToken getUserToken)
+            , IGetUserToken getUserToken, IAddUserLog userLog)
         {
             this.catalogTypeService = catalogTypeService;
             this.mapper = mapper;
             this.imageUploadService = imageUploadService;
             this.cRUDCatalogTypeImage = cRUDCatalogTypeImage;
             this.getUserToken = getUserToken;
+            _userLog = userLog;
         }
 
 
@@ -75,8 +78,9 @@ namespace Admin.EndPoint.Pages.CatalogType
             }
             
             var result = catalogTypeService.Edit(model);
-           
-           
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editCatalogType, StrKeyTable = result.Data.Id.ToString() });
+
+
             Message = result.Message;
             CatalogType = mapper.Map<CatalogTypeViewModel>(result.Data);
             return Page();

@@ -60,9 +60,10 @@ namespace Persistence.Contexts
         public DbSet<ReturnPaymentInvoice> ReturnPaymentInvoices { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<MonthLog> MonthLogs { get; set; }
+        public DbSet<UserLog> UserLogs { get; set; }
 
 
-        
+
         public DbSet<Visitor> Visitors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

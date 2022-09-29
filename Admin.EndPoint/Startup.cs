@@ -21,6 +21,7 @@ using Application.Discounts;
 using Application.Discounts.AddNewDiscountServices;
 using Application.Discounts.EditDiscountServices;
 using Application.Interfaces.Contexts;
+using Application.Logs.Command;
 using Application.Orders.AdminOrderServices;
 using Application.Orders.CustomerOrdersServices;
 using Application.PostalProducts;
@@ -111,6 +112,7 @@ namespace Admin.EndPoint
             services.AddTransient<IGetCommentForAdmin, GetCommentForAdmin>();
             services.AddTransient<IEditStatusCommentService, EditStatusCommentService>();
             services.AddTransient<IAnswerCommentAdmin, AnswerCommentAdmin>();
+            services.AddScoped<IAddUserLog, AddUserLog>();
 
             #region connection String SqlServer
             services.AddScoped<IDataBaseContext, DataBaseContext>();

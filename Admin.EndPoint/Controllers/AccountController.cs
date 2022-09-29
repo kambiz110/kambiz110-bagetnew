@@ -1,4 +1,5 @@
 ﻿using Admin.EndPoint.Helper;
+using Application.Logs.Command;
 using Application.Users.Dto;
 using Application.Users.Token;
 using Domain.Users;
@@ -21,17 +22,19 @@ namespace Admin.EndPoint.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly IGeneritTokenUser tokenUser;
         private readonly ISmsServices smsServices;
+        private readonly IAddUserLog _userLog;
 
-        public AccountController(UserManager<User> userManager, 
-            SignInManager<User> signInManager ,
-            IGeneritTokenUser tokenUser ,
+        public AccountController(UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            IGeneritTokenUser tokenUser,
             ISmsServices smsServices
-            )
+, IAddUserLog userLog)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             this.tokenUser = tokenUser;
             this.smsServices = smsServices;
+            _userLog = userLog;
         }
 
         public IActionResult Login(string returnUrl = "/")
@@ -72,10 +75,11 @@ namespace Admin.EndPoint.Controllers
             }
             if (result.Succeeded)
             {
-               // SmsServices sendSms = new SmsServices();
-               // sendSms.verificationCodeWithPatern(user.FullName,"09055510734");
-              //  sendSms.singleUserSendSMS("ورود به حساب کاربری ادمین موفق !",new string[] { "09055510734" });
-                var addClaimes = _userManager.AddClaimAsync(user, new Claim("FullName", user.FullName)).Result;
+                // SmsServices sendSms = new SmsServices();
+                // sendSms.verificationCodeWithPatern(user.FullName,"09055510734");
+                //  sendSms.singleUserSendSMS("ورود به حساب کاربری ادمین موفق !",new string[] { "09055510734" });
+                _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto {userName=user.UserName ,userEvent=Domain.Logs.logEvent.login , StrKeyTable = user.UserName });
+                  var addClaimes = _userManager.AddClaimAsync(user, new Claim("FullName", user.FullName)).Result;
                 //var token = tokenUser.creatToken(user.Id);
                 string redirect;
                 if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
@@ -98,6 +102,7 @@ namespace Admin.EndPoint.Controllers
         public IActionResult LogOut()
         {
             _signInManager.SignOutAsync();
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.logout, StrKeyTable = User.Identity.Name });
             return RedirectToAction("Index", "Home");
         }
         public IActionResult AccessDenied(string message)

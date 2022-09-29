@@ -15,11 +15,11 @@ namespace Application.Visitors.GetTodayReport
 
     public class GetTodayReportService : IGetTodayReportService
     {
-        private readonly IDataBaseContext _mongoDbContext;
+        private readonly IDataBaseContext _dbContext;
 
-        public GetTodayReportService(IDataBaseContext mongoDbContext)
+        public GetTodayReportService(IDataBaseContext DbContext)
         {
-            _mongoDbContext = mongoDbContext;
+            _dbContext = DbContext;
         }
 
         public ResultTodayReportDto Execute()
@@ -27,13 +27,13 @@ namespace Application.Visitors.GetTodayReport
             DateTime start = DateTime.Now.Date;
             DateTime end = DateTime.Now.AddDays(1);
 
-            var TodayPageViewCount = _mongoDbContext.Visitors.AsQueryable()
+            var TodayPageViewCount = _dbContext.Visitors.AsQueryable()
                 .Where(p => p.Time >= start && p.Time < end).LongCount();
-            var TodayVisitorCount = _mongoDbContext.Visitors.AsQueryable()
+            var TodayVisitorCount = _dbContext.Visitors.AsQueryable()
                 .Where(p => p.Time >= start && p.Time < end).GroupBy(p => p.VisitorId)
                 .LongCount();
-            var AllPageViewCount = _mongoDbContext.Visitors.AsQueryable().LongCount();
-            var AllVisitorCount = _mongoDbContext.Visitors.AsQueryable()
+            var AllPageViewCount = _dbContext.Visitors.AsQueryable().LongCount();
+            var AllVisitorCount = _dbContext.Visitors.AsQueryable()
                 .GroupBy(p => p.VisitorId).LongCount();
 
             VisitCountDto visitPerHour = GTetVisitPerHour(start, end);
@@ -41,7 +41,7 @@ namespace Application.Visitors.GetTodayReport
             VisitCountDto visitPerDay = GetVisitPerDay();
 
 
-            var visitors = _mongoDbContext.Visitors.AsQueryable()
+            var visitors = _dbContext.Visitors.AsQueryable()
                 .OrderByDescending(p => p.Time)
                 .Take(10)
                 .Select(p => new VisitorsDto
@@ -76,7 +76,7 @@ namespace Application.Visitors.GetTodayReport
 
         private VisitCountDto GTetVisitPerHour(DateTime start, DateTime end)
         {
-            var TodayPageViewList = _mongoDbContext.Visitors.AsQueryable().Where(
+            var TodayPageViewList = _dbContext.Visitors.AsQueryable().Where(
               p => p.Time >= start && p.Time < end)
                 .Select(p => new { p.Time }).ToList();
 
@@ -99,7 +99,7 @@ namespace Application.Visitors.GetTodayReport
         {
             DateTime MonthStart = DateTime.Now.Date.AddDays(-30);
             DateTime MonthEnds = DateTime.Now.Date.AddDays(1);
-            var Month_PageViewList = _mongoDbContext.Visitors.AsQueryable()
+            var Month_PageViewList = _dbContext.Visitors.AsQueryable()
                 .Where(p => p.Time >= MonthStart && p.Time < MonthEnds)
                 .Select(p => new { p.Time })
                 .ToList();

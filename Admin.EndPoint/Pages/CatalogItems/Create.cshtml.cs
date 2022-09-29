@@ -7,6 +7,7 @@ using Admin.EndPoint.Helper.UploadFile;
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
 using Application.Catalogs.CatalohItems.CatalogItemServices;
 using Application.Dtos;
+using Application.Logs.Command;
 using Application.Storerooms.Command;
 using Application.Storerooms.Dto;
 using Application.Users.Token;
@@ -27,18 +28,20 @@ namespace Admin.EndPoint.Pages.CatalogItems
         private readonly IUploadFile imageUploadService;
         private readonly IAddStoreroom addStoreroom;
         private readonly IGetUserToken getUserToken;
+        private readonly IAddUserLog _userLog;
 
         public CreateModel(IAddNewCatalogItemService addNewCatalogItemService
             , ICatalogItemService catalogItemService
             , IUploadFile imageUploadService
             , IAddStoreroom addStoreroom
-            , IGetUserToken getUserToken)
+            , IGetUserToken getUserToken, IAddUserLog userLog)
         {
             this.addNewCatalogItemService = addNewCatalogItemService;
             this.catalogItemService = catalogItemService;
             this.imageUploadService = imageUploadService;
             this.addStoreroom = addStoreroom;
             this.getUserToken = getUserToken;
+            _userLog = userLog;
         }
 
         public SelectList Categories { get; set; }
@@ -88,6 +91,8 @@ namespace Admin.EndPoint.Pages.CatalogItems
           
             Data.Images = images;
             var resultService = addNewCatalogItemService.Execute(Data);
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.addProduct, StrKeyTable = Data.Id.ToString() });
+
             if (resultService.IsSuccess)
             {
                 var userId = ClaimUtility.GetUserId(User);

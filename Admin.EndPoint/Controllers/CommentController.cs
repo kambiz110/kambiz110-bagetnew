@@ -4,6 +4,7 @@ using Application.Comments.Dto;
 using Application.Comments.Query;
 using Application.Dtos;
 using Application.Interfaces.Contexts;
+using Application.Logs.Command;
 using Domain.Comments;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -22,12 +23,14 @@ namespace Admin.EndPoint.Controllers
         private readonly IGetCommentForAdmin _getComment;
         private readonly IEditStatusCommentService _editStatusCommentService;
         private readonly IAnswerCommentAdmin _answerComment;
-        public CommentController(IGetCommentForAdmin getComment, IEditStatusCommentService editStatusCommentService, IAnswerCommentAdmin answerComment, IDataBaseContext context)
+        private readonly IAddUserLog _userLog;
+        public CommentController(IGetCommentForAdmin getComment, IEditStatusCommentService editStatusCommentService, IAnswerCommentAdmin answerComment, IDataBaseContext context, IAddUserLog userLog)
         {
             _getComment = getComment;
             _editStatusCommentService = editStatusCommentService;
             _answerComment = answerComment;
             _context = context;
+            _userLog = userLog;
         }
         [HttpGet, HttpPost]
         public IActionResult Index(int pageSize = 10, int pageNo = 1, string q = "", byte confirmPublish = 0, string search = "", string confirmPublishClick = "")
@@ -75,6 +78,8 @@ namespace Admin.EndPoint.Controllers
             string ip = HttpContext.Request.HttpContext.Connection.RemoteIpAddress.ToString();
             var userid = User.Identity.Name;
             var result = _editStatusCommentService.Exequte(ids, 3, userid, ip);
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.deletedComment, StrKeyTable = ids.ToString() });
+
             TempData["Message"] = result.Message;
             TempData["alertClass"] = result.IsSuccess ? "success" : "danger";
             return RedirectToAction("Index");
@@ -85,6 +90,8 @@ namespace Admin.EndPoint.Controllers
             string ip = HttpContext.Request.HttpContext.Connection.RemoteIpAddress.ToString();
             var userid = User.Identity.Name;
             var result = _editStatusCommentService.Exequte(ids, 1, userid, ip);
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.publishComment, StrKeyTable = ids.ToString() });
+
             TempData["Message"] = result.Message;
             TempData["alertClass"] = result.IsSuccess ? "success" : "danger";
             return RedirectToAction("Index");
@@ -95,6 +102,8 @@ namespace Admin.EndPoint.Controllers
             string ip = HttpContext.Request.HttpContext.Connection.RemoteIpAddress.ToString();
             var userid = User.Identity.Name;
             var result = _editStatusCommentService.Exequte(ids, 1, userid, ip);
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.publishComment, StrKeyTable = ids.ToString() });
+
             TempData["Message"] = result.Message;
             TempData["alertClass"] = result.IsSuccess ? "success" : "danger";
             return RedirectToAction("Index");
@@ -122,6 +131,8 @@ namespace Admin.EndPoint.Controllers
                 userName = User.Identity.Name;
             }
             var result = _answerComment.Exequte(data, userName, ip);
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.answerComment, StrKeyTable = data.Commentid.ToString() });
+
             if (result.IsSuccess)
             {
                 var comments = _getComment.Exequte(10, 1, "", User.Identity.Name, confirm);
@@ -144,6 +155,8 @@ namespace Admin.EndPoint.Controllers
         {
             data.userName = User.Identity.Name;
             var result = _editStatusCommentService.EditComment(data);
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editComment, StrKeyTable = data.Id.ToString() });
+
             TempData["alertClass"] = result.IsSuccess ? "success" : "danger";
             TempData["Message"] = result.Message;
             if (result.Data != null)

@@ -519,7 +519,7 @@ else
                                     $('#editMessageModal input[name=messageModal]').val("");
                                     $('#editMessageModal input[name=commentid]').val("");
 
-                                    setInterval(function () { window.location.reload(); }, 3000);
+                                    setInterval(function () { window.location.href = window.location.href; }, 3000);
 
                                 } else {
                                     Swal.fire({

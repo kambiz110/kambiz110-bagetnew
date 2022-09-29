@@ -1,4 +1,5 @@
 ﻿using Admin.EndPoint.Helper;
+using Application.Logs.Command;
 using Application.Tickets.Command;
 using Application.Tickets.Dto;
 using Application.Tickets.Query;
@@ -17,13 +18,14 @@ namespace Admin.EndPoint.Controllers
         private readonly IAdminGetTickets adminGetTickets;
         private readonly IGetAnswerDitels getAnswer;
         private readonly IAddAnswerInTicket addAnswer;
-
+        private readonly IAddUserLog _userLog;
         public TicketsController(IAdminGetTickets adminGetTickets
-            , IGetAnswerDitels getAnswer, IAddAnswerInTicket addAnswer)
+            , IGetAnswerDitels getAnswer, IAddAnswerInTicket addAnswer, IAddUserLog userLog)
         {
             this.adminGetTickets = adminGetTickets;
             this.getAnswer = getAnswer;
             this.addAnswer = addAnswer;
+            _userLog = userLog;
         }
         public IActionResult Index(int PageSize = 10, int PageNo = 1, string q = "", string search = "" , bool stat =false)
         {
@@ -49,6 +51,8 @@ namespace Admin.EndPoint.Controllers
                 return View(dto);
             }
             addAnswer.addAnswer(dto);
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.answerTicket, StrKeyTable = dto.Id.ToString() });
+
             return View(nameof(Index));
         }
         public IActionResult Edit(int id) 
@@ -66,6 +70,8 @@ namespace Admin.EndPoint.Controllers
                 return View(dto);
             }
             addAnswer.addAnswer(dto);
+            _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editTicket, StrKeyTable = dto.Id.ToString() });
+
             return View(nameof(Index));
         }
     }
