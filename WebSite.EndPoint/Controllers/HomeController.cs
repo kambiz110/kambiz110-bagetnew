@@ -12,7 +12,7 @@ using WebSite.EndPoint.Utilities.Filters;
 
 namespace WebSite.EndPoint.Controllers
 {
- [ServiceFilter(typeof(SaveVisitorFilter))]
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -24,7 +24,7 @@ namespace WebSite.EndPoint.Controllers
             _logger = logger;
             this.homePageService = homePageService;
         }
-
+        [ServiceFilter(typeof(SaveVisitorFilter))]
         public IActionResult Index()
         {
             //var data = homePageService.GetData();

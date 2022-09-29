@@ -29,7 +29,7 @@
         );
 
         seoInfo.SetImageInfo(
-            url: Model.Images.FirstOrDefault(),
+            url: Model.Images.Count()>0? Model.Images.FirstOrDefault():"/defultimage.jpg",
              width: 500,  //optional
               height: 500,  //optional
             alt: Model.Slug,//,  //optional
@@ -45,8 +45,8 @@
                     section: "Article Topic"  //optional
                 );
 
-//Add another rss feed. (only for this page) (optional)
-seoInfo.AddFeed("Post Comments", "https://yadakcarshop.com/post/comment/rss", SeoTags.FeedType.Rss);
+        //Add another rss feed. (only for this page) (optional)
+        seoInfo.AddFeed("Post Comments", "https://yadakcarshop.com/post/comment/rss", SeoTags.FeedType.Rss);
     });
 }
 
