@@ -52,7 +52,6 @@ namespace Application.Interfaces.Contexts
         DbSet<ReturneOrderItem> ReturneOrderItems { get; set; }
         DbSet<Comment> Comments { get; set; }
         DbSet<MonthLog> MonthLogs { get; set; }
-        DbSet<DayLog> DayLogs { get; set; }
         DbSet<Visitor> Visitors { get; set; }
         DbSet<Domain.Payments.ReturnPaymentInvoice> ReturnPaymentInvoices { get; set; }
         int SaveChanges();

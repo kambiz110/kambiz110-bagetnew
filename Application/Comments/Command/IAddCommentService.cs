@@ -2,6 +2,7 @@
 using Application.Dtos;
 using Application.Interfaces.Contexts;
 using AutoMapper;
+using Common.Useful;
 using Domain.Comments;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -40,19 +41,29 @@ namespace Application.Comments.Command
                 dto.UserId = user.Id;
               
             }
-        
 
-            var comment = _mapper.Map<Comment>(dto);
-            comment.CommentDate = DateTime.Now;
-            _context.Comments.Add(comment);
-            var result = _context.SaveChanges();
-            if (result > 0)
+            var dt1 = DateTime.Now.ToDateConvertDateTime();
+            if (!_context.Comments.Where(p => p.IP == dto.IP && p.CommentDate.Date == dt1.Date).Any())
             {
+                var comment = _mapper.Map<Comment>(dto);
+                comment.CommentDate = DateTime.Now;
+                _context.Comments.Add(comment);
+                var result = _context.SaveChanges();
+                if (result > 0)
+                {
+                    return new ResultDto<string>
+                    {
+                        Data = dto.Message,
+                        IsSuccess = true,
+                        Message = "موفق"
+                    };
+                }
+
                 return new ResultDto<string>
                 {
-                    Data = dto.Message,
-                    IsSuccess = true,
-                    Message = "موفق"
+                    Data = null,
+                    IsSuccess = false,
+                    Message = "ناموفق"
                 };
             }
 
@@ -60,8 +71,9 @@ namespace Application.Comments.Command
             {
                 Data = null,
                 IsSuccess = false,
-                Message = "ناموفق"
+                Message = "شما در روز فقط یک مورد می توانید نظر خود را پیرامون سایت درج نمائید"
             };
+   
         }
     }
 }

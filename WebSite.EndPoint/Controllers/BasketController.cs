@@ -5,6 +5,7 @@ using Application.Payments;
 using Application.Users;
 using Domain.Order;
 using Domain.Users;
+using DotNet.RateLimiter.ActionFilters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -45,6 +46,7 @@ namespace WebSite.EndPoint.Controllers
             this.discountService = discountService;
             this.userManager = userManager;
         }
+        [RateLimit(PeriodInSec =5, Limit = 10)]
         [AllowAnonymous]
         public IActionResult Index()
         {
@@ -59,6 +61,7 @@ namespace WebSite.EndPoint.Controllers
         /// <param name="quantity"></param>
         /// <returns></returns>
         [AllowAnonymous]
+        [RateLimit(PeriodInSec = 5, Limit = 10)]
         [HttpPost]
         public IActionResult Index(int CatalogitemId, int quantity = 1)
         {
@@ -87,6 +90,7 @@ namespace WebSite.EndPoint.Controllers
         /// <param name="ItemId"></param>
         /// <returns></returns>
         [AllowAnonymous]
+        [RateLimit(PeriodInSec = 5, Limit = 10)]
         [HttpPost]
         public IActionResult RemoveItemFromHeaderBasket(int ItemId)
         {
@@ -101,6 +105,7 @@ namespace WebSite.EndPoint.Controllers
         /// <param name="quantity"></param>
         /// <returns></returns>
         [AllowAnonymous]
+        [RateLimit(PeriodInSec = 10, Limit = 20)]
         [HttpPost]
         public IActionResult setQuantity(int basketItemId, int quantity)
         {
@@ -133,6 +138,7 @@ namespace WebSite.EndPoint.Controllers
         /// <param name="PaymentMethod"></param>
         /// <returns></returns>
         [HttpPost]
+        [RateLimit(PeriodInSec = 5, Limit = 5)]
         public IActionResult ShippingPayment(int Address, PaymentMethod PaymentMethod)
         {
             //قرار دان پیش فرض نحوه پرداخت روی آنلاین

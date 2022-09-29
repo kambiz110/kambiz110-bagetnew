@@ -1,4 +1,5 @@
 ﻿using Application.Payments;
+using DotNet.RateLimiter.ActionFilters;
 using Dto.Payment;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -31,7 +32,7 @@ namespace WebSite.EndPoint.Controllers
             this.configuration = configuration;
             this.paymentService = paymentService;
             merchendId = configuration["ZarinpalMerchendId"];
-             
+
             ///سازنده های مربوط به زرین پال
             var expose = new Expose();
             _payment = expose.CreatePayment();
@@ -40,8 +41,8 @@ namespace WebSite.EndPoint.Controllers
 
         }
 
-    
-            public async Task<IActionResult> Index(Guid PaymentId)
+        [RateLimit(PeriodInSec = 5, Limit = 5)]
+        public async Task<IActionResult> Index(Guid PaymentId)
         {
             var payment = paymentService.GetPayment(PaymentId);
             if (payment == null)
@@ -53,7 +54,7 @@ namespace WebSite.EndPoint.Controllers
             {
                 return BadRequest();
             }
-            string callbackUrl = Url.Action(nameof(Verify), "pay", new { payment.Id}, protocol: Request.Scheme);
+            string callbackUrl = Url.Action(nameof(Verify), "pay", new { payment.Id }, protocol: Request.Scheme);
             //برای تست خطوط زیر کامنت شده است
             var resultZarinpalRequest = await _payment.Request(new DtoRequest()
             {
@@ -69,12 +70,12 @@ namespace WebSite.EndPoint.Controllers
             return Redirect($"https://zarinpal.com/pg/StartPay/{resultZarinpalRequest.Authority}");
         }
 
-
+        [RateLimit(PeriodInSec = 5, Limit = 5)]
         public IActionResult Verify(Guid Id, string Authority /*,string PaymentId*/)
         {
             string Status = HttpContext.Request.Query["Status"];
-            
-            if(Status != "" && Status !=null&& Status.ToString().ToLower() =="ok"
+
+            if (Status != "" && Status != null && Status.ToString().ToLower() == "ok"
                 && Authority != "")
             {
                 var payment = paymentService.GetPayment(Id);
@@ -129,9 +130,11 @@ namespace WebSite.EndPoint.Controllers
 
             }
             TempData["message"] = "پرداخت شما ناموفق بوده است .";
-     
-            return RedirectToAction("checkout", "basket", new { payResult = false  });
+
+            return RedirectToAction("checkout", "basket", new { payResult = false });
         }
+
+        [RateLimit(PeriodInSec = 5, Limit = 5)]
         [HttpGet]
         [Route("pay/CancelPay/{PaymentId}")]
         public async Task<IActionResult> CancelPay(Guid PaymentId)

@@ -4,6 +4,7 @@ using Application.Users.Command;
 using Application.Users.Token;
 using DNTCaptcha.Core;
 using Domain.Users;
+using DotNet.RateLimiter.ActionFilters;
 using Infrastructure.SMS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -44,7 +45,7 @@ namespace WebSite.EndPoint.Controllers
         {
             return View();
         }
-
+        [RateLimit(PeriodInSec = 5, Limit = 5)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateDNTCaptcha(
@@ -111,6 +112,7 @@ namespace WebSite.EndPoint.Controllers
                 ReturnUrl = returnUrl,
             });
         }
+        [RateLimit(PeriodInSec = 5, Limit = 5)]
         [ValidateAntiForgeryToken]
         [ValidateDNTCaptcha(
             ErrorMessage = "عبارت امنیتی را به درستی وارد نمائید",
@@ -196,6 +198,7 @@ namespace WebSite.EndPoint.Controllers
         /// </summary>
         /// <param name="PhoneNumber"></param>
         /// <returns></returns>
+        [RateLimit(PeriodInSec = 30, Limit = 5)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginViaSms(string PhoneNumber)
@@ -242,6 +245,7 @@ namespace WebSite.EndPoint.Controllers
         /// <param name="PhoneNumber"></param>
         /// <param name="SmsCode"></param>
         /// <returns></returns>
+         [RateLimit(PeriodInSec = 30, Limit = 5)]
         [HttpPost]
         public async Task<ActionResult> ConfirmPhoneNumber(string PhoneNumber, string SmsCode, string token, string tokencreator)
         {

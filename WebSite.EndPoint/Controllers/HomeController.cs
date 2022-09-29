@@ -1,4 +1,5 @@
 ﻿using Application.HomePageService;
+using DotNet.RateLimiter.ActionFilters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -24,6 +25,7 @@ namespace WebSite.EndPoint.Controllers
             _logger = logger;
             this.homePageService = homePageService;
         }
+        [RateLimit(PeriodInSec = 5, Limit = 5)]
         [ServiceFilter(typeof(SaveVisitorFilter))]
         public IActionResult Index()
         {

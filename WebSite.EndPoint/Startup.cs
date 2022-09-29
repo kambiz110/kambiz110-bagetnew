@@ -27,6 +27,7 @@ using Application.Users.Token;
 using Application.Visitors.SaveVisitorInfo;
 using DNTCaptcha.Core;
 using Domain.Users;
+using DotNet.RateLimiter;
 using EndPoint.Site.Useful.Ultimite;
 using Infrastructure.IdentityConfigs;
 using Infrastructure.MappingProfile;
@@ -133,7 +134,7 @@ namespace WebSite.EndPoint
             services.AddScoped<SaveVisitorFilter>();
 
             services.AddSignalR();
-
+            services.AddRateLimitService(Configuration);
             //mapper
             services.RegisterAutoMapper();
 

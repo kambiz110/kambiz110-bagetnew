@@ -3,6 +3,7 @@ using Application.Catalogs.CatalogItems.GetCatalogItemPDP;
 using Application.Comments.Command;
 using Application.Comments.Dto;
 using DNTCaptcha.Core;
+using DotNet.RateLimiter.ActionFilters;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,17 +33,20 @@ namespace WebSite.EndPoint.Controllers
             this.getCatalogItemPDPService = getCatalogItemPDPService;
             addComment = _addComment;
         }
+        [RateLimit(PeriodInSec = 5, Limit = 5)]
         public IActionResult Index(CatlogPLPRequestDto catlogPLPRequestDto)
         {
             var data = getCatalogIItemPLPService.Execute(catlogPLPRequestDto);
             return View(data);
         }
-       [Route("[controller]/[action]/pid-{id}/{slug}")]
+        [RateLimit(PeriodInSec = 5, Limit = 5)]
+        [Route("[controller]/[action]/pid-{id}/{slug}")]
         public IActionResult Details(int Id , string slug)
         {
             var data = getCatalogItemPDPService.Execute(Id);
             return View(data);
         }
+        [RateLimit(PeriodInSec = 30, Limit = 4)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateDNTCaptcha(
