@@ -25,6 +25,10 @@ namespace Domain.Logs
         /// </summary>
         logout = 0,
         /// <summary>
+        ///  ویرایش تیکت
+        /// </summary>
+        editTicket = 2,
+        /// <summary>
         ///  افزودن محصول
         /// </summary>
         addProduct = 3,
@@ -100,9 +104,6 @@ namespace Domain.Logs
         /// </summary>
         DeliveredReturned = 20,
 
-        /// <summary>
-        ///  جواب تیکت
-        /// </summary>
-        editTicket = 21,
+
     }
 }
