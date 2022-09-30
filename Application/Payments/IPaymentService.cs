@@ -33,10 +33,10 @@ namespace Application.Payments
         public async Task CanselPayment(Guid paymentId)
         {
             var pay = context.Payments.Where(p => p.Id == paymentId).FirstOrDefault();
-            if (pay!=null)
+            if (pay != null)
             {
-                var order = context.Orders.FirstOrDefault(p=>p.Id==pay.OrderId);
-                if (order!=null)
+                var order = context.Orders.FirstOrDefault(p => p.Id == pay.OrderId);
+                if (order != null)
                 {
                     order.OrderCancelled();
                     order.PaymentCanceled();
@@ -44,8 +44,8 @@ namespace Application.Payments
                     await context.SaveChangesAsync();
                 }
             }
-            
-            
+
+
         }
 
         public PaymentDto GetPayment(Guid Id)
@@ -53,8 +53,8 @@ namespace Application.Payments
             var payment = context.Payments
                  .Include(p => p.Order)
                  .ThenInclude(p => p.OrderItems)
-                 .Include(p=> p.Order)
-                 .ThenInclude(p=> p.AppliedDiscount)
+                 .Include(p => p.Order)
+                 .ThenInclude(p => p.AppliedDiscount)
                  .SingleOrDefault(p => p.Id == Id);
 
             var user = identityContext.Users.SingleOrDefault(p => p.Id == payment.Order.UserId);
@@ -78,25 +78,28 @@ namespace Application.Payments
             return paymentDto;
         }
 
-        public PaymentToCheckoutPageDto GetPaymentWithOrderForCheckoutPage(string Id ,string userId)
+        public PaymentToCheckoutPageDto GetPaymentWithOrderForCheckoutPage(string Id, string userId)
         {
             var user = identityContext.Users.SingleOrDefault(p => p.Id == userId);
-            if (user!=null )
+            if (user != null)
             {
-                var payment = context.Payments.Where(p => p.Id == new Guid(Id) && p.IsPay == false )
+                var payment = context.Payments.Where(p => p.Id == new Guid(Id) && p.IsPay == false)
                  .Include(p => p.Order).FirstOrDefault();
-                if (payment.Order.UserId==user.Id)
+                if (payment.Order.UserId == user.Id)
                 {
-                    return new PaymentToCheckoutPageDto { 
-                    payAddress=new PayAddress() {
-                        City= payment.Order.Address.City,
-                        PhoneNumber= payment.Order.Address.PhoneNumber,
-                    PostalAddress= payment.Order.Address.PostalAddress,
-                        ReciverName= payment.Order.Address.ReciverName }
-                    ,Amount= payment.Amount,
-                    Id=payment.Id,
-                     Userid=user.Id
-                    
+                    return new PaymentToCheckoutPageDto
+                    {
+                        payAddress = new PayAddress()
+                        {
+                            City = payment.Order.Address.City,
+                            PhoneNumber = payment.Order.Address.PhoneNumber,
+                            PostalAddress = payment.Order.Address.PostalAddress,
+                            ReciverName = payment.Order.Address.ReciverName
+                        },
+                        Amount = payment.Amount,
+                        Id = payment.Id,
+                        Userid = user.Id,
+                        FollowKey=payment.Order.FollowKey,
                     };
                 }
                 return null;
@@ -115,7 +118,7 @@ namespace Application.Payments
         {
             var order = context.Orders
                     .Include(p => p.OrderItems)
-                    .Include(p=>p.AppliedDiscount)
+                    .Include(p => p.AppliedDiscount)
                     .SingleOrDefault(p => p.Id == OrderId);
             if (order == null)
                 throw new Exception("");
@@ -148,7 +151,7 @@ namespace Application.Payments
         {
             var payment = context.Payments
        .Include(p => p.Order)
-       .ThenInclude(p=>p.OrderItems
+       .ThenInclude(p => p.OrderItems
        .Where(o => o.OrderItemStatus == OrderItemStatus.Selered))
        .SingleOrDefault(p => p.Id == Id);
 
@@ -165,15 +168,15 @@ namespace Application.Payments
             for (int i = 0; i < catalogItem.Count(); i++)
             {
                 var Selered = payment.Order.OrderItems.Where(p => p.CatalogItemId == catalogItem.ElementAt(i).Id).FirstOrDefault().Units;
-                if (catalogItem.ElementAt(i).AvailableStock- Selered<0)
+                if (catalogItem.ElementAt(i).AvailableStock - Selered < 0)
                 {
-                    catalogItem.ElementAt(i).AvailableStock =0;
+                    catalogItem.ElementAt(i).AvailableStock = 0;
                 }
                 else
                 {
                     catalogItem.ElementAt(i).AvailableStock -= Selered;
                 }
-               
+
                 catalogItem.ElementAt(i).Selered += Selered;
                 catalogItem.ElementAt(i).LastSeleredDate = DateTime.Now;
 
@@ -207,17 +210,18 @@ namespace Application.Payments
     public class PaymentToCheckoutPageDto
     {
         public Guid Id { get; set; }
+        public string FollowKey { get; set; }
         public int Amount { get; set; }
         public string Userid { get; set; }
         public PayAddress payAddress { get; set; }
     }
     public class PayAddress
     {
-        public string State { get;  set; }
-        public string City { get;  set; }
+        public string State { get; set; }
+        public string City { get; set; }
 
-        public string PostalAddress { get;  set; }
-        public string ReciverName { get;  set; }
-        public string PhoneNumber { get;  set; }
+        public string PostalAddress { get; set; }
+        public string ReciverName { get; set; }
+        public string PhoneNumber { get; set; }
     }
-    }
+}

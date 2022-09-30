@@ -1,8 +1,10 @@
 ﻿using Application.Payments;
 using DotNet.RateLimiter.ActionFilters;
 using Dto.Payment;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -26,8 +28,9 @@ namespace WebSite.EndPoint.Controllers
         private readonly IConfiguration configuration;
         private readonly IPaymentService paymentService;
         private readonly string merchendId;
-
-        public PayController(IConfiguration configuration, IPaymentService paymentService)
+        private readonly ILogger<PayController> _logger;
+        private static readonly NLog.Logger nlog = NLog.LogManager.GetCurrentClassLogger();
+        public PayController(IConfiguration configuration, IPaymentService paymentService, ILogger<PayController> logger)
         {
             this.configuration = configuration;
             this.paymentService = paymentService;
@@ -38,12 +41,13 @@ namespace WebSite.EndPoint.Controllers
             _payment = expose.CreatePayment();
             _authority = expose.CreateAuthority();
             _transactions = expose.CreateTransactions();
-
+            _logger = logger;
         }
 
         [RateLimit(PeriodInSec = 5, Limit = 5)]
         public async Task<IActionResult> Index(Guid PaymentId)
         {
+            nlog.Trace("Trace");
             var payment = paymentService.GetPayment(PaymentId);
             if (payment == null)
             {
@@ -66,37 +70,27 @@ namespace WebSite.EndPoint.Controllers
                 Mobile = payment.PhoneNumber,
             }, Payment.Mode.zarinpal
                 );
-            // return RedirectToAction("Verify", "pay", new { Id=new Guid().ToString(), Authority = "test_Authority" ,paymentId= PaymentId.ToString()});
+            //  return RedirectToAction("Verify", "pay", new { Id= payment.Id, Authority = "test_Authority" });
             return Redirect($"https://zarinpal.com/pg/StartPay/{resultZarinpalRequest.Authority}");
         }
 
         [RateLimit(PeriodInSec = 5, Limit = 5)]
         public IActionResult Verify(Guid Id, string Authority /*,string PaymentId*/)
         {
+            nlog.Trace("Trace");
             string Status = HttpContext.Request.Query["Status"];
 
-            if (Status != "" && Status != null && Status.ToString().ToLower() == "ok"
-                && Authority != "")
+            if (Status != "" && Status != null && Status.ToString().ToLower() == "ok" && Authority != "")
             {
                 var payment = paymentService.GetPayment(Id);
+               // TempData["TempDatapaymentId"] = Id.ToString();
+                HttpContext.Session.SetString("paymentId", Id.ToString());
                 if (payment == null)
                 {
-                    return NotFound();
+                    return RedirectToAction("Display" , "Home");
                 }
-                TempData["paymentId"] = Id;
-                //برای چک کردن جعلی نبودن درخواست که فعلا از طرف زرین پال دارای مشکل است
-                //var verification = _payment.Verification(new DtoVerification
-                //{
-                //    Amount = payment.Amount,
-                //    Authority = Authority,
-                //    MerchantId = merchendId,
-                //}, Payment.Mode.zarinpal).Result;
-                //if (verification.Status==100)
-                //{
 
-                //}
 
-                //using RestSharp;
                 //برای چک کردن جعلی نبودن پرداخت
                 var client = new RestClient("https://www.zarinpal.com/pg/rest/WebGate/PaymentVerification.json");
                 client.Timeout = -1;
@@ -106,15 +100,15 @@ namespace WebSite.EndPoint.Controllers
                 var response = client.Execute(request);
 
                 VerificationPayResultDto verification =
-                    JsonConvert.DeserializeObject<VerificationPayResultDto>(response.Content);
+                  JsonConvert.DeserializeObject<VerificationPayResultDto>(response.Content);
 
                 if (verification.Status == 100)
                 {
                     bool verifyResult = paymentService.VerifyPayment(Id, Authority, verification.RefID);
                     if (verifyResult)
                     {
-                        TempData["message"] = "پرداخت انجام شد ";
-                        return RedirectToAction("checkout", "basket", new { payResult = true });
+
+                        return RedirectToAction("Index", "Orders", new { area = "Customers" });
                     }
                     else
                     {
@@ -124,12 +118,11 @@ namespace WebSite.EndPoint.Controllers
                 }
                 else
                 {
-                    TempData["message"] = "پرداخت شما ناموفق بوده است . لطفا مجددا تلاش نمایید یا در صورت بروز مشکل با مدیریت سایت تماس بگیرید .";
                     return RedirectToAction("checkout", "basket", new { payResult = false });
                 }
 
             }
-            TempData["message"] = "پرداخت شما ناموفق بوده است .";
+         
 
             return RedirectToAction("checkout", "basket", new { payResult = false });
         }
@@ -139,7 +132,7 @@ namespace WebSite.EndPoint.Controllers
         [Route("pay/CancelPay/{PaymentId}")]
         public async Task<IActionResult> CancelPay(Guid PaymentId)
         {
-
+            nlog.Trace("Trace");
             await paymentService.CanselPayment(PaymentId);
             return Redirect("/customers/orders/index");
         }

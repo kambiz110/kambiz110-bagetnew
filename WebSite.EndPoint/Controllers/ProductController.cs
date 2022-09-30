@@ -7,6 +7,7 @@ using DotNet.RateLimiter.ActionFilters;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,8 @@ namespace WebSite.EndPoint.Controllers
         private readonly IGetCatalogIItemPLPService getCatalogIItemPLPService;
         private readonly IGetCatalogItemPDPService getCatalogItemPDPService;
         private readonly IAddCommentService addComment;
-
+        private readonly ILogger<ProductController> _logger;
+        private static readonly NLog.Logger nlog = NLog.LogManager.GetCurrentClassLogger();
         public ProductController(IGetCatalogIItemPLPService
             getCatalogIItemPLPService
             , IGetCatalogItemPDPService getCatalogItemPDPService,
@@ -33,17 +35,19 @@ namespace WebSite.EndPoint.Controllers
             this.getCatalogItemPDPService = getCatalogItemPDPService;
             addComment = _addComment;
         }
-        [RateLimit(PeriodInSec = 5, Limit = 5)]
+        [RateLimit(PeriodInSec = 1, Limit = 2)]
         public IActionResult Index(CatlogPLPRequestDto catlogPLPRequestDto)
         {
             var data = getCatalogIItemPLPService.Execute(catlogPLPRequestDto);
+            nlog.Trace("Trace");
             return View(data);
         }
-        [RateLimit(PeriodInSec = 5, Limit = 5)]
+        [RateLimit(PeriodInSec = 1, Limit = 2)]
         [Route("[controller]/[action]/pid-{id}/{slug}")]
         public IActionResult Details(int Id , string slug)
         {
             var data = getCatalogItemPDPService.Execute(Id);
+            nlog.Trace("Trace");
             return View(data);
         }
         [RateLimit(PeriodInSec = 30, Limit = 4)]
@@ -86,7 +90,16 @@ namespace WebSite.EndPoint.Controllers
             }
 
             var result = addComment.Exequte(dto, userName);
-            TempData["Successcomment"] = "پیغام با موفقیت ثبت گردید\n پس از بررسی و در صورت نداشتن محتوای غیر اخلاقی پیغام نمایش داده می شود.";
+            nlog.Trace("Trace");
+            if (result.IsSuccess)
+            {
+                TempData["Successcomment"] = "پیغام با موفقیت ثبت گردید\n پس از بررسی و در صورت نداشتن محتوای غیر اخلاقی پیغام نمایش داده می شود.";
+            }
+            else
+            {
+                TempData["Successcomment"] = result.Message;
+            }
+            
             var referer = HttpContext.Request.Headers["Referer"].ToString();
             return Redirect(referer);
         }

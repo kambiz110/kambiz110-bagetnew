@@ -17,6 +17,7 @@ namespace WebSite.EndPoint.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private static readonly NLog.Logger nlog = NLog.LogManager.GetCurrentClassLogger();
         private readonly IHomePageService homePageService;
 
         public HomeController(ILogger<HomeController> logger
@@ -31,6 +32,7 @@ namespace WebSite.EndPoint.Controllers
         {
             //var data = homePageService.GetData();
             //return View(data);
+            nlog.Trace("Trace");
             return View();
         }
 
@@ -48,6 +50,7 @@ namespace WebSite.EndPoint.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            nlog.Trace("Trace");
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

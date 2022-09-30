@@ -71,7 +71,7 @@ namespace Application.Comments.Command
             {
                 Data = null,
                 IsSuccess = false,
-                Message = "شما در روز فقط یک مورد می توانید نظر خود را پیرامون سایت درج نمائید"
+                Message = "شما در روز فقط یک نظر در سایت می توانید درج نمائید"
             };
    
         }

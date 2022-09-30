@@ -8,6 +8,7 @@ using DotNet.RateLimiter.ActionFilters;
 using Infrastructure.SMS;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,10 +29,12 @@ namespace WebSite.EndPoint.Controllers
         private readonly ILoginWithSmsCodeServices loginWithSmsCode;
         private readonly ISmsServices smsServices;
         private readonly IGeneritTokenUser tokenUser;
+        private readonly ILogger<AccountController> _logger;
+        private static readonly NLog.Logger nlog = NLog.LogManager.GetCurrentClassLogger();
         public AccountController(UserManager<User> userManager,
             SignInManager<User> signInManager, IBasketService basketService
             , ILoginWithSmsCodeServices loginWithSmsCode
-            , ISmsServices smsServices, IGeneritTokenUser tokenUser)
+            , ISmsServices smsServices, IGeneritTokenUser tokenUser, ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -39,6 +42,7 @@ namespace WebSite.EndPoint.Controllers
             this.loginWithSmsCode = loginWithSmsCode;
             this.smsServices = smsServices;
             this.tokenUser = tokenUser;
+            _logger = logger;
         }
 
         public IActionResult Register()
@@ -54,6 +58,7 @@ namespace WebSite.EndPoint.Controllers
             CaptchaGeneratorDisplayMode = DisplayMode.NumberToWord)]
         public IActionResult Register(RegisterViewModel model)
         {
+            nlog.Trace("Trace");
             if (!ModelState.IsValid)
             {
                 var query = from state in ModelState.Values
@@ -121,6 +126,7 @@ namespace WebSite.EndPoint.Controllers
         [HttpPost]
         public IActionResult Login(LoginViewModel model)
         {
+            nlog.Trace("Trace");
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -178,6 +184,7 @@ namespace WebSite.EndPoint.Controllers
 
         private void TransferBasketForuser(string userId)
         {
+            nlog.Trace("Trace");
             string cookieName = "BasketId";
             if (Request.Cookies.ContainsKey(cookieName))
             {
@@ -203,6 +210,7 @@ namespace WebSite.EndPoint.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginViaSms(string PhoneNumber)
         {
+            nlog.Trace("Trace");
             if (String.IsNullOrEmpty(PhoneNumber))
             {
                 ViewBag.Errors = "شماره تلفن را وارد  ننموده اید!!!";
@@ -227,7 +235,7 @@ namespace WebSite.EndPoint.Controllers
         [HttpGet]
         public IActionResult ConfirmPhoneNumber(string PhoneNumber)
         {
-            
+            nlog.Trace("Trace");
             string tokencreator = TempData["tokencreator"].ToString();
             string token = TempData["token"].ToString();
             if (String.IsNullOrEmpty(tokencreator) || String.IsNullOrEmpty(token))
@@ -249,7 +257,7 @@ namespace WebSite.EndPoint.Controllers
         [HttpPost]
         public async Task<ActionResult> ConfirmPhoneNumber(string PhoneNumber, string SmsCode, string token, string tokencreator)
         {
-
+            nlog.Trace("Trace");
             await _signInManager.SignOutAsync();
             var loginResult = loginWithSmsCode.LoginWithSmsCode(PhoneNumber, SmsCode, token, tokencreator);
             if (loginResult.IsSuccess == false)
