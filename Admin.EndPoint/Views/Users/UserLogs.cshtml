@@ -1,0 +1,132 @@
+﻿@using Application.Logs.Query
+@model GetUserlogsWithPeger
+@using Admin.EndPoint.Helper
+@addTagHelper *, LazZiya.TagHelpers
+@{
+    ViewData["Title"] = "گزارش عملکرد کاربران پنل ادمین";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int counter = 1;
+}
+
+<div class="layout-px-spacing">
+
+
+    <div class="row layout-spacing">
+        <div class="col-lg-12">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-header">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                            <h4>گزارش عملکرد کاربران پنل ادمین</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-xs-6">
+                        <form asp-action="UserLogs" method="get">
+                            <div class="input-group">
+                                <input type="text" name="q" class="form-control float-right" placeholder="جستجو در دیتابیس...">
+
+
+                                <button type="submit" class="btn btn-primary">جستجو</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-sm-4 col-xs-6">
+                        <div class="form-group form-group-sm">
+
+
+                            <form class="form-inline d-inline" asp-action="UserLogs" method="get">
+                                <button type="submit" name="search" value="clear" class="btn btn-default d-inline">
+                                    پاک کن
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-content widget-content-area">
+                    <div class="table-responsive mb-4">
+                        @{
+
+                            if (Model != null && Model.UserLogs.Any())
+                            {
+                                <table id="style-3" class="table style-3  table-hover">
+                                    <thead>
+                                                                <tr>
+                                                                    <th class="checkbox-column text-center"> ردیف </th>
+
+                                                                    <th>نام کاربری</th>
+
+                                                                    <th>اقدام</th>
+                                                                    <th>تاریخ</th>
+                                                                    <th class="text-center">شماره یکتا</th>
+
+
+                                                                </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var item in Model.UserLogs)
+                                        {
+                                            <tr>
+                                                <td class="checkbox-column text-center"> @counter </td>
+
+                                                <td>@item.userName</td>
+                                                <td>@item.EventName</td>
+                                                <td>@item.InsertTime.ToPersianDateStrFarsiFull()</td>
+
+                                                <td class="text-center"><span class="shadow">@item.StrKeyTable </span></td>
+
+                                           
+                                                @{counter++;}
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            }
+                            else
+                            {
+                                <p class="h4">
+                                    هیچ رکوردی فعلا  وجود ندارد!!!
+                                </p>
+                            }
+                        }
+                        <div class="card-footer">
+                            @{
+                                if (Model != null && Model.PagerDto != null)
+                                {
+                                    <paging page-no="@Model.PagerDto.PageNo"
+                                            page-size="@Model.PagerDto.PageSize"
+                                            total-records="@Model.PagerDto.TotalRecords"
+                                            show-prev-next="true"
+                                            show-total-pages="true"
+                                            show-total-records="true"
+                                            show-page-size-nav="true"
+                                            show-first-numbered-page="true"
+                                            show-last-numbered-page="true"
+                                            query-string-key-page-no="PageNo"
+                                            query-string-key-page-size="PageSize"
+                                            query-string-value="@@(Request.QueryString.Value)"
+                                            text-total-pages="صفحه"
+                                            text-total-records="رکورد"
+                                            text-first="&laquo;"
+                                            text-last="&raquo;"
+                                            text-previous="&lsaquo;"
+                                            text-next="&rsaquo;"
+                                            sr-text-first="اولین"
+                                            sr-text-last="آخرین"
+                                            sr-text-previous="قبلی"
+                                            sr-text-next="بعدی"
+                                            gap-size="2">
+                                    </paging>
+                                }
+                            }
+
+                        </div>
+
+                    </div>
+</div>
+</div></div></div></div>

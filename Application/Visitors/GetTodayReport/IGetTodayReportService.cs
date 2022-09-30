@@ -28,27 +28,30 @@ namespace Application.Visitors.GetTodayReport
             DateTime end = DateTime.Now.AddDays(1);
 
             var TodayPageViewCount = _dbContext.Visitors.AsQueryable()
-                .Where(p => p.Time >= start && p.Time < end).LongCount();
-            var TodayVisitorCount = _dbContext.Visitors.AsQueryable()
+                .Where(p => p.Time >= start && p.Time < end).Count();
+            var TodayVisitorCount = _dbContext.Visitors
                 .Where(p => p.Time >= start && p.Time < end).GroupBy(p => p.VisitorId)
                 .LongCount();
-            var AllPageViewCount = _dbContext.Visitors.AsQueryable().LongCount();
-            var AllVisitorCount = _dbContext.Visitors.AsQueryable()
-                .GroupBy(p => p.VisitorId).LongCount();
+            var AllPageViewCount = _dbContext.Visitors.Count();
+            var AllVisitorCount = _dbContext.Visitors
+                .GroupBy(p => p.VisitorId).Count();
 
             VisitCountDto visitPerHour = GTetVisitPerHour(start, end);
 
             VisitCountDto visitPerDay = GetVisitPerDay();
+            VisitCountDto visitHourPerDayes = GetVisitHourPerDays(30);
 
 
-            var visitors = _dbContext.Visitors.AsQueryable()
+            var visitors = _dbContext.Visitors
                 .OrderByDescending(p => p.Time)
                 .Take(10)
                 .Select(p => new VisitorsDto
                 {
                     Id = p.Id,
+                    Browser = p.BrowserFamily,
                     CurrentLink = p.CurrentLink,
                     Ip = p.Ip,
+                    OperationSystem = p.OperationSystemFamily,
                     IsSpider = p.DeviceIsSpider,
                     ReferrerLink = p.ReferrerLink,
                     Time = p.Time,
@@ -62,6 +65,7 @@ namespace Application.Visitors.GetTodayReport
                     TotalPageViews = AllPageViewCount,
                     PageViewsPerVisit = GetAvg(AllPageViewCount, AllVisitorCount),
                     VisitPerDay = visitPerDay,
+                    VisitHourPerDayes = visitHourPerDayes
                 },
                 Today = new TodayDto
                 {
@@ -94,7 +98,6 @@ namespace Application.Visitors.GetTodayReport
 
             return visitPerHour;
         }
-
         private VisitCountDto GetVisitPerDay()
         {
             DateTime MonthStart = DateTime.Now.Date.AddDays(-30);
@@ -112,6 +115,36 @@ namespace Application.Visitors.GetTodayReport
             }
 
             return visitPerDay;
+        }
+        private VisitCountDto GetVisitHourPerDays(int countDay = 30)
+        {
+            DateTime MonthStart = DateTime.Now.Date.AddDays(-countDay);
+            DateTime MonthEnds = DateTime.Now.Date.AddDays(1);
+            var Month_PageViewList = _dbContext.Visitors.AsQueryable()
+                .Where(p => p.Time >= MonthStart && p.Time < MonthEnds)
+                .Select(p => new { p.Time })
+                .ToList();
+            VisitCountDto visitPerHour = new VisitCountDto()
+            {
+                Display = new string[24],
+                Value = new int[24],
+            };
+
+
+            for (int i = 0; i <= countDay; i++)
+            {
+                var currentday = DateTime.Now.AddDays(i * (-1));
+                var queryDay = Month_PageViewList.Where(p => p.Time.Date == currentday.Date).AsQueryable();
+                for (int j = 0; j <= 23; j++)
+                {
+                    visitPerHour.Display[j] = $"h-{j}";
+                    visitPerHour.Value[j] += queryDay.Where(p => p.Time.Hour == j).Count();
+                }
+
+
+            }
+
+            return visitPerHour;
         }
 
         private float GetAvg(long VisitPage, long Visitor)
@@ -141,6 +174,7 @@ namespace Application.Visitors.GetTodayReport
         public float PageViewsPerVisit { get; set; }
 
         public VisitCountDto VisitPerDay { get; set; }
+        public VisitCountDto VisitHourPerDayes { get; set; }
     }
 
     public class TodayDto

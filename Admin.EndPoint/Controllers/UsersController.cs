@@ -1,6 +1,8 @@
-﻿using Application.Orders.CustomerOrdersServices;
+﻿using Application.Logs.Query;
+using Application.Orders.CustomerOrdersServices;
 using Application.Users.Dto;
 using Application.Users.Query;
+using Application.Visitors.GetTodayReport;
 using Domain.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -21,12 +23,14 @@ namespace Admin.EndPoint.Controllers
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly ICustomerOrdersService customerOrdersService;
-        public UsersController(IGetUsers getUsers, UserManager<User> userManager, RoleManager<Role> roleManager, ICustomerOrdersService customerOrdersService)
+        private readonly IGetUserlogs _getUserlogs;
+        public UsersController(IGetUsers getUsers, UserManager<User> userManager, RoleManager<Role> roleManager, ICustomerOrdersService customerOrdersService, IGetUserlogs getUserlogs)
         {
             this.getUsers = getUsers;
             _userManager = userManager;
             _roleManager = roleManager;
             this.customerOrdersService = customerOrdersService;
+            _getUserlogs = getUserlogs;
         }
         public IActionResult Index(int pageIndex = 1, int pageSize = 10, string q = "", string search = "")
         {
@@ -147,6 +151,21 @@ namespace Admin.EndPoint.Controllers
                 return View();
             }
             return RedirectToAction("Index");
+        }
+
+        public IActionResult VisitorReport()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult UserLogs(int PageSize=20, int PageNo=1, string q="", string search = "")
+        {
+            if (search == "clear")
+            {
+                return RedirectToAction("UserLogs");
+            }
+            var model = _getUserlogs.GetUserLogs(PageSize, PageNo, q);
+            return View(model.Data);
         }
     }
 }

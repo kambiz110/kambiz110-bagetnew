@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "آمار بازدید سایت";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    @*<link href="~/Theme/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
+    <link href="~/Theme/assets/css/dashboard/dash_1.css" rel="stylesheet" type="text/css" />*@
+    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+}
+
+
+
+
+@await Component.InvokeAsync("GetPublicVisitorStatistics")
+
+<!--  END CONTENT AREA  -->
+@section Scripts{
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    @*<script src="~/Theme/plugins/apex/apexcharts.min.js"></script>*@
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+
+    <script>
+                //$(document).ready(function () {
+                //    App.init();
+                //});
+    </script>
+}
+
