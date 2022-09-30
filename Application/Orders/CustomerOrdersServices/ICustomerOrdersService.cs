@@ -151,7 +151,7 @@ namespace Application.Orders.CustomerOrdersServices
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public int countOrderItems { get; set; } = 0;
-
+        public bool IsEnableSend { get; set; }
         public int Price { get; set; }
         public string FollowKey { get; set; }
         public OrderStatus OrderStatus { get; set; }

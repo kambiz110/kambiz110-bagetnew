@@ -14,7 +14,7 @@
                 <li class="nav-item">
 
                     <a href="/Orders/Index?orderStatus=0" class="btn btn-default btn-change-state w3-green m-1">
-                        در انتظار ارسال  <i class="nav-icon fa fa-plus-circle"></i>
+                        در انتظار پرداخت مشتری و یا ارسال  <i class="nav-icon fa fa-plus-circle"></i>
                     </a>
 
                 </li>
@@ -106,7 +106,15 @@
                                                 switch (item.OrderStatus)
                                                 {
                                                     case Domain.Order.OrderStatus.Processing:
-                                                        message = " درخواست ارسال";
+                                                        if (item.IsEnableSend)
+                                                        {
+                                                            message = " درخواست ارسال";
+                                                        }
+                                                        else
+                                                        {
+                                                            message = " در انتظار پرداخت ";
+                                                        }
+
                                                         break;
                                                     //case Domain.Order.OrderStatus.RequestReturned:
                                                     //    message = " درخواست مرجوعی";

@@ -19,7 +19,7 @@ namespace Application.Orders.AdminOrderServices
         //OderDitalesForAdminDto GetAdminOrderDitalesForPrint(Guid PaymentId);
         List<MyOrderDto> GetShopAdminOrder(string searchkey,int orderStatus);
 
-        Task chengeOrederStatuse(int orderId, int status);
+        void chengeOrederStatuse(int orderId, int status);
     }
 
     public class AdminOrdersService : IAdminOrdersService
@@ -36,7 +36,7 @@ namespace Application.Orders.AdminOrderServices
             this.identityDatabase = identityDatabase;
         }
 
-        public async Task chengeOrederStatuse(int orderId, int status)
+        public  void chengeOrederStatuse(int orderId, int status)
         {
             var order = context.Orders.Where(p => p.Id == orderId).FirstOrDefault();
             if (order != null)
@@ -56,7 +56,7 @@ namespace Application.Orders.AdminOrderServices
                     default:
                         break;
                 }
-                await context.SaveChangesAsync();
+                 context.SaveChanges();
 
             }
 
@@ -124,7 +124,8 @@ namespace Application.Orders.AdminOrderServices
                     PaymentStatus = p.PaymentStatus,
                     Price = p.OrderItems.Sum(o => o.UnitPrice * o.Units),
                     countOrderItems=p.OrderItems.Count(),
-                    PaymentId=context.Payments.FirstOrDefault(m=>m.OrderId==p.Id)?.Id
+                    PaymentId=context.Payments.FirstOrDefault(m=>m.OrderId==p.Id)?.Id,
+                    IsEnableSend=((int)p.OrderStatus == 0&& (int)p.PaymentStatus==1)?true:false
 
                 }).ToList();
             return result;

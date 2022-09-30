@@ -320,9 +320,9 @@
                                 url: "/Orders/DeliveredProductToCustomer",
                                 data: {OrderId:@(Model.OrderId)},
                                 type: "get",
-                                success: function (data) {
-                                    if (data.isSuccess == true) {
-                                        console.log("data isSuccess true");
+                                success: function (resulttt) {
+                                   // if (data.isSuccess == true) {
+                                    console.log("data isSuccess :", resulttt.isSuccess);
                                         swal.fire(
                                             'موفق!',
                                             'تحویل کالا با موفقیت ثبت شد',
@@ -330,14 +330,14 @@
                                         ).then(function (isConfirm) {
                                             window.location.href = "/Orders/index";
                                         });
-                                    }
-                                    else {
-                                        swal.fire(
-                                            'هشدار!',
-                                            "اطلاعات کامل و درست وارد نمائید دیتا ثبت نشد",
-                                            'warning'
-                                        );
-                                    }
+                                    //}
+                                    //else {
+                                    //    swal.fire(
+                                    //        'هشدار!',
+                                    //        "اطلاعات کامل و درست وارد نمائید دیتا ثبت نشد",
+                                    //        'warning'
+                                    //    );
+                                    //}
                                 },
                                 error: function (xhr, ajaxOptions, thrownError) {
 
