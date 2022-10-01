@@ -21,35 +21,35 @@
                     <p>@item</p>
                 </div>
             }
-        <form asp-page="create" method="post" asp-antiforgery="true" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
-                <label asp-for="CatalogType.Type"> </label>
-                <input type="hidden" class="form-control" asp-for="CatalogType.ParentCatalogTypeId">
-                <input type="text" class="form-control" asp-for="CatalogType.Type">
-                <span asp-validation-for="CatalogType.Type" class="text-danger"></span>
-            </div>
-            <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
-                <fieldset class="form-group">
-                    <label for="basicInput">تصاویر </label>
-                    <input type="file" class="form-control" name="Files" id="Files">
-                </fieldset>
-            </div>
-            <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
-                <fieldset class="form-group">
-                    <label for="basicInput">اولویت </label>
-             
-                    <select type="number" asp-for="CatalogType.SortIndex" class="form-control">
-                        <option value="1">عادی</option>
-                        <option value="2">صفحه اصلی</option>
-                        <option value="3">ویژه</option>
-                    </select>
-                </fieldset>
-            </div>
-            <input type="hidden" asp-for="CatalogType.ParentCatalogTypeId" />
-            <input type="submit" name="time" value="ثبت" class="btn btn-primary">
-            <a asp-page="index" class="btn btn-info">برگشت به لیست</a>
-        </form>
+            <form asp-page="create" method="post" asp-antiforgery="true" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
+                    <label asp-for="CatalogType.Type"> </label>
+                    <input type="hidden" class="form-control" asp-for="CatalogType.ParentCatalogTypeId">
+                    <input type="text" class="form-control" asp-for="CatalogType.Type">
+                    <span asp-validation-for="CatalogType.Type" class="text-danger"></span>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
+                    <fieldset class="form-group">
+                        <label for="basicInput">تصاویر </label>
+                        <input type="file" class="form-control" name="Files" id="Files">
+                    </fieldset>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
+                    <fieldset class="form-group">
+                        <label for="basicInput">اولویت </label>
+
+                        <select type="number" asp-for="CatalogType.SortIndex" class="form-control">
+                            <option value="1">عادی</option>
+                            <option value="2">صفحه اصلی</option>
+                            <option value="3">ویژه</option>
+                        </select>
+                    </fieldset>
+                </div>
+                <input type="hidden" asp-for="CatalogType.ParentCatalogTypeId" />
+                <input type="submit" name="time" value="ثبت" class="btn btn-primary">
+                <a asp-page="index" class="btn btn-info">برگشت به لیست</a>
+            </form>
 
         </div>
     </div>
@@ -60,5 +60,6 @@
 
 
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{ await Html.RenderPartialAsync("_AjaxJquery"); }
+
 }

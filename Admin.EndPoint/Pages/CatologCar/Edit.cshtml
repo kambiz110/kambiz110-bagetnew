@@ -1,9 +1,9 @@
 ﻿@page
 @model Admin.EndPoint.Pages.CatologCar.EditModel
 
-    @{
-        ViewData["Title"] = "ویرایش  خودرو";
-    }
+@{
+    ViewData["Title"] = "ویرایش  خودرو";
+}
 
 <div class="col-lg-12 col-12 layout-spacing">
     <div class="statbox widget box box-shadow">
@@ -52,5 +52,5 @@
 </div>
 
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{ await Html.RenderPartialAsync("_AjaxJquery"); }
 }

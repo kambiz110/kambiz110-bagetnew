@@ -81,14 +81,14 @@
                 </div>
 
 
-            
-        
+
+
                 <div class="row text-center mt-1">
                     <input type="submit" name="time" value="ثبت" class="btn btn-primary col-5 ml-4 mr-1">
                     <a asp-page="index" class="btn btn-info col-5">برگشت به لیست</a>
 
                 </div>
-       
+
             </form>
 
         </div>
@@ -103,7 +103,7 @@
 
 }
 @section Scripts{
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{ await Html.RenderPartialAsync("_AjaxJquery"); }
 
     <script src="~/lib/trumbowyg-2_25_1/trumbowyg.js"></script>
     <script>
