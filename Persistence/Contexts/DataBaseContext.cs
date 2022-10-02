@@ -96,6 +96,8 @@ namespace Persistence.Contexts
             builder.Entity<Basket>()
                 .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
 
+            builder.Entity<CatalogBrand>()
+                .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
             builder.Entity<CatalogCompany>()
                 .HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
 

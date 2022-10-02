@@ -1,6 +1,7 @@
 ﻿using Application.Catalogs.CatalogItems.UriComposer;
 using Application.Dtos;
 using Application.Interfaces.Contexts;
+using AutoMapper;
 using Common;
 using Common.Useful;
 using Domain.Order;
@@ -16,18 +17,18 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
     public interface IGetCatalogIItemPLPService
     {
         PaginatedItemsDto<CatalogPLPDto> Execute(CatlogPLPRequestDto request);
+        List<ShortCatalogRSSDto> RssCatalog();
     }
 
     public class GetCatalogIItemPLPService : IGetCatalogIItemPLPService
     {
         private readonly IDataBaseContext context;
-       
+        private readonly IMapper mapper;
 
-        public GetCatalogIItemPLPService(IDataBaseContext context
-           )
+        public GetCatalogIItemPLPService(IDataBaseContext context, IMapper mapper)
         {
             this.context = context;
-           
+            this.mapper = mapper;
         }
         public PaginatedItemsDto<CatalogPLPDto> Execute(CatlogPLPRequestDto request)
         {
@@ -44,17 +45,17 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
 
             if (request.brandId != null)
             {
-                query = query.Where(p => request.brandId.Contains( p.CatalogBrandId));
+                query = query.Where(p => request.brandId.Contains(p.CatalogBrandId));
             }
 
             if (request.CatalogTypeId != null)
             {
                 var serchLST = request.CatalogTypeId.Where(p => p != 0).ToArray();
-                if (serchLST.Length>0)
+                if (serchLST.Length > 0)
                 {
-                query = query.Where(p => serchLST.Contains(p.CatalogTypeId));
+                    query = query.Where(p => serchLST.Contains(p.CatalogTypeId));
                 }
-               
+
             }
             if (request.CatalogCopmanyId != null)
             {
@@ -122,7 +123,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
             }
             if (query != null && query.Any())
             {
-                var result = query.PagedResult(request.pageIndex, request.page,  out rowCount)
+                var result = query.PagedResult(request.pageIndex, request.page, out rowCount)
                        .ToList();
                 if (result.Count > 0)
                 {
@@ -150,6 +151,13 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
 
             return new PaginatedItemsDto<CatalogPLPDto>(request.page, request.pageIndex, rowCount, new List<CatalogPLPDto>());
         }
+
+        public List<ShortCatalogRSSDto> RssCatalog()
+        {
+            var query = context.CatalogItems.Where(p => p.IsActive == true).AsNoTracking().ToList();
+            var result = mapper.Map<List<ShortCatalogRSSDto>>(query);
+            return result;
+        }
     }
 
 
@@ -168,7 +176,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
         public string SearchKey { get; set; }
         public int IndexSortType { get; set; }
         public SortType SortType { get; set; }
-      }
+    }
 
 
     public enum SortType
@@ -223,5 +231,14 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
         public string CarName { get; set; }
         public string CompanyName { get; set; }
         public string BrrndName { get; set; }
+    }
+    public class ShortCatalogRSSDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public string Slug { get; set; }
+
+        public string Description { get; set; }
     }
 }

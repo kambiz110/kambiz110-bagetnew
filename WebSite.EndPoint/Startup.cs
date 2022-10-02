@@ -25,6 +25,7 @@ using Application.Users;
 using Application.Users.Command;
 using Application.Users.Token;
 using Application.Visitors.SaveVisitorInfo;
+using AspNetCore.SEOHelper;
 using DNTCaptcha.Core;
 using Domain.Users;
 using DotNet.RateLimiter;
@@ -174,6 +175,7 @@ namespace WebSite.EndPoint
             app.UseSetVisitorId();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseXMLSitemap(env.ContentRootPath);
             app.UseSession();
             app.UseRouting();
 

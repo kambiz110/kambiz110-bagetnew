@@ -1,6 +1,7 @@
 ﻿using Application.Banners;
 using Application.Catalogs.CatalogCars.Dto;
 using Application.Catalogs.CatalogCompany.Dto;
+using Application.Catalogs.CatalogItems.GetCatalogIItemPLP;
 using Application.Catalogs.CatalogTypeImages;
 
 using Application.Catalogs.CatalohItems.AddNewCatalogItem;
@@ -33,6 +34,8 @@ namespace Infrastructure.MappingProfile
                  opt.MapFrom(src => src.CatalogItemImages));
 
             CreateMap<AddNewCatalogItemDto, CatalogItem>();
+
+            CreateMap<ShortCatalogRSSDto, CatalogItem>().ReverseMap(); 
 
             CreateMap<CatalogItem, CatalogItemListItemDto>()
                  .ForMember(dest => dest.Brand, opt =>
