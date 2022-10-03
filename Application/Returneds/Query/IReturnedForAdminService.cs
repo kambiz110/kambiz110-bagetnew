@@ -5,6 +5,7 @@ using Application.Returneds.Dto;
 using Application.ReturnPaymentInvoice.Dto;
 using AutoMapper;
 using Domain.Order;
+using Domain.Postals;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -118,7 +119,10 @@ namespace Application.Returneds.Query
         public void StatusResiveReturnedToShop(ResiveOrderItemsReturnedDto dto)
         {
             var returned = context.Returneds.Where(p => p.Id == dto.ReturnedId)
+                .Include(p => p.ReturnedProduct)
                 .Include(p => p.ReturneOrderItems).FirstOrDefault();
+            returned.ReturnedProduct.ReciveDate = DateTime.Now;
+            returned.ReturnedProduct.PostalStatus = PostalStatus.Delivered;
             returned.ReturnedStatus = ReturnedStatus.Returned;
             foreach (var item in dto.OrderItemsReturnedDtos)
             {

@@ -27,11 +27,12 @@ namespace Application.ReturnPaymentInvoice.Commend
         public  void addDataToDb(AddReturnPaymentInvoiceDto dto)
         {
             var paymentInvoice = _mapper.Map<Domain.Payments.ReturnPaymentInvoice>(dto);
+            paymentInvoice.Id = Guid.NewGuid();
             context.ReturnPaymentInvoices.Add(paymentInvoice);
             var returned = context.Returneds.FirstOrDefault(p => p.Id == dto.ReturnedId);
             returned.ReturnedStatus = Domain.Order.ReturnedStatus.ReturnPaymentInvoice;
 
-             context.SaveChangesAsync();
+             context.SaveChanges();
         }
     }
 }

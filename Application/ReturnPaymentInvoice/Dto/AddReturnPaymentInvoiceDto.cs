@@ -9,6 +9,7 @@ namespace Application.ReturnPaymentInvoice.Dto
 {
     public class AddReturnPaymentInvoiceDto
     {
+        public string AdminUserId { get; set; }
         public int Amount { get; set; }
         [Display(Name = "تاریخ و زمان واریز")]
         [Required(ErrorMessage = " {0}  را وارد نمائید ")]

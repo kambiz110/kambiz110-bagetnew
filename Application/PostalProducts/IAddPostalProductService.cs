@@ -29,12 +29,21 @@ namespace Application.PostalProducts
         }
         public async Task addPostal(AddPostalProductDto dto )
         {
-        
-              var postamodel=  _mapper.Map<PostProduct>(dto);
+            if (dto.Id>0)
+            {
+                var post = context.PostProducts.FirstOrDefault(p => p.Id == dto.Id);
+                _mapper.Map(dto,post);
+                 context.SaveChanges();
+            }
+            else
+            {
+                var postamodel = _mapper.Map<PostProduct>(dto);
                 context.PostProducts.Add(postamodel);
                 var order = context.Orders.FirstOrDefault(p => p.Id == dto.OrderId);
                 order.OrderPostOfficalDelivered();
                 await context.SaveChangesAsync();
+            }
+     
 
            
         }

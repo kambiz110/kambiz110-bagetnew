@@ -1,4 +1,5 @@
-﻿using Application.Dtos;
+﻿using Admin.EndPoint.Helper;
+using Application.Dtos;
 using Application.Logs.Command;
 using Application.PostalProducts;
 using Application.PostalProducts.Dto;
@@ -45,10 +46,10 @@ namespace Admin.EndPoint.Controllers
         public IActionResult ReturndDetails(int returnedId)
         {
             var model = returnedForAdmin.GetAdminOrderDitales(returnedId);
-            if ((int)model.ReturnedStatus == 0)
+            if ((int)model.ReturnedStatus == 1)
             {
                 var rootPath = _hostingEnvironment.ContentRootPath;
-                var fullPath = Path.Combine(rootPath, "wwwroot/Files/BankDate/UserBankData.json");
+                var fullPath = Path.Combine(rootPath, "wwwroot/BankDate/UserBankData.json");
                 var jsonData = System.IO.File.ReadAllText(fullPath);
 
                 var item = JsonConvert.DeserializeObject<List<BankDitel>>(jsonData);
@@ -76,6 +77,8 @@ namespace Admin.EndPoint.Controllers
                 var errorList = query.ToList();
                 return new JsonResult(new ResultDto { IsSuccess = false, Message = "false" });
             }
+            var userId = ClaimUtility.GetUserId(User);
+            dto.AdminUserId = userId;
             addPostalProduct.ReturnedPostal(dto);
             _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.sendReturned, StrKeyTable = dto.ReturnedId.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
@@ -97,9 +100,11 @@ namespace Admin.EndPoint.Controllers
             }
 
             var rootPath = _hostingEnvironment.ContentRootPath;
-            var fullPath = Path.Combine(rootPath, "wwwroot/Files/BankDate/UserBankData.json");
+            var fullPath = Path.Combine(rootPath, "wwwroot/BankDate/UserBankData.json");
             var jsonData = System.IO.File.ReadAllText(fullPath);
             var item = JsonConvert.DeserializeObject<List<BankDitel>>(jsonData);
+            var userId = ClaimUtility.GetUserId(User);
+            dto.AdminUserId = userId;
             dto.BankOrigin = item.Where(p => p.BankOriginNumber == dto.BankOriginNumber).FirstOrDefault().BankOrigin;
             returnPaymentInvoice.addDataToDb(dto);
             _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.ReturnPaymentInvoice, StrKeyTable = dto.ReturnedId.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });

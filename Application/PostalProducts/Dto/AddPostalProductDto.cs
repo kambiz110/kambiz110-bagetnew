@@ -28,6 +28,7 @@ namespace Application.PostalProducts.Dto
         public int ReturnedId { get; set; }
         public string PostOfficeName { get; set; }
         public DateTime? InsertDate { get; set; }
+        public string AdminUserId { get; set; }
     }
     
     public class ResiveOrderItemsReturnedDto
