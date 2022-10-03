@@ -1,5 +1,92 @@
 ﻿@addTagHelper *, Models
+<!--offcanvas menu area start-->
+<div class="off_canvars_overlay">
 
+</div>
+<div class="offcanvas_menu">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="canvas_open">
+                    <a href="javascript:void(0)"><i class="ion-navicon"></i></a>
+                </div>
+                <div class="offcanvas_menu_wrapper">
+                    <div class="canvas_close">
+                        <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
+                    </div>
+                    <div class="call_support">
+                        <p>
+                            <i class="icon-phone-call" aria-hidden="true"></i> <span>
+                                تماس با ما: <a href="tel:09124918349">09124918349</a>
+                            </span>
+                        </p>
+
+                    </div>
+                    <div class="header_account">
+                        <ul>
+                            <li class="language">
+                                <a href="#">
+                                    <img src="assets/img/logo/language.png" alt=""> فارسی
+                                    <i class="ion-chevron-down"></i>
+                                </a>
+                                <ul class="dropdown_language">
+                                    <li><a href="#">فارسی</a></li>
+                                    <li><a href="#">انگلیسی</a></li>
+                                    <li><a href="#">عربی</a></li>
+                                </ul>
+                            </li>
+                            <li class="currency">
+                                <a href="#">تومان <i class="ion-chevron-down"></i></a>
+                                <ul class="dropdown_currency">
+                                    <li><a href="#">دینار</a></li>
+                                    <li><a href="#">تومان</a></li>
+                                    <li><a href="#">دلار</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="header_top_links">
+                        <ul>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li> سلام &nbsp;  @User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value</li>
+                                <li><a asp-area="Customers" asp-controller="Address" asp-action="Index">ورود به حساب کاربری</a></li>
+                                <li><a asp-area="" asp-controller="Basket" asp-action="Index">سبد خرید</a></li>
+                                <li><a asp-area="" asp-controller="Account" asp-action="LogOut">خروج</a></li>
+                            }
+                            else
+                            {
+                                <li><a asp-area="" asp-controller="Account" asp-action="Register">ثبت نام</a></li>
+                                <li><a asp-area="" asp-controller="Account" asp-action="Login">ورود</a></li>
+                                <li><a asp-area="" asp-controller="Basket" asp-action="Index">سبد خرید</a></li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="search_container">
+                        <form action="/product/index" method="get">
+                            <div class="search_box">
+                                <input placeholder="جستجوی محصول ..." type="text" name="SearchKey">
+                                <button type="submit">جستجو</button>
+                            </div>
+                        </form>
+                    </div>
+                
+                    <div class="offcanvas_footer">
+                        <span><a href="#"><i class="fa fa-envelope-o"></i> info@yadakcarshop.com</a></span>
+                        <ul>
+                            <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li class="pinterest"><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                            <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--offcanvas menu area end-->
 <header>
     <div class="main_header">
         <!--header top start-->
@@ -102,9 +189,9 @@
                                 <h2 class="categori_toggle">همه دسته بندی ها</h2>
                             </div>
                             <div class="categories_menu_toggle">
-                                @*@await Component.InvokeAsync("CategoriesMenu")*@
-                              <menu-item></menu-item>
-                             
+
+                                <menu-item></menu-item>
+
                             </div>
                         </div>
                     </div>
@@ -114,17 +201,12 @@
                                 <ul>
                                     <li>
                                         <a class="active" href="~/">خانه<i class="fa fa-angle-down d-none"></i></a>
-                                        <ul class="sub_menu d-none">
-                                            <li><a href="index.html">خانه 1</a></li>
-                                            <li><a href="index-2.html">خانه 2</a></li>
-                                            <li><a href="index-3.html">خانه 3</a></li>
-                                            <li><a href="index-4.html">خانه 4</a></li>
-                                        </ul>
+
                                     </li>
 
 
                                     <li><a href="/home/about">درباره ما</a></li>
-                   
+
                                 </ul>
                             </nav>
                         </div>
