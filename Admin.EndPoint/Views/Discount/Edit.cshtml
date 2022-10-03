@@ -114,16 +114,10 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-6" id="searchProductBox">
-                        <div class="row">
-                            <div class="form-group  col-md-12 fa-directions">
-                                <label> محصولات را انتخاب کنید</label>
-                                <select class="form-control basic-single" asp-for="appliedToCatalogItem">
-                                </select>
-                            </div>
-                        </div>
+
 
                         <div class="form-row align-items-center">
-                            <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> خودرو </label>
                                     <select class="form-control basic-single" id="Cars" asp-items="(SelectList)@ViewData["Cars2"]">
@@ -131,7 +125,7 @@
                                     </select>
                                 </fieldset>
                             </div>
-                            <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> برند </label>
                                     <select class="form-control basic-single" id="Brand" asp-items="(SelectList)@ViewData["Brands2"]">
@@ -140,7 +134,7 @@
                                 </fieldset>
                             </div>
 
-                            <div class="col-xl-4 col-lg-4 col-md-4 mb-1">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">دسته بندی </label>
 
@@ -163,7 +157,13 @@
                                 <button type="button" class="btn btn-primary" id="btnsearchproduct">جستجو</button>
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="form-group  col-md-12">
+                                <label> محصولات را انتخاب کنید</label>
+                                <select class="form-control basic-single" asp-for="appliedToCatalogItem">
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
 
@@ -292,9 +292,16 @@
     <link href="~/Theme/assets/css/forms/theme-checkbox-radio.css" rel="stylesheet" />
     <link href="~/Theme/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
+    <link href="~/lib/select2/css/select2-bootstrap4.css" rel="stylesheet" />
+
     <link href="~/lib/MD_BootstrapPersianDateTimePicker-master-bs5/dist/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
 
+    <style>
+        .select2-container--default .select2-search--inline .select2-search__field {
 
+            text-align: right !important;
+        }
+    </style>
 }
 
 @section Scripts {

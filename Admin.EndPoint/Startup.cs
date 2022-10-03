@@ -59,6 +59,7 @@ namespace Admin.EndPoint
 {
     public class Startup
     {
+        public static string WebRootPath { get; private set; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -192,7 +193,7 @@ namespace Admin.EndPoint
                               pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
-        
+            WebRootPath = env.WebRootPath;
         }
     }
 }

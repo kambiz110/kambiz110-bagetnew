@@ -38,6 +38,13 @@
     <Folder Include="Pages\CatalogFeature\" />
     <Folder Include="Pages\CatologCar\" />
     <Folder Include="wwwroot\backend\css\" />
+    <Folder Include="wwwroot\Files\NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Ticket.ElFinder">
+      <HintPath>..\Ticket.ElFinder\bin\Debug\net5.0\Ticket.ElFinder.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

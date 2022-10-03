@@ -277,7 +277,27 @@
                         </ul>
                     </li>
 
+                    <li class="menu">
+                        <a href="#FileManager" data-toggle="collapse" aria-expanded="@Html.TrueAriaExpandedClass("FileManager")" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>                               
+                                <span>مدیریت فایل</span>
+                            </div>
 
+                        </a>
+
+                        <ul class="collapse submenu recent-submenu list-unstyled" id="FileManager" data-parent="#accordionExample">
+
+                            <li>
+                                <a asp-controller="FileManager" asp-action="Index">
+
+                                    مدیریت فایل
+                                </a>
+                            </li>
+                        </ul>
+
+
+                    </li>
                     <li class="menu ">
                         <a href="#users" data-toggle="collapse" aria-expanded="@Html.TrueAriaExpandedClass("Users")" class="dropdown-toggle">
                             <div class="">
@@ -292,12 +312,7 @@
                             <li>
                                 <a href="/users/index"> مدیریت کاربران </a>
                             </li>
-                            <li>
-                                <a href="/users/VisitorReport">   آمار بازدید کاربران سایت </a>
-                            </li>
-                            <li>
-                                <a href="/users/UserLogs">  عملکرد کاربران پنل ادمین </a>
-                            </li>
+
                         </ul>
                     </li>
                     <li class="menu ">
@@ -354,6 +369,28 @@
 
                         </ul>
                     </li>
+                    <li class="menu">
+                        <a href="#authReport" data-toggle="collapse" aria-expanded="@Html.TrueAriaExpandedClass("Report")" class="dropdown-toggle">
+                            <div class="">
+                                <i style="font-size:24px" class="fa">&#xf080;</i>
+                                <span>گزارش ها </span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="authReport" data-parent="#authReport">
+                            <li>
+                                <a href="/Report/VisitorReport">   آمار بازدید کاربران سایت </a>
+                            </li>
+
+                            <li>
+                                <a href="/Report/UserLogs">  آمار کاربران پنل ادمین </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
 
                 </ul>
 
@@ -388,11 +425,11 @@
     <script src="~/Theme/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="~/Theme/assets/js/app.js"></script>
     <script src="~/lib/fontawesome-free-5.15.4-web/js/all.min.js"></script>
-    <script>
+    @*<script>
         $(document).ready(function () {
             App.init();
         });
-    </script>
+    </script>*@
     <script src="~/Theme/assets/js/custom.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <!-- BEGIN PAGE LEVEL SCRIPTS -->

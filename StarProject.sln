@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaticFile.EndPoint", "StaticFile.EndPoint\StaticFile.EndPoint.csproj", "{AF63D434-2E0D-49A3-872D-9566C18C82C1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ticket.ElFinder", "Ticket.ElFinder\Ticket.ElFinder.csproj", "{E99E1E67-1AFC-437D-8788-1F519B5638F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{AF63D434-2E0D-49A3-872D-9566C18C82C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF63D434-2E0D-49A3-872D-9566C18C82C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF63D434-2E0D-49A3-872D-9566C18C82C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E99E1E67-1AFC-437D-8788-1F519B5638F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E99E1E67-1AFC-437D-8788-1F519B5638F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E99E1E67-1AFC-437D-8788-1F519B5638F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E99E1E67-1AFC-437D-8788-1F519B5638F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{A2A71BEB-30F4-4731-AED2-4EBE13CEB030} = {01F57307-76CF-49D6-AE60-558C64F3ED9A}
 		{89F529D0-0716-486B-87B5-F12964200F22} = {A2A71BEB-30F4-4731-AED2-4EBE13CEB030}
 		{AF63D434-2E0D-49A3-872D-9566C18C82C1} = {ABA2CB1E-C734-49AF-B048-15094979725E}
+		{E99E1E67-1AFC-437D-8788-1F519B5638F7} = {30767F6F-C70D-46C5-8A42-8EE5B6C757DC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4DDCF2EF-9637-4E21-AA41-71803CEFE243}
