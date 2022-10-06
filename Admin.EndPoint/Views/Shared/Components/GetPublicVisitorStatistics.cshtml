@@ -13,7 +13,7 @@
 
 <div class="row layout-top-spacing">
 
-    <div class="col-xl-5 col-lg-12 col-md-6 col-sm-12 col-12 layout-spacing">
+    <div class="col-xl-5 col-lg-12 col-md-6 col-sm-12 col-12">
         <div class="widget widget-table-one">
             <div class="widget-heading">
                 <h5 class="">آمار امروز</h5>
@@ -77,7 +77,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-5 col-lg-12 col-md-6 col-sm-12 col-12 layout-spacing">
+    <div class="col-xl-5 col-lg-12 col-md-6 col-sm-12 col-12">
         <div class="widget widget-table-one">
             <div class="widget-heading">
                 <h5 class="">آمار کل بازدید</h5>
@@ -141,7 +141,159 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-12 layout-spacing">
+
+
+    <div class="col-lg-12">
+        <div class="widget widget-table-two">
+
+            <div class="widget-heading">
+                <h5 class="">بیشترین پست های بازدید شده امروز</h5>
+            </div>
+
+            <div class="widget-content">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                      
+
+                                <th><div class="th-content th-heading">لینک</div></th>
+                                <th><div class="th-content"> تعداد بازدید </div></th>
+                                <th><div class="th-content"> تعداد بازدیدکنندگان </div></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.TodayMostVisitedLink)
+                            {
+                            <tr>
+                    
+                                <td><div class="td-content"><a href="@item.CurrentLink">@item.CurrentLink</a>  </div></td>
+                                <td><div class="td-content">@item.visited</div></td>
+                                <td><div class="td-content">@item.UniqeIpVisited</div></td>
+                            </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="widget widget-table-two">
+
+            <div class="widget-heading">
+                <h5 class="">بیشترین پست های بازدید شده دیروز</h5>
+            </div>
+
+            <div class="widget-content">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                   
+
+                                <th><div class="th-content th-heading">لینک</div></th>
+                                <th><div class="th-content"> تعداد بازدید </div></th>
+                                <th><div class="th-content"> تعداد بازدیدکنندگان </div></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.YesterdayMostVisitedLink)
+                            {
+                            <tr>
+                         
+                                <td><div class="td-content"><a href="@item.CurrentLink">@item.CurrentLink</a>  </div></td>
+                                <td><div class="td-content">@item.visited</div></td>
+                                <td><div class="td-content">@item.UniqeIpVisited</div></td>
+                            </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12 col-md-12">
+        <div class="card card-chart">
+            <div class="card-header">
+                <h5 class="card-title"> آمار نقطه به نقطه بازدید بر اساس ساعت امروز</h5>
+                <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+                <canvas id="Today-line-Chart" width="400" height="100"></canvas>
+            </div>
+            <div class="card-footer">
+                <div class="chart-legend">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12 col-md-12">
+        <div class="card card-chart">
+            <div class="card-header">
+                <h5 class="card-title"> نمودار نقطه به نقطه بر اساس ساعت بازدید مقایسه ای 5 روز اخیر </h5>
+
+                <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+                <canvas id="comparison-line-Chart" width="400" height="100"></canvas>
+            </div>
+            <div class="card-footer">
+                <div class="chart-legend">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xl-12 col-md-12">
+        <div class="card card-chart">
+            <div class="card-header">
+                <h5 class="card-title">بازدید 30 روز گذشته</h5>
+                <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+
+                <canvas id="s-lineDay" width="400" height="100"></canvas>
+            </div>
+            <div class="card-footer">
+                <div class="chart-legend">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12 col-md-12">
+        <div class="card card-chart">
+            <div class="card-header">
+                <h5 class="card-title">نمودار میله ای بازدید 30 روز گذشته بر اساس ساعت بازدید</h5>
+                <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+
+                <canvas id="income" width="400" height="100"></canvas>
+            </div>
+            <div class="card-footer">
+                <div class="chart-legend">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
         <div class="widget widget-table-two">
 
             <div class="widget-heading">
@@ -158,7 +310,6 @@
                                     <th><div class="th-content">لینک ارجاع</div></th>*@
                                 <th><div class="th-content th-heading">مرورگر</div></th>
                                 <th><div class="th-content"> سیستم عامل </div></th>
-                                <th><div class="th-content"> خزنده؟ </div></th>
                                 <th><div class="th-content"> زمان </div></th>
                                 <th><div class="th-content"> شناسه کاربر </div></th>
                             </tr>
@@ -184,7 +335,6 @@
                                         </div>
                                     </td>
                                     <td><div class="td-content">@item.OperationSystem</div></td>
-                                    <td><div class="td-content">@item.IsSpider</div></td>
                                     <td><div class="td-content pricing"><span class="">@item.Time</span></div></td>
                                     <td><div class="td-content"><span class="badge outline-badge-primary">@item.VisitorId</span></div></td>
 
@@ -198,58 +348,8 @@
             </div>
         </div>
     </div>
-
-
-    <div class="col-xl-12 col-md-12">
-        <div class="card card-chart">
-            <div class="card-header">
-                <h5 class="card-title">نمودار نقطه به نقطه</h5>
-                <p class="card-category"></p>
-            </div>
-            <div class="card-body">
-                <canvas id="line-Chart" width="400" height="100"></canvas>
-            </div>
-            <div class="card-footer">
-                <div class="chart-legend">
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div id="chartLine" class="col-xl-12 layout-top-spacing layout-spacing">
-        <div class="statbox widget box box-shadow">
-            <div class="widget-header">
-                <div class="row">
-                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                        <h4>بازدید 30 روز گذشته</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="widget-content widget-content-area">
-                <div id="s-lineDay" class=""></div>
-            </div>
-        </div>
-    </div>
 </div>
-<div class="col-xl-12 col-md-12">
-    <div class="card card-chart">
-        <div class="card-header">
-            <h5 class="card-title">نمودار میله ای بازدید 30 روز گذشته بر اساس ساعت بازدید</h5>
-            <p class="card-category"></p>
-        </div>
-        <div class="card-body">
 
-            <canvas id="income" width="400" height="100"></canvas>
-        </div>
-        <div class="card-footer">
-            <div class="chart-legend">
-
-            </div>
-
-        </div>
-    </div>
-</div>
 
 <script src="~/Theme/plugins/apex/apexcharts.min.js"></script>
 <script src="~/Theme/assets/js/scrollspyNav.js"></script>
@@ -262,83 +362,127 @@
 
 
 <script>
+        var FiveDayEgoDisplayHour=@Html.Raw(Json.Serialize(Model.FiveDayEgoVisit.VisitPerhour.Display));
+    var FiveDayEgoValueHour =@Html.Raw(Json.Serialize(Model.FiveDayEgoVisit.VisitPerhour.Value));
 
-    var DisplayHour=@Html.Raw(Json.Serialize(Model.Today.VisitPerhour.Display));
-    var ValueHour=@Html.Raw(Json.Serialize(Model.Today.VisitPerhour.Value));
+    var FourDayEgoDisplayHour=@Html.Raw(Json.Serialize(Model.FourDayEgoVisit.VisitPerhour.Display));
+    var FourDayEgoValueHour =@Html.Raw(Json.Serialize(Model.FourDayEgoVisit.VisitPerhour.Value));
 
+            var ThreeDayEgoDisplayHour=@Html.Raw(Json.Serialize(Model.ThreeDayEgoVisit.VisitPerhour.Display));
+    var ThreeDayEgoValueHour =@Html.Raw(Json.Serialize(Model.ThreeDayEgoVisit.VisitPerhour.Value));
 
+        var TowDayEgoDisplayHour=@Html.Raw(Json.Serialize(Model.TwoDayEgoVisit.VisitPerhour.Display));
+    var TwoDayEgoValueHour =@Html.Raw(Json.Serialize(Model.TwoDayEgoVisit.VisitPerhour.Value));
+
+        var YesterDayDisplayHour=@Html.Raw(Json.Serialize(Model.YesterDayVisit.VisitPerhour.Display));
+        var YesterDayValueHour=@Html.Raw(Json.Serialize(Model.YesterDayVisit.VisitPerhour.Value));
+
+              var TodayDisplayHour=@Html.Raw(Json.Serialize(Model.Today.VisitPerhour.Display));
+        var TodayValueHour=@Html.Raw(Json.Serialize(Model.Today.VisitPerhour.Value));
 
     var DisplayDay=@Html.Raw(Json.Serialize(Model.GeneralStats.VisitPerDay.Display));
     var ValueDay =@Html.Raw(Json.Serialize(Model.GeneralStats.VisitPerDay.Value));
 
        var DisplayHourPerDayes=@Html.Raw(Json.Serialize(Model.GeneralStats.VisitHourPerDayes.Display));
-    var ValueHourPerDayes=@Html.Raw(Json.Serialize(Model.GeneralStats.VisitHourPerDayes.Value));
-
-        var slineDay = {
-            chart: {
-                height: 350,
-                type: 'line',
-                zoom: {
-                    enabled: false
-                },
-                toolbar: {
-                    show: false,
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                curve: 'straight'
-            },
-            series: [{
-                name: "تعداد بازدید",
-                data: ValueDay, //[150, 41, 35, 91, 49, 62, 69, 91, 148]
-            }],
-            //title: {
-            //    text: 'بازدید 30 روز گذشته',
-            //    align: 'right',
-            //    offsetX: -95,
-            //},
-            grid: {
-                row: {
-                    colors: ['#f1f2f3', 'transparent'], // takes an array which will be repeated on columns
-                    opacity: 0.5
-                },
-            },
-            xaxis: {
-                categories: DisplayDay, //['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر'],
-            },
-            yaxis: {
-                labels: {
-                    offsetX: -20,
-                }
-            }
+    var ValueHourPerDayes =@Html.Raw(Json.Serialize(Model.GeneralStats.VisitHourPerDayes.Value));
+    console.log(DisplayHourPerDayes);
+    console.log(ValueHourPerDayes);
+    var ctx = document.getElementById("Today-line-Chart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: TodayDisplayHour,
+            datasets: [{
+                label: 'بازدید امروز',
+                data: TodayValueHour,
+                fill: false,
+                borderColor: '#fbc658',
+                backgroundColor: 'transparent',
+                pointBorderColor: '#fbc658',
+                pointRadius: 4,
+                pointHoverRadius: 4,
+                pointBorderWidth: 8,
+            }]
         }
-        var chartDay = new ApexCharts(
-            document.querySelector("#s-lineDay"),
-            slineDay
-        );
-        chartDay.render();
+    });
 
-        var ctx = document.getElementById("line-Chart").getContext('2d');
-        var myChart = new Chart(ctx, {
+    //var ctx = document.getElementById("YesterDay-line-Chart").getContext('2d');
+    //    var myChart = new Chart(ctx, {
+    //        type: 'line',
+    //        data: {
+    //            labels: YesterDayDisplayHour,
+    //            datasets: [{
+    //                label: 'بازدید 24 ساعت گذشته',
+    //                data: YesterDayValueHour,
+    //                fill: false,
+    //                borderColor: '#8B008B',
+    //                backgroundColor: 'transparent',
+    //                pointBorderColor: '#8B008B',
+    //                pointRadius: 4,
+    //                pointHoverRadius: 4,
+    //                pointBorderWidth: 8,
+    //            }]
+    //        }
+    //    });
+
+
+    var ctxComparison = document.getElementById("comparison-line-Chart").getContext('2d');
+    var myChart = new Chart(ctxComparison, {
             type: 'line',
             data: {
-                labels: DisplayHour,
-                datasets: [{
-                    label: 'بازدید 24 ساعت گذشته',
-                    data: ValueHour,
-                    fill: false,
-                    borderColor: '#fbc658',
-                    backgroundColor: 'transparent',
-                    pointBorderColor: '#fbc658',
-                    pointRadius: 4,
-                    pointHoverRadius: 4,
-                    pointBorderWidth: 8,
+                labels: TodayDisplayHour,
+                datasets: [
+                    {
+                        borderColor: "#006400",
+                    label: 'امروز',
+                    data: TodayValueHour,
+                    borderWidth: 3,
+                },
+                {
+                    borderColor: "#2793DB",
+                    label: 'روز قبل',
+                    data: YesterDayValueHour,
+                    borderWidth: 3,
+                    },
+                    {
+                        borderColor: "#7FFF00",
+                        label: '2 روز قبل',
+                        data: TwoDayEgoValueHour,
+                        borderWidth: 3,
+                    },
+                    {
+                        borderColor: "#DC143C",
+                        label: '3 روز قبل',
+                        data: ThreeDayEgoValueHour,
+                        borderWidth: 3,
+                    },
+                    {
+                        borderColor: "#8A2BE2",
+                        label: '4 روز قبل',
+                        data: FourDayEgoValueHour,
+                        borderWidth: 3,
+                    },
+                    {
+                        borderColor: "#B8860B",
+                        label: '5 روز قبل',
+                        data: FiveDayEgoValueHour,
+                        borderWidth: 3,
+                    }
+                ]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 15,
+                        fontColor: 'black',
+                        fontWeight: "bold",
+                    }
                 }]
             }
+        }
         });
+
         var ctx = document.getElementById("income").getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
@@ -363,7 +507,24 @@
             }
         });
 
-
+    var ctx = document.getElementById("s-lineDay").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: DisplayDay,
+            datasets: [{
+                label: 'نعداد بازدید ',
+                data: ValueDay,
+                fill: false,
+                borderColor: '#2793DB',
+                backgroundColor: 'transparent',
+                pointBorderColor: '#8B008B',
+                pointRadius: 4,
+                pointHoverRadius: 4,
+                pointBorderWidth: 8,
+            }]
+        }
+    });
 </script>
 
 

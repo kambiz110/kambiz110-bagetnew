@@ -33,6 +33,7 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
         public PaginatedItemsDto<CatalogPLPDto> Execute(CatlogPLPRequestDto request)
         {
             int rowCount = 0;
+            var ArreySearch = new List<string>();
             var query = context.CatalogItems.Where(p => p.IsActive == true).AsNoTracking()
                 .Include(p => p.Discounts).AsNoTracking()
                 .Include(p => p.CatalogItemImages)
@@ -68,8 +69,23 @@ namespace Application.Catalogs.CatalogItems.GetCatalogIItemPLP
 
             if (!string.IsNullOrEmpty(request.SearchKey))
             {
-                query = query.Where(p => p.Name.Contains(request.SearchKey)
-                || p.Description.Contains(request.SearchKey));
+                ArreySearch = request.SearchKey.Split(" ").Where(p => p.Trim().Length > 2).Take(2).ToList();
+                if (ArreySearch.Any())
+                {
+                    if (ArreySearch.Count()>1)
+                    {
+                        query = query.Where(s => s.Name.Contains(ArreySearch.ElementAt(0).Trim()) || 
+                        s.Name.Contains(ArreySearch.ElementAt(1).Trim()));
+                    }
+                    else
+                    {
+                        query = query.Where(s => s.Name.Contains(ArreySearch.ElementAt(0).Trim()));
+                    }
+
+                }
+            
+               
+           
             }
 
             if (request.AvailableStock == true)
