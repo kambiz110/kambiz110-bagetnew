@@ -134,6 +134,14 @@
 
                                 </fieldset>
                             </div>
+                            <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput"> کلمات کلیدی</label>
+                                    <textarea asp-for="@Model.Tags" class="form-control text-right" dir="rtl" rows="2"></textarea>
+                                    <span asp-validation-for="@Model.Tags" class="text-danger"></span>
+
+                                </fieldset>
+                            </div>
                             <div class="col-xl-6 col-lg-6 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput">تصاویر </label>
@@ -267,19 +275,19 @@
 
 </section>
 @section Styles{
-
+    <link href="~/lib/Tagging-System-Autocomplete-Amsify-Suggestags/css/amsify.suggestags.css" rel="stylesheet" />
     <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
     <link href="~/Theme/assets/css/apps/notes.css" rel="stylesheet" />
     <link href="~/lib/trumbowyg-2_25_1/ui/trumbowyg.css" rel="stylesheet" />
 }
 @section Scripts {
-
+    <script src="~/lib/Tagging-System-Autocomplete-Amsify-Suggestags/js/jquery.amsify.suggestags.js"></script>
     <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
     <script src="~/Sweetalert2/sweetalert2.min.js"></script>
     <script src="~/lib/select2/js/select2.js"></script>
     <script src="~/lib/trumbowyg-2_25_1/trumbowyg.js"></script>
     @*<script src="~/Theme/plugins/input-mask/jquery.inputmask.bundle.min.js"></script>
-    <script src="~/Theme/plugins/input-mask/input-mask.js"></script>*@
+        <script src="~/Theme/plugins/input-mask/input-mask.js"></script>*@
     @{await Html.RenderPartialAsync("_AjaxJquery");}
     @*<script src="~/Theme/plugins/editors/ckeditor.js"></script>*@
     @*<script src="https://cdn.ckeditor.com/4.13.0/standard-all/ckeditor.js"></script>*@
@@ -298,6 +306,13 @@
 
             $('.basic-single').select2({
                 placeholder: '... انتخاب کنید'
+            });
+            $('#Tags').amsifySuggestags({
+                type: 'bootstrap',
+                tagLimit: 5,
+                trimValue: true,
+                dashspaces: true,
+                lowercase: true
             });
         });
         $(document).ready(function () {
@@ -461,6 +476,7 @@
             data.append("MaxStockThreshold", $("#MaxStockThreshold").val());
             data.append("Price", $("#currency").val().replace(/,/g, ""));
             data.append("Description", $('textarea#Description').val());
+            data.append("Tags", $('#Tags').val());
 
             data.append("CatologCarId", $('#Car').find('option:selected').val());
             data.append("CatalogCompanyId", $('#Company').find('option:selected').val());

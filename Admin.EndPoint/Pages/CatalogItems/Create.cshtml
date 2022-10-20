@@ -143,15 +143,8 @@
 
                                 </fieldset>
                             </div>
-                            <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
-                                <fieldset class="form-group">
-                                    <label for="basicInput"> کلمات کلیدی</label>
-                                    <textarea name="Tageees" id="Tageees" class="form-control text-right" dir="rtl" rows="2"></textarea>
-                                    <span asp-validation-for="Data.Tags" class="text-danger"></span>
 
-                                </fieldset>
-                            </div>
-                  
+
                             <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> اهمیت قرار گیری در صفحه</label>
@@ -161,6 +154,14 @@
                                         <option value="3">ویژه</option>
                                     </select>
                                     <span asp-validation-for="Data.Importance" class="text-danger"></span>
+
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
+                                <fieldset class="form-group">
+                                    <label for="basicInput"> کلمات کلیدی</label>
+                                    <textarea name="Tageees" id="Tageees" class="form-control text-right" dir="rtl" rows="2"></textarea>
+                                    <span asp-validation-for="Data.Tags" class="text-danger"></span>
 
                                 </fieldset>
                             </div>
