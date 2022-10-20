@@ -145,6 +145,15 @@
                             </div>
                             <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
                                 <fieldset class="form-group">
+                                    <label for="basicInput"> کلمات کلیدی</label>
+                                    <textarea name="Tageees" id="Tageees" class="form-control text-right" dir="rtl" rows="2"></textarea>
+                                    <span asp-validation-for="Data.Tags" class="text-danger"></span>
+
+                                </fieldset>
+                            </div>
+                  
+                            <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
+                                <fieldset class="form-group">
                                     <label for="basicInput"> اهمیت قرار گیری در صفحه</label>
                                     <select type="number" asp-for="Data.Importance" class="form-control " id="Importance">
                                         <option value="1">عادی</option>
@@ -239,6 +248,7 @@
 
 </section>
 @section Styles{
+    <link href="~/lib/Tagging-System-Autocomplete-Amsify-Suggestags/css/amsify.suggestags.css" rel="stylesheet" />
     <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
     <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
     <link href="~/lib/trumbowyg-2_25_1/ui/trumbowyg.css" rel="stylesheet" />
@@ -248,7 +258,7 @@
 
     <script src="~/Sweetalert2/sweetalert2.min.js"></script>
     <script src="~/lib/select2/js/select2.js"></script>
-
+    <script src="~/lib/Tagging-System-Autocomplete-Amsify-Suggestags/js/jquery.amsify.suggestags.js"></script>
     <script src="~/lib/trumbowyg-2_25_1/trumbowyg.js"></script>
 
     @{await Html.RenderPartialAsync("_AjaxJquery");}
@@ -261,7 +271,13 @@
             input.value = number.toLocaleString('en-IN');;
 
         }
-
+        $('#Tageees').amsifySuggestags({
+            type: 'bootstrap',
+            tagLimit: 5,
+            trimValue: true,
+            dashspaces: true,
+            lowercase: true
+        });
         $('.trumbowyg-texterea').trumbowyg();
 
         $(document).ready(function () {
@@ -332,6 +348,7 @@
             data.append("Price", $("#currency").val().replace(/,/g, ""));
             data.append("Description", textareadata);
 
+            data.append("Tags", $('#Tageees').val());
             data.append("CatologCarId", $('#Car').find('option:selected').val());
             data.append("CatalogCompanyId", $('#Company').find('option:selected').val());
             data.append("CatalogTypeId", $('#Category').find('option:selected').val());

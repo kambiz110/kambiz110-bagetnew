@@ -9,6 +9,7 @@ namespace Application.Catalogs.CatalohItems.AddNewCatalogItem
         public string Name { get; set; }
         public string Description { get; set; }
         public string Slug { get; set; }
+        public string Tags { get; set; }
         public int Price { get; set; }
         public int Importance { get; set; }
         public int Width { get; set; }
