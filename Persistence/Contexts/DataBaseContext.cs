@@ -2,6 +2,7 @@
 using Domain.Attributes;
 using Domain.Banners;
 using Domain.Baskets;
+using Domain.Blogs;
 using Domain.Catalogs;
 using Domain.Comments;
 using Domain.Discounts;
@@ -61,6 +62,7 @@ namespace Persistence.Contexts
         public DbSet<Comment> Comments { get; set; }
         public DbSet<MonthLog> MonthLogs { get; set; }
         public DbSet<UserLog> UserLogs { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
 
 
 

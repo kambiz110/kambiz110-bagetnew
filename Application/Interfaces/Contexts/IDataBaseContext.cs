@@ -1,5 +1,6 @@
 ﻿using Domain.Banners;
 using Domain.Baskets;
+using Domain.Blogs;
 using Domain.Catalogs;
 using Domain.Comments;
 using Domain.Discounts;
@@ -54,6 +55,7 @@ namespace Application.Interfaces.Contexts
         DbSet<MonthLog> MonthLogs { get; set; }
         DbSet<Visitor> Visitors { get; set; }
         DbSet<UserLog> UserLogs { get; set; }
+        DbSet<Blog> Blogs { get; set; }
         DbSet<Domain.Payments.ReturnPaymentInvoice> ReturnPaymentInvoices { get; set; }
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);

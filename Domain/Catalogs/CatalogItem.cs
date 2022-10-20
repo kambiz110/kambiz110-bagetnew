@@ -12,7 +12,7 @@ namespace Domain.Catalogs
     {
         public CatalogItem(int pris, string name, string descript, string slug
             , int catalogCompanyId, int catalogTypeId, int catalogBrandId, int catologCarId
-            , int availableStock, int restockThreshold, int maxStockThreshold, int importance, int width, int height, int length, int weight = 0)
+            , int availableStock, int restockThreshold, int maxStockThreshold, int importance, int width, int height, int length, int weight = 0 ,string tags="")
         {
             this._price = pris;
             this.Name = name;
@@ -29,12 +29,13 @@ namespace Domain.Catalogs
             this.Width = width;
             this.Height = height;
             this.Length = length;
-            Weight = weight;
+            this.Weight = weight;
+            this.Tags = tags;
         }
 
         public CatalogItem(int id, int pris, string name, string descript, string slug
        , int catalogCompanyId, int catalogTypeId, int catalogBrandId, int catologCarId
-       , int availableStock, int restockThreshold, int maxStockThreshold, int importance, int width , int height, int length, int weight = 0)
+       , int availableStock, int restockThreshold, int maxStockThreshold, int importance, int width , int height, int length, int weight = 0, string tags = "")
         {
             this.Id = id;
             this._price = pris;
@@ -53,6 +54,7 @@ namespace Domain.Catalogs
             this.Height = height;
             this.Length = length;
             this.Weight = weight;
+            this.Tags = tags;
         }
         public CatalogItem()
         {
@@ -71,6 +73,7 @@ namespace Domain.Catalogs
         public string Description { get; set; }
         public int Selered { get; set; }
         public string Slug { get; set; }
+        public string Tags { get; set; }
         public bool IsActive { get; set; } = true;
         public int Price
         {

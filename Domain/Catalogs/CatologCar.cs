@@ -1,4 +1,5 @@
 ﻿using Domain.Attributes;
+using Domain.Blogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace Domain.Catalogs
         public string Name { get; set; }
         public bool IsDakely { get; set; }
         public string Src { get; set; } = "Resources/images/Static/Default.jpg";
+        public ICollection<Blog> Blogs { get; set; }
     }
 }
