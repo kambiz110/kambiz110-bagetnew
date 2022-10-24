@@ -54,8 +54,13 @@
     </div>
 </div>
 @(await Component.InvokeAsync("GetCatalogByDiscountHomePage"))
+
 @(await Component.InvokeAsync("GetCatalogTypeHomePage", new { sortIndex=0,  count=9 }))
+
 @(await Component.InvokeAsync("GetMainProductes"))
+
 @(await Component.InvokeAsync("BannerStyleTwo", new { position = 1,  count =2}))
-@(await Component.InvokeAsync("GetCatalogeByTypeHomePage", new { sortIndex=0,  count=9 }))
+
+@(await Component.InvokeAsync("GetCatalogeByTypeHomePage", new {  sortIndex =3,  count=4 }))
+
 @(await Component.InvokeAsync("BanerStyleTree", new { position = 2,  count =3}))

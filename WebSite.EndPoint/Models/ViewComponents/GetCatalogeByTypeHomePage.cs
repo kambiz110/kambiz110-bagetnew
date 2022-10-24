@@ -16,9 +16,9 @@ namespace WebSite.EndPoint.Models.ViewComponents
         {
             this.catalogeTypeHomePage = catalogeTypeHomePage;
         }
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(int? parentId, int sortIndex = 3, int count = 4)
         {
-            var model = catalogeTypeHomePage.Execut(null,3, 3);
+            var model = catalogeTypeHomePage.Execut(parentId, sortIndex, count);
             var viewName = $"~/Views/Shared/Components/Product/{this.ViewComponentContext.ViewComponentDescriptor.ShortName}.cshtml";
             return View(viewName, model);
         }

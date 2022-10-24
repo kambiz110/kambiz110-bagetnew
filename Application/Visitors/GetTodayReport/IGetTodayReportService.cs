@@ -34,9 +34,16 @@ namespace Application.Visitors.GetTodayReport
             var TodayVisitorCount = _dbContext.Visitors
                 .Where(p => p.Time >= start && p.Time < end).GroupBy(p => p.VisitorId)
                 .LongCount();
-            var AllPageViewCount = _dbContext.Visitors.Count();
-            var AllVisitorCount = _dbContext.Visitors
+            var AllPageViewCount = _dbContext.MonthLogs.Sum(p=>p.CountLog);
+            //آمار بازدید در 30 روز گذشته بر اساس کاربر منحصر به فرد
+            var AllVisitorCountByVisitorId = _dbContext.Visitors
+                 .Where(p => p.Time >=  DateTime.Now.AddDays(-30))
                 .GroupBy(p => p.VisitorId).Count();
+            
+            //آمار بازدید در 30 روز گذشته 
+            var AllVisitorCountBy = _dbContext.Visitors
+                 .Where(p => p.Time >= DateTime.Now.AddDays(-30))
+                .Count();
 
             VisitCountDto visitPerHour = GTetVisitPerHour(start, end);
 
@@ -67,6 +74,7 @@ namespace Application.Visitors.GetTodayReport
             VisitCountDto FiveDayEgovisitPerHour = GTetVisitPerHour(start.AddDays(-5), end.AddDays(-5));
 
             VisitCountDto visitPerDay30 = GetVisitPerDay(30);
+
             VisitCountDto visitHourPerDayes30 = GetVisitHourPerDays(30);
 
 
@@ -89,9 +97,9 @@ namespace Application.Visitors.GetTodayReport
             {
                 GeneralStats = new GeneralStatsDto
                 {
-                    TotalVisitors = AllVisitorCount,
+                    TotalVisitors = AllVisitorCountByVisitorId,
                     TotalPageViews = AllPageViewCount,
-                    PageViewsPerVisit = GetAvg(AllPageViewCount, AllVisitorCount),
+                         PageViewsPerVisit = GetAvg(AllVisitorCountBy, AllVisitorCountByVisitorId),
                     VisitPerDay = visitPerDay30,
                     VisitHourPerDayes = visitHourPerDayes30
                 },

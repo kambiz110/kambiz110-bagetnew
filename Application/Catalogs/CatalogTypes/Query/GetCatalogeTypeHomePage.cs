@@ -32,7 +32,7 @@ namespace Application.Catalogs.CatalogTypes.Query
 
         
         }
-        public GetCatalogeItemByTypeHomePageDto Execut(int? parentId, int sortIndex = 0, int count = 9)
+        public GetCatalogeItemByTypeHomePageDto Execut(int? parentId, int sortIndex = 0, int count = 4)
         {
             var model = context.CatalogTypes
  .Where(p => p.SortIndex == sortIndex && p.ParentCatalogTypeId== parentId)
