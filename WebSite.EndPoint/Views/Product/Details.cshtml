@@ -17,37 +17,73 @@
     {
         simelerUrl[i] = $@"{site}/Product/Details/pid-{Model.SimilarCatalogs.ElementAt(i).Id}/{Model.SimilarCatalogs.ElementAt(i).Slug}";
     }
-
-    Html.SetSeoInfo(seoInfo =>
+    if (!String.IsNullOrEmpty(Model.Tags) )
     {
-        seoInfo.SetCommonInfo(
-            pageTitle: Model.Slug,
-            description: Model.Slug + " خرید فروش ویژه تخفیف اینترنتی آنلاین کالا لوازم یدکی سایپا زنجانی اصل با ضمانت بازگشت وجه و ارسال سریع به سراسر ایران تماس 09124918349",
-            url: $"{site}/Product/Details/pid-{Model.Images}/{Model.Slug}",
-            keywordTags: new[] { Model.TypeName, Model.BrrndName, Model.CompanyName, Model.Name, Model.Name,Model.Tags }, //optional
-            seeAlsoUrls: simelerUrl  //optional
-        );
+        Html.SetSeoInfo(seoInfo =>
+        {
+            seoInfo.SetCommonInfo(
+                pageTitle: Model.Slug,
+                description: Model.Slug + " خرید فروش ویژه تخفیف اینترنتی آنلاین کالا لوازم یدکی سایپا زنجانی اصل با ضمانت بازگشت وجه و ارسال سریع به سراسر ایران تماس 09124918349",
+                url: $"{site}/Product/Details/pid-{Model.Images}/{Model.Slug}",
+                keywordTags: new[] { Model.TypeName, Model.BrrndName, Model.CompanyName, Model.Name ,Model.Tags}, //optional
+                seeAlsoUrls: simelerUrl  //optional
+            );
 
-        seoInfo.SetImageInfo(
-            url: Model.Images.Count()>0? Model.Images.FirstOrDefault():"/defultimage.jpg",
-             width: 500,  //optional
-              height: 500,  //optional
-            alt: Model.Slug,//,  //optional
-                            mimeType: "image/jpeg" //optional (detects from url file extension if not set.)
-                                                   // cardType: SeoTags.TwitterCardType.SummaryLargeImage   //optional
-        );
+            seoInfo.SetImageInfo(
+                url: Model.Images.Count() > 0 ? Model.Images.FirstOrDefault() : "/defultimage.jpg",
+                 width: 500,  //optional
+                  height: 500,  //optional
+                alt: Model.Slug,//,  //optional
+                                mimeType: "image/jpeg" //optional (detects from url file extension if not set.)
+                                                       // cardType: SeoTags.TwitterCardType.SummaryLargeImage   //optional
+            );
 
-        seoInfo.SetArticleInfo(
-                    authorName: "yadakcarshop.com",
-                    publishDate: DateTimeOffset.Now,
-                    modifiedDate: DateTimeOffset.Now,  //optional
-                    authorUrl: "https://yadakcarshop.com/",  //optional
-                    section: "Article Topic"  //optional
-                );
+            seoInfo.SetArticleInfo(
+                        authorName: "yadakcarshop.com",
+                        publishDate: DateTimeOffset.Now,
+                        modifiedDate: DateTimeOffset.Now,  //optional
+                        authorUrl: "https://yadakcarshop.com/",  //optional
+                        section: "Article Topic"  //optional
+                    );
 
-        //Add another rss feed. (only for this page) (optional)
-        seoInfo.AddFeed("Post Comments", "https://yadakcarshop.com/post/comment/rss", SeoTags.FeedType.Rss);
-    });
+            //Add another rss feed. (only for this page) (optional)
+            seoInfo.AddFeed("Post Comments", "https://yadakcarshop.com/post/comment/rss", SeoTags.FeedType.Rss);
+        });
+    }
+    else
+    {
+        Html.SetSeoInfo(seoInfo =>
+        {
+            seoInfo.SetCommonInfo(
+                pageTitle: Model.Slug,
+                description: Model.Slug + " خرید فروش ویژه تخفیف اینترنتی آنلاین کالا لوازم یدکی سایپا زنجانی اصل با ضمانت بازگشت وجه و ارسال سریع به سراسر ایران تماس 09124918349",
+                url: $"{site}/Product/Details/pid-{Model.Images}/{Model.Slug}",
+                keywordTags: new[] { Model.TypeName, Model.BrrndName, Model.CompanyName, Model.Name }, //optional
+                seeAlsoUrls: simelerUrl  //optional
+            );
+
+            seoInfo.SetImageInfo(
+                url: Model.Images.Count() > 0 ? Model.Images.FirstOrDefault() : "/defultimage.jpg",
+                 width: 500,  //optional
+                  height: 500,  //optional
+                alt: Model.Slug,//,  //optional
+                                mimeType: "image/jpeg" //optional (detects from url file extension if not set.)
+                                                       // cardType: SeoTags.TwitterCardType.SummaryLargeImage   //optional
+            );
+
+            seoInfo.SetArticleInfo(
+                        authorName: "yadakcarshop.com",
+                        publishDate: DateTimeOffset.Now,
+                        modifiedDate: DateTimeOffset.Now,  //optional
+                        authorUrl: "https://yadakcarshop.com/",  //optional
+                        section: "Article Topic"  //optional
+                    );
+
+            //Add another rss feed. (only for this page) (optional)
+            seoInfo.AddFeed("Post Comments", "https://yadakcarshop.com/post/comment/rss", SeoTags.FeedType.Rss);
+        });
+    }
+
 }
 
 
@@ -184,7 +220,7 @@
                             <div class="price_box">
                                 @if (Model.IsActive)
                                 {
-                                    if (Model.OldPrice != null)
+                                    @if (Model.OldPrice != null && Model.OldPrice != Model.Price)
                                     {
                                         <span class="old_price">@Model.OldPrice?.ToString("n0") تومان</span>
                                     }
