@@ -10,9 +10,43 @@ namespace Infrastructure.SMS
     {
         public Task singleUserSendSMS(string message, string[] phonNumber);
         public Task verificationCodeWithPatern(string name, string Mobile ,string smsCode);
+        public void newTicket(string name, string ticket_number, string status, string Mobile);
+        public void newBuy(string username, string number,string amount,  string status, string Mobile);
     }
     public class SmsServices : ISmsServices
     {
+        public void newBuy(string username, string number, string amount, string status, string Mobile)
+        {
+            string UserName = "09108496094";
+            string Password = "karen@1397";
+        
+
+            int PatternCodeID = 1387;
+            string[] PatternValues = new string[] { username, number , amount, status };
+            var client = new AmootSMS.AmootSMSWebService2SoapClient(
+                    AmootSMS.AmootSMSWebService2SoapClient.EndpointConfiguration.AmootSMSWebService2Soap12,
+                   "https://portal.amootsms.com/webservice2.asmx");
+            /*  AmootSMS.SendResult result =*/
+             client.SendWithPatternAsync(UserName, Password, Mobile, PatternCodeID, PatternValues);
+
+        }
+
+        public void newTicket(string name, string ticket_number, string status, string Mobile)
+        {
+            string UserName = "09108496094";
+            string Password = "karen@1397";
+
+
+            int PatternCodeID = 1386;
+            string[] PatternValues = new string[] { name, ticket_number, status };
+            var client = new AmootSMS.AmootSMSWebService2SoapClient(
+                    AmootSMS.AmootSMSWebService2SoapClient.EndpointConfiguration.AmootSMSWebService2Soap12,
+                   "https://portal.amootsms.com/webservice2.asmx");
+            /*  AmootSMS.SendResult result =*/
+             client.SendWithPatternAsync(UserName, Password, Mobile, PatternCodeID, PatternValues);
+
+        }
+
         public async Task singleUserSendSMS(string message, string[] phonNumber)
         {
             string UserName = "09108496094";
@@ -56,7 +90,8 @@ namespace Infrastructure.SMS
             var client = new AmootSMS.AmootSMSWebService2SoapClient(
                     AmootSMS.AmootSMSWebService2SoapClient.EndpointConfiguration.AmootSMSWebService2Soap12,
                    "https://portal.amootsms.com/webservice2.asmx");
-          /*  AmootSMS.SendResult result =*/ await client.SendWithPatternAsync(UserName, Password, Mobile, PatternCodeID, PatternValues);
+          /*  AmootSMS.SendResult result =*/
+            await client.SendWithPatternAsync(UserName, Password, Mobile, PatternCodeID, PatternValues);
 
        
         }

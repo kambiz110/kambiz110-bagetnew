@@ -74,6 +74,7 @@ namespace Application.Payments
                 Userid = user.Id,
                 Id = payment.Id,
                 Description = description,
+                orderId=payment.OrderId
             };
             return paymentDto;
         }
@@ -206,6 +207,7 @@ namespace Application.Payments
         public string Email { get; set; }
         public int Amount { get; set; }
         public string Userid { get; set; }
+        public int orderId { get; set; }
     }
     public class PaymentToCheckoutPageDto
     {

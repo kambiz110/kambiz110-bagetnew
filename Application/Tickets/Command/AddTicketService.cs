@@ -12,7 +12,7 @@ namespace Application.Tickets.Command
 {
     public interface IAddTicketService
     {
-        Task Add(AddTicketDto dto);
+        long Add(AddTicketDto dto);
     }
     public class AddTicketService : IAddTicketService
     {
@@ -25,12 +25,12 @@ namespace Application.Tickets.Command
             this.mapper = mapper;
         }
 
-        public async Task Add(AddTicketDto dto)
+        public long Add(AddTicketDto dto)
         {
             var ticket = mapper.Map<Ticket>(dto);
             context.Tickets.Add(ticket);
-            await context.SaveChangesAsync();
-
+             context.SaveChanges();
+            return ticket.Id;
         }
     }
 }

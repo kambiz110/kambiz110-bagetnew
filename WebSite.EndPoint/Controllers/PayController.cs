@@ -1,6 +1,7 @@
 ﻿using Application.Payments;
 using DotNet.RateLimiter.ActionFilters;
 using Dto.Payment;
+using Infrastructure.SMS;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -24,13 +25,13 @@ namespace WebSite.EndPoint.Controllers
         private readonly Authority _authority;
         private readonly Transactions _transactions;
         //****************************************
-
+        private readonly ISmsServices smsServices;
         private readonly IConfiguration configuration;
         private readonly IPaymentService paymentService;
         private readonly string merchendId;
         private readonly ILogger<PayController> _logger;
         private static readonly NLog.Logger nlog = NLog.LogManager.GetCurrentClassLogger();
-        public PayController(IConfiguration configuration, IPaymentService paymentService, ILogger<PayController> logger)
+        public PayController(IConfiguration configuration, IPaymentService paymentService, ILogger<PayController> logger, ISmsServices smsServices)
         {
             this.configuration = configuration;
             this.paymentService = paymentService;
@@ -42,6 +43,7 @@ namespace WebSite.EndPoint.Controllers
             _authority = expose.CreateAuthority();
             _transactions = expose.CreateTransactions();
             _logger = logger;
+            this.smsServices = smsServices;
         }
 
         [RateLimit(PeriodInSec = 5, Limit = 5)]
@@ -107,7 +109,9 @@ namespace WebSite.EndPoint.Controllers
                     bool verifyResult = paymentService.VerifyPayment(Id, Authority, verification.RefID);
                     if (verifyResult)
                     {
-
+                        smsServices.newBuy(payment.PhoneNumber, payment.orderId.ToString(), payment.Amount.ToString(), "خرید جدید", "09108496094");
+                        smsServices.newBuy(payment.PhoneNumber, payment.orderId.ToString(), payment.Amount.ToString(), "خرید جدید", "09124918349");
+                        smsServices.newBuy(payment.PhoneNumber, payment.orderId.ToString(), payment.Amount.ToString(),"خرید جدید", "09125476274");
                         return RedirectToAction("Index", "Orders", new { area = "Customers" });
                     }
                     else

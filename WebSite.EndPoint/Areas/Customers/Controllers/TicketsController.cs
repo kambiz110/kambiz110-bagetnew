@@ -2,6 +2,7 @@
 using Application.Tickets.Dto;
 using Application.Tickets.Query;
 using DNTCaptcha.Core;
+using Infrastructure.SMS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,12 +20,13 @@ namespace WebSite.EndPoint.Areas.Customers.Controllers
         private readonly IAddTicketService addTicket;
         private readonly ICustomerGetTickets customerGetTickets;
         private readonly IGetAnswerDitels getAnswer;
-
+        private readonly ISmsServices smsServices;
         public TicketsController(IAddTicketService addTicket,
-            ICustomerGetTickets customerGetTickets)
+            ICustomerGetTickets customerGetTickets, ISmsServices smsServices)
         {
             this.addTicket = addTicket;
             this.customerGetTickets = customerGetTickets;
+            this.smsServices = smsServices;
         }
         public IActionResult Index(int pageIndex=1, int pageSize=10)
         {
@@ -59,7 +61,10 @@ namespace WebSite.EndPoint.Areas.Customers.Controllers
             }
             var ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             dto.Ip = ip;
-            addTicket.Add(dto);
+           var result= addTicket.Add(dto);
+            smsServices.newTicket(User.Identity.Name, result.ToString(), "تیکت جدید", "09108496094");
+            smsServices.newTicket(User.Identity.Name, result.ToString(), "تیکت جدید", "09124918349");
+            smsServices.newTicket(User.Identity.Name, result.ToString(), "تیکت جدید", "09125476274");
             return View(nameof(Index));
         }
     }
