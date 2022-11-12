@@ -138,7 +138,7 @@
                             <div class="col-xl-4 col-lg-4 col-sm-12 mb-1">
                                 <fieldset class="form-group">
                                     <label for="basicInput"> قیمت (تومان)</label>
-                                    <input type="text" asp-for="Data.Price" class="form-control " onkeyup="reformatText(this)" id="currency">
+                                    <input type="text" asp-for="Data.Price" class="form-control " id="currency">
                                     <span asp-validation-for="Data.Price" class="text-danger"></span>
 
                                 </fieldset>
@@ -261,17 +261,18 @@
     <script src="~/lib/select2/js/select2.js"></script>
     <script src="~/lib/Tagging-System-Autocomplete-Amsify-Suggestags/js/jquery.amsify.suggestags.js"></script>
     <script src="~/lib/trumbowyg-2_25_1/trumbowyg.js"></script>
-
+    <script src="~/Theme/plugins/input-mask/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/Theme/plugins/input-mask/input-mask.js"></script>
     @{await Html.RenderPartialAsync("_AjaxJquery");}
     <script>
         //currency mask
-        function reformatText(input) {
-            var value = input.value;
-            var number = Number(value.replace(/,/g, ""));
+        //function reformatText(input) {
+        //    var value = input.value;
+        //    var number = Number(value.replace(/,/g, ""));
 
-            input.value = number.toLocaleString('en-IN');;
+        //    input.value = number.toLocaleString('en-IN');;
 
-        }
+        //}
         $('#Tageees').amsifySuggestags({
             type: 'bootstrap',
             tagLimit: 5,
@@ -336,6 +337,9 @@
             console.log("currency :", $("#currency").val().replace(/,/g, ""));
             var data = new FormData();
             //دریافت مقادیر از تکس باکس ها و....
+            var pprice = $("#currency").val().replace(/,/g, "");
+
+            pprice = pprice.replace(/[^\d]/g, '');
             data.append("Id", $("#Id").val());
             data.append("Importance", $('#Importance').find('option:selected').val());
             data.append("Width", $("#Width").val());
@@ -346,7 +350,7 @@
             data.append("AvailableStock", $("#AvailableStock").val());
             data.append("RestockThreshold", $("#RestockThreshold").val());
             data.append("MaxStockThreshold", $("#MaxStockThreshold").val());
-            data.append("Price", $("#currency").val().replace(/,/g, ""));
+            data.append("Price", pprice);
             data.append("Description", textareadata);
 
             data.append("Tags", $('#Tageees').val());
