@@ -1,4 +1,5 @@
 ﻿using Application.Logs.Query;
+using Application.Orders.Dto;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,11 @@ namespace Admin.EndPoint.Controllers
             }
             var model = _getUserlogs.GetUserLogs(PageSize, PageNo, q);
             return View(model.Data);
+        }
+        [HttpGet]
+        public IActionResult SaleReport(SaleReportDto dto)
+        {
+            return View();
         }
     }
 }

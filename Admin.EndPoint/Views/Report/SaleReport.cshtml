@@ -1,0 +1,137 @@
+﻿@model Application.Orders.Dto.SaleReportDto;
+@{
+    ViewData["Title"] = "آمار فروش";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-12 col-12 layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+
+                <h4 class="col-xl-12 col-md-12 col-sm-12 col-12 btn btn-success">    آمار فروش    </h4>
+
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <form asp-action="SaleReport" method="get">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                <div class="row">
+                    <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                        <label asp-for="StartDate"> </label>
+                        <input asp-for="StartDate" type="hidden" />
+                        <input type="text" class="form-control" id="StartDateFake">
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                        <label asp-for="EndDate"> </label>
+                        <input asp-for="EndDate" type="hidden" />
+                        <input type="text" class="form-control" id="EndDateFake">
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                        <label for="period"> دوره زمانی </label>
+                        <select class="form-control basic-single" id="Brand" asp-for="period">
+                            <option value="0">بدون انتخاب</option>
+                            <option value="1"> ماه گذشته</option>
+                            <option value="2"> سه ماه گذشته</option>
+                            <option value="3"> شش ماه گذشته</option>
+                            <option value="4"> یک سال گذشته</option>
+
+                        </select>
+
+                    </div>
+                    <div class="align-middle col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                        <input type="submit" name="time" value="ثبت" class="btn btn-primary col-sm-12" style="top: 53%; -ms-transform: translateY(-50%); transform: translateY(-50%); height: 45px; ">
+                    </div>
+                     
+                    </div>
+
+</form>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+
+    <link href="~/Theme/assets/css/apps/contacts.css" rel="stylesheet" />
+    <link href="~/Theme/assets/css/forms/theme-checkbox-radio.css" rel="stylesheet" />
+    <link href="~/Theme/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
+    <link href="~/lib/select2/css/select2-bootstrap4.css" rel="stylesheet" />
+
+    <link href="~/lib/MD_BootstrapPersianDateTimePicker-master-bs5/dist/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+
+    <style>
+        .select2-container--default .select2-search--inline .select2-search__field {
+            text-align: right !important;
+        }
+    </style>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_AjaxJquery");}
+
+    <script src="~/lib/select2/js/select2.js"></script>
+    <script src="~/lib/MD_BootstrapPersianDateTimePicker-master-bs5/dist/jquery.md.bootstrap.datetimepicker.js"></script>
+    <script src="~/Theme/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Theme/assets/js/apps/contact.js"></script>
+    <script>
+        $('.basic-single').select2({
+            placeholder: '... انتخاب کنید'
+        });
+        $('#StartDateFake').MdPersianDateTimePicker({
+
+            targetTextSelector: '#StartDateFake',
+            targetDateSelector: '#StartDate',
+            groupId: 'rangeSelector1',
+            placement: 'top',
+            dateFormat: 'yyyy-MM-dd HH:mm:ss',
+            textFormat: 'yyyy-MM-dd HH:mm:ss',
+            fromDate: true,
+            enableTimePicker: true,
+            modalMode: true
+        });
+
+        $('#EndDateFake').MdPersianDateTimePicker({
+            targetTextSelector: '#EndDateFake',
+            targetDateSelector: '#EndDate',
+            groupId: 'rangeSelector1',
+            placement: 'top',
+            dateFormat: 'yyyy-MM-dd HH:mm:ss',
+            textFormat: 'yyyy-MM-dd HH:mm:ss',
+            fromDate: true,
+            enableTimePicker: true,
+            modalMode: true
+
+        });
+        //  $("#DiscountPercentage").parent().hide();//model_UsePercentage
+        //  $("#CouponCode").parent().hide();
+        $('#RequiresCouponCode').click(function () {
+            if (this.checked) {
+                $("#CouponCode").parent().show();
+                $("#searchProductBox").hide();
+            } else {
+                $("#CouponCode").parent().hide();
+                $("#searchProductBox").show();
+            }
+        });
+        $('#UsePercentage').click(function () {
+            $("#DiscountAmount").attr("value", "0");
+            console.log("value : ", $("#DiscountAmount").val());
+
+            if (this.checked) {
+                $("#DiscountAmount").parent().hide();
+                $("#DiscountAmount").attr("value", "0");
+                $("#DiscountPercentage").parent().show();
+            } else {
+                $("#DiscountAmount").parent().show();
+                $("#DiscountPercentage").parent().hide();
+            }
+        });
+
+    </script>
+}
