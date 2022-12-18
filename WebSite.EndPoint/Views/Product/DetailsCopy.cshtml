@@ -167,6 +167,7 @@ seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.Fe
                                 <li>
                                     <span>@item.Key</span>
                                     <span>@item.Value</span>
+                                  
                                 </li>
                             }
                         </ul>
@@ -317,7 +318,7 @@ seoInfo.AddFeed("Post Comments", "https://site.com/post/comment/rss", SeoTags.Fe
 
                             @foreach (var group in Model.Features)
                             {
-
+                                //var ee = Model.Features.SelectMany(d => d).ToList();
                                 <section>
                                     <h3 class="params-title"> @group.Key</h3>
                                     <ul class="params-list">
