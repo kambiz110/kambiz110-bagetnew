@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Application.Interfaces.Contexts;
 using Application.Orders.Dto;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,26 +28,36 @@ namespace Application.Orders.Query
             DateTime start = DateTime.Now.Date;
             DateTime end = DateTime.Now.AddDays(1);
             //آمار   امروز 
-            var TodayPageViewCount = _dbContext.Orders.AsQueryable()
-    .Where(p => p.ZamanDelivered >= start && p.ZamanDelivered < end).Count();
+            var TodayPageView = _dbContext.Orders.AsQueryable()
+            .Where(p => p.OrderDate >= start && p.OrderDate < end 
+            && (int)p.PaymentStatus==1).Include(p=>p.OrderItems);
 
             //آمار  در 1 روز گذشته 
-            var YesterdayViewCount = _dbContext.Orders.AsQueryable()
-                .Where(p => p.ZamanDelivered >= start.AddDays(-1) && p.ZamanDelivered < end.AddDays(-1)).Count();
-            var TodayVisitorCount = _dbContext.Orders
-                .Where(p => p.ZamanDelivered >= start.AddDays(-1) && p.ZamanDelivered < end.AddDays(-1)).GroupBy(p => p.UserId)
-                .Count();
-            var AllPageViewCount = _dbContext.MonthLogs.Sum(p => p.CountLog);
-           
+            var YesterdayView = _dbContext.Orders.AsQueryable()
+                .Where(p => p.OrderDate >= start.AddDays(-1) 
+                && p.OrderDate < end.AddDays(-1)
+                && (int)p.PaymentStatus == 1).Include(p => p.OrderItems);
+
+
+            //آمار  در 7 روز گذشته 
+            var SevendayView = _dbContext.Orders.AsQueryable()
+                .Where(p => p.OrderDate >= start.AddDays(-1)
+                && p.OrderDate < end.AddDays(-7)
+                && (int)p.PaymentStatus == 1).Include(p => p.OrderItems);
+
+
+
+
             //آمار  در 30 روز گذشته بر اساس کاربر منحصر به فرد
             var AllVisitorCountByVisitorId = _dbContext.Orders
-                 .Where(p => p.ZamanDelivered >= DateTime.Now.AddDays(-30))
+                 .Where(p => p.OrderDate >= DateTime.Now.AddDays(-30))
                 .GroupBy(p => p.UserId).Count();
 
             //آمار  در 30 روز گذشته 
-            var AllVisitorCountBy = _dbContext.Orders
-                 .Where(p => p.ZamanDelivered >= DateTime.Now.AddDays(-30))
-                .Count();
+            var BuyThirtyDay = _dbContext.Orders
+                 .Where(p => p.OrderDate >= DateTime.Now.AddDays(-30)
+                 && (int)p.PaymentStatus == 1)
+                .Include(p => p.OrderItems);
 
 
             return new ResultDto<FerstSaleReportQueryViewModel>();
