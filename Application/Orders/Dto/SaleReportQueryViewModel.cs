@@ -22,6 +22,15 @@ namespace Application.Orders.Dto
     }
     public class BuyReportCountDto
     {
+        public BuyReportCountDto()
+        {
+
+        }
+        public BuyReportCountDto(string[] _display , int[] _value)
+        {
+            this.Display = _display;
+            this.Value = _value;
+        }
         public string[] Display { get; set; }
         public int[] Value { get; set; }
 
@@ -30,6 +39,6 @@ namespace Application.Orders.Dto
     {
         public int Buyers { get; set; }
         public int BuyCount { get; set; }
-        public BuyReportCountDto SaleReport { get; set; }
+        public BuyReportCountDto SaleReport { get; set; } = new BuyReportCountDto();
     }
 }

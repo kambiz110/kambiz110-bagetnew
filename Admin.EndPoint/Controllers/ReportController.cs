@@ -1,5 +1,6 @@
 ﻿using Application.Logs.Query;
 using Application.Orders.Dto;
+using Application.Orders.Query;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace Admin.EndPoint.Controllers
     public class ReportController : Controller
     {
         private readonly IGetUserlogs _getUserlogs;
+        private readonly ISaleReportQuery _saleReportQuery;
 
-        public ReportController(IGetUserlogs getUserlogs)
+        public ReportController(IGetUserlogs getUserlogs, ISaleReportQuery saleReportQuery)
         {
             _getUserlogs = getUserlogs;
+            _saleReportQuery = saleReportQuery;
         }
 
         public IActionResult VisitorReport()
@@ -34,6 +37,7 @@ namespace Admin.EndPoint.Controllers
         [HttpGet]
         public IActionResult SaleReport(SaleReportDto dto)
         {
+            var test = _saleReportQuery.FirstDefultSaleReport();
             return View();
         }
     }

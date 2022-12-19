@@ -25,6 +25,7 @@ using Application.Logs.Command;
 using Application.Logs.Query;
 using Application.Orders.AdminOrderServices;
 using Application.Orders.CustomerOrdersServices;
+using Application.Orders.Query;
 using Application.PostalProducts;
 using Application.Returneds.Query;
 using Application.ReturnPaymentInvoice.Commend;
@@ -116,6 +117,7 @@ namespace Admin.EndPoint
             services.AddTransient<IAnswerCommentAdmin, AnswerCommentAdmin>();
             services.AddScoped<IAddUserLog, AddUserLog>();
             services.AddTransient<IGetUserlogs, GetUserlogs>();
+            services.AddTransient<ISaleReportQuery, SaleReportQuery>();
 
             #region connection String SqlServer
             services.AddScoped<IDataBaseContext, DataBaseContext>();
