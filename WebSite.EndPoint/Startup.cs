@@ -89,7 +89,6 @@ namespace WebSite.EndPoint
             services.AddDbContext<DataBaseContext>(option => option.UseSqlServer(connection));
             services.AddDbContext<InMemoryContext>(option => option.UseInMemoryDatabase("OnlineVisitor"));
             services.AddScoped<InMemoryContext>();
-
             services.AddIdentityService(Configuration);
            // services.AddScoped<IUserClaimsPrincipalFactory<User>, CustomUserClaimsPrincipalFactory>();
             services.AddAuthorization();

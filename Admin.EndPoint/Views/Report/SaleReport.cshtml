@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="widget-content widget-content-area">
-            <form asp-action="SaleReport" method="get">
+            <form asp-action="AjaxSaleReport" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-12">
                         <label for="period"> دوره زمانی </label>
-                        <select class="form-control basic-single" id="Brand" asp-for="period">
+                        <select class="form-control basic-single" asp-for="period">
                             <option value="0">بدون انتخاب</option>
                             <option value="1"> ماه گذشته</option>
                             <option value="2"> سه ماه گذشته</option>
@@ -45,23 +45,29 @@
 
                     </div>
                     <div class="align-middle col-xl-3 col-lg-3 col-md-3 col-sm-12">
-                       
-                   
-                    <button type="submit"  value="ثبت" class="btn btn-primary col-sm-12" style="top: 55%; -ms-transform: translateY(-50%); transform: translateY(-50%); height: 45px; ">گزارشگیری</button>
-                    </div>
-                     
+
+
+                        <button type="submit" id="submitForm" value="ثبت" class="btn btn-primary col-sm-12" style="top: 55%; -ms-transform: translateY(-50%); transform: translateY(-50%); height: 45px; ">گزارشگیری</button>
                     </div>
 
-</form>
+                </div>
+
+            </form>
+        </div>
+
+        <div id="ResiveData">
+
         </div>
     </div>
 </div>
 
 @section Styles{
 
+
     <link href="~/Theme/assets/css/apps/contacts.css" rel="stylesheet" />
     <link href="~/Theme/assets/css/forms/theme-checkbox-radio.css" rel="stylesheet" />
     <link href="~/Theme/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
     <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
     <link href="~/lib/select2/css/select2-bootstrap4.css" rel="stylesheet" />
 
@@ -77,10 +83,12 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_AjaxJquery");}
 
+
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
     <script src="~/lib/select2/js/select2.js"></script>
     <script src="~/lib/MD_BootstrapPersianDateTimePicker-master-bs5/dist/jquery.md.bootstrap.datetimepicker.js"></script>
     <script src="~/Theme/plugins/jquery-ui/jquery-ui.min.js"></script>
-    <script src="~/Theme/assets/js/apps/contact.js"></script>
+
     <script>
         $('.basic-single').select2({
             placeholder: '... انتخاب کنید'
@@ -110,30 +118,55 @@
             modalMode: true
 
         });
-        //  $("#DiscountPercentage").parent().hide();//model_UsePercentage
-        //  $("#CouponCode").parent().hide();
-        $('#RequiresCouponCode').click(function () {
-            if (this.checked) {
-                $("#CouponCode").parent().show();
-                $("#searchProductBox").hide();
-            } else {
-                $("#CouponCode").parent().hide();
-                $("#searchProductBox").show();
-            }
-        });
-        $('#UsePercentage').click(function () {
-            $("#DiscountAmount").attr("value", "0");
-            console.log("value : ", $("#DiscountAmount").val());
 
-            if (this.checked) {
-                $("#DiscountAmount").parent().hide();
-                $("#DiscountAmount").attr("value", "0");
-                $("#DiscountPercentage").parent().show();
-            } else {
-                $("#DiscountAmount").parent().show();
-                $("#DiscountPercentage").parent().hide();
-            }
-        });
+        $('#submitForm').click(function (event) {
+            event.preventDefault();
+            var start = $("#StartDate").val();
+            var end = $("#EndDate").val();
+            var perio = $('#period').find('option:selected').val();
+            console.log("data start : ", start);
+            console.log("data end : ", end);
+            console.log("data perio : ", perio);
 
+            var data0 = {
+                StartDate: start,
+                EndDate: end,
+                period: perio,
+            };
+
+            console.log("data after : ", data0);
+            // var dto = JSON2.stringify(dataO);
+            //  console.log("data stringify : ", dto);
+            $.ajax({
+                type: "GET",
+                url: "/Report/AjaxSaleReport",
+                data: data0,
+                contentType: "application/json; charset=utf-8",
+                success: function (resived) {
+                    console.log("data recived : ", resived);
+                    if (resived.isSuccess == true) {
+                        $('#ResiveData').html(resived.data);
+                        swal.fire(
+                            'موفق!',
+                            resived.message,
+                            'success'
+                        ).then(function (isConfirm) {
+                          //  $('#ResiveData').html(resived.data);
+                        });
+                    }
+                    else {
+                        swal.fire(
+                            'هشدار!',
+                            "دیتا ثبت نشد",
+                            'warning'
+                        );
+                    }
+                }
+
+            });
+
+
+
+        });
     </script>
 }

@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Admin.EndPoint.Helper;
+using Application.Dtos;
 
 namespace Admin.EndPoint.Controllers
 {
@@ -35,10 +37,35 @@ namespace Admin.EndPoint.Controllers
             return View(model.Data);
         }
         [HttpGet]
-        public IActionResult SaleReport(SaleReportDto dto)
+        public IActionResult SaleReport()
         {
             var test = _saleReportQuery.FirstDefultSaleReport();
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult AjaxSaleReport(SaleReportDto dto)
+        {
+       
+                var result = _saleReportQuery.FirstDefultSaleReport();
+            if (result.IsSuccess)
+            {
+              
+                var viewHtml = this.RenderViewAsync("_Partial_AjaxSaleReport", result.Data, true);
+                return Json(new ResultDto<string>
+                {
+                    Data = viewHtml,
+                    IsSuccess = true,
+                    Message = " گزارش گیری موفق ."
+                }); ;
+            }
+            return Json(new ResultDto<string>
+            {
+                Data = "<p>گزارش با موفق.</p>",
+                IsSuccess = false,
+                Message = "ناموفق."
+            });
+    
         }
     }
 }
