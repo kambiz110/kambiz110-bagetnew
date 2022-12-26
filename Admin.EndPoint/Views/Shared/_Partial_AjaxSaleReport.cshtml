@@ -1,10 +1,56 @@
 ﻿@using Application.Orders.Dto
 @model FerstSaleReportQueryViewModel
-@{ 
-
+@{
     var test = Model;
 }
-        <div class="h2">
-            <p>A car is a wheeled, self-powered motor vehicle used for transportation.</p>
+
+<div class="col-xl-12 col-md-12">
+    <div class="card card-chart">
+        <div class="card-header">
+            <h5 class="card-title">آمار کل خرید بر اساس بازه زمانی انتخاب شده</h5>
+            <p class="card-category"></p>
         </div>
- 
+        <div class="card-body">
+
+            <canvas id="TestlineDay" width="400" height="100"></canvas>
+        </div>
+        <div class="card-footer">
+            <div class="chart-legend">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+       var TodayDisplayHour=@Html.Raw(Json.Serialize(Model.Today.SaleReport.Display));
+        var TodayValueHour=@Html.Raw(Json.Serialize(Model.Today.SaleReport.Value));
+
+    var ctx = document.getElementById("TestlineDay").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: TodayDisplayHour,
+            datasets: [{
+                label: 'فروش(تومان) ',
+                data: TodayValueHour,
+                backgroundColor: "rgba(234, 0, 0,0.4)"
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 15,
+                        fontColor: 'black',
+                        fontWeight: "bold",
+                    }
+                }]
+            }
+        }
+    });
+</script>

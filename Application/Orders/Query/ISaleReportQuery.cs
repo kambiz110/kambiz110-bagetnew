@@ -63,7 +63,10 @@ namespace Application.Orders.Query
                 && (int)p.PaymentStatus == 1).Include(p => p.OrderItems)
                        .OrderBy(p => p.OrderDate)
             .GroupBy(p => p.OrderDate.Date);
-            return new ResultDto<FerstSaleReportQueryViewModel>() { };
+            return new ResultDto<FerstSaleReportQueryViewModel>() {
+            IsSuccess=true,
+            Data=model
+            };
 
         }
         //result.SaleReport = visitPerDay;

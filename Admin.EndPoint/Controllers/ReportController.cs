@@ -39,7 +39,7 @@ namespace Admin.EndPoint.Controllers
         [HttpGet]
         public IActionResult SaleReport()
         {
-            var test = _saleReportQuery.FirstDefultSaleReport();
+          //  var test = _saleReportQuery.FirstDefultSaleReport();
             return View();
         }
 

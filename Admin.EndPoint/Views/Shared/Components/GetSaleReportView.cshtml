@@ -9,13 +9,42 @@
 
 <div class="row layout-top-spacing">
 
-    <div class="col-xl-5 col-lg-12 col-md-6 col-sm-12 col-12">
-        <div class="widget widget-table-one">
-            <div class="widget-heading">
-                <h5 class="">آمار امروز</h5>
+    @*<div class="col-xl-12 col-md-12">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-title"> نمودار نقطه به نقطه بر اساس ساعت بازدید مقایسه ای 5 روز اخیر </h5>
+
+                    <p class="card-category"></p>
+                </div>
+                <div class="card-body">
+                    <canvas id="comparison-line-Chart" width="400" height="100"></canvas>
+                </div>
+                <div class="card-footer">
+                    <div class="chart-legend">
+
+                    </div>
+
+                </div>
             </div>
+        </div>*@
 
 
+    <div class="col-xl-12 col-md-12">
+        <div class="card card-chart">
+            <div class="card-header">
+                <h5 class="card-title">آمار کل خرید ها بر اساس روز</h5>
+                <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+
+                <canvas id="s-lineDay" width="400" height="100"></canvas>
+            </div>
+            <div class="card-footer">
+                <div class="chart-legend">
+
+                </div>
+
+            </div>
         </div>
     </div>
 
@@ -26,3 +55,100 @@
 <script src="~/Theme/assets/js/scrollspyNav.js"></script>
 <script src="~/lib/chart/Chart.min.js"></script>
 
+<script>
+                  var TodayDisplayHour=@Html.Raw(Json.Serialize(Model.Today.SaleReport.Display));
+        var TodayValueHour=@Html.Raw(Json.Serialize(Model.Today.SaleReport.Value));
+    //مقایسه ای
+    //var ctxComparison = document.getElementById("comparison-line-Chart").getContext('2d');
+    //var myChart = new Chart(ctxComparison, {
+    //    type: 'line',
+    //    data: {
+    //        labels: TodayDisplayHour,
+    //        datasets: [
+    //            {
+    //                borderColor: "#006400",
+    //                label: 'امروز',
+    //                data: TodayValueHour,
+    //                borderWidth: 3,
+    //            },
+    //            {
+    //                borderColor: "#2793DB",
+    //                label: 'روز قبل',
+    //                data: YesterDayValueHour,
+    //                borderWidth: 3,
+    //            },
+    //            {
+    //                borderColor: "#7FFF00",
+    //                label: '2 روز قبل',
+    //                data: TwoDayEgoValueHour,
+    //                borderWidth: 3,
+    //            },
+    //            {
+    //                borderColor: "#DC143C",
+    //                label: '3 روز قبل',
+    //                data: ThreeDayEgoValueHour,
+    //                borderWidth: 3,
+    //            },
+    //            {
+    //                borderColor: "#8A2BE2",
+    //                label: '4 روز قبل',
+    //                data: FourDayEgoValueHour,
+    //                borderWidth: 3,
+    //            },
+    //            {
+    //                borderColor: "#B8860B",
+    //                label: '5 روز قبل',
+    //                data: FiveDayEgoValueHour,
+    //                borderWidth: 3,
+    //            }
+    //        ]
+    //    },
+    //    options: {
+    //        scales: {
+    //            xAxes: [{
+    //                ticks: {
+    //                    fontSize: 15,
+    //                    fontColor: 'black',
+    //                    fontWeight: "bold",
+    //                }
+    //            }]
+    //        }
+    //    }
+    //});
+    // ساده میله ای
+    var ctx = document.getElementById("s-lineDay").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: TodayDisplayHour,
+            datasets: [{
+                label: 'فروش(تومان) ',
+                data: TodayValueHour,
+                backgroundColor: "rgba(234, 0, 0,0.4)"
+            }]
+        },
+        options: {
+            animation: {
+                onComplete: () => {
+                    delayed = true;
+                },
+                delay: (context) => {
+                    let delay = 0;
+                    if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                        delay = context.dataIndex * 3000 + context.datasetIndex * 100;
+                    }
+                    return delay;
+                },
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 15,
+                        fontColor: 'black',
+                        fontWeight: "bold",
+                    }
+                }]
+            }
+        }
+    });
+</script>
