@@ -26,13 +26,17 @@ namespace Application.Orders.Dto
         {
 
         }
-        public BuyReportCountDto(string[] _display , int[] _value)
+        public BuyReportCountDto(string[] _display , int[] _value , int[] _UserCount , int[] _BuyCount)
         {
             this.Display = _display;
             this.Value = _value;
+            this.UserCount = _UserCount;
+            this.BuyCount = _BuyCount;
         }
         public string[] Display { get; set; }
         public int[] Value { get; set; }
+        public int[] UserCount { get; set; }
+        public int[] BuyCount { get; set; }
 
     }
     public class BuyDto

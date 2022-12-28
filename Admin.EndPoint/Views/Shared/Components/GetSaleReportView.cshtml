@@ -46,18 +46,59 @@
 
             </div>
         </div>
-    </div>
 
+      
+     
+    </div>
+    <div class="col-xl-12 col-md-12">
+        <div class="card card-chart">
+            <div class="card-header">
+                <h5 class="card-title">آمار کل خرید ها بر اساس تعداد خرید</h5>
+                <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+
+                <canvas id="s-lineDay2" width="400" height="100"></canvas>
+            </div>
+            <div class="card-footer">
+                <div class="chart-legend">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12 col-md-12">
+        <div class="card card-chart">
+            <div class="card-header">
+                <h5 class="card-title">آمار کل خرید ها بر اساس تعداد خریداران</h5>
+                <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+
+                <canvas id="s-lineDay3" width="400" height="100"></canvas>
+            </div>
+            <div class="card-footer">
+                <div class="chart-legend">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 
-<script src="~/Theme/plugins/apex/apexcharts.min.js"></script>
-<script src="~/Theme/assets/js/scrollspyNav.js"></script>
-<script src="~/lib/chart/Chart.min.js"></script>
+    <script src="~/Theme/plugins/apex/apexcharts.min.js"></script>
+    <script src="~/Theme/assets/js/scrollspyNav.js"></script>
+    <script src="~/lib/chart/Chart.min.js"></script>
 
-<script>
-                  var TodayDisplayHour=@Html.Raw(Json.Serialize(Model.Today.SaleReport.Display));
-        var TodayValueHour=@Html.Raw(Json.Serialize(Model.Today.SaleReport.Value));
+    <script>
+    var TodayDisplayHour=@Html.Raw(Json.Serialize(Model.Today.SaleReport.Display));
+    var TodayValueHour =@Html.Raw(Json.Serialize(Model.Today.SaleReport.Value));
+
+    var SaleReportUserCount =@Html.Raw(Json.Serialize(Model.Today.SaleReport.UserCount));
+    var SaleReportBuyCount=@Html.Raw(Json.Serialize(Model.Today.SaleReport.BuyCount));
     //مقایسه ای
     //var ctxComparison = document.getElementById("comparison-line-Chart").getContext('2d');
     //var myChart = new Chart(ctxComparison, {
@@ -151,4 +192,74 @@
             }
         }
     });
-</script>
+    var ctx2 = document.getElementById("s-lineDay2").getContext('2d');
+    var myChart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: TodayDisplayHour,
+            datasets: [{
+                label: 'فروش(تومان) ',
+                data: SaleReportBuyCount,
+                backgroundColor: "rgba(50, 0, 0,0.4)"
+            }]
+        },
+        options: {
+            animation: {
+                onComplete: () => {
+                    delayed = true;
+                },
+                delay: (context) => {
+                    let delay = 0;
+                    if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                        delay = context.dataIndex * 3000 + context.datasetIndex * 100;
+                    }
+                    return delay;
+                },
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 15,
+                        fontColor: 'black',
+                        fontWeight: "bold",
+                    }
+                }]
+            }
+        }
+    });
+    var ctx3 = document.getElementById("s-lineDay3").getContext('2d');
+    var myChart3 = new Chart(ctx3, {
+        type: 'bar',
+        data: {
+            labels: TodayDisplayHour,
+            datasets: [{
+                label: 'فروش(تومان) ',
+                data: SaleReportUserCount,
+                backgroundColor: "rgba(152, 0, 0,0.4)"
+            }]
+        },
+        options: {
+            animation: {
+                onComplete: () => {
+                    delayed = true;
+                },
+                delay: (context) => {
+                    let delay = 0;
+                    if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                        delay = context.dataIndex * 3000 + context.datasetIndex * 100;
+                    }
+                    return delay;
+                },
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 15,
+                        fontColor: 'black',
+                        fontWeight: "bold",
+                    }
+                }]
+            }
+        }
+    });
+    </script>

@@ -61,7 +61,7 @@ namespace Admin.EndPoint.Controllers
             }
             return Json(new ResultDto<string>
             {
-                Data = "<p>گزارش با موفق.</p>",
+                Data = "<h1>گزارش ناموفق.</h1>",
                 IsSuccess = false,
                 Message = "ناموفق."
             });

@@ -47,6 +47,12 @@ namespace Application.Orders.Query
                         a = o.Select(p => p.OrderItems.Sum(o => o.UnitPrice * o.Units)).Sum(t => t)
                     }).Select(p => p.a).ToArray(),
                     Display = SsaleReportToday.Select(p => p.Key.ToPersianDateStrFarsi()).ToArray(),
+                    BuyCount= SsaleReportToday.Select(o => new {
+                        a = o.Select(p => p.OrderItems).Count()
+                    }).Select(p => p.a).ToArray(),
+                    UserCount= SsaleReportToday.Select(o => new {
+                        a = o.GroupBy(p => p.UserId).Count()
+                    }).Select(p => p.a).ToArray(),
                 },
             };
 
@@ -78,20 +84,26 @@ namespace Application.Orders.Query
                 .Include(p => p.OrderItems)
                 .Where(p => p.OrderDate >= MonthStart && p.OrderDate < MonthEnds)
               .AsQueryable();
-            BuyReportCountDto visitPerDay = new BuyReportCountDto() { Display = new string[countDay], Value = new int[countDay] };
+            BuyReportCountDto visitPerDay = new BuyReportCountDto() { Display = new string[countDay], Value = new int[countDay], UserCount = new int[countDay], BuyCount = new int[countDay] };
             for (int i = 0; i < countDay; i++)
             {
                 var currentday = DateTime.Now.AddDays(i * (-1));
                 var currentFarsiDay = currentday.ToPersianDateString();
                 visitPerDay.Display[i] = currentFarsiDay;
+                var query = QueryPageView.Where(p => p.OrderDate.Date == currentday.Date);
                 if (QueryPageView.Where(p => p.OrderDate.Date == currentday.Date).Count() > 0)
                 {
-                    visitPerDay.Value[i] = QueryPageView.Where(p => p.OrderDate.Date == currentday.Date)
+                   
+                    visitPerDay.BuyCount[i] = query.GroupBy(p => p.UserId).Count();
+                    visitPerDay.UserCount[i] = query.Count();
+                    visitPerDay.Value[i] = query
                         .Select(p => p.OrderItems.Sum(o => o.UnitPrice * o.Units)).ToList().Sum(p => p);
                 }
                 else
                 {
-                    visitPerDay.Value[i] = QueryPageView.Where(p => p.OrderDate.Date == currentday.Date).Count();
+                    visitPerDay.BuyCount[i] = 0;
+                    visitPerDay.UserCount[i] = 0;
+                    visitPerDay.Value[i] =0;
                 }
 
             }
@@ -115,23 +127,29 @@ namespace Application.Orders.Query
             var result = new BuyDto();
             result.BuyCount = QueryPageView.Count();
             result.Buyers = QueryPageView.GroupBy(p => p.UserId).Count();
-            BuyReportCountDto visitPerDay = new BuyReportCountDto() { Display = new string[countDay], Value = new int[countDay] };
+            BuyReportCountDto visitPerDay = new BuyReportCountDto() { Display = new string[countDay], Value = new int[countDay] , UserCount= new int[countDay] , BuyCount= new int[countDay] };
             for (int i = 0; i < countDay; i++)
             {
                 var currentday = start.AddDays(i * (-1));
                 var currentFarsiDay = currentday.ToPersianDateString();
                 visitPerDay.Display[i] = currentFarsiDay;
+                var query = QueryPageView.Where(p => p.OrderDate.Date == currentday.Date);
                 if (QueryPageView.Where(p => p.OrderDate.Date == currentday.Date).Count() > 0)
                 {
-                    visitPerDay.Value[i] = QueryPageView.Where(p => p.OrderDate.Date == currentday.Date)
+
+                    visitPerDay.BuyCount[i] = query.GroupBy(p => p.UserId).Count();
+                    visitPerDay.UserCount[i] = query.Count();
+                    visitPerDay.Value[i] = query
                         .Select(p => p.OrderItems.Sum(o => o.UnitPrice * o.Units)).ToList().Sum(p => p);
                 }
                 else
                 {
-                    visitPerDay.Value[i] = QueryPageView.Where(p => p.OrderDate.Date == currentday.Date).Count();
+                    visitPerDay.BuyCount[i] = 0;
+                    visitPerDay.UserCount[i] = 0;
+                    visitPerDay.Value[i] = 0;
                 }
 
-               
+
             }
             return new BuyDto() { };
         }

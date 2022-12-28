@@ -27,17 +27,19 @@
 
 
 <script>
-       var TodayDisplayHour=@Html.Raw(Json.Serialize(Model.Today.SaleReport.Display));
-        var TodayValueHour=@Html.Raw(Json.Serialize(Model.Today.SaleReport.Value));
+    var SaleReportDisplay=@Html.Raw(Json.Serialize(Model.Today.SaleReport.Display));
+    var SaleReportValue =@Html.Raw(Json.Serialize(Model.Today.SaleReport.Value));
+    var SaleReportUserCount =@Html.Raw(Json.Serialize(Model.Today.SaleReport.UserCount));
+    var SaleReportBuyCount=@Html.Raw(Json.Serialize(Model.Today.SaleReport.BuyCount));
 
     var ctx = document.getElementById("TestlineDay").getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: TodayDisplayHour,
+            labels: SaleReportDisplay,
             datasets: [{
                 label: 'فروش(تومان) ',
-                data: TodayValueHour,
+                data: SaleReportValue,
                 backgroundColor: "rgba(234, 0, 0,0.4)"
             }]
         },
