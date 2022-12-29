@@ -47,10 +47,8 @@ namespace Application.Orders.Query
                         a = o.Select(p => p.OrderItems.Sum(o => o.UnitPrice * o.Units)).Sum(t => t)
                     }).Select(p => p.a).ToArray(),
                     Display = SsaleReportToday.Select(p => p.Key.ToPersianDateStrFarsi()).ToArray(),
-                    BuyCount= SsaleReportToday.Select(o => new {
-                        a = o.Select(p => p.OrderItems).Count()
-                    }).Select(p => p.a).ToArray(),
-                    UserCount= SsaleReportToday.Select(o => new {
+                    BuyCount= SsaleReportToday.Select(p => new{ b=p.Count() }).Select(p => p.b).ToArray(),
+                    UserCount = SsaleReportToday.Select(o => new {
                         a = o.GroupBy(p => p.UserId).Count()
                     }).Select(p => p.a).ToArray(),
                 },

@@ -99,64 +99,7 @@
 
     var SaleReportUserCount =@Html.Raw(Json.Serialize(Model.Today.SaleReport.UserCount));
     var SaleReportBuyCount=@Html.Raw(Json.Serialize(Model.Today.SaleReport.BuyCount));
-    //مقایسه ای
-    //var ctxComparison = document.getElementById("comparison-line-Chart").getContext('2d');
-    //var myChart = new Chart(ctxComparison, {
-    //    type: 'line',
-    //    data: {
-    //        labels: TodayDisplayHour,
-    //        datasets: [
-    //            {
-    //                borderColor: "#006400",
-    //                label: 'امروز',
-    //                data: TodayValueHour,
-    //                borderWidth: 3,
-    //            },
-    //            {
-    //                borderColor: "#2793DB",
-    //                label: 'روز قبل',
-    //                data: YesterDayValueHour,
-    //                borderWidth: 3,
-    //            },
-    //            {
-    //                borderColor: "#7FFF00",
-    //                label: '2 روز قبل',
-    //                data: TwoDayEgoValueHour,
-    //                borderWidth: 3,
-    //            },
-    //            {
-    //                borderColor: "#DC143C",
-    //                label: '3 روز قبل',
-    //                data: ThreeDayEgoValueHour,
-    //                borderWidth: 3,
-    //            },
-    //            {
-    //                borderColor: "#8A2BE2",
-    //                label: '4 روز قبل',
-    //                data: FourDayEgoValueHour,
-    //                borderWidth: 3,
-    //            },
-    //            {
-    //                borderColor: "#B8860B",
-    //                label: '5 روز قبل',
-    //                data: FiveDayEgoValueHour,
-    //                borderWidth: 3,
-    //            }
-    //        ]
-    //    },
-    //    options: {
-    //        scales: {
-    //            xAxes: [{
-    //                ticks: {
-    //                    fontSize: 15,
-    //                    fontColor: 'black',
-    //                    fontWeight: "bold",
-    //                }
-    //            }]
-    //        }
-    //    }
-    //});
-    // ساده میله ای
+
     var ctx = document.getElementById("s-lineDay").getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
