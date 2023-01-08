@@ -278,14 +278,14 @@
                     <li class="menu">
                         <a href="#FileManager" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>  
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                                 <span>مدیریت فایل</span>
                             </div>
 
                         </a>
 
                         <ul class="collapse submenu recent-submenu list-unstyled" id="FileManager" data-parent="#accordionExample">
-                         
+
                             <li>
                                 <a asp-controller="FileManager" asp-action="Index">
 
@@ -294,7 +294,7 @@
                             </li>
                         </ul>
 
-                      
+
                     </li>
 
                     <li class="menu">
@@ -435,5 +435,31 @@
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <!-- END PAGE LEVEL SCRIPTS -->
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        $(function () {
+            setNavigation();
+        });
+
+
+        function setNavigation() {
+            var path = window.location.pathname;
+            path = path.replace(/\/$/, "");
+            path = decodeURIComponent(path);
+            console.log("path :", path);
+            var counter = 0;
+            $(".nav li ul li a").each(function () {
+                counter += 1;
+
+                console.log("li a" + counter + " : ", $(this).attr('href'));
+                if (path === $(this).attr('href')) {
+                    console.log("naserPalang" + counter + " : ", $(this).attr('href'));
+                    $(this).closest("li").addClass("Active")
+                    $(this).closest("ul").addClass("Active");
+                  
+                }
+
+            });
+        }
+    </script>
 </body>
 </html>

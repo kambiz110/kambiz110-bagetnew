@@ -438,5 +438,31 @@
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <!-- END PAGE LEVEL SCRIPTS -->
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        $(function () {
+            setNavigation();
+        });
+
+
+        function setNavigation() {
+            var path = window.location.pathname;
+            path = path.replace(/\/$/, "");
+            path = decodeURIComponent(path);
+            console.log("path :", path);
+            var counter = 0;
+            $(".nav li ul li a").each(function () {
+                counter += 1;
+
+                console.log("li a" + counter + " : ", $(this).attr('href'));
+                if (path === $(this).attr('href')) {
+                    console.log("naserPalang" + counter + " : ", $(this).attr('href'));
+                    $(this).closest(".nav li").addClass("Active")
+                    $(this).closest(".nav li ul").addClass("collaps in").css({ "height": "auto" });
+                    $(this).closest(".nav li ul li").addClass("Activeli")
+                }
+
+            });
+        }
+    </script>
 </body>
 </html>
