@@ -34,8 +34,7 @@ namespace EndPoint.Site.Useful.Ultimite
             if (!string.IsNullOrWhiteSpace(user.FullName) && !string.IsNullOrWhiteSpace(user.FullName))
             {
                 ((ClaimsIdentity)principal.Identity).AddClaims(new[] {
-        new Claim(ClaimTypes.GivenName, user.FullName)
-    });
+                 new Claim(ClaimTypes.GivenName, user.FullName)});
             }
 
 

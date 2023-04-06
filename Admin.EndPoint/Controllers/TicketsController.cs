@@ -3,6 +3,7 @@ using Application.Logs.Command;
 using Application.Tickets.Command;
 using Application.Tickets.Dto;
 using Application.Tickets.Query;
+using Infrastructure.SMS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,15 +18,17 @@ namespace Admin.EndPoint.Controllers
     {
         private readonly IAdminGetTickets adminGetTickets;
         private readonly IGetAnswerDitels getAnswer;
-        private readonly IAddAnswerInTicket addAnswer;
+        private readonly IAddAnswerInTicket _addAnswer;
         private readonly IAddUserLog _userLog;
+        private readonly ISmsServices smsServices;
         public TicketsController(IAdminGetTickets adminGetTickets
-            , IGetAnswerDitels getAnswer, IAddAnswerInTicket addAnswer, IAddUserLog userLog)
+            , IGetAnswerDitels getAnswer, IAddAnswerInTicket addAnswer, IAddUserLog userLog, ISmsServices smsServices)
         {
             this.adminGetTickets = adminGetTickets;
             this.getAnswer = getAnswer;
-            this.addAnswer = addAnswer;
+            this._addAnswer = addAnswer;
             _userLog = userLog;
+            this.smsServices = smsServices;
         }
         public IActionResult Index(int PageSize = 10, int PageNo = 1, string q = "", string search = "" , bool stat =false)
         {
@@ -43,17 +46,18 @@ namespace Admin.EndPoint.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult Respons(AddAnswerDto dto) 
+        public async Task<IActionResult> Respons(AddAnswerDto dto) 
         {
             if (!ModelState.IsValid)
             {
                 ViewBag.userId = ClaimUtility.GetUserId(User);
                 return View(dto);
             }
-            addAnswer.addAnswer(dto);
+          await _addAnswer.addAnswer(dto);
             _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.answerTicket, StrKeyTable = dto.Id.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
+            await smsServices.TicketStatAsync(User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value, "   کارشناس پشتیبان پاسخ داده شده ", dto.PhoneNumber);
 
-            return View(nameof(Index));
+            return RedirectToAction("Index");
         }
         public IActionResult Edit(int id) 
         {
@@ -62,14 +66,14 @@ namespace Admin.EndPoint.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult Edit(AddAnswerDto dto) 
+        public async Task<IActionResult> Edit(AddAnswerDto dto) 
         {
             if (!ModelState.IsValid)
             {
                 ViewBag.userId = ClaimUtility.GetUserId(User);
                 return View(dto);
             }
-            addAnswer.addAnswer(dto);
+          await  _addAnswer.addAnswer(dto);
             _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.editTicket, StrKeyTable = dto.Id.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
 
             return View(nameof(Index));

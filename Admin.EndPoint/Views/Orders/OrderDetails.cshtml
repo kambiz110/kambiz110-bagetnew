@@ -180,6 +180,8 @@
                 <div class="work-section">
                     <form asp-controller="Orders" asp-action="OrderPostals" method="post" id="postalform">
                         <input name="Id" type="hidden" value="@Model.postalProductDto.Id" />
+                        <input name="usereFullname" type="hidden" value="@Model.usereFullname" />
+                        <input name="userePhoneNumber" type="hidden" value="@Model.userePhoneNumber" />
                         <input name="OrderId" value="@Model.OrderId" type="hidden" />
                         <input name="PostalStatus" value="1" type="hidden" />
                         @if ((int)Model.OrderStatus == 4)

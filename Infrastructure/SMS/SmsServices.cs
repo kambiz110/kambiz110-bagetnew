@@ -11,7 +11,12 @@ namespace Infrastructure.SMS
         public Task singleUserSendSMS(string message, string[] phonNumber);
         public Task verificationCodeWithPatern(string name, string Mobile ,string smsCode);
         public void newTicket(string name, string ticket_number, string status, string Mobile);
+        public Task TicketStatAsync(string name, string status, string Mobile);
+        public Task newTicketAsync(string name, string ticket_number, string status, string Mobile);
         public void newBuy(string username, string number,string amount,  string status, string Mobile);
+        public Task newBuyAsync(string username, string number, string amount, string status, string Mobile);
+        public Task SuccessBuyCustomerAsync(string name, string Mobile);
+        public Task SendPostalProductAsync(string name,string postcode, string postcompanyname, string Mobile);
     }
     public class SmsServices : ISmsServices
     {
@@ -46,7 +51,36 @@ namespace Infrastructure.SMS
              client.SendWithPatternAsync(UserName, Password, Mobile, PatternCodeID, PatternValues);
 
         }
+        public async Task newTicketAsync(string name, string ticket_number, string status, string Mobile)
+        {
+            string UserName = "09108496094";
+            string Password = "karen@1397";
 
+
+            int PatternCodeID = 1386;
+            string[] PatternValues = new string[] { name, ticket_number, status };
+            var client = new AmootSMS.AmootSMSWebService2SoapClient(
+                        AmootSMS.AmootSMSWebService2SoapClient.EndpointConfiguration.AmootSMSWebService2Soap12,
+                       "https://portal.amootsms.com/webservice2.asmx");
+            /*  AmootSMS.SendResult result =*/
+            await client.SendWithPatternAsync(UserName, Password, Mobile, PatternCodeID, PatternValues);
+
+        }
+        public async Task TicketStatAsync(string name, string status, string Mobile)
+        {
+            string UserName = "09108496094";
+            string Password = "karen@1397";
+
+
+            int PatternCodeID = 1617;
+            string[] PatternValues = new string[] { name, status };
+            var client = new AmootSMS.AmootSMSWebService2SoapClient(
+                        AmootSMS.AmootSMSWebService2SoapClient.EndpointConfiguration.AmootSMSWebService2Soap12,
+                       "https://portal.amootsms.com/webservice2.asmx");
+            /*  AmootSMS.SendResult result =*/
+            await client.SendWithPatternAsync(UserName, Password, Mobile, PatternCodeID, PatternValues);
+
+        }
         public async Task singleUserSendSMS(string message, string[] phonNumber)
         {
             string UserName = "09108496094";
@@ -95,8 +129,51 @@ namespace Infrastructure.SMS
 
        
         }
+        public async Task newBuyAsync(string username, string number, string amount, string status, string Mobile)
+        {
+            string UserName = "09108496094";
+            string Password = "karen@1397";
 
 
+            int PatternCodeID = 1387;
+            string[] PatternValues = new string[] { username, number, amount, status };
+            var client = new AmootSMS.AmootSMSWebService2SoapClient(
+                       AmootSMS.AmootSMSWebService2SoapClient.EndpointConfiguration.AmootSMSWebService2Soap12,
+                      "https://portal.amootsms.com/webservice2.asmx");
+            /*  AmootSMS.SendResult result =*/
+            await client.SendWithPatternAsync(UserName, Password, Mobile, PatternCodeID, PatternValues);
+
+        }
+        public async Task SuccessBuyCustomerAsync(string name, string Mobile)
+        {
+            string UserName = "09108496094";
+            string Password = "karen@1397";
+
+
+            int PatternCodeID = 1230;
+            string[] PatternValues = new string[] { name };
+            var client = new AmootSMS.AmootSMSWebService2SoapClient(
+                        AmootSMS.AmootSMSWebService2SoapClient.EndpointConfiguration.AmootSMSWebService2Soap12,
+                       "https://portal.amootsms.com/webservice2.asmx");
+            /*  AmootSMS.SendResult result =*/
+            await client.SendWithPatternAsync(UserName, Password, Mobile, PatternCodeID, PatternValues);
+
+        }
+        public async Task SendPostalProductAsync(string name, string postcode, string postcompanyname, string Mobile)
+        {
+            string UserName = "09108496094";
+            string Password = "karen@1397";
+
+
+            int PatternCodeID = 1616;
+            string[] PatternValues = new string[] { name , postcode , postcompanyname };
+            var client = new AmootSMS.AmootSMSWebService2SoapClient(
+                        AmootSMS.AmootSMSWebService2SoapClient.EndpointConfiguration.AmootSMSWebService2Soap12,
+                       "https://portal.amootsms.com/webservice2.asmx");
+            /*  AmootSMS.SendResult result =*/
+            await client.SendWithPatternAsync(UserName, Password, Mobile, PatternCodeID, PatternValues);
+
+        }
     }
 
 }
