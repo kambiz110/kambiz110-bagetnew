@@ -46,7 +46,7 @@ namespace WebSite.EndPoint.Areas.Customers.Controllers
         ErrorMessage = "عبارت امنیتی را به درستی وارد نمائید",
         CaptchaGeneratorLanguage = Language.Persian,
         CaptchaGeneratorDisplayMode = DisplayMode.NumberToWord)]
-        public IActionResult AddTicket(AddTicketDto dto)
+        public async Task<IActionResult> AddTicket(AddTicketDto dto)
         {
             ModelState.Remove("Ip");
             if (!ModelState.IsValid)
@@ -62,10 +62,11 @@ namespace WebSite.EndPoint.Areas.Customers.Controllers
             var ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             dto.Ip = ip;
            var result= addTicket.Add(dto);
-            smsServices.newTicket(User.Identity.Name, result.ToString(), "تیکت جدید", "09108496094");
-            smsServices.newTicket(User.Identity.Name, result.ToString(), "تیکت جدید", "09124918349");
-            smsServices.newTicket(User.Identity.Name, result.ToString(), "تیکت جدید", "09125476274");
-            return View(nameof(Index));
+            await smsServices.TicketStatAsync(User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value,  " در انتظار بررسی کارشناس پشتیبان ", dto.PhoneNumber);
+            await smsServices.newTicketAsync(User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value, result.ToString(), "تیکت جدید ", "09108496094");
+            await smsServices.newTicketAsync(User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value, result.ToString(), " تیکت جدید ", "09124918349");
+            await smsServices.newTicketAsync(User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value, result.ToString(), " تیکت جدید ", "09102595008");
+            return RedirectToAction("Index");
         }
     }
 }

@@ -3,6 +3,7 @@ using Application.Logs.Command;
 using Application.Orders.AdminOrderServices;
 using Application.PostalProducts;
 using Application.PostalProducts.Dto;
+using Infrastructure.SMS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,11 +19,13 @@ namespace Admin.EndPoint.Controllers
         private readonly IAdminOrdersService adminOrdersService;
         private readonly IAddPostalProductService addPostalProduct;
         private readonly IAddUserLog _userLog;
-        public OrdersController(IAdminOrdersService adminOrdersService, IAddPostalProductService addPostalProduct, IAddUserLog userLog)
+        private readonly ISmsServices smsServices;
+        public OrdersController(IAdminOrdersService adminOrdersService, IAddPostalProductService addPostalProduct, IAddUserLog userLog, ISmsServices smsServices)
         {
             this.adminOrdersService = adminOrdersService;
             this.addPostalProduct = addPostalProduct;
             _userLog = userLog;
+            this.smsServices = smsServices;
         }
         public IActionResult Index(string searchkey = "", int orderStatus = 0)
         {
@@ -36,11 +39,11 @@ namespace Admin.EndPoint.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> OrderPostals(AddPostalProductDto dto)
+        public async Task<IActionResult> OrderPostals(AddPostalProductDto dto ,string userePhoneNumber, string usereFullname)
         {
             await addPostalProduct.addPostal(dto);
             _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.sendOrder, StrKeyTable = dto.Id.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
-
+            await smsServices.SendPostalProductAsync(usereFullname, dto.TrackingNumber,dto.PostOfficeName, userePhoneNumber);
             return RedirectToAction("Index");
         }
         [Route("Orders/InvoiceOrder/{PaymentId}")]
@@ -55,7 +58,6 @@ namespace Admin.EndPoint.Controllers
         {
             adminOrdersService.chengeOrederStatuse(OrderId ,2);
             _userLog.adduserlog(new Application.Logs.Dto.AddUserLogDto { userName = User.Identity.Name, userEvent = Domain.Logs.logEvent.DeliveredOrder, StrKeyTable = OrderId.ToString(), Ip = HttpContext.Connection.RemoteIpAddress?.ToString() });
-
             return new JsonResult(new ResultDto { IsSuccess = true, Message = "true" });
         }
     }

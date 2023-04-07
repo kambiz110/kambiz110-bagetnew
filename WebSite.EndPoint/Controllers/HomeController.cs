@@ -1,5 +1,6 @@
 ﻿using Application.HomePageService;
 using DotNet.RateLimiter.ActionFilters;
+using Infrastructure.SMS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,12 +20,12 @@ namespace WebSite.EndPoint.Controllers
         private readonly ILogger<HomeController> _logger;
         private static readonly NLog.Logger nlog = NLog.LogManager.GetCurrentClassLogger();
         private readonly IHomePageService homePageService;
-
         public HomeController(ILogger<HomeController> logger
-            , IHomePageService homePageService)
+            , IHomePageService homePageService, ISmsServices _smsServices)
         {
             _logger = logger;
             this.homePageService = homePageService;
+  
         }
         [RateLimit(PeriodInSec = 5, Limit = 5)]
         [ServiceFilter(typeof(SaveVisitorFilter))]
@@ -53,5 +54,11 @@ namespace WebSite.EndPoint.Controllers
             nlog.Trace("Trace");
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        //public async Task<IActionResult> admintestsms()
+        //{
+        //  await smsServices.testtt("kambiz", "123456789", "10,000", "خرید جدید", "09108496094");
+  
+        //    return RedirectToAction("index");
+        //}
     }
 }

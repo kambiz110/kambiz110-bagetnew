@@ -77,10 +77,10 @@ namespace WebSite.EndPoint.Controllers
         }
 
         [RateLimit(PeriodInSec = 5, Limit = 5)]
-        public IActionResult Verify(Guid Id, string Authority /*,string PaymentId*/)
+        public async Task<IActionResult> Verify(Guid Id, string Authority ,string Status/*,string PaymentId*/)
         {
             nlog.Trace("Trace");
-            string Status = HttpContext.Request.Query["Status"];
+          //  string Status = HttpContext.Request.Query["Status"];
 
             if (Status != "" && Status != null && Status.ToString().ToLower() == "ok" && Authority != "")
             {
@@ -109,9 +109,10 @@ namespace WebSite.EndPoint.Controllers
                     bool verifyResult = paymentService.VerifyPayment(Id, Authority, verification.RefID);
                     if (verifyResult)
                     {
-                        smsServices.newBuy(payment.PhoneNumber, payment.orderId.ToString(), payment.Amount.ToString(), "خرید جدید", "09108496094");
-                        smsServices.newBuy(payment.PhoneNumber, payment.orderId.ToString(), payment.Amount.ToString(), "خرید جدید", "09124918349");
-                        smsServices.newBuy(payment.PhoneNumber, payment.orderId.ToString(), payment.Amount.ToString(),"خرید جدید", "09125476274");
+                      await  smsServices.newBuyAsync(User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value, payment.PhoneNumber, payment.Amount.ToString(), "خرید جدید ", "09108496094");
+                      await smsServices.newBuyAsync(User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value, payment.PhoneNumber, payment.Amount.ToString(), "خرید جدید ", "09124918349");
+                      await smsServices.newBuyAsync(User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value, payment.PhoneNumber, payment.Amount.ToString(),"خرید جدید ", "09102595008");
+                      await smsServices.SuccessBuyCustomerAsync(User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value, payment.PhoneNumber);
                         return RedirectToAction("Index", "Orders", new { area = "Customers" });
                     }
                     else

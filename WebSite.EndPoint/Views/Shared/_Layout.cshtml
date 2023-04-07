@@ -1,6 +1,8 @@
 ﻿@using System.Security.Claims;
 @{
     Layout = null;
+    var tt = User.Claims.FirstOrDefault(c => c.Type == "HomePhone")?.Value;
+    var a = 12;
 }
 
 
